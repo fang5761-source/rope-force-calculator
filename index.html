@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>β / φ / a 教學圖 - 特戰極限版</title>
+<title>β / φ / a 教學圖 - 戰繩極限版</title>
 <!-- 載入 html2canvas 核心庫以支援一鍵截圖功能 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root{
-    /* 預設：夜間戰術模式 */
+    /* 預設：夜間專業模式 */
     --bg: #0f1623;
     --card: #121a2a;
     --line: #1b2940;
@@ -64,18 +64,21 @@
     justify-content: space-between;
     align-items:center;
     margin-bottom:2px;
-    padding: 0 4px;
+    padding: 0 2px;
   }
   .title-tag {
     font-size: 13px;
     color: var(--muted);
     font-weight: bold;
     border-left: 3px solid var(--warn);
-    padding-left: 8px;
+    padding-left: 6px;
+    white-space: nowrap;
   }
   .btn-group {
     display: flex;
-    gap: 4px;
+    gap: 3px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
   button{
     appearance:none;
@@ -83,9 +86,10 @@
     background:rgba(150,150,150,.1);
     color:var(--text);
     border-radius:6px;
-    padding:4px 8px;
+    /* 為了容納更多按鈕，稍微縮減 padding */
+    padding:4px 6px;
     cursor:pointer;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -165,7 +169,7 @@
   }
   .permission-modal button:hover { background: #16a34a; }
 
-  /* --- 戰術浮水印設定 --- */
+  /* --- 浮水印設定 --- */
   .watermark {
     display: none;
     position: absolute;
@@ -239,7 +243,7 @@
   .is-broken .normal-view { display: none; }
   .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
 
-  /* --- 戰術負重快捷按鈕 --- */
+  /* --- 負重快捷按鈕 --- */
   .weight-controls {
     display: flex;
     align-items: center;
@@ -278,7 +282,7 @@
     border-radius: 4px;
   }
   
-  /* --- 戰術滑桿分流設計 --- */
+  /* --- 滑桿分流設計 --- */
   #arControls {
     display: none; align-items: center; justify-content: center; gap: 8px;
     padding: 10px; background: rgba(0,0,0,0.5); border-radius: 8px; 
@@ -348,14 +352,15 @@
 <body>
 <div id="mainCard" class="card">
   <div class="topbar">
-    <div class="title-tag">繩索受力教學圖</div>
+    <div class="title-tag">繩索教學</div>
     <div class="btn-group">
       <button id="cameraToggle" type="button" title="開啟實境相機">📷</button>
+      <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
       <button id="photoBtn" type="button" title="上傳照片疊圖">📁</button>
       <button id="gimbalToggle" type="button" title="水平儀防震">⚖️</button>
-      <button id="screenshotBtn" type="button" title="戰術截圖儲存">📸</button>
+      <button id="screenshotBtn" type="button" title="畫面截圖儲存">📸</button>
       <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
-      <button id="reset" type="button">↺ 120°</button>
+      <button id="reset" type="button">↺</button>
     </div>
   </div>
 
@@ -371,7 +376,7 @@
         
         <div id="swayGroup" class="tOverlay">
           <div class="normal-view">
-            <!-- 戰術負重快捷按鈕區 -->
+            <!-- 負重快捷按鈕區 -->
             <div class="weight-controls">
               <button id="btnMinus" class="weight-btn" type="button">-</button>
               <input id="inputT" type="number" value="100" min="0">
@@ -380,8 +385,8 @@
             <span>負重 (kg)</span>
           </div>
           <div class="skull-view">
-            <!-- 狙擊鏡防呆裁切 -->
-            <img src="skull.png" alt="特戰骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
+            <!-- 圓形防呆裁切 -->
+            <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
             <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
           </div>
         </div>
@@ -409,14 +414,14 @@
 
   <div id="caption" class="caption"></div>
   
-  <!-- 戰術浮水印 (截圖時才會顯示) -->
+  <!-- 浮水印 (截圖時才會顯示) -->
   <div id="watermark" class="watermark"></div>
 </div>
 
 <!-- 攔截式安全授權面板 -->
 <div id="permissionModalOverlay" class="permission-modal-overlay">
   <div class="permission-modal">
-    <h3>🛡️ 戰術系統安全提示</h3>
+    <h3>🛡️ 系統安全提示</h3>
     <p>為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭與陀螺儀。<br><br>請放心，所有影像疊圖與防震運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！</p>
     <button id="permissionAgreeBtn" type="button">我瞭解了，開始授權</button>
   </div>
@@ -429,6 +434,7 @@ const caption = document.getElementById('caption');
 const resetBtn = document.getElementById('reset');
 const themeToggle = document.getElementById('themeToggle');
 const cameraToggle = document.getElementById('cameraToggle');
+const torchToggle = document.getElementById('torchToggle');
 const photoBtn = document.getElementById('photoBtn');
 const photoUpload = document.getElementById('photoUpload');
 const gimbalToggle = document.getElementById('gimbalToggle');
@@ -471,14 +477,28 @@ themeToggle.addEventListener('click', () => {
   draw(slider.value);
 });
 
-// 2. 實境相機開關
+// 2. 實境相機開關 (包含強制鎖定主鏡頭的過濾機制)
 let isCameraOn = false;
 let currentStream = null;
 cameraToggle.addEventListener('click', async () => {
   if (!isCameraOn) {
     await requestUserAgreement(); 
     try {
-      currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      // 步驟一：先以基本條件請求相機權限
+      let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      
+      // 步驟二：嘗試掃描設備，強制過濾掉「超廣角 / Ultra-wide」，鎖定標準主鏡頭
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const backCams = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
+      const mainCam = backCams.find(d => !d.label.toLowerCase().includes('ultra') && !d.label.toLowerCase().includes('廣角'));
+      
+      // 如果找到更標準的主鏡頭，且與當前不同，就重新抓取
+      if (mainCam && stream.getVideoTracks()[0].getSettings().deviceId !== mainCam.deviceId) {
+          stream.getTracks().forEach(t => t.stop());
+          stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
+      }
+      
+      currentStream = stream;
       bgVideo.srcObject = currentStream;
       bgVideo.style.display = 'block';
       bgImage.style.display = 'none';
@@ -496,6 +516,30 @@ cameraToggle.addEventListener('click', async () => {
   }
 });
 
+let isTorchOn = false;
+// 3. 手電筒控制邏輯
+torchToggle.addEventListener('click', async () => {
+  if (!isCameraOn || !currentStream) {
+    alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！');
+    return;
+  }
+  const track = currentStream.getVideoTracks()[0];
+  try {
+    const capabilities = track.getCapabilities();
+    if (!capabilities.torch) {
+      alert('系統回報：您的裝置或瀏覽器不支援手電筒控制。');
+      return;
+    }
+    isTorchOn = !isTorchOn;
+    await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
+    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit';
+    torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
+  } catch (err) {
+    console.error('Torch error:', err);
+    alert('系統回報：手電筒開啟失敗，部分手機瀏覽器可能受限。');
+  }
+});
+
 function turnOffCamera() {
   if (currentStream) currentStream.getTracks().forEach(track => track.stop());
   bgVideo.style.display = 'none';
@@ -506,9 +550,14 @@ function turnOffCamera() {
   cameraToggle.textContent = '📷';
   cameraToggle.style.color = 'inherit';
   isCameraOn = false;
+  
+  // 關閉相機時同步重置手電筒狀態
+  isTorchOn = false;
+  torchToggle.style.color = 'inherit';
+  torchToggle.textContent = '🔦';
 }
 
-// 3. 上傳照片
+// 4. 上傳照片
 photoBtn.addEventListener('click', () => photoUpload.click());
 photoUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
@@ -527,12 +576,12 @@ photoUpload.addEventListener('change', (e) => {
   }
 });
 
-// 4. 縮放實景
+// 5. 縮放實景
 zoomSlider.addEventListener('input', (e) => {
   scaleWrap.style.transform = `scale(${e.target.value})`;
 });
 
-// 5. 陀螺儀穩定
+// 6. 陀螺儀穩定
 let isGimbalOn = false;
 gimbalToggle.addEventListener('click', async () => {
   if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
@@ -540,7 +589,7 @@ gimbalToggle.addEventListener('click', async () => {
     try {
       const permissionState = await DeviceOrientationEvent.requestPermission();
       if (permissionState !== 'granted') {
-        alert('特戰系統回報：需要陀螺儀權限才能啟用水平儀！');
+        alert('系統回報：需要陀螺儀權限才能啟用水平儀！');
         return;
       }
     } catch (error) { console.error(error); }
@@ -573,11 +622,10 @@ function handleOrientation(event) {
   if (angle > 90) angle = 90;
   if (angle < -90) angle = -90;
   
-  // 修正：依據兒子回饋，將旋轉方向反轉
   gimbalWrap.style.transform = `rotate(${angle}deg)`;
 }
 
-// 6. 戰術一鍵截圖 (加入浮水印)
+// 7. 畫面截圖 (加入浮水印)
 screenshotBtn.addEventListener('click', async () => {
   mainCard.style.opacity = '0.5';
   setTimeout(() => mainCard.style.opacity = '1', 150);
@@ -600,7 +648,7 @@ screenshotBtn.addEventListener('click', async () => {
   const now = new Date();
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-  watermark.innerHTML = `🛡️ 特戰戰術繩索分析<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
+  watermark.innerHTML = `🛡️ 專業戰繩受力分析<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
   watermark.style.display = 'block';
 
   try {
@@ -610,12 +658,12 @@ screenshotBtn.addEventListener('click', async () => {
       scale: 2
     });
     const link = document.createElement('a');
-    link.download = '特戰繩索受力分析圖.png';
+    link.download = '專業戰繩受力分析圖.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   } catch(e) {
     console.error("截圖發生錯誤", e);
-    alert("戰術系統回報：截圖失敗，請稍後再試！");
+    alert("系統回報：截圖失敗，請稍後再試！");
   }
 
   // 截圖後隱藏浮水印並復原相機狀態
@@ -789,7 +837,7 @@ function draw(beta){
     <div style="font-size:13px; opacity:0.9; margin-top:2px;">注意：當夾角趨近 180° 時，支點張力會瞬間暴增，極度危險！</div>`;
 }
 
-// 戰術快捷按鈕邏輯
+// 快捷按鈕邏輯
 btnMinus.addEventListener('click', () => { 
   inputT.value = Math.max(0, Number(inputT.value) - 10); 
   draw(slider.value); 
