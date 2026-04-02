@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>β / φ / a 教學圖 - 特戰極限版</title>
+<style>
+  :root{
+    /* 預設：夜間戰術模式 */
+    --bg: #0f1623;
+    --card: #121a2a;
+    --line: #1b2940;
+    --text: #e8eef7;
+    --muted: #a8b3c5;
+    --safe: #22c55e;
+    --warn: #ffd84d;
+    --bad: #ef4444;
+    --base: #94a3b8;
+    --instructor: #cbd5e1;
+  }
+  
+  /* 日間戶外模式 */
+  :root[data-theme="light"] {
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --line: #cbd5e1;
+    --text: #0f1623;
+    --muted: #64748b;
+    --safe: #16a34a;
+    --warn: #d97706;
+    --bad: #dc2626;
+    --base: #94a3b8;
+    --instructor: #475569;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: "Noto Serif CJK TC", serif;
+    display:flex;
+    justify-content:center;
+    padding:5px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .card{
+    max-width:480px;
+    width:100%;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transition: border-color 0.3s, background 0.3s;
+    overflow: hidden;
+  }
+  
+  .topbar{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    margin-bottom:2px;
+    padding: 0 4px;
+  }
+  .title-tag {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: bold;
+    border-left: 3px solid var(--warn);
+    padding-left: 8px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 4px;
+  }
+  button{
+    appearance:none;
+    border:1px solid var(--line);
+    background:rgba(150,150,150,.1);
+    color:var(--text);
+    border-radius:6px;
+    padding:4px 8px;
+    cursor:pointer;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  button:hover{ background:rgba(150,150,150,.2); }
+  
+  .zoneSafe{color:var(--safe)}
+  .zoneWarn{color:var(--warn)}
+  .zoneBad{color:var(--bad)}
+  
+  .svgWrap{position:relative; margin-top: -10px; margin-bottom: 0;}
+  
+  /* --- 動畫設定 --- */
+  @keyframes sway {
+    0% { transform: translateX(-50%) rotate(-0.6deg); }
+    50% { transform: translateX(-50%) rotate(0.6deg); }
+    100% { transform: translateX(-50%) rotate(-0.6deg); }
+  }
+  @keyframes shake {
+    0% { transform: translateX(-50.5%) translateY(0.5px); }
+    50% { transform: translateX(-49.5%) translateY(-0.5px); }
+    100% { transform: translateX(-50.5%) translateY(0.5px); }
+  }
+  @keyframes flash-red {
+    0%, 100% { border-color: rgba(239, 68, 68, 0.4); background: var(--card); }
+    50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); }
+  }
+  @keyframes instructor-run {
+    0% { transform: translateX(0) scaleX(1); }
+    15% { transform: translateX(5px) scaleX(1); } 
+    30% { transform: translateX(45px) scaleX(-1); } 
+    100% { transform: translateX(200px) scaleX(-1); opacity: 0; }
+  }
+  @keyframes skull-land {
+    0% { transform: scale(0.5) translateY(-30px); opacity: 0; }
+    70% { transform: scale(1.1) translateY(0); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .tOverlay{
+    position:absolute;
+    left:50%;
+    top:230px; 
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    color:var(--bad);
+    z-index:5;
+    transform-origin: top center;
+    animation: sway 3s infinite ease-in-out;
+    pointer-events: none;
+    transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+  .tOverlay input, .tOverlay span { pointer-events: auto; }
+  
+  .is-warn .tOverlay { animation-duration: 1.2s; }
+  .is-danger .tOverlay { animation: shake 0.1s infinite; }
+  
+  .is-broken { animation: flash-red 0.4s ease-in-out 3; }
+  .is-broken .tOverlay { animation: none; top: 255px; } 
+
+  .skull-view { display: none; }
+  .normal-view { display: flex; flex-direction: column; align-items: center; }
+  .is-broken .normal-view { display: none; }
+  .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
+
+  .tOverlay input{
+    width:70px;
+    border-radius:6px;
+    border:2px solid var(--bad); 
+    background:var(--bg);
+    color:var(--text);
+    padding:2px;
+    text-align:center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+  .tOverlay span {
+    font-size: 11px;
+    font-weight: bold;
+    background: var(--card);
+    padding: 0 4px;
+    border-radius: 4px;
+  }
+  
+  .slider-container {
+    padding: 0 10px;
+    margin-top: -10px;
+    position: relative;
+    z-index: 20;
+  }
+  input[type="range"]{
+    -webkit-appearance:none;
+    width:100%;
+    margin: 8px 0;
+    background:transparent;
+    cursor:pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track{
+    height:8px;
+    border-radius:999px;
+    background:var(--line);
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:#a67c5b;
+    border:2px solid var(--bg);
+    margin-top:-9px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  
+  .caption{
+    text-align:center;
+    margin-top:2px;
+    padding:6px;
+    background: rgba(150,150,150,0.1);
+    border-radius:8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  
+  .jumpbar{
+    display:flex;
+    gap:4px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:6px;
+  }
+  .jump{ 
+    padding:8px 12px; 
+    font-size:11px; 
+    min-width: 65px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+<div id="mainCard" class="card">
+  <div class="topbar">
+    <div class="title-tag">繩索受力教學圖</div>
+    <div class="btn-group">
+      <button id="themeToggle" type="button">☀️ 日間</button>
+      <button id="reset" type="button">重設 120°</button>
+    </div>
+  </div>
+
+  <div class="svgWrap">
+    <div id="svgContainer" style="width:100%; height: 330px;"></div>
+    
+    <div id="swayGroup" class="tOverlay">
+      <div class="normal-view">
+        <input id="inputT" type="number" value="100" min="0">
+        <span>負重 (kg)</span>
+      </div>
+      <div class="skull-view">
+        <!-- 狙擊鏡防呆裁切：使用 border-radius: 50% 強制把方形圖裁成圓形戰術臂章 -->
+        <img src="skull.png" alt="特戰骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
+        <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-container">
+    <input id="slider" type="range" min="0" max="180" value="120" step="0.1">
+  </div>
+
+  <div class="jumpbar">
+    <button class="jump" data-beta="0" type="button">β 0°</button>
+    <button class="jump" data-beta="60" type="button">β 60°</button>
+    <button class="jump" data-beta="90" type="button">β 90°</button>
+    <button class="jump" data-beta="120" type="button">β 120°</button>
+    <button class="jump" data-beta="150" type="button">β 150°</button>
+    <button class="jump" data-beta="180" type="button">β 180°</button>
+  </div>
+
+  <div id="caption" class="caption"></div>
+</div>
+
+<script>
+const svgContainer = document.getElementById('svgContainer');
+const slider = document.getElementById('slider');
+const caption = document.getElementById('caption');
+const resetBtn = document.getElementById('reset');
+const themeToggle = document.getElementById('themeToggle');
+const inputT = document.getElementById('inputT');
+const jumpBtns = document.querySelectorAll('.jump');
+const mainCard = document.getElementById('mainCard');
+
+// 日間/夜間模式切換邏輯
+let isLightMode = false;
+themeToggle.addEventListener('click', () => {
+  isLightMode = !isLightMode;
+  document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
+  themeToggle.textContent = isLightMode ? '🌙 夜間' : '☀️ 日間';
+  draw(slider.value); // 強制重繪以套用新變數
+});
+
+function polar(cx, cy, r, deg){
+  const rad = deg * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
+}
+
+function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
+  let d = '';
+  for(let i = 0; i <= steps; i++){
+    const t = i / steps;
+    const deg = startDeg + (endDeg - startDeg) * t;
+    const p = polar(cx, cy, r, deg);
+    d += `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)} `;
+  }
+  return d;
+}
+
+function stateOf(phi){
+  if(phi <= 10) return { color:'var(--bad)', title:'⚠️ 高危區域', tone:'zoneBad', desc:'教官驚訝！張力極大', stateClass:'is-danger' };
+  if(phi < 25) return { color:'var(--warn)', title:'注意區', tone:'zoneWarn', desc:'張力顯著上升', stateClass:'is-warn' };
+  return { color:'var(--safe)', title:'安全區', tone:'zoneSafe', desc:'受力穩定', stateClass:'' };
+}
+
+function getForceLabel(phi, beta){
+  if(beta >= 179.9) return "∞"; 
+  const rad = Math.max(phi, 0.05) * Math.PI / 180;
+  const T = Number(inputT.value) || 0;
+  const val = T / (2 * Math.sin(rad));
+  try {
+    return val.toLocaleString('en-US', {maximumFractionDigits: 1}) + " kg";
+  } catch (e) {
+    return val.toFixed(1) + " kg";
+  }
+}
+
+function draw(beta){
+  beta = Number(beta);
+  const phi = (180 - beta) / 2;
+  const safePhi = Math.max(phi, 0.1);
+  const st = stateOf(phi);
+  const forceLabel = getForceLabel(phi, beta);
+  
+  const isBroken = beta >= 179.9;
+  const isSurprised = phi <= 10;
+  mainCard.className = 'card ' + (isBroken ? 'is-broken' : st.stateClass);
+
+  const cx = 180, cy = 160, ropeLen = 140; 
+  const left = polar(cx, cy, ropeLen, 180 - phi);
+  const right = polar(cx, cy, ropeLen, phi);
+  const leftExt = polar(cx, cy, ropeLen + 30, 180 - phi);
+  const rightExt = polar(cx, cy, ropeLen + 30, phi);
+
+  const rightLimit = 310, minTopY = 55; 
+  const tanVal = Math.tan(safePhi * Math.PI / 180);
+  const dynamicTopY = cy - (tanVal > 0 ? tanVal * (rightLimit - cx) : 0);
+  const topY = Math.max(minTopY, dynamicTopY);
+  const ix = Math.min(cx + (cy - topY) / Math.max(tanVal, 0.001), rightLimit);
+
+  // 智慧閃避邏輯：標籤向中心靠攏並微微抬高
+  const pullIn = Math.max(0, (beta - 100) / 80); 
+  const forcePosRatio = 1 - pullIn * 0.45; 
+  const liftY = pullIn * 20; 
+
+  const leftPos = { 
+    x: Math.max(45, cx + (left.x - cx) * forcePosRatio), 
+    y: Math.max(20, left.y - 25 - liftY) 
+  };
+  const rightPos = { 
+    x: Math.min(315, cx + (right.x - cx) * forcePosRatio), 
+    y: Math.max(20, right.y - 25 - liftY) 
+  };
+
+  const aRadius = 25;
+  const aMidAngle = 180 + (safePhi / 2);
+  const aPos = polar(ix, topY, aRadius + 14, aMidAngle);
+
+  let instructorPose = '';
+  if (isBroken) {
+    instructorPose = 'animation: instructor-run 1.5s forwards;';
+  } else if (isSurprised) {
+    instructorPose = 'animation: panic-shake 0.15s infinite;';
+  }
+  
+  let ropesHtml = isBroken ? 
+    `<line x1="${cx-25}" y1="${cy+5}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />
+     <line x1="${cx+25}" y1="${cy+5}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />` :
+    `<line x1="${cx}" y1="${cy}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />
+     <line x1="${cx}" y1="${cy}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />`;
+
+  let instructorHtml = '';
+  if (isSurprised || isBroken) {
+    instructorHtml = `
+      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+15}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+35}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <text x="${ix+25}" y="${topY-45}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+    `;
+  } else {
+    instructorHtml = `
+      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+18}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+32}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <path d="M ${ix+15} ${topY-15} Q ${ix+8} ${topY-8} ${ix+3} ${topY-4}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
+    `;
+  }
+
+  let forceTagsHtml = '';
+  if (beta <= 15 && !isBroken) {
+    forceTagsHtml = `<text x="${cx}" y="${topY-35}" fill="${st.color}" font-size="18" text-anchor="middle">左右各 ${forceLabel}</text>`;
+  } else {
+    forceTagsHtml = `
+      <text x="${leftPos.x}" y="${leftPos.y}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text x="${rightPos.x}" y="${rightPos.y}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+    `;
+  }
+
+  let limitWarningHtml = isBroken ? `
+    <rect x="80" y="70" width="200" height="28" rx="6" fill="var(--bad)" opacity="0.85" />
+    <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">理論極限(179.95°)：57,296 kg</text>
+  ` : '';
+
+  svgContainer.innerHTML = `
+    <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--instructor)"/></marker>
+        <filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="var(--card)" flood-opacity="0.8"/></filter>
+        <style>
+          @keyframes svgSway { 0% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } 100% { transform: rotate(-0.5deg); } }
+          .sway-element { transform-origin: 180px 160px; animation: svgSway 3s infinite ease-in-out; }
+        </style>
+      </defs>
+      
+      <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
+      <line x1="20" y1="${cy}" x2="340" y2="${cy}" stroke="var(--base)" stroke-width="1" opacity=".5" />
+      
+      <path d="${polyArc(cx, cy, 32, 30, 150)}" stroke="var(--warn)" stroke-width="6" opacity="${beta>=120?0.2:0.05}" fill="none" />
+      <path d="${polyArc(cx, cy, 40, 20, 160)}" stroke="var(--bad)" stroke-width="8" opacity="${beta>=140?0.3:0.05}" fill="none" />
+
+      ${ropesHtml}
+      
+      <line x1="${left.x}" y1="${left.y}" x2="${leftExt.x}" y2="${leftExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      <line x1="${right.x}" y1="${right.y}" x2="${rightExt.x}" y2="${rightExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      
+      <g class="sway-element">
+        <line x1="180" y1="160" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" />
+      </g>
+
+      <path d="${polyArc(cx, cy, 28, phi, 180 - phi)}" stroke="var(--warn)" stroke-width="2" fill="none" />
+      <text x="${cx}" y="${cy-30}" fill="var(--warn)" font-size="11" text-anchor="middle" font-weight="bold">β ${Math.round(beta)}°</text>
+      <path d="${polyArc(cx, cy, 38, 0, phi)}" stroke="${st.color}" stroke-width="2" fill="none" />
+      <text x="${polar(cx, cy, 60, phi/2).x}" y="${polar(cx, cy, 60, phi/2).y}" fill="${st.color}" font-size="12">φ ${Math.round(phi)}°</text>
+
+      <path d="${polyArc(ix, topY, aRadius, 180 + safePhi, 180)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
+      <text x="${aPos.x}" y="${aPos.y}" fill="${st.color}" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
+      
+      <g opacity="0.9" style="${instructorPose}">
+        <circle cx="${ix+25}" cy="${topY-34}" r="5" fill="var(--instructor)" />
+        <line x1="${ix+25}" y1="${topY-29}" x2="${ix+25}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
+        ${instructorHtml}
+        <text x="${ix+25}" y="${topY+12}" fill="${st.color}" font-size="13" font-weight="bold" text-anchor="middle">a(=φ) ${Math.round(phi)}°</text>
+      </g>
+
+      <g font-weight="bold" filter="url(#shadow)">
+        ${forceTagsHtml}
+        ${limitWarningHtml}
+      </g>
+    </svg>
+  `;
+
+  caption.innerHTML = `<div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? '💀 系統毀損' : st.title}｜${st.desc}</div>
+    <div style="font-size:13px; opacity:0.9; margin-top:2px;">注意：當夾角趨近 180° 時，支點張力會瞬間暴增，極度危險！</div>`;
+}
+
+// 事件綁定
+slider.addEventListener('input', () => draw(slider.value));
+inputT.addEventListener('input', () => draw(slider.value));
+resetBtn.addEventListener('click', () => { 
+  slider.value = 120; 
+  inputT.value = 100; 
+  draw(120); 
+});
+jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
+
+draw(120);
+</script>
+</body>
+</html>
