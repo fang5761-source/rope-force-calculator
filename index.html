@@ -2,13 +2,21 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <title>β / φ / a 教學圖 - 戰繩極限版</title>
-<!-- 載入 html2canvas 核心庫以支援一鍵截圖功能 -->
+
+<!-- APP 專屬主畫面圖示 -->
+<!-- 💡 姊姊注意：等妳設計好 Icon 並存成 "icon.png" 後，只要把下面兩行的 href 換成 "icon.png" 就可以了喔！ -->
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
   :root{
-    /* 預設：夜間專業模式 */
     --bg: #0f1623;
     --card: #121a2a;
     --line: #1b2940;
@@ -21,7 +29,6 @@
     --instructor: #cbd5e1;
   }
   
-  /* 日間戶外模式 */
   :root[data-theme="light"] {
     --bg: #f1f5f9;
     --card: #ffffff;
@@ -45,6 +52,7 @@
     justify-content:center;
     padding:5px;
     transition: background 0.3s, color 0.3s;
+    touch-action: manipulation; 
   }
   .card{
     max-width:480px;
@@ -86,7 +94,6 @@
     background:rgba(150,150,150,.1);
     color:var(--text);
     border-radius:6px;
-    /* 為了容納更多按鈕，稍微縮減 padding */
     padding:4px 6px;
     cursor:pointer;
     font-size: 12px;
@@ -94,6 +101,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    touch-action: manipulation; 
   }
   button:hover{ background:rgba(150,150,150,.2); }
   
@@ -103,7 +111,6 @@
   
   .svgWrap{position:relative; margin-top: -10px; margin-bottom: 0;}
   
-  /* --- 實境攝影機、照片與半透明模式 --- */
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     object-fit: cover; z-index: -1; display: none; opacity: 0.85;
@@ -115,25 +122,24 @@
     background: rgba(255, 255, 255, 0.45) !important;
   }
 
-  /* --- 陀螺儀水平穩定器設定 --- */
   #gimbalWrap {
-    transition: transform 0.1s ease-out;
     transform-origin: 50% 160px;
+    will-change: transform; 
   }
   #scaleWrap {
     transform-origin: top center;
   }
 
-  /* --- 攔截式安全授權面板 --- */
-  .permission-modal-overlay {
+  .modal-overlay {
     display: none;
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.85);
     z-index: 9999;
     align-items: center; justify-content: center;
     backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
-  .permission-modal {
+  .modal-box {
     background: var(--card);
     border: 2px solid var(--safe);
     padding: 24px;
@@ -142,21 +148,24 @@
     max-width: 400px;
     text-align: center;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    position: relative;
   }
-  .permission-modal h3 {
+  .modal-box h3 {
     color: var(--safe);
     margin-top: 0;
     margin-bottom: 12px;
     font-size: 18px;
   }
-  .permission-modal p {
+  .modal-box p, .modal-box li {
     color: var(--text);
     font-size: 14px;
     line-height: 1.6;
-    margin-bottom: 20px;
     text-align: left;
   }
-  .permission-modal button {
+  .modal-box ul {
+    padding-left: 20px; margin-bottom: 20px;
+  }
+  .modal-box button.primary-btn {
     background: var(--safe);
     color: #0f1623;
     font-size: 15px;
@@ -166,29 +175,38 @@
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+    margin-top: 10px;
   }
-  .permission-modal button:hover { background: #16a34a; }
+  .modal-box button.primary-btn:hover { background: #16a34a; }
+  .close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 20px; color: var(--muted);
+    cursor: pointer; background: none; border: none; padding: 0;
+  }
 
-  /* --- 浮水印設定 --- */
+  #exactAngleInput {
+    width: 100%; padding: 12px; font-size: 20px; text-align: center;
+    border-radius: 8px; border: 2px solid var(--safe);
+    background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
+  }
+  .modal-btn-group { display: flex; gap: 10px; }
+  .modal-btn-group button { flex: 1; }
+  #angleCancelBtn { background: var(--muted); color: #ffffff; }
+  #angleCancelBtn:hover { background: #475569; }
+
   .watermark {
     display: none;
     position: absolute;
-    bottom: 12px;
-    left: 12px;
-    font-size: 11px;
-    font-weight: bold;
-    color: #e8eef7;
+    bottom: 12px; left: 12px;
+    font-size: 11px; font-weight: bold; color: #e8eef7;
     background: rgba(15, 22, 35, 0.85);
     border-left: 3px solid var(--safe);
-    padding: 6px 10px;
-    border-radius: 6px;
-    z-index: 100;
-    pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-    line-height: 1.5;
+    padding: 6px 10px; border-radius: 6px;
+    z-index: 100; pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
   }
 
-  /* --- 動畫設定 --- */
   @keyframes sway {
     0% { transform: translateX(-50%) rotate(-0.6deg); }
     50% { transform: translateX(-50%) rotate(0.6deg); }
@@ -243,110 +261,69 @@
   .is-broken .normal-view { display: none; }
   .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
 
-  /* --- 負重快捷按鈕 --- */
   .weight-controls {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
   }
   .weight-btn {
-    width: 32px;
-    height: 28px;
+    width: 32px; height: 28px;
     background: rgba(150,150,150,0.2) !important;
     border: 1px solid var(--line) !important;
-    color: var(--text) !important;
-    font-size: 16px !important;
-    border-radius: 6px !important;
-    pointer-events: auto;
+    color: var(--text) !important; font-size: 16px !important;
+    border-radius: 6px !important; pointer-events: auto;
   }
   .weight-btn:active { background: rgba(150,150,150,0.4) !important; transform: scale(0.95); }
 
   .tOverlay input{
-    width:60px;
-    border-radius:6px;
-    border:2px solid var(--bad); 
-    background:var(--bg);
-    color:var(--text);
-    padding:2px;
-    text-align:center;
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 0;
+    width:60px; border-radius:6px; border:2px solid var(--bad); 
+    background:var(--bg); color:var(--text); padding:2px;
+    text-align:center; font-weight: bold; font-size: 16px; margin-bottom: 0;
   }
   .tOverlay span {
-    font-size: 11px;
-    font-weight: bold;
-    background: var(--card);
-    padding: 0 4px;
-    border-radius: 4px;
+    font-size: 11px; font-weight: bold; background: var(--card);
+    padding: 0 4px; border-radius: 4px;
   }
   
-  /* --- 滑桿分流設計 --- */
   #arControls {
     display: none; align-items: center; justify-content: center; gap: 8px;
     padding: 10px; background: rgba(0,0,0,0.5); border-radius: 8px; 
-    margin: 15px 10px 25px; 
-    position: relative; z-index: 20;
-    border: 1px solid var(--safe);
+    margin: 15px 10px 25px; position: relative; z-index: 20; border: 1px solid var(--safe);
   }
   #zoomSlider::-webkit-slider-thumb {
-    background: var(--safe); 
-    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6);
+    background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6);
   }
 
   .slider-container {
-    padding: 0 10px;
-    margin-top: 5px; 
-    position: relative;
-    z-index: 20;
+    padding: 0 10px; margin-top: 5px; position: relative; z-index: 20;
   }
   input[type="range"]{
-    -webkit-appearance:none;
-    width:100%;
-    margin: 8px 0;
-    background:transparent;
-    cursor:pointer;
+    -webkit-appearance:none; width:100%; margin: 8px 0; background:transparent; cursor:pointer;
   }
   input[type="range"]::-webkit-slider-runnable-track{
-    height:8px;
-    border-radius:999px;
-    background:var(--line);
+    height:8px; border-radius:999px; background:var(--line);
   }
   input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none;
-    width:24px;
-    height:24px;
-    border-radius:50%;
-    background:#a67c5b;
-    border:2px solid var(--bg);
-    margin-top:-9px;
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%;
+    background:#a67c5b; border:2px solid var(--bg); margin-top:-9px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.5);
   }
   
   .caption{
-    text-align:center;
-    margin-top:2px;
-    padding:6px;
-    background: rgba(150,150,150,0.1);
-    border-radius:8px;
-    font-size: 13px;
-    line-height: 1.6;
+    text-align:center; margin-top:2px; padding:6px; background: rgba(150,150,150,0.1);
+    border-radius:8px; font-size: 13px; line-height: 1.6;
   }
   
   .jumpbar{
-    display:flex;
-    gap:4px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:6px;
+    display:flex; gap:4px; flex-wrap:wrap; justify-content:center; margin-top:6px;
   }
   .jump{ 
-    padding:8px 12px; 
-    font-size:11px; 
-    min-width: 65px;
-    font-weight: bold;
+    padding:8px 12px; font-size:11px; min-width: 65px; font-weight: bold;
   }
+
+  .mask-text {
+    paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .beta-text:hover { filter: brightness(1.3); }
 </style>
 </head>
 <body>
@@ -354,6 +331,8 @@
   <div class="topbar">
     <div class="title-tag">繩索教學</div>
     <div class="btn-group">
+      <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
+      <button id="infoBtn" type="button" title="使用說明與分享">ℹ️</button>
       <button id="cameraToggle" type="button" title="開啟實境相機">📷</button>
       <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
       <button id="photoBtn" type="button" title="上傳照片疊圖">📁</button>
@@ -364,7 +343,6 @@
     </div>
   </div>
 
-  <!-- 實境攝影機與圖片背景層 -->
   <video id="bgVideo" autoplay playsinline muted></video>
   <img id="bgImage" alt="背景圖片" />
   <input type="file" id="photoUpload" accept="image/*" style="display:none;">
@@ -376,7 +354,6 @@
         
         <div id="swayGroup" class="tOverlay">
           <div class="normal-view">
-            <!-- 負重快捷按鈕區 -->
             <div class="weight-controls">
               <button id="btnMinus" class="weight-btn" type="button">-</button>
               <input id="inputT" type="number" value="100" min="0">
@@ -385,7 +362,6 @@
             <span>負重 (kg)</span>
           </div>
           <div class="skull-view">
-            <!-- 圓形防呆裁切 -->
             <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
             <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
           </div>
@@ -414,16 +390,53 @@
 
   <div id="caption" class="caption"></div>
   
-  <!-- 浮水印 (截圖時才會顯示) -->
   <div id="watermark" class="watermark"></div>
 </div>
 
-<!-- 攔截式安全授權面板 -->
-<div id="permissionModalOverlay" class="permission-modal-overlay">
-  <div class="permission-modal">
+<div id="permissionModalOverlay" class="modal-overlay">
+  <div class="modal-box">
     <h3>🛡️ 系統安全提示</h3>
     <p>為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭與陀螺儀。<br><br>請放心，所有影像疊圖與防震運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！</p>
-    <button id="permissionAgreeBtn" type="button">我瞭解了，開始授權</button>
+    <button id="permissionAgreeBtn" class="primary-btn" type="button">我瞭解了，開始授權</button>
+  </div>
+</div>
+
+<div id="angleModalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <h3>🎯 輸入精確角度</h3>
+    <p style="text-align:center; margin-bottom:12px; font-size:13px;">請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)</p>
+    <input type="number" id="exactAngleInput" min="0" max="180" step="0.1" inputmode="decimal">
+    <div class="modal-btn-group">
+      <button id="angleCancelBtn" class="primary-btn" style="background:var(--muted); color:#fff;" type="button">取消</button>
+      <button id="angleConfirmBtn" class="primary-btn" type="button">確認設定</button>
+    </div>
+  </div>
+</div>
+
+<div id="infoModalOverlay" class="modal-overlay">
+  <div class="modal-box" style="text-align: left; padding: 20px;">
+    <button id="infoCloseBtn" class="close-btn" type="button">×</button>
+    <h3 style="text-align: center;">⚙️ 開發與版本資訊</h3>
+    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 20px;">V1.0 專業戰繩極限版</p>
+    
+    <div style="font-size: 13px; color: var(--text); background: rgba(150,150,150,0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+      <strong style="color: var(--warn);">📌 第一次使用指南：</strong>
+      <ul style="margin-top: 5px;">
+        <li>滑動底部滑桿或點擊角度文字，設定繩索夾角。</li>
+        <li>點擊 📷 開啟實境，配合 ⚖️ 水平防震進行 AR 疊圖。</li>
+        <li>遇到畸形角度可點擊「✎」直接輸入小數點。</li>
+        <li>點擊 🧍‍♂️↔️ 可一鍵切換教官的解說站位。</li>
+        <li>完成比對後，點擊 📸 將帶有時間的分析圖存入相簿。</li>
+      </ul>
+      
+      <strong style="color: var(--safe);">📱 加入手機主畫面教學：</strong>
+      <ul style="margin-top: 5px;">
+        <li><b>蘋果 iOS：</b>點擊瀏覽器下方「分享」按鈕 ➔ 選擇「加入主畫面」。</li>
+        <li><b>Android：</b>點擊瀏覽器右上角選單 ➔ 選擇「加至主畫面」。</li>
+      </ul>
+    </div>
+    
+    <button id="shareBtn" class="primary-btn" type="button">🔗 點我分享給朋友</button>
   </div>
 </div>
 
@@ -450,11 +463,55 @@ const btnMinus = document.getElementById('btnMinus');
 const btnPlus = document.getElementById('btnPlus');
 const jumpBtns = document.querySelectorAll('.jump');
 const mainCard = document.getElementById('mainCard');
+
 const permissionModalOverlay = document.getElementById('permissionModalOverlay');
 const permissionAgreeBtn = document.getElementById('permissionAgreeBtn');
 const watermark = document.getElementById('watermark');
 
-// 顯示攔截式安心面板
+const angleModalOverlay = document.getElementById('angleModalOverlay');
+const exactAngleInput = document.getElementById('exactAngleInput');
+const angleConfirmBtn = document.getElementById('angleConfirmBtn');
+const angleCancelBtn = document.getElementById('angleCancelBtn');
+
+const infoModalOverlay = document.getElementById('infoModalOverlay');
+const infoBtn = document.getElementById('infoBtn');
+const infoCloseBtn = document.getElementById('infoCloseBtn');
+const shareBtn = document.getElementById('shareBtn');
+const instructorToggleBtn = document.getElementById('instructorToggleBtn');
+
+let isInstructorRight = true;
+
+instructorToggleBtn.addEventListener('click', () => {
+  isInstructorRight = !isInstructorRight;
+  draw(slider.value);
+});
+
+infoBtn.addEventListener('click', () => infoModalOverlay.style.display = 'flex');
+infoCloseBtn.addEventListener('click', () => infoModalOverlay.style.display = 'none');
+
+shareBtn.addEventListener('click', async () => {
+  const shareData = {
+    title: '專業戰繩受力分析工具',
+    text: '這套工具可以進行 AR 實境疊圖，精準計算繩索夾角與張力，推薦給你！',
+    url: window.location.href
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert('系統回報：網址已複製，您可以貼上分享給朋友囉！');
+    }
+  } catch (err) {
+    console.error('分享失敗', err);
+  }
+});
+
 let hasAgreedToPermissions = false;
 function requestUserAgreement() {
   if (hasAgreedToPermissions) return Promise.resolve();
@@ -468,7 +525,27 @@ function requestUserAgreement() {
   });
 }
 
-// 1. 日間/夜間模式
+svgContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('beta-text') || e.target.closest('.beta-text')) {
+    exactAngleInput.value = slider.value;
+    angleModalOverlay.style.display = 'flex';
+    setTimeout(() => exactAngleInput.focus(), 100);
+  }
+});
+
+angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
+
+angleConfirmBtn.addEventListener('click', () => {
+  let val = parseFloat(exactAngleInput.value);
+  if (isNaN(val) || val < 0 || val > 180) {
+    alert('系統回報：請輸入 0 到 180 之間的有效數字！');
+    return;
+  }
+  slider.value = val;
+  draw(val);
+  angleModalOverlay.style.display = 'none';
+});
+
 let isLightMode = false;
 themeToggle.addEventListener('click', () => {
   isLightMode = !isLightMode;
@@ -477,22 +554,17 @@ themeToggle.addEventListener('click', () => {
   draw(slider.value);
 });
 
-// 2. 實境相機開關 (包含強制鎖定主鏡頭的過濾機制)
 let isCameraOn = false;
 let currentStream = null;
 cameraToggle.addEventListener('click', async () => {
   if (!isCameraOn) {
     await requestUserAgreement(); 
     try {
-      // 步驟一：先以基本條件請求相機權限
       let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-      
-      // 步驟二：嘗試掃描設備，強制過濾掉「超廣角 / Ultra-wide」，鎖定標準主鏡頭
       const devices = await navigator.mediaDevices.enumerateDevices();
       const backCams = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
       const mainCam = backCams.find(d => !d.label.toLowerCase().includes('ultra') && !d.label.toLowerCase().includes('廣角'));
       
-      // 如果找到更標準的主鏡頭，且與當前不同，就重新抓取
       if (mainCam && stream.getVideoTracks()[0].getSettings().deviceId !== mainCam.deviceId) {
           stream.getTracks().forEach(t => t.stop());
           stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
@@ -517,7 +589,6 @@ cameraToggle.addEventListener('click', async () => {
 });
 
 let isTorchOn = false;
-// 3. 手電筒控制邏輯
 torchToggle.addEventListener('click', async () => {
   if (!isCameraOn || !currentStream) {
     alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！');
@@ -551,13 +622,11 @@ function turnOffCamera() {
   cameraToggle.style.color = 'inherit';
   isCameraOn = false;
   
-  // 關閉相機時同步重置手電筒狀態
   isTorchOn = false;
   torchToggle.style.color = 'inherit';
   torchToggle.textContent = '🔦';
 }
 
-// 4. 上傳照片
 photoBtn.addEventListener('click', () => photoUpload.click());
 photoUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
@@ -576,13 +645,22 @@ photoUpload.addEventListener('change', (e) => {
   }
 });
 
-// 5. 縮放實景
 zoomSlider.addEventListener('input', (e) => {
   scaleWrap.style.transform = `scale(${e.target.value})`;
 });
 
-// 6. 陀螺儀穩定
 let isGimbalOn = false;
+let targetAngle = 0;
+let currentAngle = 0;
+let gimbalAnimFrame = null;
+
+function updateGimbalAnimation() {
+  if (!isGimbalOn) return;
+  currentAngle += (targetAngle - currentAngle) * 0.15; 
+  gimbalWrap.style.transform = `rotate(${currentAngle}deg)`;
+  gimbalAnimFrame = requestAnimationFrame(updateGimbalAnimation);
+}
+
 gimbalToggle.addEventListener('click', async () => {
   if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
     await requestUserAgreement(); 
@@ -600,11 +678,15 @@ gimbalToggle.addEventListener('click', async () => {
     gimbalToggle.style.color = 'var(--warn)';
     gimbalToggle.textContent = '⚖️(ON)';
     window.addEventListener('deviceorientation', handleOrientation);
+    updateGimbalAnimation(); 
   } else {
     gimbalToggle.style.color = 'inherit';
     gimbalToggle.textContent = '⚖️';
     window.removeEventListener('deviceorientation', handleOrientation);
+    if (gimbalAnimFrame) cancelAnimationFrame(gimbalAnimFrame);
     gimbalWrap.style.transform = `rotate(0deg)`;
+    currentAngle = 0;
+    targetAngle = 0;
   }
 });
 
@@ -612,20 +694,19 @@ function handleOrientation(event) {
   if (!isGimbalOn) return;
   let roll = event.gamma || 0; 
   let pitch = event.beta || 0;
-  let angle = 0;
+  let rawAngle = 0;
   const orientation = (screen.orientation || {}).angle || window.orientation || 0;
   
-  if (orientation === 90) { angle = pitch; } 
-  else if (orientation === -90 || orientation === 270) { angle = -pitch; } 
-  else { angle = roll; }
+  if (orientation === 90) { rawAngle = pitch; } 
+  else if (orientation === -90 || orientation === 270) { rawAngle = -pitch; } 
+  else { rawAngle = roll; }
   
-  if (angle > 90) angle = 90;
-  if (angle < -90) angle = -90;
+  if (rawAngle > 90) rawAngle = 90;
+  if (rawAngle < -90) rawAngle = -90;
   
-  gimbalWrap.style.transform = `rotate(${angle}deg)`;
+  targetAngle = rawAngle;
 }
 
-// 7. 畫面截圖 (加入浮水印)
 screenshotBtn.addEventListener('click', async () => {
   mainCard.style.opacity = '0.5';
   setTimeout(() => mainCard.style.opacity = '1', 150);
@@ -644,7 +725,6 @@ screenshotBtn.addEventListener('click', async () => {
     bgVideo.style.display = 'none';
   }
 
-  // 取得精確日期時間並顯示浮水印
   const now = new Date();
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
@@ -666,7 +746,6 @@ screenshotBtn.addEventListener('click', async () => {
     alert("系統回報：截圖失敗，請稍後再試！");
   }
 
-  // 截圖後隱藏浮水印並復原相機狀態
   watermark.style.display = 'none';
   if (isCameraOn) {
     bgVideo.style.display = originalVideoState;
@@ -723,28 +802,26 @@ function draw(beta){
   if (isBroken) mainCard.classList.add('is-broken');
   else if (st.stateClass) mainCard.classList.add(st.stateClass);
 
-  const cx = 180, cy = 160, ropeLen = 140; 
+  const cx = 180, cy = 180, ropeLen = 125; 
   const left = polar(cx, cy, ropeLen, 180 - phi);
   const right = polar(cx, cy, ropeLen, phi);
-  const leftExt = polar(cx, cy, ropeLen + 30, 180 - phi);
-  const rightExt = polar(cx, cy, ropeLen + 30, phi);
+  const leftExt = polar(cx, cy, ropeLen + 20, 180 - phi);
+  const rightExt = polar(cx, cy, ropeLen + 20, phi);
 
-  const rightLimit = 310, minTopY = 55; 
-  const tanVal = Math.tan(safePhi * Math.PI / 180);
-  const dynamicTopY = cy - (tanVal > 0 ? tanVal * (rightLimit - cx) : 0);
-  const topY = Math.max(minTopY, dynamicTopY);
-  const ix = Math.min(cx + (cy - topY) / Math.max(tanVal, 0.001), rightLimit);
+  const topY = right.y; 
+
+  const instX = isInstructorRight ? Math.min(right.x + 20, 315) : Math.max(left.x - 20, 45);
+  const d = isInstructorRight ? -1 : 1; 
 
   const pullIn = Math.max(0, (beta - 100) / 80); 
   const forcePosRatio = 1 - pullIn * 0.45; 
-  const liftY = pullIn * 20; 
-
-  const leftPos = { x: Math.max(45, cx + (left.x - cx) * forcePosRatio), y: Math.max(20, left.y - 25 - liftY) };
-  const rightPos = { x: Math.min(315, cx + (right.x - cx) * forcePosRatio), y: Math.max(20, right.y - 25 - liftY) };
-
-  const aRadius = 25;
-  const aMidAngle = 180 + (safePhi / 2);
-  const aPos = polar(ix, topY, aRadius + 14, aMidAngle);
+  
+  let leftForceX = cx + (left.x - cx) * forcePosRatio;
+  let rightForceX = cx + (right.x - cx) * forcePosRatio;
+  leftForceX = Math.min(leftForceX, cx - 45);
+  rightForceX = Math.max(rightForceX, cx + 45);
+  
+  const forceY = topY - 15;
 
   let instructorPose = '';
   if (isSurprised || isBroken) instructorPose = 'animation: panic-shake 0.15s infinite;';
@@ -758,25 +835,25 @@ function draw(beta){
   let instructorHtml = '';
   if (isSurprised || isBroken) {
     instructorHtml = `
-      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+15}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
-      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+35}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
-      <text x="${ix+25}" y="${topY-45}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <text class="mask-text" x="${instX}" y="${topY-45}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
     instructorHtml = `
-      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+18}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
-      <line x1="${ix+25}" y1="${topY-25}" x2="${ix+32}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
-      <path d="M ${ix+15} ${topY-15} Q ${ix+8} ${topY-8} ${ix+3} ${topY-4}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <path d="M ${instX + d*10} ${topY-15} Q ${instX + d*17} ${topY-8} ${instX + d*22} ${topY-4}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
     `;
   }
 
   let forceTagsHtml = '';
   if (beta <= 15 && !isBroken) {
-    forceTagsHtml = `<text x="${cx}" y="${topY-35}" fill="${st.color}" font-size="18" text-anchor="middle">左右各 ${forceLabel}</text>`;
+    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">左右各 ${forceLabel}</text>`;
   } else {
     forceTagsHtml = `
-      <text x="${leftPos.x}" y="${leftPos.y}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
-      <text x="${rightPos.x}" y="${rightPos.y}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
     `;
   }
 
@@ -784,6 +861,23 @@ function draw(beta){
     <rect x="80" y="70" width="200" height="28" rx="6" fill="var(--bad)" opacity="0.85" />
     <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">理論極限(179.95°)：57,296 kg</text>
   ` : '';
+
+  const betaStr = (beta % 1 === 0) ? beta : beta.toFixed(1);
+  const phiStr = (phi % 1 === 0) ? phi : phi.toFixed(1);
+
+  const betaYOffset = Math.max(0, 90 - beta) * 0.4;
+  const betaTextY = cy - 35 - betaYOffset;
+
+  // --- 動態計算 φ (phi) 標籤位置，完美鏡像 ---
+  const phiArcStart = isInstructorRight ? 0 : 180 - phi;
+  const phiArcEnd = isInstructorRight ? phi : 180;
+  const phiTextAngle = isInstructorRight ? phi / 2 : 180 - phi / 2;
+
+  // --- 動態計算 a (alpha) 標籤位置 ---
+  const aArcStart = isInstructorRight ? 180 : 360 - phi;
+  const aArcEnd = isInstructorRight ? 180 + phi : 360;
+  const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
+  const aAnchor = isInstructorRight ? right : left;
 
   svgContainer.innerHTML = `
     <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
@@ -799,8 +893,8 @@ function draw(beta){
       <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
       <line x1="20" y1="${cy}" x2="340" y2="${cy}" stroke="var(--base)" stroke-width="1" opacity=".5" />
       
-      <path d="${polyArc(cx, cy, 32, 30, 150)}" stroke="var(--warn)" stroke-width="6" opacity="${beta>=120?0.2:0.05}" fill="none" />
-      <path d="${polyArc(cx, cy, 40, 20, 160)}" stroke="var(--bad)" stroke-width="8" opacity="${beta>=140?0.3:0.05}" fill="none" />
+      <path d="${polyArc(cx, cy, 32, 30, 150)}" stroke="var(--warn)" stroke-width="6" opacity="${beta>=120 ? 0.2 : (beta>90 ? 0.05 : 0)}" fill="none" />
+      <path d="${polyArc(cx, cy, 40, 20, 160)}" stroke="var(--bad)" stroke-width="8" opacity="${beta>=140 ? 0.3 : (beta>90 ? 0.05 : 0)}" fill="none" />
 
       ${ropesHtml}
       
@@ -808,22 +902,27 @@ function draw(beta){
       <line x1="${right.x}" y1="${right.y}" x2="${rightExt.x}" y2="${rightExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
       
       <g class="sway-element">
-        <line x1="180" y1="160" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" />
+        <line x1="180" y1="180" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" />
       </g>
 
       <path d="${polyArc(cx, cy, 28, phi, 180 - phi)}" stroke="var(--warn)" stroke-width="2" fill="none" />
-      <text x="${cx}" y="${cy-30}" fill="var(--warn)" font-size="11" text-anchor="middle" font-weight="bold">β ${Math.round(beta)}°</text>
-      <path d="${polyArc(cx, cy, 38, 0, phi)}" stroke="${st.color}" stroke-width="2" fill="none" />
-      <text x="${polar(cx, cy, 60, phi/2).x}" y="${polar(cx, cy, 60, phi/2).y}" fill="${st.color}" font-size="12">φ ${Math.round(phi)}°</text>
-
-      <path d="${polyArc(ix, topY, aRadius, 180 + safePhi, 180)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
-      <text x="${aPos.x}" y="${aPos.y}" fill="${st.color}" font-size="18" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
       
+      <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎</text>
+      
+      <!-- 動態 φ 角標註 (已修復鏡像連動) -->
+      <path d="${polyArc(cx, cy, 38, phiArcStart, phiArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
+      <text class="mask-text" x="${polar(cx, cy, 55, phiTextAngle).x}" y="${polar(cx, cy, 55, phiTextAngle).y}" fill="${st.color}" font-size="12">φ ${phiStr}°</text>
+
+      <!-- 動態 a 角標註 -->
+      <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
+      <text class="mask-text" x="${polar(aAnchor.x, topY, 35, aArcMid).x}" y="${polar(aAnchor.x, topY, 35, aArcMid).y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
+      
+      <!-- 動態教官 -->
       <g opacity="0.9" style="${instructorPose}">
-        <circle cx="${ix+25}" cy="${topY-34}" r="5" fill="var(--instructor)" />
-        <line x1="${ix+25}" y1="${topY-29}" x2="${ix+25}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
+        <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
+        <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
         ${instructorHtml}
-        <text x="${ix+25}" y="${topY+12}" fill="${st.color}" font-size="13" font-weight="bold" text-anchor="middle">a(=φ) ${Math.round(phi)}°</text>
+        <text class="mask-text" x="${instX}" y="${topY+12}" fill="${st.color}" font-size="13" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
       </g>
 
       <g font-weight="bold" filter="url(#shadow)">
@@ -837,7 +936,6 @@ function draw(beta){
     <div style="font-size:13px; opacity:0.9; margin-top:2px;">注意：當夾角趨近 180° 時，支點張力會瞬間暴增，極度危險！</div>`;
 }
 
-// 快捷按鈕邏輯
 btnMinus.addEventListener('click', () => { 
   inputT.value = Math.max(0, Number(inputT.value) - 10); 
   draw(slider.value); 
