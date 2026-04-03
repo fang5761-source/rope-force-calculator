@@ -438,7 +438,9 @@
   <div class="modal-box" style="text-align: left; padding: 20px;">
     <button id="infoCloseBtn" class="close-btn" type="button">×</button>
     <h3 style="text-align: center;">⚙️ 開發與版本資訊</h3>
-    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 20px;">V1.0 專業戰繩極限版</p>
+    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 5px;">V1.0 專業戰繩極限版</p>
+    <!-- 第一道防線：介面上直接宣示主權 -->
+    <p style="text-align: center; color: var(--muted); font-size: 12px; margin-top: 0; margin-bottom: 20px;">© 散木團隊 研發製作</p>
     
     <div style="font-size: 13px; color: var(--text); background: rgba(150,150,150,0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
       <strong style="color: var(--warn);">📌 第一次使用指南：</strong>
@@ -465,6 +467,9 @@
 </div>
 
 <script>
+// 第二道防線：隱藏在引擎深處的防偽印記彩蛋！
+console.log("%c🛡️ 本專業戰繩分析系統由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
+
 const svgContainer = document.getElementById('svgContainer');
 const slider = document.getElementById('slider');
 const caption = document.getElementById('caption');
@@ -715,7 +720,8 @@ screenshotBtn.addEventListener('click', async () => {
   const now = new Date();
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-  watermark.innerHTML = `🛡️ 專業戰繩受力分析<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
+  // 第一道防線：截圖浮水印也加上散木團隊的專屬宣示
+  watermark.innerHTML = `🛡️ 專業戰繩受力分析 (散木團隊)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
   watermark.style.display = 'block';
 
   try {
