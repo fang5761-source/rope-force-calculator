@@ -10,7 +10,6 @@
 <title>β / φ / a 教學圖 - 戰繩極限版</title>
 
 <!-- APP 專屬主畫面圖示 -->
-<!-- 💡 姊姊注意：等妳設計好 Icon 並存成 "icon.png" 後，只要把下面兩行的 href 換成 "icon.png" 就可以了喔！ -->
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
 
@@ -149,7 +148,12 @@
     text-align: center;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
   }
+  .modal-box::-webkit-scrollbar { width: 6px; }
+  .modal-box::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 3px; }
+
   .modal-box h3 {
     color: var(--safe);
     margin-top: 0;
@@ -283,13 +287,24 @@
     padding: 0 4px; border-radius: 4px;
   }
   
+  /* --- 戰術 AR 控制面板 (縮放與手動旋轉) --- */
   #arControls {
-    display: none; align-items: center; justify-content: center; gap: 8px;
-    padding: 10px; background: rgba(0,0,0,0.5); border-radius: 8px; 
-    margin: 15px 10px 25px; position: relative; z-index: 20; border: 1px solid var(--safe);
+    display: none; flex-direction: column; gap: 12px;
+    padding: 12px 15px; background: rgba(0,0,0,0.6); border-radius: 12px; 
+    margin: 10px 10px 25px; position: relative; z-index: 20;
+    border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  .ar-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  }
+  .ar-label {
+    font-size: 13px; font-weight: bold; white-space: nowrap; width: 65px;
   }
   #zoomSlider::-webkit-slider-thumb {
     background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6);
+  }
+  #rotateSlider::-webkit-slider-thumb {
+    background: var(--warn); box-shadow: 0 2px 6px rgba(255, 216, 77, 0.6);
   }
 
   .slider-container {
@@ -335,7 +350,8 @@
       <button id="infoBtn" type="button" title="使用說明與分享">ℹ️</button>
       <button id="cameraToggle" type="button" title="開啟實境相機">📷</button>
       <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
-      <button id="photoBtn" type="button" title="上傳照片疊圖">📁</button>
+      <!-- 照片按鈕具備雙向開關功能 -->
+      <button id="photoBtn" type="button" title="上傳/取消照片疊圖">📁</button>
       <button id="gimbalToggle" type="button" title="水平儀防震">⚖️</button>
       <button id="screenshotBtn" type="button" title="畫面截圖儲存">📸</button>
       <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
@@ -370,9 +386,16 @@
     </div>
   </div>
 
+  <!-- 全新升級：AR 控制面板 (包含縮放與手動旋轉) -->
   <div id="arControls">
-    <span style="font-size:13px; color:var(--safe); font-weight:bold;">🔍 縮放實景：</span>
-    <input type="range" id="zoomSlider" min="0.4" max="1.8" value="1" step="0.05" style="width:120px; margin:0;">
+    <div class="ar-row">
+      <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
+      <input type="range" id="zoomSlider" min="0.4" max="1.8" value="1" step="0.05" style="flex:1; margin:0;">
+    </div>
+    <div class="ar-row">
+      <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
+      <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+    </div>
   </div>
 
   <div class="slider-container">
@@ -422,17 +445,18 @@
     <div style="font-size: 13px; color: var(--text); background: rgba(150,150,150,0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
       <strong style="color: var(--warn);">📌 第一次使用指南：</strong>
       <ul style="margin-top: 5px;">
-        <li>滑動底部滑桿或點擊角度文字，設定繩索夾角。</li>
-        <li>點擊 📷 開啟實境，配合 ⚖️ 水平防震進行 AR 疊圖。</li>
-        <li>遇到畸形角度可點擊「✎」直接輸入小數點。</li>
+        <li>滑動底部主滑桿，設定繩索夾角。</li>
+        <li>點擊 📷 開啟實境，配合 ⚖️ 水平防震進行疊圖。</li>
+        <li>如果現場繩索不在水平線上，可使用 🔄 <b>旋轉滑桿</b>手動對齊！</li>
+        <li>遇到畸形角度可點擊畫面數字「✎」輸入小數點。</li>
         <li>點擊 🧍‍♂️↔️ 可一鍵切換教官的解說站位。</li>
-        <li>完成比對後，點擊 📸 將帶有時間的分析圖存入相簿。</li>
+        <li>完成比對後，點擊 📸 截圖存入相簿。</li>
       </ul>
       
       <strong style="color: var(--safe);">📱 加入手機主畫面教學：</strong>
       <ul style="margin-top: 5px;">
-        <li><b>蘋果 iOS：</b>點擊瀏覽器下方「分享」按鈕 ➔ 選擇「加入主畫面」。</li>
-        <li><b>Android：</b>點擊瀏覽器右上角選單 ➔ 選擇「加至主畫面」。</li>
+        <li><b>蘋果 iOS：</b>點擊下方「分享」按鈕 ➔ 選擇「加入主畫面」。</li>
+        <li><b>Android：</b>點擊右上角選單 ➔ 選擇「加至主畫面」。</li>
       </ul>
     </div>
     
@@ -456,6 +480,7 @@ const bgVideo = document.getElementById('bgVideo');
 const bgImage = document.getElementById('bgImage');
 const arControls = document.getElementById('arControls');
 const zoomSlider = document.getElementById('zoomSlider');
+const rotateSlider = document.getElementById('rotateSlider');
 const scaleWrap = document.getElementById('scaleWrap');
 const gimbalWrap = document.getElementById('gimbalWrap');
 const inputT = document.getElementById('inputT');
@@ -578,6 +603,7 @@ cameraToggle.addEventListener('click', async () => {
       cameraToggle.textContent = '❌';
       cameraToggle.style.color = 'var(--warn)';
       arControls.style.display = 'flex'; 
+      photoBtn.style.color = 'inherit';
       isCameraOn = true;
     } catch (err) {
       cameraToggle.textContent = '⛔';
@@ -627,7 +653,21 @@ function turnOffCamera() {
   torchToggle.textContent = '🔦';
 }
 
-photoBtn.addEventListener('click', () => photoUpload.click());
+photoBtn.addEventListener('click', () => {
+  if (bgImage.style.display === 'block') {
+    bgImage.style.display = 'none';
+    bgImage.src = '';
+    photoUpload.value = '';
+    photoBtn.style.color = 'inherit';
+    if (!isCameraOn) {
+      mainCard.classList.remove('camera-mode');
+      arControls.style.display = 'none';
+    }
+  } else {
+    photoUpload.click();
+  }
+});
+
 photoUpload.addEventListener('change', (e) => {
   const file = e.target.files[0];
   if(file) {
@@ -639,7 +679,7 @@ photoUpload.addEventListener('change', (e) => {
       bgVideo.style.display = 'none';
       mainCard.classList.add('camera-mode');
       arControls.style.display = 'flex'; 
-      photoBtn.style.color = 'var(--safe)';
+      photoBtn.style.color = 'var(--safe)'; 
     };
     reader.readAsDataURL(file);
   }
@@ -647,6 +687,19 @@ photoUpload.addEventListener('change', (e) => {
 
 zoomSlider.addEventListener('input', (e) => {
   scaleWrap.style.transform = `scale(${e.target.value})`;
+});
+
+// 手動旋轉實景 (若開啟陀螺儀會自動關閉)
+rotateSlider.addEventListener('input', (e) => {
+  if (isGimbalOn) {
+    isGimbalOn = false;
+    gimbalToggle.style.color = 'inherit';
+    gimbalToggle.textContent = '⚖️';
+    window.removeEventListener('deviceorientation', handleOrientation);
+    if (gimbalAnimFrame) cancelAnimationFrame(gimbalAnimFrame);
+  }
+  currentAngle = parseFloat(e.target.value);
+  gimbalWrap.style.transform = `rotate(${currentAngle}deg)`;
 });
 
 let isGimbalOn = false;
@@ -658,6 +711,8 @@ function updateGimbalAnimation() {
   if (!isGimbalOn) return;
   currentAngle += (targetAngle - currentAngle) * 0.15; 
   gimbalWrap.style.transform = `rotate(${currentAngle}deg)`;
+  // 陀螺儀運作時，同步更新旋轉滑桿的數值顯示
+  rotateSlider.value = Math.round(currentAngle);
   gimbalAnimFrame = requestAnimationFrame(updateGimbalAnimation);
 }
 
@@ -684,9 +739,6 @@ gimbalToggle.addEventListener('click', async () => {
     gimbalToggle.textContent = '⚖️';
     window.removeEventListener('deviceorientation', handleOrientation);
     if (gimbalAnimFrame) cancelAnimationFrame(gimbalAnimFrame);
-    gimbalWrap.style.transform = `rotate(0deg)`;
-    currentAngle = 0;
-    targetAngle = 0;
   }
 });
 
@@ -868,12 +920,10 @@ function draw(beta){
   const betaYOffset = Math.max(0, 90 - beta) * 0.4;
   const betaTextY = cy - 35 - betaYOffset;
 
-  // --- 動態計算 φ (phi) 標籤位置，完美鏡像 ---
   const phiArcStart = isInstructorRight ? 0 : 180 - phi;
   const phiArcEnd = isInstructorRight ? phi : 180;
   const phiTextAngle = isInstructorRight ? phi / 2 : 180 - phi / 2;
 
-  // --- 動態計算 a (alpha) 標籤位置 ---
   const aArcStart = isInstructorRight ? 180 : 360 - phi;
   const aArcEnd = isInstructorRight ? 180 + phi : 360;
   const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
@@ -909,15 +959,12 @@ function draw(beta){
       
       <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎</text>
       
-      <!-- 動態 φ 角標註 (已修復鏡像連動) -->
       <path d="${polyArc(cx, cy, 38, phiArcStart, phiArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
       <text class="mask-text" x="${polar(cx, cy, 55, phiTextAngle).x}" y="${polar(cx, cy, 55, phiTextAngle).y}" fill="${st.color}" font-size="12">φ ${phiStr}°</text>
 
-      <!-- 動態 a 角標註 -->
       <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
       <text class="mask-text" x="${polar(aAnchor.x, topY, 35, aArcMid).x}" y="${polar(aAnchor.x, topY, 35, aArcMid).y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
       
-      <!-- 動態教官 -->
       <g opacity="0.9" style="${instructorPose}">
         <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
         <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
@@ -950,8 +997,13 @@ inputT.addEventListener('input', () => draw(slider.value));
 resetBtn.addEventListener('click', () => { 
   slider.value = 120; 
   inputT.value = 100; 
-  zoomSlider.value = 1; 
+  zoomSlider.value = 1;
+  rotateSlider.value = 0;
   scaleWrap.style.transform = `scale(1)`;
+  if (!isGimbalOn) {
+     currentAngle = 0;
+     gimbalWrap.style.transform = `rotate(0deg)`;
+  }
   draw(120); 
 });
 jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
