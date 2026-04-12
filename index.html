@@ -122,13 +122,20 @@
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; z-index: -1; display: none; opacity: 0.85;
+    object-fit: cover; 
+    object-position: top center; /* 關鍵黑科技：錨定頂部，防止收起面板時畫面跳動 */
+    z-index: -1; display: none; opacity: 0.85;
   }
   .card.camera-mode {
     background: rgba(18, 26, 42, 0.45) !important;
   }
   :root[data-theme="light"] .card.camera-mode {
     background: rgba(255, 255, 255, 0.45) !important;
+  }
+  
+  /* 戰術自動隱藏：在相機/疊圖模式下，自動隱藏礙眼的度數跳轉按鈕 */
+  .camera-mode .jumpbar {
+    display: none !important;
   }
 
   #gimbalWrap {
