@@ -304,6 +304,14 @@
     padding: 12px 15px; background: rgba(0,0,0,0.6); border-radius: 12px; 
     margin: 10px 10px 25px; position: relative; z-index: 20;
     border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease, padding 0.3s ease;
+  }
+  #arControls.is-collapsed {
+    padding: 8px 15px;
+    margin-bottom: 10px;
+  }
+  #arControls.is-collapsed #arSlidersWrap {
+    display: none !important;
   }
   .ar-row {
     display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
@@ -397,13 +405,19 @@
 
   <!-- AR 控制面板 -->
   <div id="arControls">
-    <div class="ar-row">
-      <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
-      <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
+    <div style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+      <span style="color:#a8b3c5; font-size:12px; font-weight:bold;">🛠️ 實境疊圖控制面板</span>
+      <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--text); font-size:16px; padding:0; box-shadow:none;">🔽</button>
     </div>
-    <div class="ar-row">
-      <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
-      <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+    <div id="arSlidersWrap" style="display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 5px;">
+      <div class="ar-row">
+        <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
+        <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
+      </div>
+      <div class="ar-row">
+        <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
+        <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+      </div>
     </div>
   </div>
 
@@ -498,6 +512,7 @@ const screenshotBtn = document.getElementById('screenshotBtn');
 const bgVideo = document.getElementById('bgVideo');
 const bgImage = document.getElementById('bgImage');
 const arControls = document.getElementById('arControls');
+const arCollapseBtn = document.getElementById('arCollapseBtn');
 const zoomSlider = document.getElementById('zoomSlider');
 const rotateSlider = document.getElementById('rotateSlider');
 const scaleWrap = document.getElementById('scaleWrap');
@@ -715,6 +730,11 @@ function updateTransform() {
   scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
 }
 
+arCollapseBtn.addEventListener('click', () => {
+  arControls.classList.toggle('is-collapsed');
+  arCollapseBtn.textContent = arControls.classList.contains('is-collapsed') ? '🔼' : '🔽';
+});
+
 zoomSlider.addEventListener('input', (e) => {
   currentZoom = parseFloat(e.target.value);
   updateTransform();
@@ -726,6 +746,7 @@ svgWrap.addEventListener('mousedown', (e) => {
   isDragging = true;
   startX = e.clientX - panX;
   startY = e.clientY - panY;
+  if (arControls.style.display === 'flex') arControls.style.opacity = '0.2';
 });
 
 window.addEventListener('mousemove', (e) => {
@@ -737,6 +758,7 @@ window.addEventListener('mousemove', (e) => {
 
 window.addEventListener('mouseup', () => {
   isDragging = false;
+  arControls.style.opacity = '1';
 });
 
 // 觸控事件 (手機端實戰用)
@@ -745,6 +767,7 @@ svgWrap.addEventListener('touchstart', (e) => {
   isDragging = true;
   startX = e.touches[0].clientX - panX;
   startY = e.touches[0].clientY - panY;
+  if (arControls.style.display === 'flex') arControls.style.opacity = '0.2';
 }, {passive: false});
 
 window.addEventListener('touchmove', (e) => {
@@ -757,6 +780,7 @@ window.addEventListener('touchmove', (e) => {
 
 window.addEventListener('touchend', () => {
   isDragging = false;
+  arControls.style.opacity = '1';
 });
 
 // --- 手動旋轉實景 ---
@@ -1013,6 +1037,11 @@ resetBtn.addEventListener('click', () => {
   zoomSlider.value = 1;
   rotateSlider.value = 0;
   
+  // 重置面板與透明度
+  arControls.classList.remove('is-collapsed');
+  arCollapseBtn.textContent = '🔽';
+  arControls.style.opacity = '1';
+
   // 重置平移與縮放狀態
   currentZoom = 1;
   panX = 0;
