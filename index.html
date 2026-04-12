@@ -133,9 +133,10 @@
     background: rgba(255, 255, 255, 0.45) !important;
   }
   
-  /* 戰術自動隱藏：在相機/疊圖模式下，自動隱藏礙眼的度數跳轉按鈕 */
+  /* 戰術自動隱藏：改為 visibility: hidden，保留高度，絕對防止畫面跳動！ */
   .camera-mode .jumpbar {
-    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none;
   }
 
   #gimbalWrap {
@@ -305,19 +306,22 @@
     padding: 0 4px; border-radius: 4px;
   }
   
-  /* --- 戰術 AR 控制面板 --- */
+  /* --- 戰術 AR 控制面板 (全新懸浮膠囊設計) --- */
   #arControls {
     display: none; flex-direction: column; gap: 12px;
-    padding: 12px 15px; background: rgba(0,0,0,0.6); border-radius: 12px; 
-    margin: 10px 10px 25px; position: relative; z-index: 20;
+    position: absolute; bottom: 85px; left: 50%; transform: translateX(-50%);
+    width: 90%; z-index: 50;
+    padding: 12px 15px; background: rgba(0,0,0,0.7); border-radius: 12px; 
     border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: opacity 0.3s ease, padding 0.3s ease;
+    transition: all 0.3s ease; backdrop-filter: blur(3px);
   }
   #arControls.is-collapsed {
-    padding: 8px 15px;
-    margin-bottom: 10px;
+    width: auto; left: auto; right: 10px; transform: none; bottom: 85px;
+    padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.6);
+    border: 1px solid var(--muted);
   }
-  #arControls.is-collapsed #arSlidersWrap {
+  #arControls.is-collapsed #arSlidersWrap,
+  #arControls.is-collapsed .ar-header-text {
     display: none !important;
   }
   .ar-row {
@@ -410,13 +414,13 @@
     </div>
   </div>
 
-  <!-- AR 控制面板 -->
-  <div id="arControls">
+  <!-- AR 控制面板 (全新懸浮膠囊結構) -->
+  <div id="arControls" class="is-collapsed">
     <div style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
-      <span style="color:#a8b3c5; font-size:12px; font-weight:bold;">🛠️ 實境疊圖控制面板</span>
-      <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--text); font-size:16px; padding:0; box-shadow:none;">🔽</button>
+      <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none;">🛠️ 實境疊圖控制面板</span>
+      <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold;">🛠️ 展開設定</button>
     </div>
-    <div id="arSlidersWrap" style="display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 5px;">
+    <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
       <div class="ar-row">
         <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
         <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
@@ -738,8 +742,20 @@ function updateTransform() {
 }
 
 arCollapseBtn.addEventListener('click', () => {
-  arControls.classList.toggle('is-collapsed');
-  arCollapseBtn.textContent = arControls.classList.contains('is-collapsed') ? '🔼' : '🔽';
+  const isCollapsed = arControls.classList.contains('is-collapsed');
+  if(isCollapsed) {
+    arControls.classList.remove('is-collapsed');
+    document.querySelector('.ar-header-text').style.display = 'block';
+    document.getElementById('arSlidersWrap').style.display = 'flex';
+    arCollapseBtn.textContent = '🔽 收起面板';
+    arCollapseBtn.style.color = 'var(--muted)';
+  } else {
+    arControls.classList.add('is-collapsed');
+    document.querySelector('.ar-header-text').style.display = 'none';
+    document.getElementById('arSlidersWrap').style.display = 'none';
+    arCollapseBtn.textContent = '🛠️ 展開設定';
+    arCollapseBtn.style.color = 'var(--safe)';
+  }
 });
 
 zoomSlider.addEventListener('input', (e) => {
@@ -768,32 +784,11 @@ window.addEventListener('mouseup', () => {
   arControls.style.opacity = '1';
 });
 
-// 觸控事件 (手機端實戰用)
-svgWrap.addEventListener('touchstart', (e) => {
-  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('.beta-text')) return;
-  isDragging = true;
-  startX = e.touches[0].clientX - panX;
-  startY = e.touches[0].clientY - panY;
-  if (arControls.style.display === 'flex') arControls.style.opacity = '0.2';
-}, {passive: false});
-
-window.addEventListener('touchmove', (e) => {
-  if (!isDragging) return;
-  if (e.cancelable) e.preventDefault(); // 防止拖曳時網頁被捲動
-  panX = e.touches[0].clientX - startX;
-  panY = e.touches[0].clientY - startY;
-  updateTransform();
-}, {passive: false});
-
-window.addEventListener('touchend', () => {
-  isDragging = false;
-  arControls.style.opacity = '1';
-});
-
-// --- 手動旋轉實景 ---
+// --- 手動旋轉實景 (修正直覺反轉) ---
 rotateSlider.addEventListener('input', (e) => {
   let currentAngle = parseFloat(e.target.value);
-  gimbalWrap.style.transform = `rotate(${currentAngle}deg)`;
+  // 加上負號，讓往右滑 = 底部V角往右擺！完全符合直覺
+  gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`;
 });
 
 screenshotBtn.addEventListener('click', async () => {
@@ -1044,9 +1039,12 @@ resetBtn.addEventListener('click', () => {
   zoomSlider.value = 1;
   rotateSlider.value = 0;
   
-  // 重置面板與透明度
-  arControls.classList.remove('is-collapsed');
-  arCollapseBtn.textContent = '🔽';
+  // 重置面板與透明度 (恢復成小膠囊狀態)
+  arControls.classList.add('is-collapsed');
+  document.querySelector('.ar-header-text').style.display = 'none';
+  document.getElementById('arSlidersWrap').style.display = 'none';
+  arCollapseBtn.textContent = '🛠️ 展開設定';
+  arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1';
 
   // 重置平移與縮放狀態
