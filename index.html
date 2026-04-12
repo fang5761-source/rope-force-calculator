@@ -7,7 +7,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<title>β / φ / a 教學圖 - 戰繩極限版</title>
+<title>索道張力計算程式</title>
 
 <!-- APP 專屬主畫面圖示 -->
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
@@ -108,7 +108,17 @@
   .zoneWarn{color:var(--warn)}
   .zoneBad{color:var(--bad)}
   
-  .svgWrap{position:relative; margin-top: -10px; margin-bottom: 0;}
+  /* 加入拖曳手勢提示與防捲動 */
+  .svgWrap{
+    position:relative; 
+    margin-top: -10px; 
+    margin-bottom: 0;
+    cursor: grab;
+    touch-action: none; /* 拖曳時防止網頁捲動 */
+  }
+  .svgWrap:active {
+    cursor: grabbing;
+  }
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -127,6 +137,7 @@
   }
   #scaleWrap {
     transform-origin: top center;
+    will-change: transform;
   }
 
   .modal-overlay {
@@ -287,7 +298,7 @@
     padding: 0 4px; border-radius: 4px;
   }
   
-  /* --- 戰術 AR 控制面板 (縮放與手動旋轉) --- */
+  /* --- 戰術 AR 控制面板 --- */
   #arControls {
     display: none; flex-direction: column; gap: 12px;
     padding: 12px 15px; background: rgba(0,0,0,0.6); border-radius: 12px; 
@@ -344,7 +355,7 @@
 <body>
 <div id="mainCard" class="card">
   <div class="topbar">
-    <div class="title-tag">繩索教學</div>
+    <div class="title-tag">索道張力計算程式</div>
     <div class="btn-group">
       <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
       <button id="infoBtn" type="button" title="使用說明與分享">ℹ️</button>
@@ -384,11 +395,11 @@
     </div>
   </div>
 
-  <!-- AR 控制面板 (僅保留縮放與手動旋轉) -->
+  <!-- AR 控制面板 -->
   <div id="arControls">
     <div class="ar-row">
       <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
-      <input type="range" id="zoomSlider" min="0.4" max="1.8" value="1" step="0.05" style="flex:1; margin:0;">
+      <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
     </div>
     <div class="ar-row">
       <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
@@ -438,9 +449,11 @@
   <div class="modal-box" style="text-align: left; padding: 20px;">
     <button id="infoCloseBtn" class="close-btn" type="button">×</button>
     <h3 style="text-align: center;">⚙️ 開發與版本資訊</h3>
-    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 5px;">V1.0 專業戰繩極限版</p>
-    <!-- 第一道防線：介面上直接宣示主權 -->
-    <p style="text-align: center; color: var(--muted); font-size: 12px; margin-top: 0; margin-bottom: 20px;">© 散木團隊 研發製作</p>
+    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 5px;">V1.0 索道張力計算程式</p>
+    <!-- 第一道防線：全面統一使用散木團隊署名 -->
+    <p style="text-align: center; color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 0; margin-bottom: 20px;">
+      © 散木團隊 研發製作
+    </p>
     
     <div style="font-size: 13px; color: var(--text); background: rgba(150,150,150,0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
       <strong style="color: var(--warn);">📌 第一次使用指南：</strong>
@@ -448,6 +461,7 @@
         • [主滑桿] 左右滑動，設定基本繩索夾角。<br>
         • 📷 [實境相機] 開啟鏡頭，進行現場畫面疊圖。<br>
         • 🔄 [旋轉滑桿] 手動對齊傾斜的現場繩索。<br>
+        • 👆 [單指拖曳] 放大實景時，可直接拖曳移動圖表位置。<br>
         • ✎ [精確角度] 點擊畫面上的數字，直接輸入小數點。<br>
         • 🧍‍♂️↔️ [教官換位] 一鍵切換教官的解說站位。<br>
         • 📁 [照片疊圖] 上傳現場照片作為背景比對。<br>
@@ -467,10 +481,11 @@
 </div>
 
 <script>
-// 第二道防線：隱藏在引擎深處的防偽印記彩蛋！
-console.log("%c🛡️ 本專業戰繩分析系統由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
+// 第二道防線：引擎深處的防偽印記彩蛋！(統一為散木團隊)
+console.log("%c🛡️ 本索道張力計算程式由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
 
 const svgContainer = document.getElementById('svgContainer');
+const svgWrap = document.querySelector('.svgWrap');
 const slider = document.getElementById('slider');
 const caption = document.getElementById('caption');
 const resetBtn = document.getElementById('reset');
@@ -520,7 +535,7 @@ infoCloseBtn.addEventListener('click', () => infoModalOverlay.style.display = 'n
 
 shareBtn.addEventListener('click', async () => {
   const shareData = {
-    title: '專業戰繩受力分析工具',
+    title: '索道張力計算程式',
     text: '這套工具可以進行 AR 實境疊圖，精準計算繩索夾角與張力，推薦給你！',
     url: window.location.href
   };
@@ -689,11 +704,62 @@ photoUpload.addEventListener('change', (e) => {
   }
 });
 
+// --- 戰術平移與縮放系統 (Drag & Pan) ---
+let currentZoom = 1;
+let panX = 0;
+let panY = 0;
+let isDragging = false;
+let startX = 0, startY = 0;
+
+function updateTransform() {
+  scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+}
+
 zoomSlider.addEventListener('input', (e) => {
-  scaleWrap.style.transform = `scale(${e.target.value})`;
+  currentZoom = parseFloat(e.target.value);
+  updateTransform();
 });
 
-// 手動旋轉實景
+// 滑鼠事件 (電腦端測試用)
+svgWrap.addEventListener('mousedown', (e) => {
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('.beta-text')) return;
+  isDragging = true;
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  panX = e.clientX - startX;
+  panY = e.clientY - startY;
+  updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// 觸控事件 (手機端實戰用)
+svgWrap.addEventListener('touchstart', (e) => {
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('.beta-text')) return;
+  isDragging = true;
+  startX = e.touches[0].clientX - panX;
+  startY = e.touches[0].clientY - panY;
+}, {passive: false});
+
+window.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  if (e.cancelable) e.preventDefault(); // 防止拖曳時網頁被捲動
+  panX = e.touches[0].clientX - startX;
+  panY = e.touches[0].clientY - startY;
+  updateTransform();
+}, {passive: false});
+
+window.addEventListener('touchend', () => {
+  isDragging = false;
+});
+
+// --- 手動旋轉實景 ---
 rotateSlider.addEventListener('input', (e) => {
   let currentAngle = parseFloat(e.target.value);
   gimbalWrap.style.transform = `rotate(${currentAngle}deg)`;
@@ -720,8 +786,9 @@ screenshotBtn.addEventListener('click', async () => {
   const now = new Date();
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-  // 第一道防線：截圖浮水印也加上散木團隊的專屬宣示
-  watermark.innerHTML = `🛡️ 專業戰繩受力分析 (散木團隊)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
+  
+  // 浮水印正名為索道張力計算程式，署名散木團隊
+  watermark.innerHTML = `🛡️ 索道張力計算程式 (散木團隊)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
   watermark.style.display = 'block';
 
   try {
@@ -731,7 +798,7 @@ screenshotBtn.addEventListener('click', async () => {
       scale: 2
     });
     const link = document.createElement('a');
-    link.download = '專業戰繩受力分析圖.png';
+    link.download = '索道張力計算程式.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   } catch(e) {
@@ -840,12 +907,15 @@ function draw(beta){
     `;
   }
 
+  // 將術語精準校正為：固定點張力
   let forceTagsHtml = '';
   if (beta <= 15 && !isBroken) {
-    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">左右各 ${forceLabel}</text>`;
+    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">固定點張力 ${forceLabel}</text>`;
   } else {
     forceTagsHtml = `
+      <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
       <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
       <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
     `;
   }
@@ -935,15 +1005,24 @@ btnPlus.addEventListener('click', () => {
 
 slider.addEventListener('input', () => draw(slider.value));
 inputT.addEventListener('input', () => draw(slider.value));
+
+// --- 萬能重置鈕 ---
 resetBtn.addEventListener('click', () => { 
   slider.value = 120; 
   inputT.value = 100; 
   zoomSlider.value = 1;
   rotateSlider.value = 0;
-  scaleWrap.style.transform = `scale(1)`;
+  
+  // 重置平移與縮放狀態
+  currentZoom = 1;
+  panX = 0;
+  panY = 0;
+  updateTransform();
   gimbalWrap.style.transform = `rotate(0deg)`;
+  
   draw(120); 
 });
+
 jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
 
 draw(120);
