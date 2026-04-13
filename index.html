@@ -306,23 +306,27 @@
     padding: 0 4px; border-radius: 4px;
   }
   
-  /* --- 戰術 AR 控制面板 (全新懸浮膠囊設計) --- */
+  /* --- 戰術 AR 控制面板 (全新自由懸浮膠囊設計) --- */
   #arControls {
     display: none; flex-direction: column; gap: 12px;
-    position: absolute; bottom: 85px; left: 50%; transform: translateX(-50%);
-    width: 90%; z-index: 50;
+    position: absolute; top: 60px; right: 10px; /* 初始位置改到右上方，不再擋住下方滑桿 */
+    width: 250px; z-index: 50;
     padding: 12px 15px; background: rgba(0,0,0,0.7); border-radius: 12px; 
     border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: all 0.3s ease; backdrop-filter: blur(3px);
+    transition: opacity 0.3s ease, padding 0.3s ease; /* 移除位置的 transition，確保拖曳順暢 */
+    backdrop-filter: blur(3px);
   }
   #arControls.is-collapsed {
-    width: auto; left: auto; right: 10px; transform: none; bottom: 85px;
+    width: auto; 
     padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.6);
     border: 1px solid var(--muted);
   }
   #arControls.is-collapsed #arSlidersWrap,
   #arControls.is-collapsed .ar-header-text {
     display: none !important;
+  }
+  #arDragHandle {
+    cursor: move; touch-action: none; user-select: none;
   }
   .ar-row {
     display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
@@ -414,11 +418,14 @@
     </div>
   </div>
 
-  <!-- AR 控制面板 (全新懸浮膠囊結構) -->
+  <!-- AR 控制面板 (加入自由拖曳把手) -->
   <div id="arControls" class="is-collapsed">
-    <div style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
-      <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none;">🛠️ 實境疊圖控制面板</span>
-      <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold;">🛠️ 展開設定</button>
+    <div id="arDragHandle" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+      <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none; pointer-events:none;">🛠️ 實境疊圖控制面板</span>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="color:var(--muted); font-size:16px; pointer-events:none;">✥</span>
+        <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold; cursor:pointer;">展開設定</button>
+      </div>
     </div>
     <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
       <div class="ar-row">
@@ -524,6 +531,7 @@ const bgVideo = document.getElementById('bgVideo');
 const bgImage = document.getElementById('bgImage');
 const arControls = document.getElementById('arControls');
 const arCollapseBtn = document.getElementById('arCollapseBtn');
+const arDragHandle = document.getElementById('arDragHandle');
 const zoomSlider = document.getElementById('zoomSlider');
 const rotateSlider = document.getElementById('rotateSlider');
 const scaleWrap = document.getElementById('scaleWrap');
@@ -747,13 +755,13 @@ arCollapseBtn.addEventListener('click', () => {
     arControls.classList.remove('is-collapsed');
     document.querySelector('.ar-header-text').style.display = 'block';
     document.getElementById('arSlidersWrap').style.display = 'flex';
-    arCollapseBtn.textContent = '🔽 收起面板';
+    arCollapseBtn.textContent = '收起面板';
     arCollapseBtn.style.color = 'var(--muted)';
   } else {
     arControls.classList.add('is-collapsed');
     document.querySelector('.ar-header-text').style.display = 'none';
     document.getElementById('arSlidersWrap').style.display = 'none';
-    arCollapseBtn.textContent = '🛠️ 展開設定';
+    arCollapseBtn.textContent = '展開設定';
     arCollapseBtn.style.color = 'var(--safe)';
   }
 });
@@ -763,13 +771,60 @@ zoomSlider.addEventListener('input', (e) => {
   updateTransform();
 });
 
+// --- 面板自由拖曳系統 (黑科技) ---
+let isDraggingPanel = false;
+let pStartX, pStartY, pInitialLeft, pInitialTop;
+
+function startPanelDrag(e) {
+  if (e.target.id === 'arCollapseBtn' || e.target.tagName.toLowerCase() === 'input') return;
+  isDraggingPanel = true;
+  const touch = e.type.includes('mouse') ? e : e.touches[0];
+  pStartX = touch.clientX;
+  pStartY = touch.clientY;
+  
+  const rect = arControls.getBoundingClientRect();
+  const parentRect = mainCard.getBoundingClientRect();
+  
+  pInitialLeft = rect.left - parentRect.left;
+  pInitialTop = rect.top - parentRect.top;
+  
+  arControls.style.left = `${pInitialLeft}px`;
+  arControls.style.top = `${pInitialTop}px`;
+  arControls.style.right = 'auto';
+  arControls.style.bottom = 'auto';
+  arControls.style.transform = 'none';
+}
+
+function movePanel(e) {
+  if (!isDraggingPanel) return;
+  e.preventDefault();
+  const touch = e.type.includes('mouse') ? e : e.touches[0];
+  const dx = touch.clientX - pStartX;
+  const dy = touch.clientY - pStartY;
+  arControls.style.left = `${pInitialLeft + dx}px`;
+  arControls.style.top = `${pInitialTop + dy}px`;
+}
+
+function endPanelDrag() {
+  isDraggingPanel = false;
+}
+
+arDragHandle.addEventListener('mousedown', startPanelDrag);
+window.addEventListener('mousemove', movePanel);
+window.addEventListener('mouseup', endPanelDrag);
+arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false});
+window.addEventListener('touchmove', movePanel, {passive: false});
+window.addEventListener('touchend', endPanelDrag);
+
+
+// --- 實境疊圖(SVG)全螢幕平移系統 ---
 // 滑鼠事件 (電腦端測試用)
-svgWrap.addEventListener('mousedown', (e) => {
-  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('.beta-text')) return;
+mainCard.addEventListener('mousedown', (e) => {
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
   startX = e.clientX - panX;
   startY = e.clientY - panY;
-  if (arControls.style.display === 'flex') arControls.style.opacity = '0.2';
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
 });
 
 window.addEventListener('mousemove', (e) => {
@@ -780,6 +835,28 @@ window.addEventListener('mousemove', (e) => {
 });
 
 window.addEventListener('mouseup', () => {
+  isDragging = false;
+  arControls.style.opacity = '1';
+});
+
+// 觸控事件 (手機端實戰用)
+mainCard.addEventListener('touchstart', (e) => {
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true;
+  startX = e.touches[0].clientX - panX;
+  startY = e.touches[0].clientY - panY;
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
+}, {passive: false});
+
+window.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  if (e.cancelable) e.preventDefault(); // 防止拖曳時網頁被捲動
+  panX = e.touches[0].clientX - startX;
+  panY = e.touches[0].clientY - startY;
+  updateTransform();
+}, {passive: false});
+
+window.addEventListener('touchend', () => {
   isDragging = false;
   arControls.style.opacity = '1';
 });
@@ -1039,13 +1116,17 @@ resetBtn.addEventListener('click', () => {
   zoomSlider.value = 1;
   rotateSlider.value = 0;
   
-  // 重置面板與透明度 (恢復成小膠囊狀態)
+  // 重置面板位置與狀態
   arControls.classList.add('is-collapsed');
   document.querySelector('.ar-header-text').style.display = 'none';
   document.getElementById('arSlidersWrap').style.display = 'none';
-  arCollapseBtn.textContent = '🛠️ 展開設定';
+  arCollapseBtn.textContent = '展開設定';
   arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1';
+  arControls.style.left = 'auto';
+  arControls.style.top = '60px';
+  arControls.style.right = '10px';
+  arControls.style.bottom = 'auto';
 
   // 重置平移與縮放狀態
   currentZoom = 1;
