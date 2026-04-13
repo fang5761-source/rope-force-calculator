@@ -16,12 +16,12 @@
 <meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
-<!-- 真正 APP 安裝設定檔 (取代舊的 Base64 寫法，解決"儓"錯字與安裝問題) -->
+<!-- 真正 APP 安裝設定檔 -->
 <link rel="manifest" href="manifest.json">
 
-<!-- APP 專屬主畫面圖示 (終極戰術版) -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
+<!-- APP 專屬主畫面圖示 (終極戰術防彈版，確保蘋果也能正常顯示) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -65,95 +65,45 @@
     touch-action: manipulation; 
   }
   
-  /* 外層容器 */
   .app-container {
-    max-width: 480px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px;
   }
 
-  /* --- 作戰區塊 (主卡片) --- */
   .card{
-    width:100%;
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding: 10px;
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
-    transition: border-color 0.3s, background 0.3s;
-    overflow: hidden;
-    position: relative;
+    width:100%; background:var(--card); border:1px solid var(--line);
+    border-radius:16px; padding: 10px; box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transition: border-color 0.3s, background 0.3s; overflow: hidden; position: relative;
   }
   
-  /* 雙層戰術頂列設計 */
-  .topbar {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 8px;
-    padding: 0 4px;
-  }
-  .title-row {
-    display: flex;
-    align-items: center;
-    width: 100%;
-  }
+  .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
+  .title-row { display: flex; align-items: center; width: 100%; }
   .title-tag {
-    font-size: 15px;
-    color: var(--text);
-    font-weight: bold;
-    border-left: 4px solid var(--warn);
-    padding-left: 8px;
-    letter-spacing: 0.5px;
-    line-height: 1.4;
+    font-size: 15px; color: var(--text); font-weight: bold;
+    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; line-height: 1.4;
   }
   .btn-group {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    width: 100%;
-    background: rgba(150,150,150,0.05);
-    padding: 6px;
-    border-radius: 10px;
+    display: flex; gap: 6px; flex-wrap: wrap; width: 100%;
+    background: rgba(150,150,150,0.05); padding: 6px; border-radius: 10px;
   }
   button{
-    appearance:none;
-    border:1px solid var(--line);
-    background:rgba(150,150,150,.1);
-    color:var(--text);
-    border-radius:8px;
-    padding: 8px 12px;
-    cursor:pointer;
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    touch-action: manipulation; 
-    flex: 1; min-width: 40px;
+    appearance:none; border:1px solid var(--line); background:rgba(150,150,150,.1);
+    color:var(--text); border-radius:8px; padding: 8px 12px; cursor:pointer;
+    font-size: 14px; font-weight: bold; display: flex; align-items: center;
+    justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px;
   }
   button:hover{ background:rgba(150,150,150,.2); }
   
-  .zoneSafe{color:var(--safe)}
-  .zoneWarn{color:var(--warn)}
-  .zoneBad{color:var(--bad)}
+  .zoneSafe{color:var(--safe)} .zoneWarn{color:var(--warn)} .zoneBad{color:var(--bad)}
   
-  .svgWrap{
-    position:relative; margin-top: -10px; margin-bottom: 0;
-    cursor: grab; touch-action: none; 
-  }
+  .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
   .svgWrap:active { cursor: grabbing; }
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: top center; 
-    z-index: -1; display: none; opacity: 0.85;
+    object-fit: cover; object-position: top center; z-index: -1; display: none; opacity: 0.85;
   }
   .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
   :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
-  
   .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
 
   #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
@@ -161,8 +111,7 @@
 
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); z-index: 9999;
-    align-items: center; justify-content: center;
+    background: rgba(0, 0, 0, 0.85); z-index: 9999; align-items: center; justify-content: center;
     backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   }
   .modal-box {
@@ -177,19 +126,18 @@
     border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;
   }
   #exactAngleInput {
-    width: 100%; padding: 12px; font-size: 20px; text-align: center;
-    border-radius: 8px; border: 2px solid var(--safe);
-    background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
+    width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px;
+    border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
   }
   .modal-btn-group { display: flex; gap: 10px; }
   .modal-btn-group button { flex: 1; }
   #angleCancelBtn { background: var(--muted); color: #ffffff; }
 
   .watermark {
-    display: none; position: absolute; bottom: 12px; left: 12px;
-    font-size: 11px; font-weight: bold; color: #e8eef7; background: rgba(15, 22, 35, 0.85);
-    border-left: 3px solid var(--safe); padding: 6px 10px; border-radius: 6px;
-    z-index: 100; pointer-events: none; text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
+    display: none; position: absolute; bottom: 12px; left: 12px; font-size: 11px; font-weight: bold;
+    color: #e8eef7; background: rgba(15, 22, 35, 0.85); border-left: 3px solid var(--safe);
+    padding: 6px 10px; border-radius: 6px; z-index: 100; pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
   }
 
   @keyframes sway { 0%, 100% { transform: translateX(-50%) rotate(-0.6deg); } 50% { transform: translateX(-50%) rotate(0.6deg); } }
@@ -199,9 +147,8 @@
   @keyframes panic-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } 75% { transform: translate(-1px, -1px); } }
 
   .tOverlay{
-    position:absolute; left:50%; top:230px; transform:translateX(-50%);
-    display:flex; flex-direction: column; align-items:center; color:var(--bad);
-    z-index:5; transform-origin: top center; animation: sway 3s infinite ease-in-out;
+    position:absolute; left:50%; top:230px; transform:translateX(-50%); display:flex; flex-direction: column;
+    align-items:center; color:var(--bad); z-index:5; transform-origin: top center; animation: sway 3s infinite ease-in-out;
     pointer-events: none; transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   }
   .tOverlay input, .tOverlay span, .tOverlay button { pointer-events: auto; }
@@ -217,32 +164,23 @@
 
   .weight-controls { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
   .weight-btn {
-    width: 32px; height: 28px; background: rgba(150,150,150,0.2) !important;
-    border: 1px solid var(--line) !important; color: var(--text) !important; font-size: 16px !important;
-    border-radius: 6px !important; pointer-events: auto; flex: none; min-width: auto;
+    width: 32px; height: 28px; background: rgba(150,150,150,0.2) !important; border: 1px solid var(--line) !important;
+    color: var(--text) !important; font-size: 16px !important; border-radius: 6px !important; pointer-events: auto; flex: none; min-width: auto;
   }
   .weight-btn:active { background: rgba(150,150,150,0.4) !important; transform: scale(0.95); }
 
   .tOverlay input{
-    width:60px; border-radius:6px; border:2px solid var(--bad); 
-    background:var(--bg); color:var(--text); padding:2px;
+    width:60px; border-radius:6px; border:2px solid var(--bad); background:var(--bg); color:var(--text); padding:2px;
     text-align:center; font-weight: bold; font-size: 16px; margin-bottom: 0;
   }
   .tOverlay span { font-size: 11px; font-weight: bold; background: var(--card); padding: 0 4px; border-radius: 4px; }
   
-  /* --- 戰術 AR 控制面板 (懸浮膠囊) --- */
   #arControls {
-    display: none; flex-direction: column; gap: 12px;
-    position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
-    padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; 
-    border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: opacity 0.3s ease, padding 0.3s ease;
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    display: none; flex-direction: column; gap: 12px; position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
+    padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease, padding 0.3s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
-  #arControls.is-collapsed {
-    width: auto; padding: 8px 14px; border-radius: 20px; background: rgba(0,0,0,0.6);
-    border: 1px solid var(--muted);
-  }
+  #arControls.is-collapsed { width: auto; padding: 8px 14px; border-radius: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--muted); }
   #arControls.is-collapsed #arSlidersWrap, #arControls.is-collapsed .ar-header-text { display: none !important; }
   #arDragHandle { cursor: move; touch-action: none; user-select: none; }
   .ar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
@@ -267,102 +205,27 @@
   /* =========================================
      ▼ 終極區塊排版：APP 原生設定選單風格 ▼
      ========================================= */
-  .menu-list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-top: 5px;
-  }
+  .menu-list { display: flex; flex-direction: column; width: 100%; margin-top: 5px; }
   
-  /* --- 主收合區塊 --- */
-  details.main-accordion {
-    margin-top: 12px;
-  }
+  details.main-accordion { margin-top: 12px; }
   details.main-accordion > summary {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--text);
-    padding: 12px 16px;
-    background: rgba(150,150,150,0.1);
-    border-radius: 12px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-    transition: background 0.2s;
+    font-size: 14px; font-weight: bold; color: var(--text); padding: 12px 16px; background: rgba(150,150,150,0.1);
+    border-radius: 12px; letter-spacing: 0.5px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; transition: background 0.2s;
   }
-  details.main-accordion > summary:active {
-    background: rgba(150,150,150,0.2);
-  }
+  details.main-accordion > summary:active { background: rgba(150,150,150,0.2); }
   details.main-accordion > summary::-webkit-details-marker { display: none; }
-  details.main-accordion > summary::after {
-    content: "❯";
-    font-size: 12px;
-    color: var(--muted);
-    transition: transform 0.3s;
-    display: inline-block;
-  }
-  details.main-accordion[open] > summary {
-    margin-bottom: 8px; 
-  }
-  details.main-accordion[open] > summary::after {
-    transform: rotate(90deg);
-  }
+  details.main-accordion > summary::after { content: "❯"; font-size: 12px; color: var(--muted); transition: transform 0.3s; display: inline-block; }
+  details.main-accordion[open] > summary { margin-bottom: 8px; }
+  details.main-accordion[open] > summary::after { transform: rotate(90deg); }
 
-  /* --- 內部清單群組 --- */
-  .menu-group {
-    background: var(--card);
-    border-radius: 14px;
-    border: 1px solid var(--line);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
+  .menu-group { background: var(--card); border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; }
 
-  details.menu-item, .menu-action-btn {
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    border-bottom: 1px solid rgba(150,150,150,0.1);
-    margin: 0;
-    font-size: 15px;
-    font-weight: bold;
-    color: var(--text);
-    cursor: pointer;
-    user-select: none;
-    text-decoration: none;
-  }
-  
-  details.menu-item {
-    display: block; 
-    padding: 0;
-  }
+  details.menu-item, .menu-action-btn { background: transparent; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid rgba(150,150,150,0.1); margin: 0; font-size: 15px; font-weight: bold; color: var(--text); cursor: pointer; user-select: none; text-decoration: none; }
+  details.menu-item { display: block; padding: 0; }
+  .menu-action-btn { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+  details.menu-item:last-child, .menu-action-btn:last-child { border-bottom: none; }
 
-  .menu-action-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-  }
-  
-  details.menu-item:last-child, .menu-action-btn:last-child {
-    border-bottom: none;
-  }
-
-  details.menu-item summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    list-style: none;
-    width: 100%;
-    margin: 0; 
-    padding: 16px;
-  }
+  details.menu-item summary { display: flex; align-items: center; justify-content: space-between; list-style: none; width: 100%; margin: 0; padding: 16px; }
   details.menu-item summary::-webkit-details-marker { display: none; }
   
   .menu-header-left { display: flex; align-items: center; gap: 12px; }
@@ -370,111 +233,37 @@
   .menu-arrow { color: var(--muted); transition: transform 0.3s; font-size: 12px; font-weight: bold; }
   details.menu-item[open] summary .menu-arrow { transform: rotate(90deg); }
   
-  .menu-content {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.7;
-    border-top: 1px solid rgba(150,150,150,0.1);
-    margin: 0;
-    padding: 16px;
-    font-weight: normal;
-  }
+  .menu-content { font-size: 14px; color: var(--muted); line-height: 1.7; border-top: 1px solid rgba(150,150,150,0.1); margin: 0; padding: 16px; font-weight: normal; }
   .menu-content ul { padding-left: 20px; margin: 8px 0; }
   .menu-content li { margin-bottom: 6px; }
   .menu-content p { margin-top: 0; margin-bottom: 10px; }
 
   .menu-action-btn:active { background: rgba(150,150,150,0.1); }
 
-  /* 專注模式：隱藏未展開的同層選單 */
-  .menu-group.has-open-item > details.menu-item:not([open]),
-  .menu-group.has-open-item > .menu-action-btn {
-    display: none !important;
-  }
+  .menu-group.has-open-item > details.menu-item:not([open]), .menu-group.has-open-item > .menu-action-btn { display: none !important; }
   
-  /* 大樂內部收合按鈕樣式 */
-  .btn-collapse-inner {
-    background: rgba(150,150,150,0.1);
-    color: var(--text);
-    border: 1px solid var(--line);
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.2s;
-  }
+  .btn-collapse-inner { background: rgba(150,150,150,0.1); color: var(--text); border: 1px solid var(--line); width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
   .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
   
-  /* 特殊高亮按鈕 (咖啡、表單、安裝) */
   .highlight-coffee .menu-icon { color: #d97706; text-shadow: 0 0 5px rgba(217, 119, 6, 0.4); }
   .highlight-heart .menu-icon { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
   .highlight-install .menu-icon { color: #3b82f6; text-shadow: 0 0 5px rgba(59, 130, 246, 0.4); }
   
-  /* 全局免責聲明區塊 */
-  .footer-disclaimer {
-    margin-top: 20px;
-    padding: 15px;
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-    text-align: justify;
-    background: rgba(150,150,150,0.05);
-    border-radius: 10px;
-    border-left: 4px solid var(--bad);
-  }
+  .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
 
-  /* --- 安裝教學彈出視窗樣式 --- */
-  .install-guide {
-    text-align: center;
-  }
-  .install-guide-steps {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .install-step {
-    flex: 1;
-    padding: 10px;
-    background: rgba(150,150,150,0.1);
-    border-radius: 12px;
-    margin: 0 5px;
-  }
-  .install-step-icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-    display: block;
-  }
-  .install-step-text {
-    font-size: 12px;
-    color: var(--text);
-  }
-  .install-platform-title {
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--safe);
-    margin-top: 15px;
-    margin-bottom: 5px;
-    text-align: left;
-    border-bottom: 1px solid rgba(150,150,150,0.2);
-    padding-bottom: 5px;
-  }
+  .install-guide { text-align: center; }
+  .install-guide-steps { display: flex; justify-content: space-around; margin-top: 20px; margin-bottom: 20px; }
+  .install-step { flex: 1; padding: 10px; background: rgba(150,150,150,0.1); border-radius: 12px; margin: 0 5px; }
+  .install-step-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+  .install-step-text { font-size: 12px; color: var(--text); }
+  .install-platform-title { font-size: 14px; font-weight: bold; color: var(--safe); margin-top: 15px; margin-bottom: 5px; text-align: left; border-bottom: 1px solid rgba(150,150,150,0.2); padding-bottom: 5px; }
 </style>
 </head>
 <body>
 
 <div class="app-container">
   
-  <!-- 【戰鬥區塊】主系統面板 -->
   <div id="mainCard" class="card">
-    
-    <!-- 雙層戰術頂列 -->
     <div class="topbar">
       <div class="title-row">
         <div class="title-tag">繩索張力自動估算儀</div>
@@ -554,10 +343,8 @@
     <div id="watermark" class="watermark"></div>
   </div>
 
-  <!-- 【後勤區塊】群組化 APP 原生選單排版 (主收合設計) -->
   <div class="menu-list">
     
-    <!-- 第 1 區塊：系統工具與說明 (主收合) -->
     <details class="main-accordion">
       <summary>⚙️ 系統工具與說明</summary>
       <div class="menu-group">
@@ -593,9 +380,6 @@
           </div>
         </details>
 
-        <!-- 將原本的「加入主畫面說明」移除，合併到「📥 安裝至桌面」功能中 -->
-
-        <!-- 安裝至桌面 (呼叫圖文並茂的教學彈窗) -->
         <div class="menu-action-btn highlight-install" onclick="installApp()">
           <div class="menu-header-left"><span class="menu-icon">📥</span>安裝至桌面 (獲得 APP 體驗)</div>
           <span class="menu-arrow">❯</span>
@@ -606,7 +390,6 @@
           <span class="menu-arrow">❯</span>
         </div>
 
-        <!-- 安卓硬刷新：檢查更新 -->
         <div class="menu-action-btn" onclick="checkForUpdates()">
           <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並下載新版</div>
           <span class="menu-arrow">❯</span>
@@ -615,7 +398,6 @@
       </div>
     </details>
 
-    <!-- 第 2 區塊：支持與回饋 (主收合) -->
     <details class="main-accordion">
       <summary>💖 支持與回饋</summary>
       <div class="menu-group">
@@ -640,7 +422,6 @@
       </div>
     </details>
 
-    <!-- 全局底端免責聲明 -->
     <div class="footer-disclaimer">
       <strong style="color: var(--bad); font-size: 14px;">⚠️ 教學聲明：</strong><br>
       系統運算基於理想物理模型，不含繩索材質疲勞、摩擦力損耗等環境變數。實際救援操作時，請務必遵循專業教官之指導，開發團隊不負任何實地操作之法律責任。
@@ -669,7 +450,6 @@
   </div>
 </div>
 
-<!-- 全新：圖文並茂安裝教學彈出視窗 -->
 <div id="installGuideModalOverlay" class="modal-overlay">
   <div class="modal-box install-guide">
     <h3>📥 安裝至桌面</h3>
@@ -704,7 +484,7 @@
 </div>
 
 <script>
-// --- 註冊 Service Worker (達成 Android 真正 APP 安裝的最後一塊拼圖) ---
+// --- 註冊 Service Worker ---
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js')
@@ -763,23 +543,32 @@ instructorToggleBtn.addEventListener('click', () => {
   draw(slider.value);
 });
 
-// --- Android 安裝與更新黑科技 (結合圖文教學) ---
+// --- Android 安裝與更新黑科技 (含診斷雷達) ---
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
-  deferredPrompt = e; // 攔截安卓原生的安裝事件
+  deferredPrompt = e; 
+  console.log('✅ 系統判定：符合 PWA 原生安裝資格！');
+});
+
+window.addEventListener('appinstalled', (evt) => {
+  console.log('✅ 系統回報：APP 已成功安裝至桌面');
 });
 
 function installApp() {
   if (deferredPrompt) {
-    // 支援一鍵安裝的安卓瀏覽器，直接跳出系統安裝框
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
       deferredPrompt = null;
     });
   } else {
-    // 蘋果、Line 內部瀏覽器，或是已經安裝過的，彈出圖文並茂的教學面板！
-    installGuideModalOverlay.style.display = 'flex';
+    // 啟動診斷雷達：如果無法安裝，告訴使用者為什麼！
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        alert('系統回報：您目前已經是在 APP 模式下執行囉！');
+    } else {
+        alert('🕵️‍♂️ 系統診斷報告：\n\n目前安卓 Chrome 尚未核發「原生安裝權限」。\n\n可能原因：\n1. 您的桌面上還有舊版的捷徑 (請先刪除它！)\n2. 系統還在背景下載圖檔\n3. 請嘗試重新整理網頁\n\n我們將先為您開啟「圖文安裝教學」！');
+        installGuideModalOverlay.style.display = 'flex';
+    }
   }
 }
 
@@ -790,7 +579,6 @@ installGuideCloseBtn.addEventListener('click', () => {
 function checkForUpdates() {
   alert("系統回報：正在為您檢查並載入最新版本...");
   setTimeout(() => {
-    // 使用 query string 強制突破安卓瀏覽器的快取
     window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
   }, 600);
 }
@@ -967,7 +755,6 @@ photoUpload.addEventListener('change', (e) => {
   }
 });
 
-// --- 戰術平移與縮放系統 ---
 let currentZoom = 1;
 let panX = 0;
 let panY = 0;
@@ -1000,7 +787,6 @@ zoomSlider.addEventListener('input', (e) => {
   updateTransform();
 });
 
-// --- 面板自由拖曳系統 ---
 let isDraggingPanel = false;
 let pStartX, pStartY, pInitialLeft, pInitialTop;
 
@@ -1043,8 +829,6 @@ arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false});
 window.addEventListener('touchmove', movePanel, {passive: false});
 window.addEventListener('touchend', endPanelDrag);
 
-
-// --- 實境疊圖全螢幕平移 (大樂黑科技：智慧離合器) ---
 mainCard.addEventListener('mousedown', (e) => {
   if (arControls.classList.contains('is-collapsed')) return;
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
@@ -1088,7 +872,6 @@ window.addEventListener('touchend', () => {
   arControls.style.opacity = '1';
 });
 
-// --- 手動旋轉實景 ---
 rotateSlider.addEventListener('input', (e) => {
   let currentAngle = parseFloat(e.target.value);
   gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`;
@@ -1333,7 +1116,6 @@ btnPlus.addEventListener('click', () => {
 slider.addEventListener('input', () => draw(slider.value));
 inputT.addEventListener('input', () => draw(slider.value));
 
-// --- 萬能重置鈕 ---
 resetBtn.addEventListener('click', () => { 
   slider.value = 120; 
   inputT.value = 100; 
@@ -1364,7 +1146,6 @@ jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn
 
 draw(120);
 
-// --- APP 原生「專注鑽取式」選單 (Focus Drill-down) ---
 const menuGroups = document.querySelectorAll('.menu-group');
 menuGroups.forEach(group => {
   const items = group.querySelectorAll('details.menu-item');
@@ -1372,18 +1153,15 @@ menuGroups.forEach(group => {
     item.addEventListener('toggle', function() {
       if (this.open) {
         group.classList.add('has-open-item');
-        // 關閉同群組的其他選單，避免狀態錯亂
         items.forEach(other => {
           if (other !== this && other.open) {
             other.removeAttribute('open');
           }
         });
-        // 微微滑動對齊，讓體驗更絲滑
         setTimeout(() => {
           this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 50);
       } else {
-        // 檢查是否全關了才解除隱形
         const anyOpen = Array.from(items).some(i => i.open);
         if (!anyOpen) {
           group.classList.remove('has-open-item');
