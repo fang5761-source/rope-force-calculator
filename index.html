@@ -271,7 +271,7 @@
     margin-top: 5px;
   }
   
-  /* --- 主收合區塊 (大樂黑科技：讓兩大區塊預設收合) --- */
+  /* --- 主收合區塊 --- */
   details.main-accordion {
     margin-top: 12px;
   }
@@ -303,7 +303,7 @@
     display: inline-block;
   }
   details.main-accordion[open] > summary {
-    margin-bottom: 8px; /* 展開時與下方群組拉開距離 */
+    margin-bottom: 8px; 
   }
   details.main-accordion[open] > summary::after {
     transform: rotate(90deg);
@@ -327,16 +327,24 @@
     box-shadow: none;
     border-bottom: 1px solid rgba(150,150,150,0.1);
     margin: 0;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     font-size: 15px;
     font-weight: bold;
     color: var(--text);
     cursor: pointer;
     user-select: none;
     text-decoration: none;
+  }
+  
+  details.menu-item {
+    display: block; /* 大樂修正：讓排版由上到下，解決左右擠壓的致命錯誤！ */
+    padding: 0;
+  }
+
+  .menu-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
   }
   
   details.menu-item:last-child, .menu-action-btn:last-child {
@@ -349,7 +357,7 @@
     justify-content: space-between;
     list-style: none;
     width: 100%;
-    margin: -16px; /* 撐滿外層 padding */
+    margin: 0; 
     padding: 16px;
   }
   details.menu-item summary::-webkit-details-marker { display: none; }
@@ -364,7 +372,7 @@
     color: var(--muted);
     line-height: 1.7;
     border-top: 1px solid rgba(150,150,150,0.1);
-    margin: 16px -16px -16px -16px;
+    margin: 0;
     padding: 16px;
     font-weight: normal;
   }
@@ -380,7 +388,7 @@
     display: none !important;
   }
   
-  /* 內部收合按鈕樣式 */
+  /* 大樂內部收合按鈕樣式 */
   .btn-collapse-inner {
     background: rgba(150,150,150,0.1);
     color: var(--text);
@@ -519,15 +527,15 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <ul>
+            <ul style="margin-top: 0;">
               <li><span style="color:var(--text);">[主滑桿]</span> 左右滑動設定基本繩索夾角。</li>
               <li><span style="color:var(--text);">✎ [精確角度]</span> 點擊畫面上角度數字可輸入小數。</li>
               <li><span style="color:var(--text);">📷 [實境相機]</span> 開啟鏡頭進行實地疊圖測量。</li>
               <li><span style="color:var(--text);">📁 [照片疊圖]</span> 上傳舊照片作為背景比對。</li>
-              <li><span style="color:var(--text);">👆 [單指拖曳]</span> 實景模式下可按住畫面拖曳綠色 V角。</li>
+              <li><span style="color:var(--text);">👆 [單指拖曳]</span> 需先點開【🛠️展開設定】才能拖曳平移 V角。</li>
               <li><span style="color:var(--text);">📸 [戰術截圖]</span> 一鍵截取乾淨儀表板存入相簿。</li>
             </ul>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -536,11 +544,10 @@
             <div class="menu-header-left"><span class="menu-icon">ℹ️</span>版本與開發資訊</div>
             <span class="menu-arrow">❯</span>
           </summary>
-          <div class="menu-content" style="text-align: center;">
-            <p style="color: var(--safe); font-size: 16px; font-weight: bold; margin-bottom: 2px;">V1.0 戰術張力儀</p>
-            <p style="font-size: 13px; margin-top: 0; margin-bottom: 12px;">© 散木團隊 研發製作</p>
-            <p style="text-align: left; margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          <div class="menu-content">
+            <p style="margin-top: 0; margin-bottom: 10px; font-weight: bold; color: var(--safe);">© 散木團隊 研發製作</p>
+            <p style="margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -550,12 +557,12 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p>將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
+            <p style="margin-top: 0;">將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
             <ul>
               <li><b style="color:var(--text);">🍎 蘋果 iOS：</b>點擊 Safari 下方「分享(方框向上箭頭)」➔ 向上滑動選擇「加入主畫面」。</li>
               <li><b style="color:var(--text);">🤖 安卓 Android：</b>點擊 Chrome 右上角「三個點」➔ 選擇「加至主畫面」。</li>
             </ul>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -583,10 +590,9 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p style="font-weight: bold; color: var(--warn); text-align: center;">支持散木團隊持續研發！</p>
-            <p>若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡！</p>
+            <p style="margin-top: 0;">若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡，支持散木團隊持續研發！</p>
             <button onclick="alert('系統回報：綠界金流目前正在建置中，感謝您的熱情支持！等我們磨好這套裝備再開放！')" style="width:100%; background:#d97706; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; margin-top:10px; cursor:pointer;">☕ 贊助 20 元 (建置中)</button>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -923,8 +929,11 @@ window.addEventListener('touchmove', movePanel, {passive: false});
 window.addEventListener('touchend', endPanelDrag);
 
 
-// --- 實境疊圖全螢幕平移 ---
+// --- 實境疊圖全螢幕平移 (大樂黑科技：智慧離合器) ---
 mainCard.addEventListener('mousedown', (e) => {
+  // 如果面板是收起的，代表使用者不在校正模式，此時「鎖定平移」，釋放網頁捲動！
+  if (arControls.classList.contains('is-collapsed')) return;
+  
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
   startX = e.clientX - panX;
@@ -945,6 +954,9 @@ window.addEventListener('mouseup', () => {
 });
 
 mainCard.addEventListener('touchstart', (e) => {
+  // 如果面板是收起的，代表使用者不在校正模式，此時「鎖定平移」，釋放網頁垂直捲動！
+  if (arControls.classList.contains('is-collapsed')) return;
+  
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
   startX = e.touches[0].clientX - panX;
@@ -954,7 +966,7 @@ mainCard.addEventListener('touchstart', (e) => {
 
 window.addEventListener('touchmove', (e) => {
   if (!isDragging) return;
-  if (e.cancelable) e.preventDefault();
+  if (e.cancelable) e.preventDefault(); // 只有在確認要平移 V角時，才攔截預設的滑動行為
   panX = e.touches[0].clientX - startX;
   panY = e.touches[0].clientY - startY;
   updateTransform();
