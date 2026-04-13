@@ -7,11 +7,18 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<title>索道張力計算程式</title>
+<!-- 官方全名：展現專業權威 -->
+<title>戰術繩索：雙點錨定受力分析系統</title>
 
-<!-- APP 專屬主畫面圖示 -->
-<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMGYxNjIzIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA4MCBMODAgMjAiIHN0cm9rZT0iI2ZmZDg0ZCIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIi8+PGNpcmNsZSBjeD0iNTAiIGN5PSI4MCIgcj0iMTAiIGZpbGw9IiNlZjQ0NDQiLz48L3N2Zz4=">
+<!-- 🍎 APP 模式設定與桌面短檔名 (戰術張力儀) -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="戰術張力儀">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- APP 專屬主畫面圖示 (終極戰術版：雷達網格、上彎弧線、發光繩索、張力向量) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
@@ -49,58 +56,80 @@
     font-family: "Noto Serif CJK TC", serif;
     display:flex;
     justify-content:center;
-    padding:5px;
+    align-items: flex-start;
+    padding: 15px 10px 40px 10px;
     transition: background 0.3s, color 0.3s;
     touch-action: manipulation; 
   }
+  
+  /* 外層容器 */
+  .app-container {
+    max-width: 480px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* --- 作戰區塊 (主卡片) --- */
   .card{
-    max-width:480px;
     width:100%;
     background:var(--card);
     border:1px solid var(--line);
     border-radius:16px;
-    padding:8px;
+    padding: 10px;
     box-shadow:0 10px 30px rgba(0,0,0,.2);
     transition: border-color 0.3s, background 0.3s;
     overflow: hidden;
     position: relative;
   }
   
-  .topbar{
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    margin-bottom:2px;
-    padding: 0 2px;
+  /* 雙層戰術頂列設計 */
+  .topbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+  .title-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
   }
   .title-tag {
-    font-size: 13px;
-    color: var(--muted);
+    font-size: 15px;
+    color: var(--text);
     font-weight: bold;
-    border-left: 3px solid var(--warn);
-    padding-left: 6px;
-    white-space: nowrap;
+    border-left: 4px solid var(--warn);
+    padding-left: 8px;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
   }
   .btn-group {
     display: flex;
-    gap: 3px;
+    gap: 6px;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    width: 100%;
+    background: rgba(150,150,150,0.05);
+    padding: 6px;
+    border-radius: 10px;
   }
   button{
     appearance:none;
     border:1px solid var(--line);
     background:rgba(150,150,150,.1);
     color:var(--text);
-    border-radius:6px;
-    padding:4px 6px;
+    border-radius:8px;
+    padding: 8px 12px;
     cursor:pointer;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     touch-action: manipulation; 
+    flex: 1; min-width: 40px;
   }
   button:hover{ background:rgba(150,150,150,.2); }
   
@@ -108,106 +137,42 @@
   .zoneWarn{color:var(--warn)}
   .zoneBad{color:var(--bad)}
   
-  /* 加入拖曳手勢提示與防捲動 */
   .svgWrap{
-    position:relative; 
-    margin-top: -10px; 
-    margin-bottom: 0;
-    cursor: grab;
-    touch-action: none; /* 拖曳時防止網頁捲動 */
+    position:relative; margin-top: -10px; margin-bottom: 0;
+    cursor: grab; touch-action: none; 
   }
-  .svgWrap:active {
-    cursor: grabbing;
-  }
+  .svgWrap:active { cursor: grabbing; }
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; 
-    object-position: top center; /* 關鍵黑科技：錨定頂部，防止收起面板時畫面跳動 */
+    object-fit: cover; object-position: top center; 
     z-index: -1; display: none; opacity: 0.85;
   }
-  .card.camera-mode {
-    background: rgba(18, 26, 42, 0.45) !important;
-  }
-  :root[data-theme="light"] .card.camera-mode {
-    background: rgba(255, 255, 255, 0.45) !important;
-  }
+  .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
+  :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
   
-  /* 戰術自動隱藏：改為 visibility: hidden，保留高度，絕對防止畫面跳動！ */
-  .camera-mode .jumpbar {
-    visibility: hidden !important;
-    pointer-events: none;
-  }
+  .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
 
-  #gimbalWrap {
-    transform-origin: 50% 160px;
-    will-change: transform; 
-  }
-  #scaleWrap {
-    transform-origin: top center;
-    will-change: transform;
-  }
+  #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
+  #scaleWrap { transform-origin: top center; will-change: transform; }
 
   .modal-overlay {
-    display: none;
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    z-index: 9999;
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); z-index: 9999;
     align-items: center; justify-content: center;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
   }
   .modal-box {
-    background: var(--card);
-    border: 2px solid var(--safe);
-    padding: 24px;
-    border-radius: 16px;
-    width: 85%;
-    max-width: 400px;
-    text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
+    background: var(--card); border: 2px solid var(--safe); padding: 24px;
+    border-radius: 16px; width: 85%; max-width: 400px; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
   }
-  .modal-box::-webkit-scrollbar { width: 6px; }
-  .modal-box::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 3px; }
-
-  .modal-box h3 {
-    color: var(--safe);
-    margin-top: 0;
-    margin-bottom: 12px;
-    font-size: 18px;
-  }
-  .modal-box p, .modal-box li {
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: left;
-  }
-  .modal-box ul {
-    padding-left: 20px; margin-bottom: 20px;
-  }
+  .modal-box h3 { color: var(--safe); margin-top: 0; margin-bottom: 12px; font-size: 18px; }
+  .modal-box p { color: var(--text); font-size: 14px; line-height: 1.6; }
   .modal-box button.primary-btn {
-    background: var(--safe);
-    color: #0f1623;
-    font-size: 15px;
-    padding: 10px 24px;
-    border: none;
-    width: 100%;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
+    background: var(--safe); color: #0f1623; font-size: 15px; padding: 10px 24px;
+    border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;
   }
-  .modal-box button.primary-btn:hover { background: #16a34a; }
-  .close-btn {
-    position: absolute;
-    top: 10px; right: 15px;
-    font-size: 20px; color: var(--muted);
-    cursor: pointer; background: none; border: none; padding: 0;
-  }
-
   #exactAngleInput {
     width: 100%; padding: 12px; font-size: 20px; text-align: center;
     border-radius: 8px; border: 2px solid var(--safe);
@@ -216,66 +181,29 @@
   .modal-btn-group { display: flex; gap: 10px; }
   .modal-btn-group button { flex: 1; }
   #angleCancelBtn { background: var(--muted); color: #ffffff; }
-  #angleCancelBtn:hover { background: #475569; }
 
   .watermark {
-    display: none;
-    position: absolute;
-    bottom: 12px; left: 12px;
-    font-size: 11px; font-weight: bold; color: #e8eef7;
-    background: rgba(15, 22, 35, 0.85);
-    border-left: 3px solid var(--safe);
-    padding: 6px 10px; border-radius: 6px;
-    z-index: 100; pointer-events: none;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
+    display: none; position: absolute; bottom: 12px; left: 12px;
+    font-size: 11px; font-weight: bold; color: #e8eef7; background: rgba(15, 22, 35, 0.85);
+    border-left: 3px solid var(--safe); padding: 6px 10px; border-radius: 6px;
+    z-index: 100; pointer-events: none; text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
   }
 
-  @keyframes sway {
-    0% { transform: translateX(-50%) rotate(-0.6deg); }
-    50% { transform: translateX(-50%) rotate(0.6deg); }
-    100% { transform: translateX(-50%) rotate(-0.6deg); }
-  }
-  @keyframes shake {
-    0% { transform: translateX(-50.5%) translateY(0.5px); }
-    50% { transform: translateX(-49.5%) translateY(-0.5px); }
-    100% { transform: translateX(-50.5%) translateY(0.5px); }
-  }
-  @keyframes flash-red {
-    0%, 100% { border-color: rgba(239, 68, 68, 0.4); background: var(--card); }
-    50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); }
-  }
-  @keyframes skull-land {
-    0% { transform: scale(0.5) translateY(-30px); opacity: 0; }
-    70% { transform: scale(1.1) translateY(0); opacity: 1; }
-    100% { transform: scale(1) translateY(0); opacity: 1; }
-  }
-  @keyframes panic-shake {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-1px, 1px); }
-    50% { transform: translate(1px, -1px); }
-    75% { transform: translate(-1px, -1px); }
-  }
+  @keyframes sway { 0%, 100% { transform: translateX(-50%) rotate(-0.6deg); } 50% { transform: translateX(-50%) rotate(0.6deg); } }
+  @keyframes shake { 0%, 100% { transform: translateX(-50.5%) translateY(0.5px); } 50% { transform: translateX(-49.5%) translateY(-0.5px); } }
+  @keyframes flash-red { 0%, 100% { border-color: rgba(239, 68, 68, 0.4); background: var(--card); } 50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); } }
+  @keyframes skull-land { 0% { transform: scale(0.5) translateY(-30px); opacity: 0; } 70% { transform: scale(1.1) translateY(0); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+  @keyframes panic-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } 75% { transform: translate(-1px, -1px); } }
 
   .tOverlay{
-    position:absolute;
-    left:50%;
-    top:230px; 
-    transform:translateX(-50%);
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    color:var(--bad);
-    z-index:5;
-    transform-origin: top center;
-    animation: sway 3s infinite ease-in-out;
-    pointer-events: none;
-    transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    position:absolute; left:50%; top:230px; transform:translateX(-50%);
+    display:flex; flex-direction: column; align-items:center; color:var(--bad);
+    z-index:5; transform-origin: top center; animation: sway 3s infinite ease-in-out;
+    pointer-events: none; transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   }
   .tOverlay input, .tOverlay span, .tOverlay button { pointer-events: auto; }
-  
   .is-warn .tOverlay { animation-duration: 1.2s; }
   .is-danger .tOverlay { animation: shake 0.1s infinite; }
-  
   .is-broken { animation: flash-red 0.4s ease-in-out 3; }
   .is-broken .tOverlay { animation: none; top: 240px; } 
 
@@ -284,15 +212,11 @@
   .is-broken .normal-view { display: none; }
   .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
 
-  .weight-controls {
-    display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
-  }
+  .weight-controls { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
   .weight-btn {
-    width: 32px; height: 28px;
-    background: rgba(150,150,150,0.2) !important;
-    border: 1px solid var(--line) !important;
-    color: var(--text) !important; font-size: 16px !important;
-    border-radius: 6px !important; pointer-events: auto;
+    width: 32px; height: 28px; background: rgba(150,150,150,0.2) !important;
+    border: 1px solid var(--line) !important; color: var(--text) !important; font-size: 16px !important;
+    border-radius: 6px !important; pointer-events: auto; flex: none; min-width: auto;
   }
   .weight-btn:active { background: rgba(150,150,150,0.4) !important; transform: scale(0.95); }
 
@@ -301,160 +225,386 @@
     background:var(--bg); color:var(--text); padding:2px;
     text-align:center; font-weight: bold; font-size: 16px; margin-bottom: 0;
   }
-  .tOverlay span {
-    font-size: 11px; font-weight: bold; background: var(--card);
-    padding: 0 4px; border-radius: 4px;
-  }
+  .tOverlay span { font-size: 11px; font-weight: bold; background: var(--card); padding: 0 4px; border-radius: 4px; }
   
-  /* --- 戰術 AR 控制面板 (全新自由懸浮膠囊設計) --- */
+  /* --- 戰術 AR 控制面板 (懸浮膠囊) --- */
   #arControls {
     display: none; flex-direction: column; gap: 12px;
-    position: absolute; top: 60px; right: 10px; /* 初始位置改到右上方，不再擋住下方滑桿 */
-    width: 250px; z-index: 50;
-    padding: 12px 15px; background: rgba(0,0,0,0.7); border-radius: 12px; 
+    position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
+    padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; 
     border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: opacity 0.3s ease, padding 0.3s ease; /* 移除位置的 transition，確保拖曳順暢 */
-    backdrop-filter: blur(3px);
+    transition: opacity 0.3s ease, padding 0.3s ease;
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
   #arControls.is-collapsed {
-    width: auto; 
-    padding: 6px 12px; border-radius: 20px; background: rgba(0,0,0,0.6);
+    width: auto; padding: 8px 14px; border-radius: 20px; background: rgba(0,0,0,0.6);
     border: 1px solid var(--muted);
   }
-  #arControls.is-collapsed #arSlidersWrap,
-  #arControls.is-collapsed .ar-header-text {
+  #arControls.is-collapsed #arSlidersWrap, #arControls.is-collapsed .ar-header-text { display: none !important; }
+  #arDragHandle { cursor: move; touch-action: none; user-select: none; }
+  .ar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+  .ar-label { font-size: 13px; font-weight: bold; white-space: nowrap; width: 65px; }
+  #zoomSlider::-webkit-slider-thumb { background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6); }
+  #rotateSlider::-webkit-slider-thumb { background: var(--warn); box-shadow: 0 2px 6px rgba(255, 216, 77, 0.6); }
+
+  .slider-container { padding: 0 10px; margin-top: 5px; position: relative; z-index: 20; }
+  input[type="range"]{ -webkit-appearance:none; width:100%; margin: 8px 0; background:transparent; cursor:pointer; }
+  input[type="range"]::-webkit-slider-runnable-track{ height:8px; border-radius:999px; background:var(--line); }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:#a67c5b;
+    border:2px solid var(--bg); margin-top:-9px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  
+  .caption{ text-align:center; margin-top:2px; padding:6px; background: rgba(150,150,150,0.1); border-radius:8px; font-size: 13px; line-height: 1.6; }
+  .jumpbar{ display:flex; gap:4px; flex-wrap:wrap; justify-content:center; margin-top:8px; background:rgba(150,150,150,0.05); padding: 6px; border-radius: 10px; }
+  .jump{ padding:8px 12px; font-size:12px; min-width: 65px; font-weight: bold; flex: 1; border-radius: 8px; }
+  .mask-text { paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px; stroke-linecap: round; stroke-linejoin: round; }
+  .beta-text:hover { filter: brightness(1.3); }
+
+  /* =========================================
+     ▼ 終極區塊排版：APP 原生設定選單風格 ▼
+     ========================================= */
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5px;
+  }
+  
+  /* --- 主收合區塊 (大樂黑科技：讓兩大區塊預設收合) --- */
+  details.main-accordion {
+    margin-top: 12px;
+  }
+  details.main-accordion > summary {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--text);
+    padding: 12px 16px;
+    background: rgba(150,150,150,0.1);
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  details.main-accordion > summary:active {
+    background: rgba(150,150,150,0.2);
+  }
+  details.main-accordion > summary::-webkit-details-marker { display: none; }
+  details.main-accordion > summary::after {
+    content: "❯";
+    font-size: 12px;
+    color: var(--muted);
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+  details.main-accordion[open] > summary {
+    margin-bottom: 8px; /* 展開時與下方群組拉開距離 */
+  }
+  details.main-accordion[open] > summary::after {
+    transform: rotate(90deg);
+  }
+
+  /* --- 內部清單群組 --- */
+  .menu-group {
+    background: var(--card);
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  details.menu-item, .menu-action-btn {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(150,150,150,0.1);
+    margin: 0;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--text);
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+  }
+  
+  details.menu-item:last-child, .menu-action-btn:last-child {
+    border-bottom: none;
+  }
+
+  details.menu-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    width: 100%;
+    margin: -16px; /* 撐滿外層 padding */
+    padding: 16px;
+  }
+  details.menu-item summary::-webkit-details-marker { display: none; }
+  
+  .menu-header-left { display: flex; align-items: center; gap: 12px; }
+  .menu-icon { font-size: 18px; width: 24px; text-align: center; }
+  .menu-arrow { color: var(--muted); transition: transform 0.3s; font-size: 12px; font-weight: bold; }
+  details.menu-item[open] summary .menu-arrow { transform: rotate(90deg); }
+  
+  .menu-content {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    border-top: 1px solid rgba(150,150,150,0.1);
+    margin: 16px -16px -16px -16px;
+    padding: 16px;
+    font-weight: normal;
+  }
+  .menu-content ul { padding-left: 20px; margin: 8px 0; }
+  .menu-content li { margin-bottom: 6px; }
+  .menu-content p { margin-top: 0; margin-bottom: 10px; }
+
+  .menu-action-btn:active { background: rgba(150,150,150,0.1); }
+
+  /* 專注模式：隱藏未展開的同層選單 */
+  .menu-group.has-open-item > details.menu-item:not([open]),
+  .menu-group.has-open-item > .menu-action-btn {
     display: none !important;
   }
-  #arDragHandle {
-    cursor: move; touch-action: none; user-select: none;
-  }
-  .ar-row {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
-  }
-  .ar-label {
-    font-size: 13px; font-weight: bold; white-space: nowrap; width: 65px;
-  }
-  #zoomSlider::-webkit-slider-thumb {
-    background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6);
-  }
-  #rotateSlider::-webkit-slider-thumb {
-    background: var(--warn); box-shadow: 0 2px 6px rgba(255, 216, 77, 0.6);
-  }
-
-  .slider-container {
-    padding: 0 10px; margin-top: 5px; position: relative; z-index: 20;
-  }
-  input[type="range"]{
-    -webkit-appearance:none; width:100%; margin: 8px 0; background:transparent; cursor:pointer;
-  }
-  input[type="range"]::-webkit-slider-runnable-track{
-    height:8px; border-radius:999px; background:var(--line);
-  }
-  input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:24px; height:24px; border-radius:50%;
-    background:#a67c5b; border:2px solid var(--bg); margin-top:-9px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  }
   
-  .caption{
-    text-align:center; margin-top:2px; padding:6px; background: rgba(150,150,150,0.1);
-    border-radius:8px; font-size: 13px; line-height: 1.6;
+  /* 內部收合按鈕樣式 */
+  .btn-collapse-inner {
+    background: rgba(150,150,150,0.1);
+    color: var(--text);
+    border: 1px solid var(--line);
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
   }
+  .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
   
-  .jumpbar{
-    display:flex; gap:4px; flex-wrap:wrap; justify-content:center; margin-top:6px;
+  /* 特殊高亮按鈕 (咖啡、表單) */
+  .highlight-coffee .menu-icon { color: #d97706; text-shadow: 0 0 5px rgba(217, 119, 6, 0.4); }
+  .highlight-heart .menu-icon { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+  
+  /* 全局免責聲明區塊 */
+  .footer-disclaimer {
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: justify;
+    background: rgba(150,150,150,0.05);
+    border-radius: 10px;
+    border-left: 4px solid var(--bad);
   }
-  .jump{ 
-    padding:8px 12px; font-size:11px; min-width: 65px; font-weight: bold;
-  }
-
-  .mask-text {
-    paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px;
-    stroke-linecap: round; stroke-linejoin: round;
-  }
-  .beta-text:hover { filter: brightness(1.3); }
 </style>
 </head>
 <body>
-<div id="mainCard" class="card">
-  <div class="topbar">
-    <div class="title-tag">索道張力計算程式</div>
-    <div class="btn-group">
-      <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
-      <button id="infoBtn" type="button" title="使用說明與分享">ℹ️</button>
-      <button id="cameraToggle" type="button" title="開啟實境相機">📷</button>
-      <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
-      <button id="photoBtn" type="button" title="上傳/取消照片疊圖">📁</button>
-      <button id="screenshotBtn" type="button" title="畫面截圖儲存">📸</button>
-      <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
-      <button id="reset" type="button">↺</button>
+
+<div class="app-container">
+  
+  <!-- 【戰鬥區塊】主系統面板 -->
+  <div id="mainCard" class="card">
+    
+    <!-- 雙層戰術頂列 -->
+    <div class="topbar">
+      <div class="title-row">
+        <div class="title-tag">戰術繩索：雙點錨定受力分析系統</div>
+      </div>
+      <div class="btn-group">
+        <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
+        <button id="cameraToggle" type="button" title="開啟實境相機">📷</button>
+        <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
+        <button id="photoBtn" type="button" title="上傳照片疊圖">📁</button>
+        <button id="screenshotBtn" type="button" title="戰術截圖">📸</button>
+        <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
+        <button id="reset" type="button" title="重置畫面">↺</button>
+      </div>
     </div>
-  </div>
 
-  <video id="bgVideo" autoplay playsinline muted></video>
-  <img id="bgImage" alt="背景圖片" />
-  <input type="file" id="photoUpload" accept="image/*" style="display:none;">
+    <video id="bgVideo" autoplay playsinline muted></video>
+    <img id="bgImage" alt="背景圖片" />
+    <input type="file" id="photoUpload" accept="image/*" style="display:none;">
 
-  <div class="svgWrap">
-    <div id="gimbalWrap">
-      <div id="scaleWrap">
-        <div id="svgContainer" style="width:100%; height: 330px;"></div>
-        
-        <div id="swayGroup" class="tOverlay">
-          <div class="normal-view">
-            <div class="weight-controls">
-              <button id="btnMinus" class="weight-btn" type="button">-</button>
-              <input id="inputT" type="number" value="100" min="0">
-              <button id="btnPlus" class="weight-btn" type="button">+</button>
+    <div class="svgWrap">
+      <div id="gimbalWrap">
+        <div id="scaleWrap">
+          <div id="svgContainer" style="width:100%; height: 330px;"></div>
+          
+          <div id="swayGroup" class="tOverlay">
+            <div class="normal-view">
+              <div class="weight-controls">
+                <button id="btnMinus" class="weight-btn" type="button">-</button>
+                <input id="inputT" type="number" value="100" min="0">
+                <button id="btnPlus" class="weight-btn" type="button">+</button>
+              </div>
+              <span>負重 (kg)</span>
             </div>
-            <span>負重 (kg)</span>
-          </div>
-          <div class="skull-view">
-            <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
-            <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
+            <div class="skull-view">
+              <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
+              <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- AR 控制面板 (加入自由拖曳把手) -->
-  <div id="arControls" class="is-collapsed">
-    <div id="arDragHandle" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
-      <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none; pointer-events:none;">🛠️ 實境疊圖控制面板</span>
-      <div style="display:flex; align-items:center; gap:8px;">
-        <span style="color:var(--muted); font-size:16px; pointer-events:none;">✥</span>
-        <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold; cursor:pointer;">展開設定</button>
+    <div id="arControls" class="is-collapsed">
+      <div id="arDragHandle" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+        <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none; pointer-events:none;">🛠️ 實境疊圖控制面板</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--muted); font-size:16px; pointer-events:none;">✥</span>
+          <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold; cursor:pointer;">展開設定</button>
+        </div>
+      </div>
+      <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
+          <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
+        </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
+          <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+        </div>
       </div>
     </div>
-    <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
-      <div class="ar-row">
-        <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
-        <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
-      </div>
-      <div class="ar-row">
-        <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
-        <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
-      </div>
+
+    <div class="slider-container">
+      <input id="slider" type="range" min="0" max="180" value="120" step="0.1">
     </div>
+
+    <div class="jumpbar">
+      <button class="jump" data-beta="0" type="button">β 0°</button>
+      <button class="jump" data-beta="60" type="button">β 60°</button>
+      <button class="jump" data-beta="90" type="button">β 90°</button>
+      <button class="jump" data-beta="120" type="button">β 120°</button>
+      <button class="jump" data-beta="150" type="button">β 150°</button>
+      <button class="jump" data-beta="180" type="button">β 180°</button>
+    </div>
+
+    <div id="caption" class="caption"></div>
+    <div id="watermark" class="watermark"></div>
   </div>
 
-  <div class="slider-container">
-    <input id="slider" type="range" min="0" max="180" value="120" step="0.1">
-  </div>
+  <!-- 【後勤區塊】群組化 APP 原生選單排版 (主收合設計) -->
+  <div class="menu-list">
+    
+    <!-- 第 1 區塊：系統工具與說明 (主收合) -->
+    <details class="main-accordion">
+      <summary>⚙️ 系統工具與說明</summary>
+      <div class="menu-group">
+        
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📖</span>系統使用說明書</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <ul>
+              <li><span style="color:var(--text);">[主滑桿]</span> 左右滑動設定基本繩索夾角。</li>
+              <li><span style="color:var(--text);">✎ [精確角度]</span> 點擊畫面上角度數字可輸入小數。</li>
+              <li><span style="color:var(--text);">📷 [實境相機]</span> 開啟鏡頭進行實地疊圖測量。</li>
+              <li><span style="color:var(--text);">📁 [照片疊圖]</span> 上傳舊照片作為背景比對。</li>
+              <li><span style="color:var(--text);">👆 [單指拖曳]</span> 實景模式下可按住畫面拖曳綠色 V角。</li>
+              <li><span style="color:var(--text);">📸 [戰術截圖]</span> 一鍵截取乾淨儀表板存入相簿。</li>
+            </ul>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          </div>
+        </details>
 
-  <div class="jumpbar">
-    <button class="jump" data-beta="0" type="button">β 0°</button>
-    <button class="jump" data-beta="60" type="button">β 60°</button>
-    <button class="jump" data-beta="90" type="button">β 90°</button>
-    <button class="jump" data-beta="120" type="button">β 120°</button>
-    <button class="jump" data-beta="150" type="button">β 150°</button>
-    <button class="jump" data-beta="180" type="button">β 180°</button>
-  </div>
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">ℹ️</span>版本與開發資訊</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content" style="text-align: center;">
+            <p style="color: var(--safe); font-size: 16px; font-weight: bold; margin-bottom: 2px;">V1.0 戰術張力儀</p>
+            <p style="font-size: 13px; margin-top: 0; margin-bottom: 12px;">© 散木團隊 研發製作</p>
+            <p style="text-align: left; margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          </div>
+        </details>
 
-  <div id="caption" class="caption"></div>
-  
-  <div id="watermark" class="watermark"></div>
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <p>將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
+            <ul>
+              <li><b style="color:var(--text);">🍎 蘋果 iOS：</b>點擊 Safari 下方「分享(方框向上箭頭)」➔ 向上滑動選擇「加入主畫面」。</li>
+              <li><b style="color:var(--text);">🤖 安卓 Android：</b>點擊 Chrome 右上角「三個點」➔ 選擇「加至主畫面」。</li>
+            </ul>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          </div>
+        </details>
+
+        <div class="menu-action-btn" id="shareBtnAction">
+          <div class="menu-header-left"><span class="menu-icon">🔗</span>分享此APP給好友</div>
+          <span class="menu-arrow">❯</span>
+        </div>
+
+        <div class="menu-action-btn" onclick="window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime()">
+          <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查及載入新版本</div>
+          <span class="menu-arrow">❯</span>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 第 2 區塊：支持與回饋 (主收合) -->
+    <details class="main-accordion">
+      <summary>💖 支持與回饋</summary>
+      <div class="menu-group">
+        
+        <details class="menu-item highlight-coffee">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">☕</span>喜歡這APP嗎?歡迎請我喝咖啡</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <p style="font-weight: bold; color: var(--warn); text-align: center;">支持散木團隊持續研發！</p>
+            <p>若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡！</p>
+            <button onclick="alert('系統回報：綠界金流目前正在建置中，感謝您的熱情支持！等我們磨好這套裝備再開放！')" style="width:100%; background:#d97706; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; margin-top:10px; cursor:pointer;">☕ 贊助 20 元 (建置中)</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          </div>
+        </details>
+
+        <div class="menu-action-btn highlight-heart" onclick="window.open('https://forms.gle/YOUR_FORM_LINK_HERE', '_blank')">
+          <div class="menu-header-left"><span class="menu-icon">💬</span>想跟朵朵說些什麼？</div>
+          <span class="menu-arrow">❯</span>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- 全局底端免責聲明 -->
+    <div class="footer-disclaimer">
+      <strong style="color: var(--bad); font-size: 14px;">⚠️ 教學聲明：</strong><br>
+      系統運算基於理想物理模型，不含繩索材質疲勞、摩擦力損耗等環境變數。實際救援操作時，請務必遵循專業教官之指導，開發團隊不負任何實地操作之法律責任。
+    </div>
+
+  </div>
 </div>
 
 <div id="permissionModalOverlay" class="modal-overlay">
@@ -477,43 +627,7 @@
   </div>
 </div>
 
-<div id="infoModalOverlay" class="modal-overlay">
-  <div class="modal-box" style="text-align: left; padding: 20px;">
-    <button id="infoCloseBtn" class="close-btn" type="button">×</button>
-    <h3 style="text-align: center;">⚙️ 開發與版本資訊</h3>
-    <p style="text-align: center; color: var(--safe); font-weight: bold; margin-bottom: 5px;">V1.0 索道張力計算程式</p>
-    <!-- 第一道防線：全面統一使用散木團隊署名 -->
-    <p style="text-align: center; color: var(--muted); font-size: 13px; line-height: 1.5; margin-top: 0; margin-bottom: 20px;">
-      © 散木團隊 研發製作
-    </p>
-    
-    <div style="font-size: 13px; color: var(--text); background: rgba(150,150,150,0.1); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-      <strong style="color: var(--warn);">📌 第一次使用指南：</strong>
-      <div style="margin-top: 8px; line-height: 1.8;">
-        • [主滑桿] 左右滑動，設定基本繩索夾角。<br>
-        • 📷 [實境相機] 開啟鏡頭，進行現場畫面疊圖。<br>
-        • 🔄 [旋轉滑桿] 手動對齊傾斜的現場繩索。<br>
-        • 👆 [單指拖曳] 放大實景時，可直接拖曳移動圖表位置。<br>
-        • ✎ [精確角度] 點擊畫面上的數字，直接輸入小數點。<br>
-        • 🧍‍♂️↔️ [教官換位] 一鍵切換教官的解說站位。<br>
-        • 📁 [照片疊圖] 上傳現場照片作為背景比對。<br>
-        • 🔦 [手電筒] 開啟實境時，可點擊補光。<br>
-        • 📸 [戰術截圖] 完成比對後，截圖存入手機相簿。
-      </div>
-      
-      <strong style="color: var(--safe); display:inline-block; margin-top: 12px;">📱 加入手機主畫面教學：</strong>
-      <div style="margin-top: 4px; line-height: 1.8;">
-        • <b>蘋果 iOS：</b>點擊下方「分享」按鈕 ➔ 選擇「加入主畫面」。<br>
-        • <b>Android：</b>點擊右上角選單 ➔ 選擇「加至主畫面」。
-      </div>
-    </div>
-    
-    <button id="shareBtn" class="primary-btn" type="button">🔗 點我分享給朋友</button>
-  </div>
-</div>
-
 <script>
-// 第二道防線：引擎深處的防偽印記彩蛋！(統一為散木團隊)
 console.log("%c🛡️ 本索道張力計算程式由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
 
 const svgContainer = document.getElementById('svgContainer');
@@ -551,10 +665,7 @@ const exactAngleInput = document.getElementById('exactAngleInput');
 const angleConfirmBtn = document.getElementById('angleConfirmBtn');
 const angleCancelBtn = document.getElementById('angleCancelBtn');
 
-const infoModalOverlay = document.getElementById('infoModalOverlay');
-const infoBtn = document.getElementById('infoBtn');
-const infoCloseBtn = document.getElementById('infoCloseBtn');
-const shareBtn = document.getElementById('shareBtn');
+const shareBtnAction = document.getElementById('shareBtnAction');
 const instructorToggleBtn = document.getElementById('instructorToggleBtn');
 
 let isInstructorRight = true;
@@ -564,12 +675,9 @@ instructorToggleBtn.addEventListener('click', () => {
   draw(slider.value);
 });
 
-infoBtn.addEventListener('click', () => infoModalOverlay.style.display = 'flex');
-infoCloseBtn.addEventListener('click', () => infoModalOverlay.style.display = 'none');
-
-shareBtn.addEventListener('click', async () => {
+shareBtnAction.addEventListener('click', async () => {
   const shareData = {
-    title: '索道張力計算程式',
+    title: '戰術繩索：雙點錨定受力分析系統',
     text: '這套工具可以進行 AR 實境疊圖，精準計算繩索夾角與張力，推薦給你！',
     url: window.location.href
   };
@@ -738,7 +846,7 @@ photoUpload.addEventListener('change', (e) => {
   }
 });
 
-// --- 戰術平移與縮放系統 (Drag & Pan) ---
+// --- 戰術平移與縮放系統 ---
 let currentZoom = 1;
 let panX = 0;
 let panY = 0;
@@ -771,7 +879,7 @@ zoomSlider.addEventListener('input', (e) => {
   updateTransform();
 });
 
-// --- 面板自由拖曳系統 (黑科技) ---
+// --- 面板自由拖曳系統 ---
 let isDraggingPanel = false;
 let pStartX, pStartY, pInitialLeft, pInitialTop;
 
@@ -805,9 +913,7 @@ function movePanel(e) {
   arControls.style.top = `${pInitialTop + dy}px`;
 }
 
-function endPanelDrag() {
-  isDraggingPanel = false;
-}
+function endPanelDrag() { isDraggingPanel = false; }
 
 arDragHandle.addEventListener('mousedown', startPanelDrag);
 window.addEventListener('mousemove', movePanel);
@@ -817,8 +923,7 @@ window.addEventListener('touchmove', movePanel, {passive: false});
 window.addEventListener('touchend', endPanelDrag);
 
 
-// --- 實境疊圖(SVG)全螢幕平移系統 ---
-// 滑鼠事件 (電腦端測試用)
+// --- 實境疊圖全螢幕平移 ---
 mainCard.addEventListener('mousedown', (e) => {
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
@@ -839,7 +944,6 @@ window.addEventListener('mouseup', () => {
   arControls.style.opacity = '1';
 });
 
-// 觸控事件 (手機端實戰用)
 mainCard.addEventListener('touchstart', (e) => {
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
@@ -850,7 +954,7 @@ mainCard.addEventListener('touchstart', (e) => {
 
 window.addEventListener('touchmove', (e) => {
   if (!isDragging) return;
-  if (e.cancelable) e.preventDefault(); // 防止拖曳時網頁被捲動
+  if (e.cancelable) e.preventDefault();
   panX = e.touches[0].clientX - startX;
   panY = e.touches[0].clientY - startY;
   updateTransform();
@@ -861,10 +965,9 @@ window.addEventListener('touchend', () => {
   arControls.style.opacity = '1';
 });
 
-// --- 手動旋轉實景 (修正直覺反轉) ---
+// --- 手動旋轉實景 ---
 rotateSlider.addEventListener('input', (e) => {
   let currentAngle = parseFloat(e.target.value);
-  // 加上負號，讓往右滑 = 底部V角往右擺！完全符合直覺
   gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`;
 });
 
@@ -890,8 +993,7 @@ screenshotBtn.addEventListener('click', async () => {
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
   
-  // 浮水印正名為索道張力計算程式，署名散木團隊
-  watermark.innerHTML = `🛡️ 索道張力計算程式 (散木團隊)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr}</span>`;
+  watermark.innerHTML = `🛡️ 戰術繩索：雙點錨定受力分析系統<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
   watermark.style.display = 'block';
 
   try {
@@ -901,7 +1003,7 @@ screenshotBtn.addEventListener('click', async () => {
       scale: 2
     });
     const link = document.createElement('a');
-    link.download = '索道張力計算程式.png';
+    link.download = '戰術張力分析截圖.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
   } catch(e) {
@@ -1010,7 +1112,6 @@ function draw(beta){
     `;
   }
 
-  // 將術語精準校正為：固定點張力
   let forceTagsHtml = '';
   if (beta <= 15 && !isBroken) {
     forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">固定點張力 ${forceLabel}</text>`;
@@ -1116,7 +1217,6 @@ resetBtn.addEventListener('click', () => {
   zoomSlider.value = 1;
   rotateSlider.value = 0;
   
-  // 重置面板位置與狀態
   arControls.classList.add('is-collapsed');
   document.querySelector('.ar-header-text').style.display = 'none';
   document.getElementById('arSlidersWrap').style.display = 'none';
@@ -1124,11 +1224,10 @@ resetBtn.addEventListener('click', () => {
   arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1';
   arControls.style.left = 'auto';
-  arControls.style.top = '60px';
+  arControls.style.top = '80px';
   arControls.style.right = '10px';
   arControls.style.bottom = 'auto';
 
-  // 重置平移與縮放狀態
   currentZoom = 1;
   panX = 0;
   panY = 0;
@@ -1141,6 +1240,35 @@ resetBtn.addEventListener('click', () => {
 jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
 
 draw(120);
+
+// --- APP 原生「專注鑽取式」選單 (Focus Drill-down) ---
+const menuGroups = document.querySelectorAll('.menu-group');
+menuGroups.forEach(group => {
+  const items = group.querySelectorAll('details.menu-item');
+  items.forEach(item => {
+    item.addEventListener('toggle', function() {
+      if (this.open) {
+        group.classList.add('has-open-item');
+        // 關閉同群組的其他選單，避免狀態錯亂
+        items.forEach(other => {
+          if (other !== this && other.open) {
+            other.removeAttribute('open');
+          }
+        });
+        // 微微滑動對齊，讓體驗更絲滑
+        setTimeout(() => {
+          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+      } else {
+        // 檢查是否全關了才解除隱形
+        const anyOpen = Array.from(items).some(i => i.open);
+        if (!anyOpen) {
+          group.classList.remove('has-open-item');
+        }
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
