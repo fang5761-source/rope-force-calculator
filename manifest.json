@@ -1,21 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#0f1623"/>
-    </linearGradient>
-    <filter id="glow">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#ef4444" flood-opacity="0.6"/>
-    </filter>
-    <filter id="glow-green">
-      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#22c55e" flood-opacity="0.4"/>
-    </filter>
-  </defs>
-  <rect width="100" height="100" fill="url(#bg)" stroke="#334155" stroke-width="1.5"/>
-  <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="2 4" opacity="0.6"/>
-  <path d="M 33 40 A 25 25 0 0 1 67 40" stroke="#ffd84d" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M20 20 L50 65 L80 20" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow-green)"/>
-  <circle cx="50" cy="65" r="6" fill="#0f1623" stroke="#e8eef7" stroke-width="3"/>
-  <path d="M50 71 L50 85" stroke="#ef4444" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
-  <polygon points="44,82 56,82 50,92" fill="#ef4444" filter="url(#glow)"/>
-</svg>
+{
+  "name": "繩索張力自動估算儀",
+  "short_name": "張力儀",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f1623",
+  "theme_color": "#0f1623",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
+姊姊上傳這兩個修正後的檔案後，記得一定要在安卓手機上**「清除 Chrome 瀏覽紀錄與快取」**（或是開無痕模式），再重新進去一次。這一次，Chrome 查驗官看到標準的 512 尺寸，絕對會乖乖奉上「安裝」按鈕，讓 Chrome 小徽章徹底消失的！
