@@ -1,21 +1,22 @@
 {
-  "name": "Capstan 繩索張力放大公式",
-  "short_name": "Capstan公式",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "繩索張力自動估算儀",
+  "short_name": "張力儀",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#0b1220",
-  "theme_color": "#0b1220",
+  "background_color": "#0f1623",
+  "theme_color": "#0f1623",
   "icons": [
     {
-      "src": "./friction_icon-192.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyOTNiIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGYxNjIzIi8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJnbG93Ij48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMiIgc3RkRGV2aWF0aW9uPSIzIiBmbG9vZC1jb2xvcj0iI2VmNDQ0NCIgZmxvb2Qtb3BhY2l0eT0iMC42Ii8+PC9maWx0ZXI+PGZpbHRlciBpZD0iZ2xvdy1ncmVlbiI+PGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjAiIHN0ZERldmlhdGlvbj0iMiIgZmxvb2QtY29sb3I9IiMyMmM1NWUiIGZsb29kLW9wYWNpdHk9IjAuNCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNiZykiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjIgNCIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTSAzMyA0MCBBIDI1IDI1IDAgMCAxIDY3IDQwIiBzdHJva2U9IiNmZmQ4NGQiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA2NSBMODAgMjAiIHN0cm9rZT0iIzIyYzU1ZSIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9Im5vbmUiIGZpbHRlcj0idXJsKCNnbG93LWdyZWVuKSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNjUiIHI9IjYiIGZpbGw9IiMwZjE2MjMiIHN0cm9rZT0iI2U4ZWVmNyIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTUwIDcxIEw1MCA4NSIgc3Ryb2tlPSIjZWY0NDQ0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+PHBvbHlnb24gcG9pbnRzPSI0NCw4MiA1Niw4MiA1MCw5MiIgZmlsbD0iI2VmNDQ0NCIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+PC9zdmc+",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "./friction_icon-512.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMWUyOTNiIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGYxNjIzIi8+PC9saW5lYXJHcmFkaWVudD48ZmlsdGVyIGlkPSJnbG93Ij48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMiIgc3RkRGV2aWF0aW9uPSIzIiBmbG9vZC1jb2xvcj0iI2VmNDQ0NCIgZmxvb2Qtb3BhY2l0eT0iMC42Ii8+PC9maWx0ZXI+PGZpbHRlciBpZD0iZ2xvdy1ncmVlbiI+PGZlRHJvcFNoYWRvdyBkeD0iMCIgZHk9IjAiIHN0ZERldmlhdGlvbj0iMiIgZmxvb2QtY29sb3I9IiMyMmM1NWUiIGZsb29kLW9wYWNpdHk9IjAuNCIvPjwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0idXJsKCNiZykiIHN0cm9rZT0iIzMzNDE1NSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzM0MTU1IiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1kYXNoYXJyYXk9IjIgNCIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTSAzMyA0MCBBIDI1IDI1IDAgMCAxIDY3IDQwIiBzdHJva2U9IiNmZmQ4NGQiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTIwIDIwIEw1MCA2NSBMODAgMjAiIHN0cm9rZT0iIzIyYzU1ZSIgc3Ryb2tlLXdpZHRoPSI4IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGZpbGw9Im5vbmUiIGZpbHRlcj0idXJsKCNnbG93LWdyZWVuKSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNjUiIHI9IjYiIGZpbGw9IiMwZjE2MjMiIHN0cm9rZT0iI2U4ZWVmNyIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTUwIDcxIEw1MCA4NSIgc3Ryb2tlPSIjZWY0NDQ0IiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+PHBvbHlnb24gcG9pbnRzPSI0NCw4MiA1Niw4MiA1MCw5MiIgZmlsbD0iI2VmNDQ0NCIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+PC9zdmc+",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }
