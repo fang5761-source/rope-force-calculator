@@ -8,15 +8,18 @@
 <meta http-equiv="Expires" content="0" />
 
 <!-- 官方全名：展現專業權威 -->
-<title>戰術繩索：雙點錨定受力分析系統</title>
+<title>繩索張力自動估算儀</title>
 
-<!-- 🍎 APP 模式設定與桌面短檔名 (戰術張力儀) -->
+<!-- 🍎 APP 模式設定與桌面短檔名 (徐老師指定：張力儀) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="戰術張力儀">
+<meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
-<!-- APP 專屬主畫面圖示 (終極戰術版：雷達網格、上彎弧線、發光繩索、張力向量) -->
+<!-- APP WebAPK 註冊清單 (黑科技：讓安卓系統產生真正的 APP 安裝，消除 Chrome 小徽章) -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoi57mp57Si5by15Yqb6Ieq5YuV5L2w566X5YSTIiwic2hvcnRfbmFtZSI6IuW8teWKm+WEkyIsInN0YXJ0X3VybCI6Ii4iLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImJhY2tncm91bmRfY29sb3ciOiIjMGYxNjIzIiwidGhlbWVfY29sb3ciOiIjMGYxNjIzIiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJyUzRSUzQ2RlZnMlM0UlM0NsaW5lYXJHcmFkaWVudCBpZD0nYmcnIHgxPScwJTI1JyB5MT0nMCUyNScgeDI9JzEwMCUyNScgeTI9JzEwMCUyNSclM0UlM0NzdG9wIG9mZnNldD0nMCUyNScgc3RvcC1jb2xvcj0nJTIzMWUyOTNiJy8lM0UlM0NzdG9wIG9mZnNldD0nMTAwJTI1JyBzdG9wLWNvbG9yPSclMjMwZjE2MjMnLyUzRSUzQy9saW5lYXJHcmFkaWVudCUzRSUzQ2ZpbHRlciBpZD0nZ2xvdyclM0UlM0NmZURyb3BTaGFkb3cgZHg9JzAnIGR5PScyJyBzdGREZXZpYXRpb249JzMnIGZsb29kLWNvbG9yPSclMjNlZjQ0NDQnIGZsb29kLW9wYWNpdHk9JzAuNiclM0UlM0MvZmlsdGVyJTNFJTNDZmlsdGVyIGlkPSdnbG93LWdyZWVuJyUzRSUzQ2ZlRHJvcFNoYWRvdyBkeD0nMCcgZHk9JzAnIHN0ZERldmlhdGlvbj0nMicgZmxvb2QtY29sb3I9JyUyMzIyYzU1ZScgZmxvb2Qtb3BhY2l0eT0nMC40Jy8lM0UlM0MvZmlsdGVyJTNFJTNDL2RlZnMlM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSd1cmwoJTIzYmcpJyBzdHJva2U9JyUyMzMzNDE1NScgc3Ryb2tlLXdpZHRoPScxLjUnLyUzRSUzQ2NpcmNsZSBjeD0nNTAnIGN5PSc1MCcgcj0nNDAnIGZpbGw9J25vbmUnIHN0cm9rZT0nJTIzMzM0MTU1JyBzdHJva2Utd2lkdGg9JzEnIHN0cm9rZS1kYXNoYXJyYXk9JzIgNCcgb3BhY2l0eT0nMC42Jy8lM0UlM0NwYXRoIGQ9J00gMzMgNDAgQSAyNSAyNSAwIDAgMSA2NyA0MCcgc3Ryb2tlPSclMjNmZmQ4NGQnIHN0cm9rZS13aWR0aD0nMycgZmlsbD0nbm9uZScgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJy8lM0UlM0NwYXRoIGQ9J00yMCAyMCBMNTAgNjUgTDgwIDIwJyBzdHJva2U9JyUyMzIyYzU1ZScgc3Ryb2tlLXdpZHRoPSc4JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIHN0cm9rZS1saW5lam9pbj0ncm91bmQnIGZpbGw9J25vbmUnIGZpbHRlcj0ndXJsKCUyM2dsb3ctZ3JlZW4pJy8lM0UlM0NjaXJjbGUgY3g9JzUwJyBjeT0nNjUnIHI9JzYnIGZpbGw9JyUyMzBmMTYyMycgc3Ryb2tlPSclMjNlOGVlZjcnIHN0cm9rZS13aWR0aD0nMycvJTNFJTNDcGF0aCBkPSdNNTAgNzEgTDUwIDg1JyBzdHJva2U9JyUyM2VmNDQ0NCcgc3Ryb2tlLXdpZHRoPSc0JyBzdHJva2UtbGluZWNhcD0ncm91bmQnIGZpbHRlcj0ndXJsKCUyM2dsb3cpJy8lM0UlM0Nwb2x5Z29uIHBvaW50cz0nNDQsODIgNTYsODIgNTAsOTInIGZpbGw9JyUyM2VmNDQ0NCcgZmlsdGVyPSd1cmwoJTIzZ2xvdyknLyUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjE5MngxOTIgNTEyeDUxMiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSJ9XX0=">
+
+<!-- APP 專屬主畫面圖示 (終極戰術版) -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3Cfilter id='glow'%3E%3CfeDropShadow dx='0' dy='2' stdDeviation='3' flood-color='%23ef4444' flood-opacity='0.6'/%3E%3C/filter%3E%3Cfilter id='glow-green'%3E%3CfeDropShadow dx='0' dy='0' stdDeviation='2' flood-color='%2322c55e' flood-opacity='0.4'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none' filter='url(%23glow-green)'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round' filter='url(%23glow)'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444' filter='url(%23glow)'/%3E%3C/svg%3E">
 
@@ -271,7 +274,7 @@
     margin-top: 5px;
   }
   
-  /* --- 主收合區塊 (大樂黑科技：讓兩大區塊預設收合) --- */
+  /* --- 主收合區塊 --- */
   details.main-accordion {
     margin-top: 12px;
   }
@@ -303,7 +306,7 @@
     display: inline-block;
   }
   details.main-accordion[open] > summary {
-    margin-bottom: 8px; /* 展開時與下方群組拉開距離 */
+    margin-bottom: 8px; 
   }
   details.main-accordion[open] > summary::after {
     transform: rotate(90deg);
@@ -327,16 +330,24 @@
     box-shadow: none;
     border-bottom: 1px solid rgba(150,150,150,0.1);
     margin: 0;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     font-size: 15px;
     font-weight: bold;
     color: var(--text);
     cursor: pointer;
     user-select: none;
     text-decoration: none;
+  }
+  
+  details.menu-item {
+    display: block; 
+    padding: 0;
+  }
+
+  .menu-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
   }
   
   details.menu-item:last-child, .menu-action-btn:last-child {
@@ -349,7 +360,7 @@
     justify-content: space-between;
     list-style: none;
     width: 100%;
-    margin: -16px; /* 撐滿外層 padding */
+    margin: 0; 
     padding: 16px;
   }
   details.menu-item summary::-webkit-details-marker { display: none; }
@@ -364,7 +375,7 @@
     color: var(--muted);
     line-height: 1.7;
     border-top: 1px solid rgba(150,150,150,0.1);
-    margin: 16px -16px -16px -16px;
+    margin: 0;
     padding: 16px;
     font-weight: normal;
   }
@@ -380,7 +391,7 @@
     display: none !important;
   }
   
-  /* 內部收合按鈕樣式 */
+  /* 大樂內部收合按鈕樣式 */
   .btn-collapse-inner {
     background: rgba(150,150,150,0.1);
     color: var(--text);
@@ -400,9 +411,10 @@
   }
   .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
   
-  /* 特殊高亮按鈕 (咖啡、表單) */
+  /* 特殊高亮按鈕 (咖啡、表單、安裝) */
   .highlight-coffee .menu-icon { color: #d97706; text-shadow: 0 0 5px rgba(217, 119, 6, 0.4); }
   .highlight-heart .menu-icon { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+  .highlight-install .menu-icon { color: #3b82f6; text-shadow: 0 0 5px rgba(59, 130, 246, 0.4); }
   
   /* 全局免責聲明區塊 */
   .footer-disclaimer {
@@ -416,6 +428,43 @@
     border-radius: 10px;
     border-left: 4px solid var(--bad);
   }
+
+  /* --- 安裝教學彈出視窗樣式 --- */
+  .install-guide {
+    text-align: center;
+  }
+  .install-guide-steps {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .install-step {
+    flex: 1;
+    padding: 10px;
+    background: rgba(150,150,150,0.1);
+    border-radius: 12px;
+    margin: 0 5px;
+  }
+  .install-step-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .install-step-text {
+    font-size: 12px;
+    color: var(--text);
+  }
+  .install-platform-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--safe);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    text-align: left;
+    border-bottom: 1px solid rgba(150,150,150,0.2);
+    padding-bottom: 5px;
+  }
 </style>
 </head>
 <body>
@@ -428,7 +477,7 @@
     <!-- 雙層戰術頂列 -->
     <div class="topbar">
       <div class="title-row">
-        <div class="title-tag">戰術繩索：雙點錨定受力分析系統</div>
+        <div class="title-tag">繩索張力自動估算儀</div>
       </div>
       <div class="btn-group">
         <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
@@ -519,15 +568,15 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <ul>
+            <ul style="margin-top: 0;">
               <li><span style="color:var(--text);">[主滑桿]</span> 左右滑動設定基本繩索夾角。</li>
               <li><span style="color:var(--text);">✎ [精確角度]</span> 點擊畫面上角度數字可輸入小數。</li>
               <li><span style="color:var(--text);">📷 [實境相機]</span> 開啟鏡頭進行實地疊圖測量。</li>
               <li><span style="color:var(--text);">📁 [照片疊圖]</span> 上傳舊照片作為背景比對。</li>
-              <li><span style="color:var(--text);">👆 [單指拖曳]</span> 實景模式下可按住畫面拖曳綠色 V角。</li>
+              <li><span style="color:var(--text);">👆 [單指拖曳]</span> 需先點開【🛠️展開設定】才能拖曳平移 V角。</li>
               <li><span style="color:var(--text);">📸 [戰術截圖]</span> 一鍵截取乾淨儀表板存入相簿。</li>
             </ul>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -536,36 +585,30 @@
             <div class="menu-header-left"><span class="menu-icon">ℹ️</span>版本與開發資訊</div>
             <span class="menu-arrow">❯</span>
           </summary>
-          <div class="menu-content" style="text-align: center;">
-            <p style="color: var(--safe); font-size: 16px; font-weight: bold; margin-bottom: 2px;">V1.0 戰術張力儀</p>
-            <p style="font-size: 13px; margin-top: 0; margin-bottom: 12px;">© 散木團隊 研發製作</p>
-            <p style="text-align: left; margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+          <div class="menu-content">
+            <p style="margin-top: 0; margin-bottom: 10px; font-weight: bold; color: var(--safe);">V1.0 繩索張力自動估算儀</p>
+            <p style="margin-top: 0; margin-bottom: 10px; font-weight: bold;">© 散木團隊 研發製作</p>
+            <p style="margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
-        <details class="menu-item">
-          <summary>
-            <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
-            <span class="menu-arrow">❯</span>
-          </summary>
-          <div class="menu-content">
-            <p>將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
-            <ul>
-              <li><b style="color:var(--text);">🍎 蘋果 iOS：</b>點擊 Safari 下方「分享(方框向上箭頭)」➔ 向上滑動選擇「加入主畫面」。</li>
-              <li><b style="color:var(--text);">🤖 安卓 Android：</b>點擊 Chrome 右上角「三個點」➔ 選擇「加至主畫面」。</li>
-            </ul>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
-          </div>
-        </details>
+        <!-- 將原本的「加入主畫面說明」移除，合併到「📥 安裝至桌面」功能中 -->
+
+        <!-- 安裝至桌面 (呼叫圖文並茂的教學彈窗) -->
+        <div class="menu-action-btn highlight-install" onclick="installApp()">
+          <div class="menu-header-left"><span class="menu-icon">📥</span>安裝至桌面 (獲得 APP 體驗)</div>
+          <span class="menu-arrow">❯</span>
+        </div>
 
         <div class="menu-action-btn" id="shareBtnAction">
           <div class="menu-header-left"><span class="menu-icon">🔗</span>分享此APP給好友</div>
           <span class="menu-arrow">❯</span>
         </div>
 
-        <div class="menu-action-btn" onclick="window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime()">
-          <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查及載入新版本</div>
+        <!-- 安卓硬刷新：檢查更新 -->
+        <div class="menu-action-btn" onclick="checkForUpdates()">
+          <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並下載新版</div>
           <span class="menu-arrow">❯</span>
         </div>
 
@@ -583,10 +626,9 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p style="font-weight: bold; color: var(--warn); text-align: center;">支持散木團隊持續研發！</p>
-            <p>若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡！</p>
+            <p style="margin-top: 0;">若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡，支持散木團隊持續研發！</p>
             <button onclick="alert('系統回報：綠界金流目前正在建置中，感謝您的熱情支持！等我們磨好這套裝備再開放！')" style="width:100%; background:#d97706; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; margin-top:10px; cursor:pointer;">☕ 贊助 20 元 (建置中)</button>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起面板</button>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
@@ -617,7 +659,7 @@
 
 <div id="angleModalOverlay" class="modal-overlay">
   <div class="modal-box">
-    <h3>🎯 輸入精確角度</h3>
+    <h3>🎯 輸入精精角度</h3>
     <p style="text-align:center; margin-bottom:12px; font-size:13px;">請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)</p>
     <input type="number" id="exactAngleInput" min="0" max="180" step="0.1" inputmode="decimal">
     <div class="modal-btn-group">
@@ -627,8 +669,42 @@
   </div>
 </div>
 
+<!-- 全新：圖文並茂安裝教學彈出視窗 -->
+<div id="installGuideModalOverlay" class="modal-overlay">
+  <div class="modal-box install-guide">
+    <h3>📥 安裝至桌面</h3>
+    <p style="text-align:center; margin-bottom: 5px;">將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗！</p>
+    
+    <div class="install-platform-title">🍎 蘋果 iOS (Safari)</div>
+    <div class="install-guide-steps">
+      <div class="install-step">
+        <span class="install-step-icon">⇪</span>
+        <span class="install-step-text">1. 點擊下方<br>分享按鈕</span>
+      </div>
+      <div class="install-step">
+        <span class="install-step-icon">➕</span>
+        <span class="install-step-text">2. 選擇<br>加入主畫面</span>
+      </div>
+    </div>
+
+    <div class="install-platform-title">🤖 安卓 Android (Chrome)</div>
+    <div class="install-guide-steps">
+      <div class="install-step">
+        <span class="install-step-icon">⋮</span>
+        <span class="install-step-text">1. 點擊右上角<br>選單按鈕</span>
+      </div>
+      <div class="install-step">
+        <span class="install-step-icon">📱</span>
+        <span class="install-step-text">2. 選擇<br>加至主畫面</span>
+      </div>
+    </div>
+    
+    <button id="installGuideCloseBtn" class="primary-btn" type="button">我知道了</button>
+  </div>
+</div>
+
 <script>
-console.log("%c🛡️ 本索道張力計算程式由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
+console.log("%c🛡️ 本繩索張力自動估算儀由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
 
 const svgContainer = document.getElementById('svgContainer');
 const svgWrap = document.querySelector('.svgWrap');
@@ -665,6 +741,9 @@ const exactAngleInput = document.getElementById('exactAngleInput');
 const angleConfirmBtn = document.getElementById('angleConfirmBtn');
 const angleCancelBtn = document.getElementById('angleCancelBtn');
 
+const installGuideModalOverlay = document.getElementById('installGuideModalOverlay');
+const installGuideCloseBtn = document.getElementById('installGuideCloseBtn');
+
 const shareBtnAction = document.getElementById('shareBtnAction');
 const instructorToggleBtn = document.getElementById('instructorToggleBtn');
 
@@ -675,9 +754,42 @@ instructorToggleBtn.addEventListener('click', () => {
   draw(slider.value);
 });
 
+// --- Android 安裝與更新黑科技 (結合圖文教學) ---
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e; // 攔截安卓原生的安裝事件
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    // 支援一鍵安裝的安卓瀏覽器，直接跳出系統安裝框
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      deferredPrompt = null;
+    });
+  } else {
+    // 蘋果、Line 內部瀏覽器，或是已經安裝過的，彈出圖文並茂的教學面板！
+    installGuideModalOverlay.style.display = 'flex';
+  }
+}
+
+installGuideCloseBtn.addEventListener('click', () => {
+  installGuideModalOverlay.style.display = 'none';
+});
+
+function checkForUpdates() {
+  alert("系統回報：正在為您檢查並載入最新版本...");
+  setTimeout(() => {
+    // 使用 query string 強制突破安卓瀏覽器的快取
+    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
+  }, 600);
+}
+// ---------------------------------
+
 shareBtnAction.addEventListener('click', async () => {
   const shareData = {
-    title: '戰術繩索：雙點錨定受力分析系統',
+    title: '繩索張力自動估算儀',
     text: '這套工具可以進行 AR 實境疊圖，精準計算繩索夾角與張力，推薦給你！',
     url: window.location.href
   };
@@ -923,8 +1035,9 @@ window.addEventListener('touchmove', movePanel, {passive: false});
 window.addEventListener('touchend', endPanelDrag);
 
 
-// --- 實境疊圖全螢幕平移 ---
+// --- 實境疊圖全螢幕平移 (大樂黑科技：智慧離合器) ---
 mainCard.addEventListener('mousedown', (e) => {
+  if (arControls.classList.contains('is-collapsed')) return;
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
   startX = e.clientX - panX;
@@ -945,6 +1058,7 @@ window.addEventListener('mouseup', () => {
 });
 
 mainCard.addEventListener('touchstart', (e) => {
+  if (arControls.classList.contains('is-collapsed')) return;
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true;
   startX = e.touches[0].clientX - panX;
@@ -954,7 +1068,7 @@ mainCard.addEventListener('touchstart', (e) => {
 
 window.addEventListener('touchmove', (e) => {
   if (!isDragging) return;
-  if (e.cancelable) e.preventDefault();
+  if (e.cancelable) e.preventDefault(); 
   panX = e.touches[0].clientX - startX;
   panY = e.touches[0].clientY - startY;
   updateTransform();
@@ -993,7 +1107,7 @@ screenshotBtn.addEventListener('click', async () => {
   const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
   const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
   
-  watermark.innerHTML = `🛡️ 戰術繩索：雙點錨定受力分析系統<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
+  watermark.innerHTML = `🛡️ 繩索張力自動估算儀<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
   watermark.style.display = 'block';
 
   try {
