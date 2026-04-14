@@ -377,6 +377,40 @@
           </div>
         </details>
 
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
+            
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🤖 Android (安卓版)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
+                <li style="margin-bottom: 4px;">點選畫面右下角的「⋮」</li>
+                <li style="margin-bottom: 4px;">選擇「使用預設瀏覽器開啟」</li>
+                <li style="margin-bottom: 4px;">在畫面右上角點選「⋮」</li>
+                <li style="margin-bottom: 4px;">往下滑，選擇「加到主畫面」</li>
+                <li style="margin-bottom: 0;">點選「安裝」，即可將捷徑加到主畫面</li>
+              </ol>
+            </div>
+
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🍎 iOS (iPhone)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
+                <li style="margin-bottom: 4px;">點選下方的「分享」圖示，往下滑</li>
+                <li style="margin-bottom: 4px;">選擇「加入主畫面」</li>
+                <li style="margin-bottom: 0;">點選「加入」，即可將捷徑加到主畫面</li>
+              </ol>
+            </div>
+
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          </div>
+        </details>
+
         <div class="menu-action-btn" id="shareBtnAction">
           <div class="menu-header-left"><span class="menu-icon">🔗</span>分享此APP給好友</div>
           <span class="menu-arrow">❯</span>
@@ -400,20 +434,27 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p style="margin-top: 0; text-align: justify;">若您覺得這套裝備對您的搜救任務有實質幫助，歡迎請我們喝咖啡，支持散木團隊持續研發！</p>
+            <p style="margin-top: 0; text-align: justify;">若您覺得這套APP對您執行的任務有幫助，歡迎請我們喝咖啡，支持散木團隊持續研發！</p>
             
-            <div style="background: var(--bg); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--line); text-align: center;">
-              <!-- 自動讀取姊姊上傳的 QR Code 圖片檔 -->
-              <img src="donate-qr-v2.jpg" alt="贊助資訊 QR Code" style="width: 100%; max-width: 200px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" onerror="this.style.display='none'">
-              <!-- 無法點擊的裝飾性按鈕銘牌 -->
-              <div style="width:100%; background:#d97706; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:bold; margin-top:15px; font-size:14px; letter-spacing:1px;">☕ 歡迎請我喝咖啡</div>
+            <div style="background: rgba(150,150,150,0.05); padding: 16px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--line);">
+              <div style="text-align: center; margin-bottom: 12px;">
+                <span style="display:inline-block; background:#d97706; color:#fff; font-weight:bold; padding:4px 12px; border-radius:20px; font-size:13px; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.3);">☕ 一杯咖啡 50 元 (杯數隨喜)</span>
+              </div>
+              <div style="background: var(--bg); padding: 12px; border-radius: 8px; border: 1px solid rgba(150,150,150,0.1);">
+                <div style="margin-bottom: 8px; color: var(--muted); font-size: 13px;">銀行代碼 <span style="color: var(--text); font-weight: bold; margin-left: 4px;">807 (永豐銀行)</span></div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <div style="color: var(--muted); font-size: 13px;">帳號 <span style="color: var(--warn); font-weight: bold; font-size: 16px; margin-left: 4px; letter-spacing: 1px;">20401800252531</span></div>
+                  <button type="button" onclick="copyCoffee()" style="background: var(--safe); color: #0f1623; border: none; padding: 6px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; min-width: auto; flex: none; box-shadow: 0 2px 4px rgba(34,197,94,0.3);">複製</button>
+                </div>
+              </div>
             </div>
+            <div id="coffeeMsg" style="display:none; color: var(--safe); font-size: 13px; text-align: center; margin-top: 12px; font-weight: bold;">✓ 帳號已複製成功！</div>
 
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
-        <div class="menu-action-btn highlight-heart" onclick="window.open('https://twgo.io/badra', '_blank')">
+        <div class="menu-action-btn highlight-heart" onclick="window.open('https://forms.gle/Uykr5jeQP6fgVhxh9', '_blank')">
           <div class="menu-header-left"><span class="menu-icon">💬</span>想跟朵朵說些什麼？</div>
           <span class="menu-arrow">❯</span>
         </div>
@@ -505,6 +546,40 @@ instructorToggleBtn.addEventListener('click', () => {
   isInstructorRight = !isInstructorRight;
   draw(slider.value);
 });
+
+// --- 一鍵複製銀行帳號黑科技 ---
+window.copyCoffee = function() {
+  const acc = '20401800252531';
+  const showMsg = () => {
+      const msg = document.getElementById('coffeeMsg');
+      if(msg) {
+          msg.style.display = 'block';
+          setTimeout(() => { msg.style.display = 'none'; }, 2000);
+      }
+  };
+
+  if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(acc).then(() => {
+          showMsg();
+      });
+  } else {
+      let textArea = document.createElement("textarea");
+      textArea.value = acc;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+          document.execCommand('copy');
+          showMsg();
+      } catch (err) {
+          alert('複製失敗，請手動選取複製');
+      }
+      textArea.remove();
+  }
+};
 
 function checkForUpdates() {
   if (confirm("系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？")) {
