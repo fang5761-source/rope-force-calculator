@@ -247,16 +247,9 @@
   
   .highlight-coffee .menu-icon { color: #d97706; text-shadow: 0 0 5px rgba(217, 119, 6, 0.4); }
   .highlight-heart .menu-icon { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
-  .highlight-install .menu-icon { color: #3b82f6; text-shadow: 0 0 5px rgba(59, 130, 246, 0.4); }
   
+  /* 全局免責聲明區塊 */
   .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
-
-  .install-guide { text-align: center; }
-  .install-guide-steps { display: flex; justify-content: space-around; margin-top: 20px; margin-bottom: 20px; }
-  .install-step { flex: 1; padding: 10px; background: rgba(150,150,150,0.1); border-radius: 12px; margin: 0 5px; }
-  .install-step-icon { font-size: 24px; margin-bottom: 8px; display: block; }
-  .install-step-text { font-size: 12px; color: var(--text); }
-  .install-platform-title { font-size: 14px; font-weight: bold; color: var(--safe); margin-top: 15px; margin-bottom: 5px; text-align: left; border-bottom: 1px solid rgba(150,150,150,0.2); padding-bottom: 5px; }
 </style>
 </head>
 <body>
@@ -373,17 +366,16 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p style="margin-top: 0; margin-bottom: 10px; font-weight: bold; color: var(--safe);">V1.0 繩索張力自動估算儀</p>
-            <p style="margin-top: 0; margin-bottom: 10px; font-weight: bold;">© 散木團隊 研發製作</p>
-            <p style="margin-bottom: 0;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
+            <div style="text-align: center; margin-bottom: 15px;">
+              <span style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">V1.0 繩索張力自動估算儀</span>
+            </div>
+            <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
+            <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; color: var(--muted); text-align: center;">教學架構與工程判斷／徐世豐</p>
+            <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; color: var(--muted); text-align: center;">工具設計與互動介面／吳佩芳（朵朵）</p>
+            <p style="margin-bottom: 0; text-align: justify;">運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。</p>
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
-
-        <div class="menu-action-btn highlight-install" onclick="installApp()">
-          <div class="menu-header-left"><span class="menu-icon">📥</span>安裝至桌面 (獲得 APP 體驗)</div>
-          <span class="menu-arrow">❯</span>
-        </div>
 
         <div class="menu-action-btn" id="shareBtnAction">
           <div class="menu-header-left"><span class="menu-icon">🔗</span>分享此APP給好友</div>
@@ -408,13 +400,20 @@
             <span class="menu-arrow">❯</span>
           </summary>
           <div class="menu-content">
-            <p style="margin-top: 0;">若您覺得這套裝備對您的搜救任務有實質幫助，歡迎贊助我們一杯咖啡，支持散木團隊持續研發！</p>
-            <button onclick="alert('系統回報：綠界金流目前正在建置中，感謝您的熱情支持！等我們磨好這套裝備再開放！')" style="width:100%; background:#d97706; color:#fff; border:none; padding:12px; border-radius:8px; font-weight:bold; margin-top:10px; cursor:pointer;">☕ 贊助 20 元 (建置中)</button>
+            <p style="margin-top: 0; text-align: justify;">若您覺得這套裝備對您的搜救任務有實質幫助，歡迎請我們喝咖啡，支持散木團隊持續研發！</p>
+            
+            <div style="background: var(--bg); padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px solid var(--line); text-align: center;">
+              <!-- 自動讀取姊姊上傳的 QR Code 圖片檔 -->
+              <img src="donate-qr-v2.jpg" alt="贊助資訊 QR Code" style="width: 100%; max-width: 200px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" onerror="this.style.display='none'">
+              <!-- 無法點擊的裝飾性按鈕銘牌 -->
+              <div style="width:100%; background:#d97706; color:#fff; border:none; padding:10px; border-radius:8px; font-weight:bold; margin-top:15px; font-size:14px; letter-spacing:1px;">☕ 歡迎請我喝咖啡</div>
+            </div>
+
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
 
-        <div class="menu-action-btn highlight-heart" onclick="window.open('https://forms.gle/YOUR_FORM_LINK_HERE', '_blank')">
+        <div class="menu-action-btn highlight-heart" onclick="window.open('https://twgo.io/badra', '_blank')">
           <div class="menu-header-left"><span class="menu-icon">💬</span>想跟朵朵說些什麼？</div>
           <span class="menu-arrow">❯</span>
         </div>
@@ -447,39 +446,6 @@
       <button id="angleCancelBtn" class="primary-btn" style="background:var(--muted); color:#fff;" type="button">取消</button>
       <button id="angleConfirmBtn" class="primary-btn" type="button">確認設定</button>
     </div>
-  </div>
-</div>
-
-<div id="installGuideModalOverlay" class="modal-overlay">
-  <div class="modal-box install-guide">
-    <h3>📥 安裝至桌面</h3>
-    <p style="text-align:center; margin-bottom: 5px;">將本系統加至主畫面，獲得無網址列的 100% 沉浸式體驗！</p>
-    
-    <div class="install-platform-title">🍎 蘋果 iOS (Safari)</div>
-    <div class="install-guide-steps">
-      <div class="install-step">
-        <span class="install-step-icon">⇪</span>
-        <span class="install-step-text">1. 點擊下方<br>分享按鈕</span>
-      </div>
-      <div class="install-step">
-        <span class="install-step-icon">➕</span>
-        <span class="install-step-text">2. 選擇<br>加入主畫面</span>
-      </div>
-    </div>
-
-    <div class="install-platform-title">🤖 安卓 Android (Chrome)</div>
-    <div class="install-guide-steps">
-      <div class="install-step">
-        <span class="install-step-icon">⋮</span>
-        <span class="install-step-text">1. 點擊右上角<br>選單按鈕</span>
-      </div>
-      <div class="install-step">
-        <span class="install-step-icon">📱</span>
-        <span class="install-step-text">2. 選擇<br>加至主畫面 / 安裝</span>
-      </div>
-    </div>
-    
-    <button id="installGuideCloseBtn" class="primary-btn" type="button">我知道了</button>
   </div>
 </div>
 
@@ -530,9 +496,6 @@ const exactAngleInput = document.getElementById('exactAngleInput');
 const angleConfirmBtn = document.getElementById('angleConfirmBtn');
 const angleCancelBtn = document.getElementById('angleCancelBtn');
 
-const installGuideModalOverlay = document.getElementById('installGuideModalOverlay');
-const installGuideCloseBtn = document.getElementById('installGuideCloseBtn');
-
 const shareBtnAction = document.getElementById('shareBtnAction');
 const instructorToggleBtn = document.getElementById('instructorToggleBtn');
 
@@ -543,46 +506,11 @@ instructorToggleBtn.addEventListener('click', () => {
   draw(slider.value);
 });
 
-// --- Android 安裝與更新黑科技 (含診斷雷達) ---
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e; 
-  console.log('✅ 系統判定：符合 PWA 原生安裝資格！');
-});
-
-window.addEventListener('appinstalled', (evt) => {
-  console.log('✅ 系統回報：APP 已成功安裝至桌面');
-});
-
-function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-      deferredPrompt = null;
-    });
-  } else {
-    // 啟動診斷雷達：如果無法安裝，告訴使用者為什麼！
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-        alert('系統回報：您目前已經是在 APP 模式下執行囉！');
-    } else {
-        alert('🕵️‍♂️ 系統診斷報告：\n\n目前安卓 Chrome 尚未核發「原生安裝權限」。\n\n可能原因：\n1. 您的桌面上還有舊版的捷徑 (請先刪除它！)\n2. 系統還在背景下載圖檔\n3. 請嘗試重新整理網頁\n\n我們將先為您開啟「圖文安裝教學」！');
-        installGuideModalOverlay.style.display = 'flex';
-    }
+function checkForUpdates() {
+  if (confirm("系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？")) {
+    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
   }
 }
-
-installGuideCloseBtn.addEventListener('click', () => {
-  installGuideModalOverlay.style.display = 'none';
-});
-
-function checkForUpdates() {
-  alert("系統回報：正在為您檢查並載入最新版本...");
-  setTimeout(() => {
-    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
-  }, 600);
-}
-// ---------------------------------
 
 shareBtnAction.addEventListener('click', async () => {
   const shareData = {
