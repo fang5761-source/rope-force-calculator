@@ -1003,6 +1003,13 @@ function draw(beta){
   
   const forceY = topY - 15;
 
+  // 💡 提早計算角度 a 的標籤位置，讓後續的箭頭可以自動瞄準！
+  const aArcStart = isInstructorRight ? 180 : 360 - phi;
+  const aArcEnd = isInstructorRight ? 180 + phi : 360;
+  const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
+  const aAnchor = isInstructorRight ? right : left;
+  const aTextPos = polar(aAnchor.x, topY, 35, aArcMid);
+
   let instructorPose = '';
   if (isSurprised || isBroken) instructorPose = 'animation: panic-shake 0.15s infinite;';
   
@@ -1021,10 +1028,26 @@ function draw(beta){
       <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
+    // 🎯 AI 動態索敵導引線：算出從教官手部到 a標籤 的完美拋物線
+    const arrowStartX = instX + d * 10;
+    const arrowStartY = topY - 15;
+    const deltaX = aTextPos.x - arrowStartX;
+    const deltaY = aTextPos.y - arrowStartY;
+    const dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    
+    // 保持 14px 戰術安全距離，避免箭頭直接戳到數字
+    const ratio = dist > 14 ? (dist - 14) / dist : 1;
+    const arrowEndX = arrowStartX + deltaX * ratio;
+    const arrowEndY = arrowStartY + deltaY * ratio;
+    
+    // 拋物線控制點：讓箭頭微微往上拱，避免碰到繩索
+    const arrowCpX = arrowStartX + deltaX * 0.5;
+    const arrowCpY = Math.min(arrowStartY, arrowEndY) - 15;
+
     instructorHtml = `
       <line x1="${instX}" y1="${topY-25}" x2="${instX + 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
       <line x1="${instX}" y1="${topY-25}" x2="${instX - 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
-      <path d="M ${instX + d*10} ${topY-15} Q ${instX + d*17} ${topY-8} ${instX + d*22} ${topY-4}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
+      <path d="M ${arrowStartX} ${arrowStartY} Q ${arrowCpX} ${arrowCpY} ${arrowEndX} ${arrowEndY}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
     `;
   }
 
@@ -1055,10 +1078,7 @@ function draw(beta){
   const phiArcEnd = isInstructorRight ? phi : 180;
   const phiTextAngle = isInstructorRight ? phi / 2 : 180 - phi / 2;
 
-  const aArcStart = isInstructorRight ? 180 : 360 - phi;
-  const aArcEnd = isInstructorRight ? 180 + phi : 360;
-  const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
-  const aAnchor = isInstructorRight ? right : left;
+  // 💡 大樂刪除了這裡重複宣告的 aArcStart 等變數！(就是那四行害系統罷工的)
 
   svgContainer.innerHTML = `
     <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
