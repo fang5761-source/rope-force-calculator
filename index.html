@@ -16,6 +16,13 @@
 <meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
+<!-- 🔗 LINE/FB 貼上網址時的預覽卡片設定 (Open Graph) -->
+<meta property="og:title" content="繩索張力自動估算儀 | 散木團隊">
+<meta property="og:description" content="運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。">
+<meta property="og:image" content="https://fang5761-source.github.io/rope-force-calculator/icon-512.png">
+<meta property="og:url" content="https://fang5761-source.github.io/rope-force-calculator/">
+<meta property="og:type" content="website">
+
 <!-- 真正 APP 安裝設定檔 -->
 <link rel="manifest" href="manifest.json">
 
@@ -276,9 +283,10 @@
   
   <div id="mainCard" class="card">
     <div class="topbar">
-      <!-- 散木團隊專屬 LOGO 與標題 -->
+      <!-- 專屬 LOGO 與標題 -->
       <div class="title-row">
-        <img src="sunmoon_logo.png" alt="[LOGO]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
+        <!-- APP 專屬圖示 (icon-192.png) -->
+        <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
         <div class="title-tag">繩索張力自動估算儀</div>
       </div>
       <div class="btn-group">
@@ -610,7 +618,7 @@ function checkForUpdates() {
 shareBtnAction.addEventListener('click', async () => {
   const shareData = {
     title: '繩索張力自動估算儀',
-    text: '這套工具可以進行 AR 實境疊圖，精準計算繩索夾角與張力，推薦給你！',
+    text: '運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。',
     url: window.location.href
   };
   try {
@@ -1088,8 +1096,6 @@ function draw(beta){
 
   const betaYOffset = Math.max(0, 90 - beta) * 0.4;
   const betaTextY = cy - 35 - betaYOffset;
-
-  // 💡 大樂保證：這裡絕對沒有重複宣告 aArcStart 等變數了！
 
   svgContainer.innerHTML = `
     <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
