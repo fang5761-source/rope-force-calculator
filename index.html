@@ -254,13 +254,30 @@
 </head>
 <body>
 
+<script>
+// 🛡️ 散木團隊專屬防盜鎖 (網域綁定黑科技)
+(function protectOurApp() {
+  const myDomain = "fang5761-source.github.io"; 
+  const currentDomain = window.location.hostname;
+  
+  if (currentDomain !== "" && currentDomain !== "localhost" && currentDomain !== "127.0.0.1") {
+    if (!currentDomain.includes(myDomain)) {
+      alert("⚠️ 系統安全警告：偵測到非官方網域！\n\n本工具為【散木團隊】專屬研發，未經授權禁止盜用。\n系統防護機制啟動，即將強制鎖定。");
+      document.addEventListener("DOMContentLoaded", () => {
+          document.body.innerHTML = "<div style='display:flex; flex-direction:column; height:100vh; width:100vw; background:#0f1623; color:#ef4444; justify-content:center; align-items:center; font-size:24px; font-weight:bold; text-align:center; padding:20px;'><span style='font-size:60px; margin-bottom:20px;'>💀</span><br>未經授權的盜用版本<br>系統已鎖定</div>";
+      });
+      throw new Error("Security Breach: Unauthorized Domain. System Terminated.");
+    }
+  }
+})();
+</script>
+
 <div class="app-container">
   
   <div id="mainCard" class="card">
     <div class="topbar">
       <!-- 散木團隊專屬 LOGO 與標題 -->
       <div class="title-row">
-        <!-- 💡 修正副檔名為 .png -->
         <img src="sunmoon_logo.png" alt="[LOGO]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
         <div class="title-tag">繩索張力自動估算儀</div>
       </div>
@@ -988,7 +1005,6 @@ function draw(beta){
   const topY = right.y; 
 
   // 💡 大樂黑科技：AI 戰術走位 (教官智能閃避系統)
-  // 強制拉開安全距離，並限制最大邊界，確保不被弧線吞噬！
   const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
   const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
   const d = isInstructorRight ? -1 : 1; 
@@ -1024,23 +1040,22 @@ function draw(beta){
     instructorHtml = `
       <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
       <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
-      <!-- 驚訝符號往上移，避免重疊 -->
       <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
-    // 🎯 AI 動態索敵導引線：算出從教官手部到 a標籤 的完美拋物線
+    // 🎯 AI 動態索敵導引線
     const arrowStartX = instX + d * 10;
     const arrowStartY = topY - 15;
     const deltaX = aTextPos.x - arrowStartX;
     const deltaY = aTextPos.y - arrowStartY;
     const dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
     
-    // 保持 14px 戰術安全距離，避免箭頭直接戳到數字
+    // 保持 14px 戰術安全距離
     const ratio = dist > 14 ? (dist - 14) / dist : 1;
     const arrowEndX = arrowStartX + deltaX * ratio;
     const arrowEndY = arrowStartY + deltaY * ratio;
     
-    // 拋物線控制點：讓箭頭微微往上拱，避免碰到繩索
+    // 拋物線控制點
     const arrowCpX = arrowStartX + deltaX * 0.5;
     const arrowCpY = Math.min(arrowStartY, arrowEndY) - 15;
 
@@ -1074,11 +1089,7 @@ function draw(beta){
   const betaYOffset = Math.max(0, 90 - beta) * 0.4;
   const betaTextY = cy - 35 - betaYOffset;
 
-  const phiArcStart = isInstructorRight ? 0 : 180 - phi;
-  const phiArcEnd = isInstructorRight ? phi : 180;
-  const phiTextAngle = isInstructorRight ? phi / 2 : 180 - phi / 2;
-
-  // 💡 大樂刪除了這裡重複宣告的 aArcStart 等變數！(就是那四行害系統罷工的)
+  // 💡 大樂保證：這裡絕對沒有重複宣告 aArcStart 等變數了！
 
   svgContainer.innerHTML = `
     <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
@@ -1110,17 +1121,16 @@ function draw(beta){
       
       <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎</text>
       
-      <path d="${polyArc(cx, cy, 38, phiArcStart, phiArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
-      <text class="mask-text" x="${polar(cx, cy, 55, phiTextAngle).x}" y="${polar(cx, cy, 55, phiTextAngle).y}" fill="${st.color}" font-size="12">φ ${phiStr}°</text>
-
+      <path d="${polyArc(aAnchor.x, topY, 38, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
+      
       <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
-      <text class="mask-text" x="${polar(aAnchor.x, topY, 35, aArcMid).x}" y="${polar(aAnchor.x, topY, 35, aArcMid).y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
+      <!-- 直接使用前面算好的 aTextPos，不會再報錯！ -->
+      <text class="mask-text" x="${aTextPos.x}" y="${aTextPos.y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
       
       <g opacity="0.9" style="${instructorPose}">
         <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
         <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
         ${instructorHtml}
-        <!-- 💡 標籤頂置法：直接移到教官頭頂，徹底脫離戰區！ -->
         <text class="mask-text" x="${instX}" y="${topY-44}" fill="${st.color}" font-size="12" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
       </g>
 
