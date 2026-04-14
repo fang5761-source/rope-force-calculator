@@ -260,7 +260,8 @@
     <div class="topbar">
       <!-- 散木團隊專屬 LOGO 與標題 -->
       <div class="title-row">
-        <img src="sunmoon_logo.jpg" alt="散木團隊" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line);" onerror="this.style.display='none'">
+        <!-- 💡 修正副檔名為 .png -->
+        <img src="sunmoon_logo.png" alt="[LOGO]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
         <div class="title-tag">繩索張力自動估算儀</div>
       </div>
       <div class="btn-group">
@@ -986,7 +987,10 @@ function draw(beta){
 
   const topY = right.y; 
 
-  const instX = isInstructorRight ? Math.min(right.x + 20, 315) : Math.max(left.x - 20, 45);
+  // 💡 大樂黑科技：AI 戰術走位 (教官智能閃避系統)
+  // 強制拉開安全距離，並限制最大邊界，確保不被弧線吞噬！
+  const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
+  const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
   const d = isInstructorRight ? -1 : 1; 
 
   const pullIn = Math.max(0, (beta - 100) / 80); 
@@ -1013,7 +1017,8 @@ function draw(beta){
     instructorHtml = `
       <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
       <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
-      <text class="mask-text" x="${instX}" y="${topY-45}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+      <!-- 驚訝符號往上移，避免重疊 -->
+      <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
     instructorHtml = `
@@ -1095,7 +1100,8 @@ function draw(beta){
         <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
         <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
         ${instructorHtml}
-        <text class="mask-text" x="${instX}" y="${topY+12}" fill="${st.color}" font-size="13" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
+        <!-- 💡 標籤頂置法：直接移到教官頭頂，徹底脫離戰區！ -->
+        <text class="mask-text" x="${instX}" y="${topY-44}" fill="${st.color}" font-size="12" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
       </g>
 
       <g font-weight="bold" filter="url(#shadow)">
