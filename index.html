@@ -2,575 +2,632 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#0f1623" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
+<!-- 官方全名：展現專業權威 -->
 <title>錨點張力儀 (V型雙點版) | 散木團隊</title>
 
+<!-- 🍎 APP 模式設定與桌面短檔名 (徐老師指定：張力儀) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="錨點張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
+<!-- 🔗 LINE/FB 貼上網址時的預覽卡片設定 (Open Graph) -->
 <meta property="og:title" content="錨點張力儀 (V型雙點版) | 散木團隊">
-<meta property="og:description" content="V型確保系統張力自動估算：實境相機疊圖對位、即時倍數換算，解開雙點確保極限張力的物理之謎。">
-<meta property="og:image" content="https://fang5761-source.github.io/trackline-simulator/icon-512.png">
-<meta property="og:url" content="https://fang5761-source.github.io/trackline-simulator/">
+<meta property="og:description" content="運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。">
+<meta property="og:image" content="https://fang5761-source.github.io/rope-force-calculator/icon-512.png">
+<meta property="og:url" content="https://fang5761-source.github.io/rope-force-calculator/">
 <meta property="og:type" content="website">
 
+<!-- 真正 APP 安裝設定檔 -->
 <link rel="manifest" href="manifest.json">
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+<!-- APP 專屬主畫面圖示 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
-
   :root{
     --bg: #0f1623;
-    --card: rgba(18, 26, 42, 0.85);
+    --card: #121a2a;
     --line: #1b2940;
-    --grid: #1e3a5f;
     --text: #e8eef7;
     --muted: #a8b3c5;
     --safe: #22c55e;
     --warn: #ffd84d;
     --bad: #ef4444;
-    --tagline: #38bdf8; 
+    --base: #94a3b8;
+    --instructor: #cbd5e1;
     --vip: #c084fc;
   }
-
-  html, body { 
-    height: 100%; width: 100%; overflow: hidden; overscroll-behavior: none; 
-    position: fixed; inset: 0; background-color: var(--bg);
-  }
   
-  body {
-    margin: 0; color: var(--text); font-family: 'Noto Serif TC', serif;
-    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-    transition: background-color 0.3s ease;
-    display: flex; flex-direction: column; align-items: center;
-
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  body.camera-mode { background-color: transparent !important; }
-
-  #status-bar-protector {
-    position: fixed; top: 0; left: 0; width: 100%;
-    height: env(safe-area-inset-top);
-    background-color: var(--bg);
-    z-index: 9998; 
-    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-  }
-  body.camera-mode #status-bar-protector {
-    background-color: rgba(15, 22, 35, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-  
-  #scroll-wrapper {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-    display: flex; flex-direction: column; align-items: center;
+  :root[data-theme="light"] {
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --line: #cbd5e1;
+    --text: #0f1623;
+    --muted: #64748b;
+    --safe: #16a34a;
+    --warn: #d97706;
+    --bad: #dc2626;
+    --base: #94a3b8;
+    --instructor: #475569;
   }
 
-  input, textarea { -webkit-user-select: auto; user-select: auto; box-sizing: border-box; }
   *{box-sizing:border-box}
-
-  #bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background-color: var(--bg); overflow: hidden; }
-  #bg-video, #bg-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s; }
-  #grid-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 20px 20px; opacity: 0.5; pointer-events: none; transition: opacity 0.3s;
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: "Noto Serif CJK TC", serif;
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+    padding: 15px 10px 40px 10px;
+    transition: background 0.3s, color 0.3s;
+    touch-action: manipulation; 
   }
-
-  .app-container { 
-    max-width: 500px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; 
-    padding-top: calc(12px + env(safe-area-inset-top));
-    padding-bottom: calc(40px + env(safe-area-inset-bottom));
-    padding-left: max(10px, env(safe-area-inset-left));
-    padding-right: max(10px, env(safe-area-inset-right));
-  }
-  input[type="file"] { display: none; }
-
-  .card { 
-    width:100%; background:var(--card); border:2px solid var(--line); 
-    border-radius:16px; padding: 12px; box-shadow:0 10px 30px rgba(0,0,0,.5); 
-    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); 
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-    position: relative; 
-  }
-  .card.camera-mode {
-    background: transparent !important; border-color: rgba(255,255,255,0.2) !important;
-    backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none !important;
-  }
-
-  .card.capture-mode {
-    background-color: var(--bg) !important;
-    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px) !important;
-    background-size: 20px 20px !important;
-    border-color: var(--line) !important;
-    box-shadow: none !important;
-    border-radius: 0 !important; 
-    backdrop-filter: none !important; 
-    -webkit-backdrop-filter: none !important;
-  }
-  .capture-mode .capture-hide { display: none !important; }
   
-  .topbar { display: flex; align-items: center; margin-bottom: 8px; width: 100%; }
-  .title-tag { font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 8px; white-space: nowrap; width: 100%; justify-content: space-between; }
-  .title-left { display: flex; align-items: center; gap: 6px; }
-  .title-divider { width: 3px; height: 22px; background-color: var(--warn); border-radius: 2px; }
+  .app-container {
+    max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px;
+  }
+
+  .card{
+    width:100%; background:var(--card); border:1px solid var(--line);
+    border-radius:16px; padding: 10px; box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transition: border-color 0.3s, background 0.3s; overflow: hidden; position: relative;
+  }
   
+  .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
+  .title-row { display: flex; align-items: center; width: 100%; }
+  .title-tag {
+    font-size: 15px; color: var(--text); font-weight: bold;
+    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; line-height: 1.4;
+    display: flex; align-items: center;
+  }
+  .btn-group {
+    display: flex; gap: 6px; flex-wrap: wrap; width: 100%;
+    background: rgba(150,150,150,0.05); padding: 6px; border-radius: 10px;
+  }
+  button{
+    appearance:none; border:1px solid var(--line); background:rgba(150,150,150,.1);
+    color:var(--text); border-radius:8px; padding: 8px 12px; cursor:pointer;
+    font-size: 14px; font-weight: bold; display: flex; align-items: center;
+    justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px;
+    position: relative;
+  }
+  button:hover{ background:rgba(150,150,150,.2); }
+  
+  .zoneSafe{color:var(--safe)} .zoneWarn{color:var(--warn)} .zoneBad{color:var(--bad)}
+  
+  .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
+  .svgWrap:active { cursor: grabbing; }
+  
+  #bgVideo, #bgImage {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center; z-index: -1; display: none; opacity: 0.85;
+  }
+  .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
+  :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
+  .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
+
+  #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
+  #scaleWrap { transform-origin: top center; will-change: transform; }
+
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); z-index: 9999; align-items: center; justify-content: center;
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  }
+  .modal-box {
+    background: var(--card); border: 2px solid var(--safe); padding: 24px;
+    border-radius: 16px; width: 85%; max-width: 400px; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
+  }
+  .modal-box h3 { color: var(--safe); margin-top: 0; margin-bottom: 12px; font-size: 18px; }
+  .modal-box p { color: var(--text); font-size: 14px; line-height: 1.6; }
+  .modal-box button.primary-btn {
+    background: var(--safe); color: #0f1623; font-size: 15px; padding: 10px 24px;
+    border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;
+  }
+  #exactAngleInput {
+    width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px;
+    border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
+  }
+  .modal-btn-group { display: flex; gap: 10px; }
+  .modal-btn-group button { flex: 1; }
+  #angleCancelBtn { background: var(--muted); color: #ffffff; }
+
+  /* VIP 標籤與鎖頭 CSS */
   .vip-badge {
     display: none; background: var(--vip); color: #fff; font-size: 10px; font-weight: bold;
     padding: 2px 6px; border-radius: 12px; letter-spacing: 0.5px;
-    box-shadow: 0 0 8px rgba(192, 132, 252, 0.6); margin-left: 4px;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.6); margin-left: 6px; vertical-align: middle;
   }
-  .is-vip .vip-badge { display: inline-block; }
-
-  .icon-bar { display: flex; justify-content: space-between; align-items: center; gap: 6px; background: rgba(0,0,0,0.4); padding: 6px 8px; border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--line); }
-  .icon-btn { flex: 1; aspect-ratio: 1/1; max-height: 38px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid transparent; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: all 0.2s; font-size: 18px; color: var(--text); padding: 0; }
-  .icon-btn:active { background: var(--line); transform: scale(0.95); }
-  .icon-btn.active { background: var(--safe); color: var(--bg); border-color: var(--safe); }
+  body.is-vip .vip-badge { display: inline-block; }
   
-  .lock-icon { position: absolute; bottom: 2px; right: 2px; font-size: 10px; background: rgba(0,0,0,0.8); border-radius: 50%; padding: 2px; }
-  .is-vip .lock-icon { display: none; }
+  .lock-icon { position: absolute; bottom: 2px; right: 4px; font-size: 10px; text-shadow: 0 1px 2px #000; pointer-events: none; }
+  body.is-vip .lock-icon { display: none; }
+  .inline-lock { font-size: 12px; margin-left: 4px; vertical-align: text-top; }
+  body.is-vip .inline-lock { display: none; }
+
+  .watermark {
+    display: none; position: absolute; bottom: 12px; left: 12px; font-size: 11px; font-weight: bold;
+    color: #e8eef7; background: rgba(15, 22, 35, 0.85); border-left: 3px solid var(--safe);
+    padding: 6px 10px; border-radius: 6px; z-index: 100; pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
+  }
+
+  @keyframes sway { 0%, 100% { transform: translateX(-50%) rotate(-0.6deg); } 50% { transform: translateX(-50%) rotate(0.6deg); } }
+  @keyframes shake { 0%, 100% { transform: translateX(-50.5%) translateY(0.5px); } 50% { transform: translateX(-49.5%) translateY(-0.5px); } }
+  @keyframes flash-red { 0%, 100% { border-color: rgba(239, 68, 68, 0.4); background: var(--card); } 50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); } }
+  @keyframes skull-land { 0% { transform: scale(0.5) translateY(-30px); opacity: 0; } 70% { transform: scale(1.1) translateY(0); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+  @keyframes panic-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } 75% { transform: translate(-1px, -1px); } }
+
+  .tOverlay{
+    position:absolute; left:50%; top:230px; transform:translateX(-50%); display:flex; flex-direction: column;
+    align-items:center; color:var(--bad); z-index:5; transform-origin: top center; animation: sway 3s infinite ease-in-out;
+    pointer-events: none; transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+  .tOverlay input, .tOverlay span, .tOverlay button { pointer-events: auto; }
+  .is-warn .tOverlay { animation-duration: 1.2s; }
+  .is-danger .tOverlay { animation: shake 0.1s infinite; }
+  .is-broken { animation: flash-red 0.4s ease-in-out 3; }
+  .is-broken .tOverlay { animation: none; top: 240px; } 
+
+  .skull-view { display: none; }
+  .normal-view { display: flex; flex-direction: column; align-items: center; }
+  .is-broken .normal-view { display: none; }
+  .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
+
+  .weight-controls { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+  .weight-btn {
+    width: 32px; height: 28px; background: rgba(150,150,150,0.2) !important; border: 1px solid var(--line) !important;
+    color: var(--text) !important; font-size: 16px !important; border-radius: 6px !important; pointer-events: auto; flex: none; min-width: auto;
+  }
+  .weight-btn:active { background: rgba(150,150,150,0.4) !important; transform: scale(0.95); }
+
+  .tOverlay input{
+    width:60px; border-radius:6px; border:2px solid var(--bad); background:var(--bg); color:var(--text); padding:2px;
+    text-align:center; font-weight: bold; font-size: 16px; margin-bottom: 0;
+  }
+  .tOverlay span { font-size: 11px; font-weight: bold; background: var(--card); padding: 0 4px; border-radius: 4px; }
   
-  .lock-icon-inline { font-size: 10px; margin-left: 4px; color: var(--vip); }
-  .is-vip .lock-icon-inline { display: none; }
-
-  @keyframes glow-red { 0%, 100% { box-shadow: 0 4px 10px rgba(0,0,0,0.6); border-color: #9a3412; } 50% { box-shadow: 0 0 15px rgba(239,68,68,0.8); border-color: #ef4444; } }
-  .shock-anim { animation: glow-red 1s infinite; }
-
-  /* 💡 畫布加上抓取手勢，暗示可以自由平移 */
-  .svgWrap { 
-    position:relative; width:100%; 
-    height: 45vh; min-height: 320px; max-height: 460px;
-    background: transparent; border-radius: 12px; border: 1px dashed var(--line); overflow: hidden; 
-    cursor: grab;
+  #arControls {
+    display: none; flex-direction: column; gap: 12px; position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
+    padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease, padding 0.3s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
-  .svgWrap:active { cursor: grabbing; }
-  svg { display: block; width: 100%; height: 100%; pointer-events: none; }
+  #arControls.is-collapsed { width: auto; padding: 8px 14px; border-radius: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--muted); }
+  #arControls.is-collapsed #arSlidersWrap, #arControls.is-collapsed .ar-header-text { display: none !important; }
+  #arDragHandle { cursor: move; touch-action: none; user-select: none; }
+  .ar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+  .ar-label { font-size: 13px; font-weight: bold; white-space: nowrap; width: 65px; }
+  #zoomSlider::-webkit-slider-thumb { background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6); }
+  #rotateSlider::-webkit-slider-thumb { background: var(--warn); box-shadow: 0 2px 6px rgba(255, 216, 77, 0.6); }
 
-  .hud-panel, .stretcher-tag, .tagline-wrap, .control-deck { transition: opacity 0.3s ease; }
-  
-  .hud-panel {
-    position: absolute; background: rgba(10, 15, 25, 0.7); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px; padding: 4px 6px; color: var(--text); font-size: 11px; font-weight: bold;
-    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); pointer-events: auto;
-    display: flex; flex-direction: column; gap: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  }
-  .hud-panel .val { font-size: 13px; font-family: monospace; white-space: nowrap; display: flex; align-items: baseline; gap: 4px; }
-  
-  .hud-tl { top: 10px; left: 5px; border-left: 3px solid var(--safe); max-width: 48%; overflow: hidden; } 
-  .hud-tr { top: 10px; right: 5px; border-right: 3px solid var(--safe); text-align: right; align-items: flex-end; max-width: 48%; overflow: hidden; } 
-
-  .tag-badge {
-    position: absolute;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 900;
-    white-space: nowrap;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    transition: left 0.15s ease-out, top 0.15s ease-out, color 0.2s, border 0.2s;
-    z-index: 90; 
-    display: none;
-    background: rgba(15, 22, 35, 0.95);
-    border: 2px solid;
-  }
-
-  .stretcher-tag {
-    position: absolute; background: #ea580c; border: 2px solid #9a3412;
-    border-radius: 8px; padding: 8px 12px; color: var(--bg);
-    transform: translate(-50%, 0); /* 💡 取消旋轉與 Y 軸置中，確保絕對垂直 */
-    display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 50; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-    min-width: 100px; width: auto; 
-    pointer-events: auto;
-  }
-  .stretcher-handles { width: calc(100% + 24px); height: 8px; position: absolute; top: 16px; left: -12px; display: flex; justify-content: space-between; z-index: -1; }
-  .handle-block { width: 14px; height: 8px; background: #c2410c; border: 1px solid #7c2d12; border-radius: 4px; }
-  .stretcher-content { display: flex; flex-direction: row; align-items: center; gap: 10px; }
-  .stretcher-tag input { background: rgba(0,0,0,0.25); border: none; border-bottom: 2px solid rgba(255,255,255,0.6); color: #ffffff; font-size: 20px; font-weight: bold; text-align: center; outline: none; font-family: monospace; padding: 2px 0; border-radius: 4px; width: 60px; }
-  .stretcher-tag input:focus { border-bottom-color: #ffffff; background: rgba(0,0,0,0.5); }
-
-  .control-deck {
-    background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; 
-    padding: 8px 10px; margin-top: 8px; display: flex; flex-direction: column; gap: 8px;
-  }
-  .angle-slider-header { display: flex; justify-content: space-between; font-size: 12px; color: var(--warn); font-weight: bold; }
-  input[type="range"]{ -webkit-appearance:none; width:100%; margin: 4px 0; background:transparent; cursor:pointer; }
+  .slider-container { padding: 0 10px; margin-top: 5px; position: relative; z-index: 20; }
+  input[type="range"]{ -webkit-appearance:none; width:100%; margin: 8px 0; background:transparent; cursor:pointer; }
   input[type="range"]::-webkit-slider-runnable-track{ height:8px; border-radius:999px; background:var(--line); }
-  input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--warn); border:2px solid var(--bg); margin-top:-8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
-
-  .ma-btn-group { display: flex; gap: 6px; width: 100%; justify-content: center; margin-bottom: 4px;}
-  .ma-btn { flex: 1; max-width: 60px; background: rgba(0,0,0,0.4); border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 6px 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: monospace; position: relative;}
-  .ma-btn.active { background: var(--warn); color: var(--bg); border-color: var(--warn); }
-
-  .overlay-tools { display: flex; gap: 12px; margin-top: 4px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
-  .overlay-tool-col { flex: 1; display: flex; flex-direction: column; }
-  .overlay-lbl { font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 4px; font-weight: bold; }
-
-  .tagline-wrap { margin-top: 8px; padding: 8px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px solid var(--tagline); text-align: center; font-size: 13px; font-weight: bold; color: var(--tagline); }
-
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    display: flex; justify-content: center; align-items: center; z-index: 9999;
-    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:#a67c5b;
+    border:2px solid var(--bg); margin-top:-9px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
   }
-  .modal-overlay.show { opacity: 1; pointer-events: auto; }
   
-  .modal-box {
-    background: var(--bg); border: 2px solid var(--vip); border-radius: 16px;
-    padding: 24px; width: 90%; max-width: 350px; text-align: center;
-    box-shadow: 0 10px 40px rgba(192, 132, 252, 0.3); transform: scale(0.9); transition: transform 0.3s ease;
-  }
-  .modal-overlay.show .modal-box { transform: scale(1); }
-  .modal-box h3 { margin: 0 0 10px 0; color: var(--text); display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .modal-box p { font-size: 14px; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
-  .modal-box .highlight { color: var(--vip); font-weight: bold; font-size: 16px; }
-  .btn-store { background: var(--vip); color: #fff; border: none; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; width: 100%; cursor: pointer; box-shadow: 0 4px 12px rgba(192, 132, 252, 0.4); margin-bottom: 10px; transition: transform 0.2s; }
-  .btn-store:active { transform: scale(0.95); }
-  .pwd-input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--line); color: #fff; padding: 10px; border-radius: 8px; font-size: 16px; text-align: center; outline: none; margin-bottom: 12px; letter-spacing: 2px; font-family: monospace; }
-  .pwd-input:focus { border-color: var(--safe); }
-  .modal-actions { display: flex; gap: 10px; }
-  .btn-cancel { flex: 1; background: transparent; border: 1px solid var(--line); color: var(--text); padding: 10px; border-radius: 8px; cursor: pointer; }
-  .btn-unlock { flex: 1; background: var(--safe); border: none; color: #0f1623; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .jumpbar{ display:flex; gap:4px; flex-wrap:wrap; justify-content:center; margin-top:8px; background:rgba(150,150,150,0.05); padding: 6px; border-radius: 10px; }
+  .jump{ padding:8px 12px; font-size:12px; min-width: 65px; font-weight: bold; flex: 1; border-radius: 8px; }
+  .caption{ text-align:center; margin-top:8px; padding:6px; background: rgba(150,150,150,0.1); border-radius:8px; font-size: 13px; line-height: 1.6; }
+  
+  .mask-text { paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px; stroke-linecap: round; stroke-linejoin: round; }
+  .beta-text:hover { filter: brightness(1.3); }
 
-  .menu-list { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; width: 100%; }
-  .main-accordion { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-  details.main-accordion > summary { padding: 14px 16px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--warn); background: rgba(0,0,0,0.3); font-size: 15px; }
+  /* =========================================
+     ▼ 終極區塊排版：APP 原生設定選單風格 ▼
+     ========================================= */
+  .menu-list { display: flex; flex-direction: column; width: 100%; margin-top: 5px; }
+  
+  details.main-accordion { margin-top: 12px; }
+  details.main-accordion > summary {
+    font-size: 14px; font-weight: bold; color: var(--text); padding: 12px 16px; background: rgba(150,150,150,0.1);
+    border-radius: 12px; letter-spacing: 0.5px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; transition: background 0.2s;
+  }
+  details.main-accordion > summary:active { background: rgba(150,150,150,0.2); }
   details.main-accordion > summary::-webkit-details-marker { display: none; }
-  .menu-group { display: flex; flex-direction: column; }
-  .menu-item { border-top: 1px solid var(--line); }
-  .menu-item summary { padding: 12px 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 14px; transition: background 0.2s; color: var(--text); }
-  .menu-item summary::-webkit-details-marker { display: none; }
-  .menu-item summary:active { background: var(--line); }
-  .menu-header-left { display: flex; align-items: center; gap: 10px; }
-  .menu-icon { font-size: 18px; }
-  .menu-arrow { color: var(--muted); font-size: 12px; transition: transform 0.3s; }
-  .menu-item[open] > summary .menu-arrow { transform: rotate(90deg); }
-  .menu-content { padding: 16px; font-size: 13.5px; color: var(--muted); line-height: 1.6; background: rgba(0,0,0,0.4); text-align: justify; }
-  
-  .btn-collapse-inner { width: 100%; padding: 10px; margin-top: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: 8px; color: var(--text); cursor: pointer; font-family: inherit; font-weight: bold; }
-  
-  .menu-action-btn { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; transition: background 0.2s; color: var(--text); }
-  .menu-action-btn:active { background: var(--line); }
+  details.main-accordion > summary::after { content: "❯"; font-size: 12px; color: var(--muted); transition: transform 0.3s; display: inline-block; }
+  details.main-accordion[open] > summary { margin-bottom: 8px; }
+  details.main-accordion[open] > summary::after { transform: rotate(90deg); }
 
-  .footer-disclaimer { margin-top: 5px; padding: 12px; font-size: 12px; color: var(--muted); line-height: 1.6; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 4px solid var(--bad); text-align: justify; }
+  .menu-group { background: var(--card); border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; }
+
+  details.menu-item, .menu-action-btn { background: transparent; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid rgba(150,150,150,0.1); margin: 0; font-size: 15px; font-weight: bold; color: var(--text); cursor: pointer; user-select: none; text-decoration: none; }
+  details.menu-item { display: block; padding: 0; }
+  .menu-action-btn { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+  details.menu-item:last-child, .menu-action-btn:last-child { border-bottom: none; }
+
+  details.menu-item summary { display: flex; align-items: center; justify-content: space-between; list-style: none; width: 100%; margin: 0; padding: 16px; }
+  details.menu-item summary::-webkit-details-marker { display: none; }
+  
+  .menu-header-left { display: flex; align-items: center; gap: 12px; }
+  .menu-icon { font-size: 18px; width: 24px; text-align: center; }
+  .menu-arrow { color: var(--muted); transition: transform 0.3s; font-size: 12px; font-weight: bold; }
+  details.menu-item[open] summary .menu-arrow { transform: rotate(90deg); }
+  
+  .menu-content { font-size: 14px; color: var(--muted); line-height: 1.7; border-top: 1px solid rgba(150,150,150,0.1); margin: 0; padding: 16px; font-weight: normal; }
+  .menu-content ul { padding-left: 20px; margin: 8px 0; }
+  .menu-content li { margin-bottom: 6px; }
+  .menu-content p { margin-top: 0; margin-bottom: 10px; }
+
+  .menu-action-btn:active { background: rgba(150,150,150,0.1); }
+
+  .menu-group.has-open-item > details.menu-item:not([open]), .menu-group.has-open-item > .menu-action-btn { display: none !important; }
+  
+  .btn-collapse-inner { background: rgba(150,150,150,0.1); color: var(--text); border: 1px solid var(--line); width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
+  .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
+  
+  /* 💡 更新免責聲明區塊樣式 */
+  .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
 </style>
 </head>
 <body>
 
 <script>
-(function protectOurApp() {
-  if (window.self !== window.top) { window.top.location = window.self.location; }
-  document.addEventListener('contextmenu', event => event.preventDefault());
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) || (e.ctrlKey && (e.key === 'U' || e.key === 'u')) || (e.metaKey && e.altKey && (e.key === 'I' || e.key === 'i')) || (e.metaKey && e.altKey && (e.key === 'U' || e.key === 'u'))) {
-      e.preventDefault();
-    }
-  });
-  const myDomain = "fang5761-source.github.io"; 
-  const currentDomain = window.location.hostname;
-  if (currentDomain !== "" && currentDomain !== "localhost" && currentDomain !== "127.0.0.1") {
-    if (!currentDomain.includes(myDomain)) {
-      alert("⚠️ 系統安全警告：偵測到非官方網域！\n\n本工具為【散木團隊】專屬研發，未經授權禁止盜用。\n系統防護機制啟動，即將強制鎖定。");
-      document.addEventListener("DOMContentLoaded", () => {
-          document.body.innerHTML = "<div style='display:flex; flex-direction:column; height:100vh; width:100vw; background:#0f1623; color:#ef4444; justify-content:center; align-items:center; font-size:24px; font-weight:bold; text-align:center; padding:20px;'><span style='font-size:60px; margin-bottom:20px;'>💀</span><br>未經授權的盜用版本<br>系統已鎖定</div>";
-      });
-      throw new Error("Security Breach: Unauthorized Domain. System Terminated.");
-    }
-  }
-})();
+// ══════════════════════════════════════════════════════════════
+//  散木團隊 · 多層次防盜保護系統 v2.0
+// ══════════════════════════════════════════════════════════════
+(function(){
+  const _0xd = atob('ZmFuZzU3NjEtc291cmNlLmdpdGh1Yi5pbw=='); 
+  const _0xh = window[atob('bG9jYXRpb24=')][atob('aG9zdG5hbWU=')]; 
 
-// 💡 V1.3.0: 物理重力校正版
-const APP_VERSION = "V1.3.0";
+  window['_unlockApp']   = function(){ _0xKill(); };
+  window['_bypassCheck'] = function(){ _0xKill(); };
+  window['_disableLock'] = function(){ _0xKill(); };
+
+  function _0xKill(msg) {
+    const _m = msg || atob('5pyq57aT5o6l5qC85qih6Iiq5ZCn77yc5bey57O757uf5bim5Yqo5aSx5pWX');
+    try {
+      document.open();
+      document.write(
+        '<html><body style="margin:0;height:100vh;display:flex;flex-direction:column;' +
+        'background:#0f1623;color:#ef4444;justify-content:center;align-items:center;' +
+        'text-align:center;font-family:monospace;padding:20px;">' +
+        '<span style="font-size:72px;margin-bottom:16px;">&#x1F480;</span>' +
+        '<div style="font-size:22px;font-weight:bold;margin-bottom:8px;">' + _m + '</div>' +
+        '<div style="font-size:13px;color:#94a3b8;margin-top:12px;">' +
+        atob('5pys5bel5YW36aSa5qih6Iiq55qE5q2k5bqT77yM5Lul56aB5q2k5q+P5qih6IiqICsgU2NhdHRlck1hcA==') +
+        '</div></body></html>'
+      );
+      document.close();
+    } catch(e) {
+      document.body.innerHTML = '';
+      document.body.style.cssText = 'background:#0f1623;color:#ef4444;display:flex;flex-direction:column;height:100vh;justify-content:center;align-items:center;text-align:center;';
+      document.body.innerHTML = '<span style="font-size:72px">&#x1F480;</span><br>' + _m;
+    }
+    throw new Error('[SM-SHIELD] Unauthorized access terminated.');
+  }
+
+  (function _0xVerify(){
+    const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
+    const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
+
+    if (!_isOk) {
+      try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
+      _0xKill();
+    }
+  })();
+
+})();
 </script>
 
-<div id="status-bar-protector" data-html2canvas-ignore="true"></div>
-<div id="bg-layer"><video id="bg-video" autoplay playsinline muted></video><img id="bg-image" src="" alt="背景圖片"></div>
-<div id="grid-overlay"></div>
+<div class="app-container">
+  
+  <div id="mainCard" class="card">
+    <div class="topbar">
+      <div class="title-row">
+        <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
+        <div class="title-tag">錨點張力儀 (V型雙點版) <span class="vip-badge">PRO</span></div>
+      </div>
+      <div class="btn-group">
+        <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
+        <button id="cameraToggle" type="button" title="開啟實境相機">📷<span class="lock-icon">🔒</span></button>
+        <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
+        <button id="photoBtn" type="button" title="上傳照片疊圖">📁<span class="lock-icon">🔒</span></button>
+        <button id="screenshotBtn" type="button" title="戰術截圖">📸<span class="lock-icon">🔒</span></button>
+        <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
+        <button id="reset" type="button" title="重置畫面">↺</button>
+      </div>
+    </div>
 
-<div id="vipModal" class="modal-overlay">
+    <video id="bgVideo" autoplay playsinline muted></video>
+    <img id="bgImage" alt="背景圖片" />
+    <input type="file" id="photoUpload" accept="image/*" style="display:none;">
+
+    <div class="svgWrap">
+      <div id="gimbalWrap">
+        <div id="scaleWrap">
+          <div id="svgContainer" style="width:100%; height: 330px;"></div>
+          
+          <div id="swayGroup" class="tOverlay">
+            <div class="normal-view">
+              <div class="weight-controls">
+                <button id="btnMinus" class="weight-btn" type="button">-</button>
+                <input id="inputT" type="number" value="100" min="0">
+                <button id="btnPlus" class="weight-btn" type="button">+</button>
+              </div>
+              <span>負重 (kg)</span>
+            </div>
+            <div class="skull-view">
+              <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
+              <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="arControls" class="is-collapsed">
+      <div id="arDragHandle" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+        <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none; pointer-events:none;">🛠️ 實境疊圖控制面板</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--muted); font-size:16px; pointer-events:none;">✥</span>
+          <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold; cursor:pointer;">展開設定</button>
+        </div>
+      </div>
+      <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
+          <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
+        </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
+          <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-container">
+      <input id="slider" type="range" min="0" max="180" value="120" step="0.1">
+    </div>
+
+    <div class="jumpbar">
+      <button class="jump" data-beta="0" type="button">β 0°</button>
+      <button class="jump" data-beta="60" type="button">β 60°</button>
+      <button class="jump" data-beta="90" type="button">β 90°</button>
+      <button class="jump" data-beta="120" type="button">β 120°</button>
+      <button class="jump" data-beta="150" type="button">β 150°</button>
+      <button class="jump" data-beta="180" type="button">β 180°</button>
+    </div>
+
+    <div id="caption" class="caption"></div>
+    <div id="watermark" class="watermark"></div>
+  </div>
+
+  <div class="menu-list">
+    
+    <details class="main-accordion">
+      <summary>📚 專業名詞與原理解析</summary>
+      <div class="menu-group">
+        <div class="menu-content">
+          <p><b style="color:var(--safe)">🔗 張力 (Tension)</b><br>系統內部主繩繃緊的程度。當 V 型夾角越大，系統產生的倍數張力就越恐怖，超過 120 度將直接大於原負載！</p>
+          <p><b style="color:var(--warn)">⚓ 錨點 (Anchor)</b><br>確保系統安全的核心基石。本儀器專注於計算兩端錨點（A/B點）在不同夾角下，所承受的極限張力拉扯。</p>
+          <p><b style="color:var(--tagline)">📐 臨界死角 (Critical Angle)</b><br>在雙點確保系統中，強烈建議夾角維持在 90 度以內；一旦超過 120 度，張力曲線將呈現指數型飆升，極易導致系統崩潰。</p>
+          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的 a 角，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，兩者數值完全相同，方便教官在現場判斷系統受力狀態。</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+        </div>
+      </div>
+    </details>
+
+    <details class="main-accordion">
+      <summary>⚙️ 系統工具與說明書</summary>
+      <div class="menu-group">
+        
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📖</span>系統操作說明</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <ul style="margin-top: 0; padding-left: 20px;">
+              <li style="margin-bottom: 6px;">直接滑動下方 <b>夾角拉桿</b>，或點擊快速按鈕，即時預覽不同角度的張力變化。</li>
+              <li style="margin-bottom: 6px;">點擊畫面上角度數字旁的 <b>✎ 圖示</b>，可手動輸入精確角度。</li>
+              <li style="margin-bottom: 6px;">點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。</li>
+              <li style="margin-bottom: 6px;">點擊上方工具列的 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。</li>
+              <li style="margin-bottom: 6px;">點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片。開啟後，點選畫布下方的 <b>【🛠️展開設定】</b>，即可單指拖曳平移 V角，或用拉桿旋轉、縮放來疊合現場地形。</li>
+              <li style="margin-bottom: 6px;">點擊 <b>☀️ 按鈕</b>：切換日/夜間深淺色模式，適應不同光源環境。</li>
+              <li style="margin-bottom: 6px;">點擊 <b>📸 戰術截圖</b>：一鍵截取乾淨儀表板存入相簿。</li>
+            </ul>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          </div>
+        </details>
+
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">ℹ️</span>版本與開發資訊</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <div style="text-align: center; margin-bottom: 15px;">
+              <span style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">錨點張力儀 專業正式版</span>
+            </div>
+            <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
+            <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;">教學架構與工程判斷／徐世豐</p>
+            <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;">工具設計與互動介面／吳佩芳（朵朵）</p>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          </div>
+        </details>
+
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
+            
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🤖 Android (安卓版)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
+                <li style="margin-bottom: 4px;">點選畫面右下角的「⋮」</li>
+                <li style="margin-bottom: 4px;">選擇「使用預設瀏覽器開啟」</li>
+                <li style="margin-bottom: 4px;">在畫面右上角點選「⋮」</li>
+                <li style="margin-bottom: 4px;">往下滑，選擇「加到主畫面」</li>
+                <li style="margin-bottom: 0;">點選「安裝」，即可將捷徑加到主畫面</li>
+              </ol>
+            </div>
+
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🍎 iOS (iPhone)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
+                <li style="margin-bottom: 4px;">點選下方的「分享」圖示，往下滑</li>
+                <li style="margin-bottom: 4px;">選擇「加入主畫面」</li>
+                <li style="margin-bottom: 0;">點選「加入」，即可將捷徑加到主畫面</li>
+              </ol>
+            </div>
+
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          </div>
+        </details>
+      </div>
+    </details>
+
+    <div class="main-accordion" style="display: flex; flex-direction: column;">
+      <div class="menu-action-btn" id="shareBtnAction" style="border-bottom: 1px solid var(--line);">
+        <div class="menu-header-left"><span class="menu-icon">🔗</span>分享系統連結</div>
+        <span class="menu-arrow">❯</span>
+      </div>
+
+      <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
+        <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並載入最新版本</div>
+        <span class="menu-arrow">❯</span>
+      </div>
+
+      <div class="menu-action-btn" onclick="window.open('https://forms.gle/Uykr5jeQP6fgVhxh9', '_blank')">
+        <div class="menu-header-left"><span class="menu-icon">💬</span>技術支援與問題回報</div>
+        <span class="menu-arrow">❯</span>
+      </div>
+    </div>
+
+    <!-- 💡 替換為軟體免責聲明 -->
+    <div class="footer-disclaimer">
+      <strong style="color: var(--bad); font-size: 14px;">⚖️ 軟體免責聲明：</strong><br>
+      系統運算基於理想物理模型，不含繩索材質疲勞、摩擦力損耗等環境變數。實際救援操作時，請務必遵循專業教官之指導，開發團隊不負任何實地操作之法律與賠償責任。
+    </div>
+
+  </div>
+</div>
+
+<div id="permissionModalOverlay" class="modal-overlay">
   <div class="modal-box">
-    <h3>🔒 專業版功能解鎖 <span class="vip-badge" style="display:inline-block;">PRO</span></h3>
-    <p>您即將啟用「<span id="vipFeatureName" class="highlight"></span>」！</p>
-    <p id="vipFeatureDesc" style="font-size:14px; color:var(--safe); font-weight:bold; margin-bottom: 12px;"></p>
-    <p style="font-size:13px;">此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！</p>
-    <button class="btn-store" onclick="window.open('https://gumroad.com', '_blank')">🛒 前往專業版自動販賣機</button>
-    <hr style="border:0; border-top:1px dashed var(--line); margin: 15px 0;">
-    <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">已取得密碼？請在此輸入：</p>
-    <input type="text" id="vipPwdInput" placeholder="輸入 VIP 通關密碼" class="pwd-input" autocomplete="off">
-    <div id="vipErrorMsg" style="color:var(--bad); font-size:12px; height:16px; margin-bottom:8px;"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeVipModal()">稍後再說</button>
-      <button class="btn-unlock" onclick="verifyVip()">立即解鎖 🔓</button>
+    <h3>🛡️ 系統安全提示</h3>
+    <p>為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭。<br><br>請放心，所有影像疊圖運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！</p>
+    <button id="permissionAgreeBtn" class="primary-btn" type="button">我瞭解了，開始授權</button>
+  </div>
+</div>
+
+<div id="angleModalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <h3>🎯 輸入精確角度</h3>
+    <p style="text-align:center; margin-bottom:12px; font-size:13px;">請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)</p>
+    <input type="number" id="exactAngleInput" min="0" max="180" step="0.1" inputmode="decimal">
+    <div class="modal-btn-group">
+      <button id="angleCancelBtn" class="primary-btn" style="background:var(--muted); color:#fff;" type="button">取消</button>
+      <button id="angleConfirmBtn" class="primary-btn" type="button">確認設定</button>
     </div>
   </div>
 </div>
 
-<div id="scroll-wrapper">
-  <div class="app-container" id="capture-area">
-
-    <div class="card" id="mainCard">
-      <div class="topbar">
-        <div class="title-tag">
-          <div class="title-left">
-            <svg width="24" height="24" viewBox="0 0 100 100">
-               <rect width="100" height="100" fill="#0f1623" rx="10"/>
-               <path d="M 20 30 L 50 70 L 80 30" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-               <circle cx="20" cy="30" r="10" fill="#ffffff" />
-               <circle cx="80" cy="30" r="10" fill="#ffffff" />
-               <circle cx="50" cy="70" r="14" fill="#ffd84d" />
-               <circle cx="50" cy="70" r="4" fill="#0f1623" />
-            </svg>
-            <div class="title-divider"></div>
-            <span>錨點張力儀 (V型雙點版) <span class="vip-badge">PRO</span></span>
-          </div>
-          <img src="./sunmoon_logo.png" alt="散木團隊" style="width: 30px; height: 30px; border-radius: 6px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-        </div>
-      </div>
-
-      <div class="icon-bar" data-html2canvas-ignore="true">
-        <button class="icon-btn" id="btn-camera" onclick="attemptFeature('📷 實境相機與相簿疊圖', toggleCamera)" title="實境相機">📷<span class="lock-icon">🔒</span></button>
-        <button class="icon-btn" id="btn-flashlight" onclick="toggleFlashlight()" title="手電筒">🔦</button>
-        <label class="icon-btn" onclick="handleImageUploadClick(event)" title="載入照片" style="margin:0;">📁<span class="lock-icon">🔒</span></label>
-        <input type="file" id="upload-image" accept="image/*" onchange="loadImage(event)">
-        <button class="icon-btn" onclick="toggleGrid()" title="工程網格">🌐</button>
-        
-        <!-- 💡 點擊 AR 測角，連動打開相機並展開拉桿 -->
-        <button class="icon-btn" id="btn-ar" onclick="attemptFeature('📐 手動實境測角', toggleManualAR)" title="手動測角">📐<span class="lock-icon">🔒</span></button>
-        
-        <button class="icon-btn" onclick="toggleHUD()" title="專注/淨空模式" id="btn-hud">
-           <span>👁️</span>
-           <div id="hud-slash" style="display:none; position:absolute; width:22px; height:3px; background:var(--bad); transform:rotate(-45deg); border-radius:2px; box-shadow:0 0 4px rgba(0,0,0,0.8);"></div>
-        </button>
-
-        <button class="icon-btn" onclick="attemptFeature('📸 戰術純淨截圖', takeScreenshot)" title="戰術截圖">📸<span class="lock-icon">🔒</span></button>
-        <button class="icon-btn" onclick="resetEngine()" title="重置沙盤">↺</button>
-      </div>
-
-      <div class="svgWrap" id="svgWrap">
-        <!-- 💡 移除了 CSS rotate，只保留平移與縮放，將旋轉交給純數學運算 -->
-        <g id="transformLayer" style="display:block; width:100%; height:100%; transform-origin: 200px 220px;">
-            <svg id="canvas" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet">
-              <path id="angleArc" fill="none" stroke="var(--warn)" stroke-width="2" />
-              <text id="angleText" fill="var(--warn)" font-size="15" font-weight="bold" text-anchor="middle"></text>
-
-              <line id="ropeL" stroke="var(--safe)" stroke-width="6" stroke-linecap="round" />
-              <line id="ropeR" stroke="var(--safe)" stroke-width="6" stroke-linecap="round" />
-
-              <circle id="dotA" cx="0" cy="0" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
-              <text id="txtA" x="0" y="4" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">A</text>
-              
-              <circle id="dotB" cx="0" cy="0" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
-              <text id="txtB" x="0" y="4" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">B</text>
-
-              <!-- 💡 重力恆定線 (永遠垂直往下) -->
-              <circle id="centerRing" cx="200" cy="220" r="12" fill="none" stroke="var(--warn)" stroke-width="4" />
-              <line id="suspLine" stroke="var(--muted)" stroke-width="5" stroke-linecap="round" />
-              <line id="pulleyNeedle" stroke="#000" stroke-width="2.5" stroke-linecap="round" />
-            </svg>
-        </g>
-
-        <div class="hud-panel hud-tl" id="hudA">
-           <div style="color:var(--muted); font-size:11px;">A 錨點</div>
-           <div id="txtTenA" class="val" style="color:var(--safe)">張力: --</div>
-           <div id="txtVertA" class="val" style="color:var(--warn)">抗重: --</div>
-        </div>
-        <div class="hud-panel hud-tr" id="hudB">
-           <div style="color:var(--muted); font-size:11px;">B 錨點</div>
-           <div id="txtTenB" class="val" style="color:var(--safe)">張力: --</div>
-           <div id="txtVertB" class="val" style="color:var(--warn)">抗重: --</div>
-        </div>
-        
-        <!-- 💡 移除不合理的 CSS 旋轉，讓擔架乖乖垂直 -->
-        <div id="floatLoad" class="stretcher-tag">
-           <div class="stretcher-handles">
-              <div class="handle-block"></div><div class="handle-block"></div>
-           </div>
-           <div class="stretcher-content">
-              <div style="display:flex; align-items:baseline; gap:4px;">
-                 <input type="number" id="inLoad" value="100" step="1"><span style="font-size:14px; font-weight:bold; color:#fff;">kg</span>
-              </div>
-           </div>
-        </div>
-      </div>
-      
-      <div class="control-deck">
-         <div class="angle-slider-header capture-hide">
-            <span>銳角 (0°)</span>
-            <span style="color:var(--text);">📐 滑動調整 V 型夾角</span>
-            <span>鈍角 (180°)</span>
-         </div>
-         <input type="range" id="angleSlider" class="capture-hide" min="0" max="175" step="1" value="120">
-         
-         <div class="ma-btn-group capture-hide" style="margin-top: 6px;">
-            <button class="ma-btn" data-angle="30">30°</button>
-            <button class="ma-btn" data-angle="60">60°</button>
-            <button class="ma-btn" data-angle="90">90°</button>
-            <button class="ma-btn active" data-angle="120">120°</button>
-            <button class="ma-btn" data-angle="150">150°</button>
-         </div>
-
-         <div class="overlay-tools capture-hide" id="overlayTools" style="display:none;">
-             <div class="overlay-tool-col">
-                 <div class="overlay-lbl">🔄 系統旋轉對齊</div>
-                 <input type="range" id="rotSlider" min="-180" max="180" value="0">
-             </div>
-             <div class="overlay-tool-col">
-                 <div class="overlay-lbl">🔍 系統放大縮小</div>
-                 <input type="range" id="scaleSlider" min="0.4" max="2.0" step="0.1" value="1">
-             </div>
-         </div>
-      </div>
-      
-      <div class="tagline-wrap" id="tensionInfo">
-         📍 目前張力倍數：<b id="mulText" style="color:var(--safe)">1.00 x</b> 負載
-      </div>
-    </div> 
-    
-    <div class="menu-list" data-html2canvas-ignore="true">
-      <details class="main-accordion">
-        <summary>📚 專業名詞與原理解析</summary>
-        <div class="menu-group">
-          <div class="menu-content">
-            <p><b style="color:var(--safe)">🔗 張力 (Tension)</b><br>系統內部主繩繃緊的程度。當 V 型夾角越大，系統產生的倍數張力就越恐怖，超過 120 度將直接大於原負載！</p>
-            <p><b style="color:var(--warn)">⚓ 錨點 (Anchor)</b><br>確保系統安全的核心基石。本儀器專注於計算兩端錨點（A/B點）在不同夾角下，所承受的極限張力拉扯。</p>
-            <p><b style="color:var(--tagline)">📐 臨界死角 (Critical Angle)</b><br>在雙點確保系統中，強烈建議夾角維持在 90 度以內；一旦超過 120 度，張力曲線將呈現指數型飆升，極易導致系統崩潰。</p>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
-          </div>
-        </div>
-      </details>
-
-      <details class="main-accordion">
-        <summary>⚙️ 系統工具與說明書</summary>
-        <div class="menu-group">
-          
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">📖</span>系統操作說明</div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <ul style="margin-top: 0; padding-left: 20px;">
-                <li style="margin-bottom: 6px;">滑動下方 <b>夾角拉桿</b>，或點擊快速按鈕，即時預覽不同角度的張力變化。</li>
-                <li style="margin-bottom: 6px;">點擊橘色 <b>大擔架</b> 修改負載重量，系統會自動換算兩端承受張力。</li>
-                <li style="margin-bottom: 6px;">點擊 <b>📷實境 / 📁相簿 / 📐測角</b>：可開啟相機或匯入現場照片。開啟後，您可以直接用手指<b>拖曳畫布</b>來移動系統位置，並利用下方出現的<b>🔄旋轉</b>與<b>🔍縮放</b>拉桿，將系統完美疊合於現場環境中！</li>
-                <li style="margin-bottom: 6px;">點擊 <b>👁️淨空模式</b>：隱藏所有數據面板，只保留純粹的繩索幾何線條，適合教學講解。</li>
-              </ul>
-              <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
-            </div>
-          </details>
-
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">ℹ️</span>版本與開發資訊</div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <div style="text-align: center; margin-bottom: 15px;">
-                <span style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">錨點張力儀 專業正式版</span>
-              </div>
-              <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
-              <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;">教學架構與工程判斷／徐世豐</p>
-              <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;">工具設計與互動介面／吳佩芳（朵朵）</p>
-              
-              <p style="margin-top: 16px; margin-bottom: 0; font-size: 12px; text-align: center; color: var(--muted); font-family: monospace;">系統核心版本：<span id="appVersionDisplay">--</span></p>
-
-              <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
-            </div>
-          </details>
-
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
-              <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-                <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🤖 Android (安卓版)</p>
-                <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                  <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
-                  <li style="margin-bottom: 4px;">點選畫面右下角的「⋮」</li>
-                  <li style="margin-bottom: 4px;">選擇「使用預設瀏覽器開啟」</li>
-                  <li style="margin-bottom: 4px;">在畫面右上角點選「⋮」</li>
-                  <li style="margin-bottom: 4px;">往下滑，選擇「加到主畫面」</li>
-                  <li style="margin-bottom: 0;">點選「安裝」，即可將捷徑加到主畫面</li>
-                </ol>
-              </div>
-              <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px;">
-                <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🍎 iOS (iPhone)</p>
-                <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                  <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
-                  <li style="margin-bottom: 4px;">點選下方的「分享」圖示，往下滑</li>
-                  <li style="margin-bottom: 4px;">選擇「加入主畫面」</li>
-                  <li style="margin-bottom: 0;">點選「加入」，即可將捷徑加到主畫面</li>
-                </ol>
-              </div>
-              <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
-            </div>
-          </details>
-        </div>
-      </details>
-
-      <div class="main-accordion" style="display: flex; flex-direction: column;">
-        <div class="menu-action-btn" id="shareBtnAction" style="border-bottom: 1px solid var(--line);">
-          <div class="menu-header-left"><span class="menu-icon">🔗</span>分享系統連結</div>
-          <span class="menu-arrow">❯</span>
-        </div>
-
-        <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
-          <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並載入最新版本</div>
-          <span class="menu-arrow">❯</span>
-        </div>
-
-        <div class="menu-action-btn" onclick="window.open('https://forms.gle/Uykr5jeQP6fgVhxh9', '_blank')">
-          <div class="menu-header-left"><span class="menu-icon">💬</span>技術支援與問題回報</div>
-          <span class="menu-arrow">❯</span>
-        </div>
-      </div>
-
-      <div class="footer-disclaimer">
-        <strong style="color: var(--bad); font-size: 14px;">⚖️ 軟體免責聲明：</strong><br>
-        本軟體為理論物理運算輔助工具，不包含繩索材質疲勞、極端摩擦力等環境變數。實際救援操作之系統架設與安全確保，均須由專業教官與指揮官實地判定，開發團隊不負任何實地操作之法律與賠償責任。
-      </div>
+<!-- 💡 VIP 升級解鎖視窗 -->
+<div id="vipModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>🔒 專業版功能解鎖 <span class="vip-badge" style="display:inline-block; margin-left:8px;">PRO</span></h3>
+    <p>您即將啟用「<span id="vipFeatureName" style="color:var(--vip); font-weight:bold; font-size:16px;"></span>」！</p>
+    <p id="vipFeatureDesc" style="font-size:14px; color:var(--safe); font-weight:bold; margin-bottom: 12px;"></p>
+    <p style="font-size:13px;">此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！</p>
+    <button class="primary-btn" style="background:var(--vip); margin-bottom:10px;" onclick="window.open('https://gumroad.com', '_blank')">🛒 前往專業版自動販賣機</button>
+    <hr style="border:0; border-top:1px dashed var(--line); margin: 15px 0;">
+    <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">已取得密碼？請在此輸入：</p>
+    <input type="text" id="vipPwdInput" placeholder="輸入 VIP 通關密碼" style="width: 100%; padding: 10px; font-size: 16px; text-align: center; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 12px; letter-spacing: 2px; font-family: monospace;">
+    <div id="vipErrorMsg" style="color:var(--bad); font-size:12px; height:16px; margin-bottom:8px;"></div>
+    <div class="modal-btn-group">
+      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="closeVipModal()">稍後再說</button>
+      <button class="primary-btn" onclick="verifyVip()">立即解鎖 🔓</button>
     </div>
   </div>
 </div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('🛡️ 戰術後勤 SW 已啟動'))
+      .catch(err => console.log('SW 啟動失敗', err));
+  });
+}
+
+console.log("%c🛡️ 本錨點張力儀由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
+
+const svgContainer = document.getElementById('svgContainer');
+const svgWrap = document.querySelector('.svgWrap');
+const slider = document.getElementById('slider');
+const caption = document.getElementById('caption');
+const resetBtn = document.getElementById('reset');
+const themeToggle = document.getElementById('themeToggle');
+const cameraToggle = document.getElementById('cameraToggle');
+const torchToggle = document.getElementById('torchToggle');
+const photoBtn = document.getElementById('photoBtn');
+const photoUpload = document.getElementById('photoUpload');
+const screenshotBtn = document.getElementById('screenshotBtn');
+const bgVideo = document.getElementById('bgVideo');
+const bgImage = document.getElementById('bgImage');
+const arControls = document.getElementById('arControls');
+const arCollapseBtn = document.getElementById('arCollapseBtn');
+const arDragHandle = document.getElementById('arDragHandle');
+const zoomSlider = document.getElementById('zoomSlider');
+const rotateSlider = document.getElementById('rotateSlider');
+const scaleWrap = document.getElementById('scaleWrap');
+const gimbalWrap = document.getElementById('gimbalWrap');
+const inputT = document.getElementById('inputT');
+const btnMinus = document.getElementById('btnMinus');
+const btnPlus = document.getElementById('btnPlus');
+const jumpBtns = document.querySelectorAll('.jump');
+const mainCard = document.getElementById('mainCard');
+
+const permissionModalOverlay = document.getElementById('permissionModalOverlay');
+const permissionAgreeBtn = document.getElementById('permissionAgreeBtn');
+const watermark = document.getElementById('watermark');
+
+const angleModalOverlay = document.getElementById('angleModalOverlay');
+const exactAngleInput = document.getElementById('exactAngleInput');
+const angleConfirmBtn = document.getElementById('angleConfirmBtn');
+const angleCancelBtn = document.getElementById('angleCancelBtn');
+
+const shareBtnAction = document.getElementById('shareBtnAction');
+const instructorToggleBtn = document.getElementById('instructorToggleBtn');
+
+// 💡 VIP 系統初始化
 const VIP_SECRET_KEYS = ["SM-PRO-2024", "SUNMOON-V10", "RESCUE-VIP"];
 let isUserVip = false;
 
 try {
     isUserVip = localStorage.getItem('sunmoon_vip_status') === 'true';
 } catch (e) {
-    console.warn("系統提示：當前預覽環境沙盒已限制記憶體存取。");
+    console.warn("預覽環境限制存取");
 }
 
-if (isUserVip) { 
-    document.body.classList.add('is-vip'); 
-}
+if (isUserVip) { document.body.classList.add('is-vip'); }
 
+// 💡 修正 1：細分相機與相簿的專屬文案
 const featureDescriptions = {
-    '📷 實境相機與相簿疊圖': '開啟鏡頭將沙盤完美重疊於真實救援現場，實地精準推演！',
-    '📁 場勘照片疊圖': '匯入現場環境照片，即使在指揮所也能進行最真實的地形沙盤兵推！',
-    '📐 手動實境測角': '解鎖自由拖曳與旋轉功能！開啟相機後，直接用手拉動控制桿將系統完美對齊現場繩索！',
-    '📸 戰術純淨截圖': '自動濾除雜訊，一鍵匯出無浮水印、最高解析度的專業戰術報告圖紙！'
+    '📷 實境相機疊圖': '開啟鏡頭將沙盤完美重疊於真實救援現場，實地精準推演！',
+    '📁 場勘照片疊圖': '您可以匯入現場環境相片，即使在指揮所，也能將系統完美疊合於相片中，進行最真實的地形沙盤兵推！',
+    '📸 戰術純淨截圖': '自動濾除雜訊，一鍵匯出無浮水印、最高解析度的專業戰術報告圖紙！',
+    '🎯 精確角度輸入': '解鎖小數點級別的精確輸入！解除滑桿限制，精準模擬現場量測的極端張力變化！'
 };
 
 let pendingFeatureCallback = null;
@@ -580,15 +637,15 @@ function attemptFeature(featureName, callback) {
     else {
         pendingFeatureCallback = callback;
         document.getElementById('vipFeatureName').textContent = featureName;
-        document.getElementById('vipFeatureDesc').textContent = featureDescriptions[featureName] || "解鎖進階專業參數，獲得最完整的特戰物理運算能力！";
+        document.getElementById('vipFeatureDesc').textContent = featureDescriptions[featureName];
         document.getElementById('vipErrorMsg').textContent = "";
         document.getElementById('vipPwdInput').value = "";
-        document.getElementById('vipModal').classList.add('show');
+        document.getElementById('vipModal').style.display = 'flex';
     }
 }
 
 function closeVipModal() {
-    document.getElementById('vipModal').classList.remove('show');
+    document.getElementById('vipModal').style.display = 'none';
     pendingFeatureCallback = null;
 }
 
@@ -605,418 +662,614 @@ function verifyVip() {
         if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
     } else {
         errorMsg.textContent = "❌ 密碼錯誤，請確認輸入是否正確。";
-        document.getElementById('vipPwdInput').classList.add('shock-anim');
-        setTimeout(() => document.getElementById('vipPwdInput').classList.remove('shock-anim'), 1000);
     }
 }
 
-function handleImageUploadClick(e) {
-    if (!isUserVip) {
-        e.preventDefault(); 
-        attemptFeature('📁 場勘照片疊圖', () => {
-            document.getElementById('upload-image').click();
-        });
-    }
-}
+let isInstructorRight = true;
 
-// 💡 AR 測角與 Camera 深度連動
-async function toggleManualAR() {
-    if (!stream) {
-        await toggleCamera();
-    } else {
-        // 如果已經開了相機，就只是確保工具列顯示
-        document.getElementById('overlayTools').style.display = 'flex';
-        try{ alert("📍 實境測角功能已解鎖！\n\n您可以直接在畫布上「拖曳平移」，並利用下方「旋轉與縮放」拉桿，將系統V角完美重疊於現場的真實繩索上！\n(重物將永遠維持受地心引力垂直向下)"); }catch(e){}
-    }
-}
-
-function describeArc(x, y, r, startAngle, endAngle) {
-    let start = { x: x + r * Math.cos(endAngle), y: y + r * Math.sin(endAngle) };
-    let end = { x: x + r * Math.cos(startAngle), y: y + r * Math.sin(startAngle) };
-    let largeArcFlag = endAngle - startAngle <= Math.PI ? "0" : "1";
-    return ["M", start.x, start.y, "A", r, r, 0, largeArcFlag, 0, end.x, end.y].join(" ");
-}
-
-let panX = 0, panY = 0;
-
-function draw(angleDeg) {
-    let load = parseFloat(document.getElementById('inLoad').value) || 100;
-    let rad = angleDeg * Math.PI / 180;
-    
-    // 💡 抓取旋轉桿的數值 (轉化為弧度)
-    let rot = parseFloat(document.getElementById('rotSlider').value) || 0;
-    let scl = parseFloat(document.getElementById('scaleSlider').value) || 1;
-    let rotRad = rot * Math.PI / 180;
-    
-    let tension = load / (2 * Math.cos(rad / 2));
-    if (angleDeg >= 180) tension = Infinity;
-
-    let multiplier = tension / load;
-    
-    let isDanger = angleDeg >= 160 || multiplier >= 4;
-    let isWarn = !isDanger && (angleDeg >= 120 || multiplier >= 1.5);
-    let color = isDanger ? 'var(--bad)' : (isWarn ? 'var(--warn)' : 'var(--safe)');
-    
-    document.getElementById('mainCard').style.borderColor = color;
-    document.getElementById('mainCard').style.boxShadow = `0 10px 30px ${isDanger ? 'rgba(239, 68, 68, 0.2)' : (isWarn ? 'rgba(255, 216, 77, 0.15)' : 'rgba(0,0,0,0.5)')}`;
-    
-    let cx = 200, cy = 220; // 核心圓心往下放
-    let R = 130; 
-    
-    // 💡 物理引擎重構：運用數學公式在平面上真實旋轉兩條繩索，而不是用 CSS 盲目旋轉
-    let angleA = -Math.PI/2 - rad/2 + rotRad;
-    let angleB = -Math.PI/2 + rad/2 + rotRad;
-    
-    let ax = cx + R * Math.cos(angleA);
-    let ay = cy + R * Math.sin(angleA);
-    let bx = cx + R * Math.cos(angleB);
-    let by = cy + R * Math.sin(angleB);
-
-    document.getElementById('ropeL').setAttribute('x1', ax);
-    document.getElementById('ropeL').setAttribute('y1', ay);
-    document.getElementById('ropeL').setAttribute('x2', cx);
-    document.getElementById('ropeL').setAttribute('y2', cy);
-    document.getElementById('ropeL').setAttribute('stroke', color);
-    
-    document.getElementById('ropeR').setAttribute('x1', bx);
-    document.getElementById('ropeR').setAttribute('y1', by);
-    document.getElementById('ropeR').setAttribute('x2', cx);
-    document.getElementById('ropeR').setAttribute('y2', cy);
-    document.getElementById('ropeR').setAttribute('stroke', color);
-    
-    document.getElementById('dotA').setAttribute('cx', ax);
-    document.getElementById('dotA').setAttribute('cy', ay);
-    document.getElementById('dotA').setAttribute('stroke', color);
-    document.getElementById('txtA').setAttribute('x', ax);
-    document.getElementById('txtA').setAttribute('y', ay + 4);
-    
-    document.getElementById('dotB').setAttribute('cx', bx);
-    document.getElementById('dotB').setAttribute('cy', by);
-    document.getElementById('dotB').setAttribute('stroke', color);
-    document.getElementById('txtB').setAttribute('x', bx);
-    document.getElementById('txtB').setAttribute('y', by + 4);
-    
-    // 💡 畫出旋轉過後的完美角度弧線
-    document.getElementById('angleArc').setAttribute('d', describeArc(cx, cy, 25, angleA, angleB));
-    document.getElementById('angleArc').setAttribute('stroke', color);
-    
-    // 💡 角度數字會永遠跟隨在 V 型夾角的正中央上方，絕對不會重疊打結
-    let bisector = -Math.PI/2 + rotRad;
-    let textR = 45;
-    document.getElementById('angleText').textContent = angleDeg + "°";
-    document.getElementById('angleText').setAttribute('x', cx + textR * Math.cos(bisector));
-    document.getElementById('angleText').setAttribute('y', cy + textR * Math.sin(bisector) + 5); 
-    document.getElementById('angleText').setAttribute('fill', color);
-    
-    // 💡 指針會根據張力強度產生偏轉
-    let deflection = (isDanger ? 50 : -50 + (multiplier / 5) * 100) * Math.PI / 180;
-    document.getElementById('pulleyNeedle').setAttribute('x1', cx);
-    document.getElementById('pulleyNeedle').setAttribute('y1', cy);
-    document.getElementById('pulleyNeedle').setAttribute('x2', cx + 12 * Math.cos(bisector + deflection));
-    document.getElementById('pulleyNeedle').setAttribute('y2', cy + 12 * Math.sin(bisector + deflection));
-
-    // 💡 萬有引力鎖定：懸吊線永遠筆直朝下，絕不受旋轉影響
-    document.getElementById('centerRing').setAttribute('stroke', color);
-    document.getElementById('suspLine').setAttribute('x1', cx);
-    document.getElementById('suspLine').setAttribute('y1', cy + 12);
-    document.getElementById('suspLine').setAttribute('x2', cx);
-    document.getElementById('suspLine').setAttribute('y2', cy + 60);
-
-    let tText = tension > 9999 ? '∞' : tension.toFixed(1) + ' kg';
-    let vertA = tension > 9999 ? '∞' : (tension * Math.cos(rad/2)).toFixed(1) + ' kg';
-    let vertB = tension > 9999 ? '∞' : (tension * Math.cos(rad/2)).toFixed(1) + ' kg';
-    
-    document.getElementById('txtTenA').innerHTML = `張力 <span style="font-size:15px">${tText}</span>`;
-    document.getElementById('txtTenA').style.color = color;
-    document.getElementById('txtVertA').innerHTML = `抗重 <span style="font-size:15px">${vertA}</span>`;
-    document.getElementById('hudA').style.borderLeftColor = color;
-
-    document.getElementById('txtTenB').innerHTML = `張力 <span style="font-size:15px">${tText}</span>`;
-    document.getElementById('txtTenB').style.color = color;
-    document.getElementById('txtVertB').innerHTML = `抗重 <span style="font-size:15px">${vertB}</span>`;
-    document.getElementById('hudB').style.borderRightColor = color;
-
-    // 💡 CSS 只負責平移與縮放，徹底拔除害人的 rotate
-    document.getElementById('transformLayer').style.transform = `translate(${panX}px, ${panY}px) scale(${scl})`;
-    
-    // 💡 HTML 擔架定位，與 SVG 平移縮放保持完美同步
-    let ctm = document.getElementById('canvas').getScreenCTM();
-    if (ctm) {
-        let wrapRect = document.getElementById('svgWrap').getBoundingClientRect();
-        
-        let ptLoad = document.getElementById('canvas').createSVGPoint();
-        ptLoad.x = cx; 
-        ptLoad.y = cy + 60; // 懸吊繩底端
-        let scLoad = ptLoad.matrixTransform(ctm);
-        
-        // 鎖定在懸吊點的下方
-        document.getElementById('floatLoad').style.left = `${scLoad.x - wrapRect.left}px`;
-        document.getElementById('floatLoad').style.top = `${scLoad.y - wrapRect.top + 28}px`; 
-        document.getElementById('floatLoad').style.transform = `translate(-50%, 0) scale(${scl})`;
-    }
-
-    document.getElementById('mulText').textContent = (tension>9999 ? '∞' : multiplier.toFixed(2)) + ' x';
-    document.getElementById('mulText').style.color = color;
-}
-
-document.getElementById('angleSlider').addEventListener('input', (e) => {
-    let val = e.target.value;
-    document.querySelectorAll('.ma-btn').forEach(b => b.classList.remove('active'));
-    let btn = document.querySelector(`.ma-btn[data-angle="${val}"]`);
-    if (btn) btn.classList.add('active');
-    draw(val);
+instructorToggleBtn.addEventListener('click', () => {
+  isInstructorRight = !isInstructorRight;
+  draw(slider.value);
 });
-
-document.getElementById('rotSlider').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
-document.getElementById('scaleSlider').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
-
-document.querySelectorAll('.ma-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        let angle = e.target.dataset.angle;
-        document.getElementById('angleSlider').value = angle;
-        document.querySelectorAll('.ma-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        draw(angle);
-    });
-});
-
-document.getElementById('inLoad').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
-
-// 💡 實境疊圖專屬：單指自由拖曳平移系統
-let isPanning = false, startX, startY;
-const wrap = document.getElementById('svgWrap');
-
-wrap.addEventListener('mousedown', (e) => {
-    if (e.target.closest('#floatLoad') || e.target.closest('input')) return;
-    isPanning = true;
-    startX = e.clientX - panX;
-    startY = e.clientY - panY;
-});
-wrap.addEventListener('touchstart', (e) => {
-    if (e.target.closest('#floatLoad') || e.target.closest('input')) return;
-    isPanning = true;
-    startX = e.touches[0].clientX - panX;
-    startY = e.touches[0].clientY - panY;
-}, {passive: false});
-
-window.addEventListener('mousemove', (e) => {
-    if(!isPanning) return;
-    panX = e.clientX - startX;
-    panY = e.clientY - startY;
-    draw(document.getElementById('angleSlider').value);
-});
-window.addEventListener('touchmove', (e) => {
-    if(!isPanning) return;
-    e.preventDefault();
-    panX = e.touches[0].clientX - startX;
-    panY = e.touches[0].clientY - startY;
-    draw(document.getElementById('angleSlider').value);
-}, {passive: false});
-
-window.addEventListener('mouseup', () => isPanning = false);
-window.addEventListener('touchend', () => isPanning = false);
-
-
-let stream = null, videoTrack = null, torchOn = false; 
-const video = document.getElementById('bg-video'), image = document.getElementById('bg-image'), btnCamera = document.getElementById('btn-camera'), btnFlashlight = document.getElementById('btn-flashlight'), gridOverlay = document.getElementById('grid-overlay'); 
-let gridVisible = true, hudVisible = true;
-
-async function toggleCamera() { 
-  if (stream) { 
-    stream.getTracks().forEach(track => track.stop()); stream = null; videoTrack = null; 
-    video.style.opacity = "0"; btnCamera.classList.remove('active'); 
-    torchOn = false; btnFlashlight.classList.remove('active');
-    mainCard.classList.remove('camera-mode');
-    document.body.classList.remove('camera-mode');
-    document.getElementById('overlayTools').style.display = 'none'; 
-  } else { 
-    try { 
-      image.style.opacity = "0"; 
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }); 
-      videoTrack = stream.getVideoTracks()[0];
-      video.srcObject = stream; video.style.opacity = "1"; btnCamera.classList.add('active'); 
-      mainCard.classList.add('camera-mode');
-      document.body.classList.add('camera-mode');
-      document.getElementById('overlayTools').style.display = 'flex'; 
-      try{ alert("📍 實境疊圖已啟動！\n\n您可以直接在畫布上「拖曳平移」，並利用下方出現的「旋轉與縮放」拉桿，將系統完美疊合於現場照片中！"); }catch(e){}
-    } catch (err) { 
-      try { alert("⚠️ 鏡頭啟動失敗：" + err.message); } catch(e){} 
-    } 
-  } 
-}
-
-async function toggleFlashlight() {
-  if (!videoTrack) { 
-    try { alert("⚠️ 請先開啟 📷 實境鏡頭！"); } catch(e){} 
-    return; 
-  }
-  try {
-    const capabilities = videoTrack.getCapabilities();
-    if (!capabilities.torch) { 
-        try { alert("⚠️ 您的裝置或瀏覽器不支援手電筒功能！"); } catch(e){} 
-        return; 
-    }
-    torchOn = !torchOn;
-    await videoTrack.applyConstraints({ advanced: [{ torch: torchOn }] });
-    if(torchOn) btnFlashlight.classList.add('active'); else btnFlashlight.classList.remove('active');
-  } catch(e) { 
-      try { alert("⚠️ 手電筒切換失敗：" + e.message); } catch(err){} 
-  }
-}
-
-function loadImage(event) { 
-  const file = event.target.files[0]; 
-  if (file) { 
-    if(stream) toggleCamera(); 
-    const reader = new FileReader(); 
-    reader.onload = function(e) { 
-      image.src = e.target.result; 
-      image.style.opacity = "1"; 
-      mainCard.classList.add('camera-mode');
-      document.body.classList.add('camera-mode');
-      document.getElementById('overlayTools').style.display = 'flex';
-      try{ alert("📍 相簿疊圖已載入！\n\n您可以直接在畫布上「拖曳平移」，並利用下方出現的「旋轉與縮放」拉桿，將系統完美疊合於現場照片中！"); }catch(e){}
-    }; 
-    reader.readAsDataURL(file); 
-  } 
-}
-
-function toggleGrid() { gridVisible = !gridVisible; gridOverlay.style.opacity = gridVisible ? "0.5" : "0"; }
-
-function toggleHUD() {
-  hudVisible = !hudVisible;
-  const huds = document.querySelectorAll('.hud-panel, .tagline-wrap, .control-deck, .tag-badge, .stretcher-tag');
-  huds.forEach(el => el.style.opacity = hudVisible ? "1" : "0");
-  
-  const slash = document.getElementById('hud-slash');
-  if (slash) {
-      slash.style.display = hudVisible ? 'none' : 'block';
-  }
-}
-
-function resetEngine() {
-  document.getElementById('inLoad').value = 100;
-  document.getElementById('angleSlider').value = 120;
-  document.getElementById('rotSlider').value = 0;
-  document.getElementById('scaleSlider').value = 1;
-  panX = 0; panY = 0;
-  document.querySelectorAll('.ma-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.ma-btn[data-angle="120"]').classList.add('active');
-  draw(120);
-}
-
-async function takeScreenshot() {
-  const target = document.getElementById('mainCard'); 
-  target.classList.add('capture-mode');
-  
-  const inputs = target.querySelectorAll('input[type="number"]');
-  const placeholders = [];
-  
-  inputs.forEach(inp => {
-      if(inp.closest('.capture-hide')) return;
-      const span = document.createElement('span');
-      span.textContent = inp.value;
-      span.style.color = 'var(--text)';
-      span.style.fontSize = '20px';
-      span.style.fontWeight = 'bold';
-      span.style.fontFamily = 'monospace';
-      span.style.margin = '0 2px';
-      
-      inp.style.display = 'none';
-      inp.parentNode.insertBefore(span, inp);
-      placeholders.push({ span, inp });
-  });
-
-  window.scrollTo(0, 0);
-  await new Promise(r => setTimeout(r, 100));
-  
-  let bgCanvas = document.createElement('canvas'), bgCtx = bgCanvas.getContext('2d'); 
-  bgCanvas.width = window.innerWidth; 
-  bgCanvas.height = window.innerHeight;
-  bgCtx.fillStyle = '#0f1623'; 
-  bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-  
-  if (image.style.opacity === "1" || video.style.opacity === "1") {
-      if (image.style.opacity === "1") bgCtx.drawImage(image, 0, 0, bgCanvas.width, bgCanvas.height); 
-      else if (video.style.opacity === "1") bgCtx.drawImage(video, 0, 0, bgCanvas.width, bgCanvas.height);
-      
-      bgCtx.fillStyle = 'rgba(15, 22, 35, 0.65)';
-      bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-  }
-  
-  if(gridVisible) { 
-      bgCtx.strokeStyle = 'rgba(30, 58, 95, 0.5)';
-      bgCtx.lineWidth = 1; 
-      for(let x=0; x<bgCanvas.width; x+=20) { bgCtx.beginPath(); bgCtx.moveTo(x,0); bgCtx.lineTo(x,bgCanvas.height); bgCtx.stroke(); } 
-      for(let y=0; y<bgCanvas.height; y+=20) { bgCtx.beginPath(); bgCtx.moveTo(0,y); bgCtx.lineTo(bgCanvas.width,y); bgCtx.stroke(); } 
-  }
-  
-  try {
-    const canvas = await html2canvas(target, { backgroundColor: null, scale: 2, useCORS: true, ignoreElements: (el) => el.hasAttribute('data-html2canvas-ignore') || el.classList.contains('capture-hide') });
-    let finalCanvas = document.createElement('canvas'), finalCtx = finalCanvas.getContext('2d'); 
-    finalCanvas.width = canvas.width; 
-    finalCanvas.height = canvas.height;
-    
-    let rect = target.getBoundingClientRect(); 
-    finalCtx.drawImage(bgCanvas, rect.left, rect.top, rect.width, rect.height, 0, 0, finalCanvas.width, finalCanvas.height); 
-    finalCtx.drawImage(canvas, 0, 0);
-    
-    const link = document.createElement('a'); 
-    link.download = `錨點張力儀_戰術報告_${new Date().getTime()}.png`; 
-    link.href = finalCanvas.toDataURL('image/png'); 
-    link.click();
-  } catch(e) { 
-      try { alert("截圖失敗：" + e); } catch(err){} 
-  }
-  
-  placeholders.forEach(p => {
-      p.inp.style.display = '';
-      p.span.remove();
-  });
-  
-  target.classList.remove('capture-mode');
-}
-
-const shareBtnAction = document.getElementById('shareBtnAction');
-if(shareBtnAction) {
-    shareBtnAction.addEventListener('click', async () => {
-      const shareData = { title: '錨點張力儀 (散木團隊)', text: '推薦這套散木團隊專屬的「錨點張力儀」！支援實境疊圖與一鍵戰術截圖，快來試試！', url: window.location.href };
-      try {
-        if (navigator.share) { await navigator.share(shareData); } 
-        else {
-          const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href;
-          dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy);
-          try { alert('系統回報：系統網址已複製，您可以貼上分享給其他人囉！'); } catch(e){}
-        }
-      } catch (err) { console.error('分享失敗', err); }
-    });
-}
-
-if ('serviceWorker' in navigator) { 
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(reg => {
-      reg.update();
-    }).catch(err => console.error(err));
-  }); 
-}
 
 function checkForUpdates() {
-  let confirmUpdate = true;
-  try {
-      confirmUpdate = confirm("當前系統版本：" + APP_VERSION + "\n\n系統將連線檢查是否有最新版本的運算參數。\n\n請問是否立即執行更新程序？");
-  } catch(e) {
-  }
-  
-  if (confirmUpdate) { 
-    if ('caches' in window) {
-      caches.keys().then((names) => {
-        names.forEach(name => caches.delete(name));
-      });
-    }
-    try { alert("✅ 已準備就緒！即將為您重新載入最新版本系統。"); } catch(e){}
-    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime(); 
+  if (confirm("系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？")) {
+    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
   }
 }
+
+shareBtnAction.addEventListener('click', async () => {
+  const shareData = {
+    title: '錨點張力儀 (V型雙點版)',
+    text: '運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。',
+    url: window.location.href
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      alert('系統回報：網址已複製，您可以貼上分享給朋友囉！');
+    }
+  } catch (err) {
+    console.error('分享失敗', err);
+  }
+});
+
+let hasAgreedToPermissions = false;
+function requestUserAgreement() {
+  if (hasAgreedToPermissions) return Promise.resolve();
+  return new Promise((resolve) => {
+    permissionModalOverlay.style.display = 'flex';
+    permissionAgreeBtn.onclick = () => {
+      permissionModalOverlay.style.display = 'none';
+      hasAgreedToPermissions = true;
+      resolve();
+    };
+  });
+}
+
+svgContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('beta-text') || e.target.closest('.beta-text')) {
+    attemptFeature('🎯 精確角度輸入', () => {
+      exactAngleInput.value = slider.value;
+      angleModalOverlay.style.display = 'flex';
+      setTimeout(() => exactAngleInput.focus(), 100);
+    });
+  }
+});
+
+angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
+
+angleConfirmBtn.addEventListener('click', () => {
+  let val = parseFloat(exactAngleInput.value);
+  if (isNaN(val) || val < 0 || val > 180) {
+    alert('系統回報：請輸入 0 到 180 之間的有效數字！');
+    return;
+  }
+  slider.value = val;
+  draw(val);
+  angleModalOverlay.style.display = 'none';
+});
+
+let isLightMode = false;
+themeToggle.addEventListener('click', () => {
+  isLightMode = !isLightMode;
+  document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
+  themeToggle.textContent = isLightMode ? '🌙' : '☀️';
+  draw(slider.value);
+});
+
+let isCameraOn = false;
+let currentStream = null;
+cameraToggle.addEventListener('click', () => {
+  attemptFeature('📷 實境相機疊圖', async () => {
+    if (!isCameraOn) {
+      await requestUserAgreement(); 
+      try {
+        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const backCams = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
+        const mainCam = backCams.find(d => !d.label.toLowerCase().includes('ultra') && !d.label.toLowerCase().includes('廣角'));
+        
+        if (mainCam && stream.getVideoTracks()[0].getSettings().deviceId !== mainCam.deviceId) {
+            stream.getTracks().forEach(t => t.stop());
+            stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
+        }
+        
+        currentStream = stream;
+        bgVideo.srcObject = currentStream;
+        bgVideo.style.display = 'block';
+        bgImage.style.display = 'none';
+        mainCard.classList.add('camera-mode');
+        cameraToggle.textContent = '❌';
+        cameraToggle.style.color = 'var(--warn)';
+        arControls.style.display = 'flex'; 
+        photoBtn.style.color = 'inherit';
+        isCameraOn = true;
+      } catch (err) {
+        cameraToggle.textContent = '⛔';
+        setTimeout(() => cameraToggle.textContent = '📷', 3000);
+      }
+    } else {
+      turnOffCamera();
+    }
+  });
+});
+
+let isTorchOn = false;
+torchToggle.addEventListener('click', async () => {
+  if (!isCameraOn || !currentStream) {
+    alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！');
+    return;
+  }
+  const track = currentStream.getVideoTracks()[0];
+  try {
+    const capabilities = track.getCapabilities();
+    if (!capabilities.torch) {
+      alert('系統回報：您的裝置或瀏覽器不支援手電筒控制。');
+      return;
+    }
+    isTorchOn = !isTorchOn;
+    await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
+    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit';
+    torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
+  } catch (err) {
+    console.error('Torch error:', err);
+    alert('系統回報：手電筒開啟失敗，部分手機瀏覽器可能受限。');
+  }
+});
+
+function turnOffCamera() {
+  if (currentStream) currentStream.getTracks().forEach(track => track.stop());
+  bgVideo.style.display = 'none';
+  if (bgImage.style.display !== 'block') {
+    mainCard.classList.remove('camera-mode');
+    arControls.style.display = 'none';
+  }
+  cameraToggle.textContent = '📷';
+  cameraToggle.style.color = 'inherit';
+  isCameraOn = false;
+  
+  isTorchOn = false;
+  torchToggle.style.color = 'inherit';
+  torchToggle.textContent = '🔦';
+}
+
+photoBtn.addEventListener('click', () => {
+  attemptFeature('📁 場勘照片疊圖', () => {
+    if (bgImage.style.display === 'block') {
+      bgImage.style.display = 'none';
+      bgImage.src = '';
+      photoUpload.value = '';
+      photoBtn.style.color = 'inherit';
+      if (!isCameraOn) {
+        mainCard.classList.remove('camera-mode');
+        arControls.style.display = 'none';
+      }
+    } else {
+      photoUpload.click();
+    }
+  });
+});
+
+photoUpload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      bgImage.src = event.target.result;
+      bgImage.style.display = 'block';
+      if(isCameraOn) turnOffCamera(); 
+      bgVideo.style.display = 'none';
+      mainCard.classList.add('camera-mode');
+      arControls.style.display = 'flex'; 
+      photoBtn.style.color = 'var(--safe)'; 
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+let currentZoom = 1;
+let panX = 0;
+let panY = 0;
+let isDragging = false;
+let startX = 0, startY = 0;
+
+function updateTransform() {
+  scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+}
+
+arCollapseBtn.addEventListener('click', () => {
+  const isCollapsed = arControls.classList.contains('is-collapsed');
+  if(isCollapsed) {
+    arControls.classList.remove('is-collapsed');
+    document.querySelector('.ar-header-text').style.display = 'block';
+    document.getElementById('arSlidersWrap').style.display = 'flex';
+    arCollapseBtn.textContent = '收起面板';
+    arCollapseBtn.style.color = 'var(--muted)';
+  } else {
+    arControls.classList.add('is-collapsed');
+    document.querySelector('.ar-header-text').style.display = 'none';
+    document.getElementById('arSlidersWrap').style.display = 'none';
+    arCollapseBtn.textContent = '展開設定';
+    arCollapseBtn.style.color = 'var(--safe)';
+  }
+});
+
+zoomSlider.addEventListener('input', (e) => {
+  currentZoom = parseFloat(e.target.value);
+  updateTransform();
+});
+
+let isDraggingPanel = false;
+let pStartX, pStartY, pInitialLeft, pInitialTop;
+
+function startPanelDrag(e) {
+  if (e.target.id === 'arCollapseBtn' || e.target.tagName.toLowerCase() === 'input') return;
+  isDraggingPanel = true;
+  const touch = e.type.includes('mouse') ? e : e.touches[0];
+  pStartX = touch.clientX;
+  pStartY = touch.clientY;
+  
+  const rect = arControls.getBoundingClientRect();
+  const parentRect = mainCard.getBoundingClientRect();
+  
+  pInitialLeft = rect.left - parentRect.left;
+  pInitialTop = rect.top - parentRect.top;
+  
+  arControls.style.left = `${pInitialLeft}px`;
+  arControls.style.top = `${pInitialTop}px`;
+  arControls.style.right = 'auto';
+  arControls.style.bottom = 'auto';
+  arControls.style.transform = 'none';
+}
+
+function movePanel(e) {
+  if (!isDraggingPanel) return;
+  e.preventDefault();
+  const touch = e.type.includes('mouse') ? e : e.touches[0];
+  const dx = touch.clientX - pStartX;
+  const dy = touch.clientY - pStartY;
+  arControls.style.left = `${pInitialLeft + dx}px`;
+  arControls.style.top = `${pInitialTop + dy}px`;
+}
+
+function endPanelDrag() { isDraggingPanel = false; }
+
+arDragHandle.addEventListener('mousedown', startPanelDrag);
+window.addEventListener('mousemove', movePanel);
+window.addEventListener('mouseup', endPanelDrag);
+arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false});
+window.addEventListener('touchmove', movePanel, {passive: false});
+window.addEventListener('touchend', endPanelDrag);
+
+mainCard.addEventListener('mousedown', (e) => {
+  if (arControls.classList.contains('is-collapsed')) return;
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true;
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+  panX = e.clientX - startX;
+  panY = e.clientY - startY;
+  updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  isDragging = false;
+  arControls.style.opacity = '1';
+});
+
+mainCard.addEventListener('touchstart', (e) => {
+  if (arControls.classList.contains('is-collapsed')) return;
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true;
+  startX = e.touches[0].clientX - panX;
+  startY = e.touches[0].clientY - panY;
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
+}, {passive: false});
+
+window.addEventListener('touchmove', (e) => {
+  if (!isDragging) return;
+  if (e.cancelable) e.preventDefault(); 
+  panX = e.touches[0].clientX - startX;
+  panY = e.touches[0].clientY - startY;
+  updateTransform();
+}, {passive: false});
+
+window.addEventListener('touchend', () => {
+  isDragging = false;
+  arControls.style.opacity = '1';
+});
+
+rotateSlider.addEventListener('input', (e) => {
+  let currentAngle = parseFloat(e.target.value);
+  gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`;
+});
+
+screenshotBtn.addEventListener('click', () => {
+  attemptFeature('📸 戰術純淨截圖', async () => {
+    mainCard.style.opacity = '0.5';
+    setTimeout(() => mainCard.style.opacity = '1', 150);
+
+    let originalVideoState = bgVideo.style.display;
+    let originalImageSrc = bgImage.src;
+    let originalImageState = bgImage.style.display;
+
+    if (isCameraOn && bgVideo.videoWidth) {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = bgVideo.videoWidth;
+      tempCanvas.height = bgVideo.videoHeight;
+      tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+      bgImage.src = tempCanvas.toDataURL('image/jpeg');
+      bgImage.style.display = 'block';
+      bgVideo.style.display = 'none';
+    }
+
+    const now = new Date();
+    const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
+    const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    
+    watermark.innerHTML = `🛡️ 錨點張力儀 (V型雙點版)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
+    watermark.style.display = 'block';
+
+    try {
+      const canvas = await html2canvas(mainCard, { 
+        useCORS: true, 
+        backgroundColor: null,
+        scale: 2
+      });
+      const link = document.createElement('a');
+      link.download = '戰術張力分析截圖.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch(e) {
+      console.error("截圖發生錯誤", e);
+      alert("系統回報：截圖失敗，請稍後再試！");
+    }
+
+    watermark.style.display = 'none';
+    if (isCameraOn) {
+      bgVideo.style.display = originalVideoState;
+      bgImage.src = originalImageSrc;
+      bgImage.style.display = originalImageState;
+    }
+  });
+});
+
+function polar(cx, cy, r, deg){
+  const rad = deg * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
+}
+
+function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
+  let d = '';
+  for(let i = 0; i <= steps; i++){
+    const t = i / steps;
+    const deg = startDeg + (endDeg - startDeg) * t;
+    const p = polar(cx, cy, r, deg);
+    d += `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)} `;
+  }
+  return d;
+}
+
+function stateOf(phi){
+  if(phi <= 10) return { color:'var(--bad)', title:'⚠️ 高危區域', tone:'zoneBad', desc:'教官驚訝！張力極大', stateClass:'is-danger' };
+  if(phi < 25) return { color:'var(--warn)', title:'注意區', tone:'zoneWarn', desc:'張力顯著上升', stateClass:'is-warn' };
+  return { color:'var(--safe)', title:'安全區', tone:'zoneSafe', desc:'受力穩定', stateClass:'' };
+}
+
+function getForceLabel(phi, beta){
+  if(beta >= 179.9) return "∞"; 
+  const rad = Math.max(phi, 0.05) * Math.PI / 180;
+  const T = Number(inputT.value) || 0;
+  const val = T / (2 * Math.sin(rad));
+  try {
+    return val.toLocaleString('en-US', {maximumFractionDigits: 1}) + " kg";
+  } catch (e) {
+    return val.toFixed(1) + " kg";
+  }
+}
+
+function draw(beta){
+  beta = Number(beta);
+  const phi = (180 - beta) / 2;
+  const safePhi = Math.max(phi, 0.1);
+  const st = stateOf(phi);
+  const forceLabel = getForceLabel(phi, beta);
+  
+  const isBroken = beta >= 179.9;
+  const isSurprised = phi <= 10 && !isBroken;
+  
+  mainCard.classList.remove('is-broken', 'is-danger', 'is-warn');
+  if (isBroken) mainCard.classList.add('is-broken');
+  else if (st.stateClass) mainCard.classList.add(st.stateClass);
+
+  const cx = 180, cy = 180, ropeLen = 125; 
+  const left = polar(cx, cy, ropeLen, 180 - phi);
+  const right = polar(cx, cy, ropeLen, phi);
+  const leftExt = polar(cx, cy, ropeLen + 20, 180 - phi);
+  const rightExt = polar(cx, cy, ropeLen + 20, phi);
+
+  const topY = right.y; 
+
+  const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
+  const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
+  const d = isInstructorRight ? -1 : 1; 
+
+  const pullIn = Math.max(0, (beta - 100) / 80); 
+  const forcePosRatio = 1 - pullIn * 0.45; 
+  
+  let leftForceX = cx + (left.x - cx) * forcePosRatio;
+  let rightForceX = cx + (right.x - cx) * forcePosRatio;
+  leftForceX = Math.min(leftForceX, cx - 45);
+  rightForceX = Math.max(rightForceX, cx + 45);
+  
+  const forceY = topY - 15;
+
+  const aArcStart = isInstructorRight ? 180 : 360 - phi;
+  const aArcEnd = isInstructorRight ? 180 + phi : 360;
+  const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
+  const aAnchor = isInstructorRight ? right : left;
+  const aTextPos = polar(aAnchor.x, topY, 38, aArcMid);
+
+  const altArcStart = isInstructorRight ? 0 : 180 - phi;
+  const altArcEnd = isInstructorRight ? phi : 180;
+  const altArcMid = isInstructorRight ? phi/2 : 180 - phi/2;
+  const altTextPos = polar(cx, cy, 45, altArcMid);
+
+  let instructorPose = '';
+  if (isSurprised || isBroken) instructorPose = 'animation: panic-shake 0.15s infinite;';
+  
+  let ropesHtml = isBroken ? 
+    `<line x1="${cx-25}" y1="${cy+5}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />
+     <line x1="${cx+25}" y1="${cy+5}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />` :
+    `<line x1="${cx}" y1="${cy}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />
+     <line x1="${cx}" y1="${cy}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />`;
+
+  let instructorHtml = '';
+  if (isSurprised || isBroken) {
+    instructorHtml = `
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+    `;
+  } else {
+    const arrowStartX = instX + d * 10;
+    const arrowStartY = topY - 15;
+    const arcTarget = polar(aAnchor.x, topY, 25, aArcMid);
+    const deltaX = arcTarget.x - arrowStartX;
+    const deltaY = arcTarget.y - arrowStartY;
+    const dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    
+    const ratio = dist > 8 ? (dist - 8) / dist : 1;
+    const arrowEndX = arrowStartX + deltaX * ratio;
+    const arrowEndY = arrowStartY + deltaY * ratio;
+    
+    const arrowCpX = arrowStartX + deltaX * 0.5;
+    const arrowCpY = Math.min(arrowStartY, arrowEndY) - 25;
+
+    instructorHtml = `
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <path d="M ${arrowStartX} ${arrowStartY} Q ${arrowCpX} ${arrowCpY} ${arrowEndX} ${arrowEndY}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
+    `;
+  }
+
+  let forceTagsHtml = '';
+  if (beta <= 15 && !isBroken) {
+    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">固定點張力 ${forceLabel}</text>`;
+  } else {
+    forceTagsHtml = `
+      <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
+      <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+    `;
+  }
+
+  let limitWarningHtml = isBroken ? `
+    <rect x="80" y="70" width="200" height="28" rx="6" fill="var(--bad)" opacity="0.85" />
+    <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">理論極限(179.95°)：57,296 kg</text>
+  ` : '';
+
+  const betaStr = (beta % 1 === 0) ? beta : beta.toFixed(1);
+  const phiStr = (phi % 1 === 0) ? phi : phi.toFixed(1);
+
+  const betaYOffset = Math.max(0, 90 - beta) * 0.4;
+  const betaTextY = cy - 35 - betaYOffset;
+
+  svgContainer.innerHTML = `
+    <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--instructor)"/></marker>
+        <filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="var(--card)" flood-opacity="0.8"/></filter>
+        <style>
+          @keyframes svgSway { 0% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } 100% { transform: rotate(-0.5deg); } }
+          .sway-element { transform-origin: 180px 160px; animation: svgSway 3s infinite ease-in-out; }
+        </style>
+      </defs>
+      
+      <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
+      <line x1="20" y1="${cy}" x2="340" y2="${cy}" stroke="var(--base)" stroke-width="1" opacity=".5" />
+      
+      <path d="${polyArc(cx, cy, 32, 30, 150)}" stroke="var(--warn)" stroke-width="6" opacity="${beta>=120 ? 0.2 : (beta>90 ? 0.05 : 0)}" fill="none" />
+      <path d="${polyArc(cx, cy, 40, 20, 160)}" stroke="var(--bad)" stroke-width="8" opacity="${beta>=140 ? 0.3 : (beta>90 ? 0.05 : 0)}" fill="none" />
+
+      ${ropesHtml}
+      
+      <line x1="${left.x}" y1="${left.y}" x2="${leftExt.x}" y2="${leftExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      <line x1="${right.x}" y1="${right.y}" x2="${rightExt.x}" y2="${rightExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      
+      <g class="sway-element">
+        <line x1="180" y1="180" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" />
+      </g>
+
+      <path d="${polyArc(cx, cy, 28, phi, 180 - phi)}" stroke="var(--warn)" stroke-width="2" fill="none" />
+      
+      <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎<tspan class="inline-lock">🔒</tspan></text>
+      
+      <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
+      <text class="mask-text" x="${aTextPos.x}" y="${aTextPos.y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
+      
+      <path d="${polyArc(cx, cy, 25, altArcStart, altArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" stroke-dasharray="3 3" />
+      <text class="mask-text" x="${altTextPos.x}" y="${altTextPos.y}" fill="${st.color}" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">φ ${phiStr}°</text>
+
+      <g opacity="0.9" style="${instructorPose}">
+        <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
+        <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
+        ${instructorHtml}
+        <text class="mask-text" x="${instX}" y="${topY-44}" fill="${st.color}" font-size="12" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
+      </g>
+
+      <g font-weight="bold" filter="url(#shadow)">
+        ${forceTagsHtml}
+        ${limitWarningHtml}
+      </g>
+    </svg>
+  `;
+
+  let multiplier = tension / Number(inputT.value);
+  let mulText = tension > 9999 ? '∞' : multiplier.toFixed(2);
+  
+  caption.innerHTML = `
+    <div style="font-size:14px; margin-bottom:6px;">📍 目前張力倍數：<b style="color:var(--safe)">${mulText} x</b> 負載</div>
+    <div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? '💀 系統毀損' : st.title}｜${st.desc}</div>
+    <div style="font-size:13px; opacity:0.9; margin-top:2px;">注意：當夾角趨近 180° 時，支點張力會瞬間暴增，極度危險！</div>
+  `;
+}
+
+btnMinus.addEventListener('click', () => { 
+  inputT.value = Math.max(0, Number(inputT.value) - 10); 
+  draw(slider.value); 
+});
+btnPlus.addEventListener('click', () => { 
+  inputT.value = Number(inputT.value) + 10; 
+  draw(slider.value); 
+});
+
+slider.addEventListener('input', () => draw(slider.value));
+inputT.addEventListener('input', () => draw(slider.value));
+
+resetBtn.addEventListener('click', () => { 
+  slider.value = 120; 
+  inputT.value = 100; 
+  zoomSlider.value = 1;
+  rotateSlider.value = 0;
+  
+  arControls.classList.add('is-collapsed');
+  document.querySelector('.ar-header-text').style.display = 'none';
+  document.getElementById('arSlidersWrap').style.display = 'none';
+  arCollapseBtn.textContent = '展開設定';
+  arCollapseBtn.style.color = 'var(--safe)';
+  arControls.style.opacity = '1';
+  arControls.style.left = 'auto';
+  arControls.style.top = '80px';
+  arControls.style.right = '10px';
+  arControls.style.bottom = 'auto';
+
+  currentZoom = 1;
+  panX = 0;
+  panY = 0;
+  updateTransform();
+  gimbalWrap.style.transform = `rotate(0deg)`;
+  
+  draw(120); 
+});
+
+jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
+
+draw(120);
 
 const menuGroups = document.querySelectorAll('.menu-group');
 menuGroups.forEach(group => {
@@ -1025,21 +1278,22 @@ menuGroups.forEach(group => {
     item.addEventListener('toggle', function() {
       if (this.open) {
         group.classList.add('has-open-item');
-        items.forEach(other => { if (other !== this && other.open) other.removeAttribute('open'); });
-        setTimeout(() => { this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+        items.forEach(other => {
+          if (other !== this && other.open) {
+            other.removeAttribute('open');
+          }
+        });
+        setTimeout(() => {
+          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
       } else {
         const anyOpen = Array.from(items).some(i => i.open);
-        if (!anyOpen) group.classList.remove('has-open-item');
+        if (!anyOpen) {
+          group.classList.remove('has-open-item');
+        }
       }
     });
   });
-});
-
-window.addEventListener('resize', () => draw(document.getElementById('angleSlider').value));
-document.addEventListener('DOMContentLoaded', () => {
-    const versionDisplay = document.getElementById('appVersionDisplay');
-    if (versionDisplay) { versionDisplay.textContent = APP_VERSION; }
-    setTimeout(resetEngine, 150);
 });
 </script>
 </body>
