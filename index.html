@@ -8,7 +8,6 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<!-- 💡 全新統一命名系統 -->
 <title>錨點張力儀 (V型雙點版) | 散木團隊</title>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,7 +16,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta property="og:title" content="錨點張力儀 (V型雙點版) | 散木團隊">
-<meta property="og:description" content="V型確保系統張力自動估算：AR實境測角、即時倍數換算，解開雙點確保極限張力的物理之謎。">
+<meta property="og:description" content="V型確保系統張力自動估算：實境相機疊圖對位、即時倍數換算，解開雙點確保極限張力的物理之謎。">
 <meta property="og:image" content="https://fang5761-source.github.io/trackline-simulator/icon-512.png">
 <meta property="og:url" content="https://fang5761-source.github.io/trackline-simulator/">
 <meta property="og:type" content="website">
@@ -112,7 +111,6 @@
     backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none !important;
   }
 
-  /* 💡 截圖專屬裝甲：強制化為實心深藍色，內建網格，杜絕外部照片干擾 */
   .card.capture-mode {
     background-color: var(--bg) !important;
     background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px) !important;
@@ -141,7 +139,6 @@
   .icon-btn { flex: 1; aspect-ratio: 1/1; max-height: 38px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid transparent; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: all 0.2s; font-size: 18px; color: var(--text); padding: 0; }
   .icon-btn:active { background: var(--line); transform: scale(0.95); }
   .icon-btn.active { background: var(--safe); color: var(--bg); border-color: var(--safe); }
-  .icon-btn.active-shock { background: var(--bad); color: #fff; border-color: var(--bad); animation: pulse 1.5s infinite; }
   
   .lock-icon { position: absolute; bottom: 2px; right: 2px; font-size: 10px; background: rgba(0,0,0,0.8); border-radius: 50%; padding: 2px; }
   .is-vip .lock-icon { display: none; }
@@ -149,33 +146,31 @@
   .lock-icon-inline { font-size: 10px; margin-left: 4px; color: var(--vip); }
   .is-vip .lock-icon-inline { display: none; }
 
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
   @keyframes glow-red { 0%, 100% { box-shadow: 0 4px 10px rgba(0,0,0,0.6); border-color: #9a3412; } 50% { box-shadow: 0 0 15px rgba(239,68,68,0.8); border-color: #ef4444; } }
   .shock-anim { animation: glow-red 1s infinite; }
 
+  /* 💡 V1.2.0: 加入觸控平移指標 */
   .svgWrap { 
     position:relative; width:100%; 
     height: 45vh; min-height: 320px; max-height: 460px;
     background: transparent; border-radius: 12px; border: 1px dashed var(--line); overflow: hidden; 
+    cursor: grab;
   }
-  svg { display: block; width: 100%; height: 100%; }
+  .svgWrap:active { cursor: grabbing; }
+  svg { display: block; width: 100%; height: 100%; pointer-events: none; }
 
-  .tag-badge {
-    position: absolute;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 900;
-    white-space: nowrap;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    transition: left 0.15s ease-out, top 0.15s ease-out, color 0.2s, border 0.2s;
-    z-index: 90; 
-    display: none;
-    background: rgba(15, 22, 35, 0.95);
-    border: 2px solid;
+  .hud-panel, .stretcher-tag, .tagline-wrap, .control-deck { transition: opacity 0.3s ease; }
+  
+  .hud-panel {
+    position: absolute; background: rgba(10, 15, 25, 0.7); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 4px 6px; color: var(--text); font-size: 11px; font-weight: bold;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); pointer-events: auto;
+    display: flex; flex-direction: column; gap: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   }
+  .hud-panel .val { font-size: 13px; font-family: monospace; white-space: nowrap; display: flex; align-items: baseline; gap: 4px; }
+  
+  .hud-tl { top: 10px; left: 5px; border-left: 3px solid var(--safe); max-width: 48%; overflow: hidden; } 
+  .hud-tr { top: 10px; right: 5px; border-right: 3px solid var(--safe); text-align: right; align-items: flex-end; max-width: 48%; overflow: hidden; } 
 
   .stretcher-tag {
     position: absolute; background: #ea580c; border: 2px solid #9a3412;
@@ -184,6 +179,7 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 50; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.6);
     min-width: 100px; width: auto; 
+    pointer-events: auto;
   }
   .stretcher-handles { width: calc(100% + 24px); height: 8px; position: absolute; top: 16px; left: -12px; display: flex; justify-content: space-between; z-index: -1; }
   .handle-block { width: 14px; height: 8px; background: #c2410c; border: 1px solid #7c2d12; border-radius: 4px; }
@@ -200,11 +196,16 @@
   input[type="range"]::-webkit-slider-runnable-track{ height:8px; border-radius:999px; background:var(--line); }
   input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--warn); border:2px solid var(--bg); margin-top:-8px; box-shadow: 0 2px 6px rgba(0,0,0,0.5); }
 
-  .tagline-wrap { margin-top: 8px; padding: 8px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px solid var(--tagline); text-align: center; font-size: 13px; font-weight: bold; color: var(--tagline); }
-  
   .ma-btn-group { display: flex; gap: 6px; width: 100%; justify-content: center; margin-bottom: 4px;}
   .ma-btn { flex: 1; max-width: 60px; background: rgba(0,0,0,0.4); border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 6px 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: monospace; position: relative;}
   .ma-btn.active { background: var(--warn); color: var(--bg); border-color: var(--warn); }
+
+  /* 💡 V1.2.0: 疊圖微調工具列 */
+  .overlay-tools { display: flex; gap: 12px; margin-top: 4px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); }
+  .overlay-tool-col { flex: 1; display: flex; flex-direction: column; }
+  .overlay-lbl { font-size: 11px; color: var(--muted); text-align: center; margin-bottom: 4px; font-weight: bold; }
+
+  .tagline-wrap { margin-top: 8px; padding: 8px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px solid var(--tagline); text-align: center; font-size: 13px; font-weight: bold; color: var(--tagline); }
 
   .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -277,6 +278,9 @@
     }
   }
 })();
+
+// 💡 動態發行版號引擎 (升級至 V1.2.0)
+const APP_VERSION = "V1.2.0";
 </script>
 
 <div id="status-bar-protector" data-html2canvas-ignore="true"></div>
@@ -310,7 +314,6 @@
           <div class="title-left">
             <svg width="24" height="24" viewBox="0 0 100 100">
                <rect width="100" height="100" fill="#0f1623" rx="10"/>
-               <!-- V型錨點圖標 -->
                <path d="M 20 30 L 50 70 L 80 30" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
                <circle cx="20" cy="30" r="10" fill="#ffffff" />
                <circle cx="80" cy="30" r="10" fill="#ffffff" />
@@ -330,9 +333,7 @@
         <label class="icon-btn" onclick="handleImageUploadClick(event)" title="載入照片" style="margin:0;">📁<span class="lock-icon">🔒</span></label>
         <input type="file" id="upload-image" accept="image/*" onchange="loadImage(event)">
         <button class="icon-btn" onclick="toggleGrid()" title="工程網格">🌐</button>
-        <button class="icon-btn" id="btn-ar" onclick="attemptFeature('📐 AR 陀螺儀實境測角', toggleAR)" title="AR 測角">📐<span class="lock-icon">🔒</span></button>
         
-        <!-- 💡 換上帶有戰術斜線機制的眼睛按鈕 -->
         <button class="icon-btn" onclick="toggleHUD()" title="專注/淨空模式" id="btn-hud">
            <span>👁️</span>
            <div id="hud-slash" style="display:none; position:absolute; width:22px; height:3px; background:var(--bad); transform:rotate(-45deg); border-radius:2px; box-shadow:0 0 4px rgba(0,0,0,0.8);"></div>
@@ -342,30 +343,45 @@
         <button class="icon-btn" onclick="resetEngine()" title="重置沙盤">↺</button>
       </div>
 
+      <!-- 💡 V1.2.0: 加上 cursor:grab，暗示可以自由平移 -->
       <div class="svgWrap" id="svgWrap">
-        <div id="gimbalWrap" style="width:100%; height:100%; transform-origin: center center; transition: transform 0.3s ease-out;">
+        <!-- 💡 核心黑科技：用 CSS Transform 處理全系統旋轉、縮放與平移，預覽絕不當機！ -->
+        <g id="transformLayer" style="display:block; width:100%; height:100%; transform-origin: 200px 240px; transition: transform 0.1s ease-out;">
             <svg id="canvas" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid meet">
               <path id="angleArc" fill="none" stroke="var(--warn)" stroke-width="2" />
+              <!-- 💡 角度文字往下推，絕對不跟滑輪或繩索打架 -->
               <text id="angleText" fill="var(--warn)" font-size="15" font-weight="bold" text-anchor="middle"></text>
 
               <line id="ropeL" stroke="var(--safe)" stroke-width="6" stroke-linecap="round" />
               <line id="ropeR" stroke="var(--safe)" stroke-width="6" stroke-linecap="round" />
 
-              <circle id="dotA" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
-              <text id="txtA" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">A</text>
+              <circle id="dotA" cx="0" cy="0" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
+              <text id="txtA" x="0" y="4" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">A</text>
               
-              <circle id="dotB" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
-              <text id="txtB" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">B</text>
+              <circle id="dotB" cx="0" cy="0" r="14" fill="var(--bg)" stroke="var(--safe)" stroke-width="3.5" />
+              <text id="txtB" x="0" y="4" font-size="13" font-weight="bold" text-anchor="middle" fill="var(--text)" pointer-events="none">B</text>
 
-              <circle id="centerRing" cx="200" cy="180" r="12" fill="none" stroke="var(--warn)" stroke-width="4" />
-              <line id="suspLine" x1="200" y1="192" x2="200" y2="240" stroke="var(--muted)" stroke-width="5" stroke-linecap="round" />
+              <!-- 💡 V1.2.0：重力點全數下移至 cy=240，騰出上方開闊視野 -->
+              <circle id="centerRing" cx="200" cy="240" r="12" fill="none" stroke="var(--warn)" stroke-width="4" />
+              <line id="suspLine" x1="200" y1="252" x2="200" y2="300" stroke="var(--muted)" stroke-width="5" stroke-linecap="round" />
+              <line id="pulleyNeedle" stroke="#000" stroke-width="2.5" stroke-linecap="round" />
             </svg>
+        </g>
+
+        <!-- 💡 徹底拔除礙眼且疊字的 tagBadgeA/B -->
+
+        <div class="hud-panel hud-tl" id="hudA">
+           <div style="color:var(--muted); font-size:11px;">A 錨點</div>
+           <div id="txtTenA" class="val" style="color:var(--safe)">張力: --</div>
+           <div id="txtVertA" class="val" style="color:var(--warn)">抗重: --</div>
         </div>
-
-        <div id="tagBadgeA" class="tag-badge">--</div>
-        <div id="tagBadgeB" class="tag-badge">--</div>
-
-        <div id="floatLoad" class="stretcher-tag">
+        <div class="hud-panel hud-tr" id="hudB">
+           <div style="color:var(--muted); font-size:11px;">B 錨點</div>
+           <div id="txtTenB" class="val" style="color:var(--safe)">張力: --</div>
+           <div id="txtVertB" class="val" style="color:var(--warn)">抗重: --</div>
+        </div>
+        
+        <div id="floatLoad" class="stretcher-tag" style="transition: transform 0.1s ease-out;">
            <div class="stretcher-handles">
               <div class="handle-block"></div><div class="handle-block"></div>
            </div>
@@ -385,14 +401,24 @@
          </div>
          <input type="range" id="angleSlider" class="capture-hide" min="0" max="175" step="1" value="120">
          
-         <hr class="capture-hide" style="border:0; border-top:1px dashed rgba(255,255,255,0.1); margin: 6px 0;">
-
-         <div class="ma-btn-group capture-hide">
+         <div class="ma-btn-group capture-hide" style="margin-top: 6px;">
             <button class="ma-btn" data-angle="30">30°</button>
             <button class="ma-btn" data-angle="60">60°</button>
             <button class="ma-btn" data-angle="90">90°</button>
             <button class="ma-btn active" data-angle="120">120°</button>
             <button class="ma-btn" data-angle="150">150°</button>
+         </div>
+
+         <!-- 💡 V1.2.0：實境疊圖微調工具 (旋轉與縮放) -->
+         <div class="overlay-tools capture-hide" id="overlayTools" style="display:none;">
+             <div class="overlay-tool-col">
+                 <div class="overlay-lbl">🔄 系統旋轉對齊</div>
+                 <input type="range" id="rotSlider" min="-180" max="180" value="0">
+             </div>
+             <div class="overlay-tool-col">
+                 <div class="overlay-lbl">🔍 系統放大縮小</div>
+                 <input type="range" id="scaleSlider" min="0.4" max="2.0" step="0.1" value="1">
+             </div>
          </div>
       </div>
       
@@ -427,8 +453,7 @@
               <ul style="margin-top: 0; padding-left: 20px;">
                 <li style="margin-bottom: 6px;">滑動下方 <b>夾角拉桿</b>，或點擊快速按鈕，即時預覽不同角度的張力變化。</li>
                 <li style="margin-bottom: 6px;">點擊橘色 <b>大擔架</b> 修改負載重量，系統會自動換算兩端承受張力。</li>
-                <li style="margin-bottom: 6px;">點擊 <b>📷實境 / 📁相簿</b>：可開啟手機鏡頭或匯入現場照片，直接在真實環境上進行沙盤疊圖推演。</li>
-                <li style="margin-bottom: 6px;">點擊 <b>📐AR測角</b>：啟動手機陀螺儀，將手機對準現場繩索，系統會自動抓取真實夾角狀態。</li>
+                <li style="margin-bottom: 6px;">點擊 <b>📷實境 / 📁相簿</b>：可開啟相機或匯入現場照片。開啟後，您可直接用手指<b>拖曳畫布</b>來移動系統位置，並利用下方新出現的<b>🔄旋轉</b>與<b>🔍縮放</b>拉桿，將系統完美疊合於現場環境中！</li>
                 <li style="margin-bottom: 6px;">點擊 <b>👁️淨空模式</b>：隱藏所有數據面板，只保留純粹的繩索幾何線條，適合教學講解。</li>
               </ul>
               <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
@@ -447,6 +472,9 @@
               <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
               <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;">教學架構與工程判斷／徐世豐</p>
               <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;">工具設計與互動介面／吳佩芳（朵朵）</p>
+              
+              <p style="margin-top: 16px; margin-bottom: 0; font-size: 12px; text-align: center; color: var(--muted); font-family: monospace;">系統核心版本：<span id="appVersionDisplay">--</span></p>
+
               <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
             </div>
           </details>
@@ -526,7 +554,6 @@ if (isUserVip) {
 const featureDescriptions = {
     '📷 實境相機與相簿疊圖': '開啟鏡頭將沙盤完美重疊於真實救援現場，實地精準推演！',
     '📁 場勘照片疊圖': '匯入現場環境照片，即使在指揮所也能進行最真實的地形沙盤兵推！',
-    '📐 AR 陀螺儀實境測角': '啟動手機內建陀螺儀，直接對準現場繩索，自動抓取真實夾角！',
     '📸 戰術純淨截圖': '自動濾除雜訊，一鍵匯出無浮水印、最高解析度的專業戰術報告圖紙！'
 };
 
@@ -576,58 +603,15 @@ function handleImageUploadClick(e) {
     }
 }
 
-let useAR = false;
-function toggleAR() {
-    if (!useAR) {
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission()
-            .then(permissionState => {
-                if (permissionState === 'granted') {
-                    window.addEventListener('deviceorientation', handleOrientation);
-                    enableAR();
-                } else {
-                    try { alert('系統回報：需要裝置方向權限才能啟用 AR 測角。'); } catch(e){}
-                }
-            }).catch(console.error);
-        } else {
-            window.addEventListener('deviceorientation', handleOrientation);
-            enableAR();
-        }
-    } else {
-        disableAR();
-    }
-}
-
-function enableAR() {
-    useAR = true;
-    document.getElementById('btn-ar').classList.add('active');
-    document.getElementById('gimbalWrap').style.transition = 'none';
-}
-
-function disableAR() {
-    useAR = false;
-    document.getElementById('btn-ar').classList.remove('active');
-    window.removeEventListener('deviceorientation', handleOrientation);
-    document.getElementById('gimbalWrap').style.transition = 'transform 0.3s ease-out';
-    document.getElementById('gimbalWrap').style.transform = `rotate(0deg)`;
-    setTimeout(() => draw(document.getElementById('angleSlider').value), 300);
-}
-
-function handleOrientation(event) {
-    if (!useAR) return;
-    let gamma = event.gamma || 0; 
-    if (gamma > 90) gamma = 90;
-    if (gamma < -90) gamma = -90;
-    document.getElementById('gimbalWrap').style.transform = `rotate(${-gamma}deg)`;
-    draw(document.getElementById('angleSlider').value);
-}
-
 function describeArc(x, y, r, startAngle, endAngle) {
     let start = { x: x + r * Math.cos(endAngle), y: y + r * Math.sin(endAngle) };
     let end = { x: x + r * Math.cos(startAngle), y: y + r * Math.sin(startAngle) };
     let largeArcFlag = endAngle - startAngle <= Math.PI ? "0" : "1";
     return ["M", start.x, start.y, "A", r, r, 0, largeArcFlag, 0, end.x, end.y].join(" ");
 }
+
+// 💡 實境疊圖專屬的全系統位移與變形參數
+let panX = 0, panY = 0;
 
 function draw(angleDeg) {
     let load = parseFloat(document.getElementById('inLoad').value) || 100;
@@ -645,8 +629,9 @@ function draw(angleDeg) {
     document.getElementById('mainCard').style.borderColor = color;
     document.getElementById('mainCard').style.boxShadow = `0 10px 30px ${isDanger ? 'rgba(239, 68, 68, 0.2)' : (isWarn ? 'rgba(255, 216, 77, 0.15)' : 'rgba(0,0,0,0.5)')}`;
     
-    let cx = 200, cy = 180;
-    let R = 130; 
+    // 💡 V1.2.0: 重心下移，滑輪中心點設在 cy=240，完美騰出上方空間
+    let cx = 200, cy = 240;
+    let R = 150; 
     
     let ax = cx - R * Math.sin(rad/2);
     let ay = cy - R * Math.cos(rad/2);
@@ -677,51 +662,48 @@ function draw(angleDeg) {
     document.getElementById('txtB').setAttribute('x', bx);
     document.getElementById('txtB').setAttribute('y', by + 4);
     
-    document.getElementById('centerRing').setAttribute('stroke', color);
-    
     let startAngle = -Math.PI/2 - rad/2;
     let endAngle = -Math.PI/2 + rad/2;
     document.getElementById('angleArc').setAttribute('d', describeArc(cx, cy, 25, startAngle, endAngle));
     document.getElementById('angleArc').setAttribute('stroke', color);
     
+    // 💡 角度數字往下沉，絕對不跟兩側繩索打架
     document.getElementById('angleText').textContent = angleDeg + "°";
     document.getElementById('angleText').setAttribute('x', cx);
-    document.getElementById('angleText').setAttribute('y', cy - 35);
+    document.getElementById('angleText').setAttribute('y', cy - 40); 
     document.getElementById('angleText').setAttribute('fill', color);
     
+    let nRad = (isDanger ? 50 : -50 + (multiplier / 5) * 100) * Math.PI / 180;
+    document.getElementById('pulleyNeedle').setAttribute('x1', cx);
+    document.getElementById('pulleyNeedle').setAttribute('y1', cy);
+    document.getElementById('pulleyNeedle').setAttribute('x2', cx + 12 * Math.sin(nRad));
+    document.getElementById('pulleyNeedle').setAttribute('y2', cy - 12 * Math.cos(nRad));
+
     let tText = tension > 9999 ? '∞' : tension.toFixed(1) + ' kg';
-    document.getElementById('tagBadgeA').textContent = tText;
-    document.getElementById('tagBadgeB').textContent = tText;
-    document.getElementById('tagBadgeA').style.color = color;
-    document.getElementById('tagBadgeB').style.color = color;
-    document.getElementById('tagBadgeA').style.borderColor = color;
-    document.getElementById('tagBadgeB').style.borderColor = color;
+    let vertA = tension > 9999 ? '∞' : (tension * Math.cos(rad/2)).toFixed(1) + ' kg';
+    let vertB = tension > 9999 ? '∞' : (tension * Math.cos(rad/2)).toFixed(1) + ' kg';
+    
+    document.getElementById('txtTenA').innerHTML = `張力 <span style="font-size:15px">${tText}</span>`;
+    document.getElementById('txtTenA').style.color = color;
+    document.getElementById('txtVertA').innerHTML = `抗重 <span style="font-size:15px">${vertA}</span>`;
+    document.getElementById('hudA').style.borderLeftColor = color;
 
-    let ctm = document.getElementById('canvas').getScreenCTM();
-    if (ctm) {
-        let wrapRect = document.getElementById('svgWrap').getBoundingClientRect();
-        
-        let mxA = (ax + cx) / 2; let myA = (ay + cy) / 2;
-        let scxA = (mxA * ctm.a + ctm.e) - wrapRect.left;
-        let scyA = (myA * ctm.d + ctm.f) - wrapRect.top;
-        
-        document.getElementById('tagBadgeA').style.display = 'block';
-        document.getElementById('tagBadgeA').style.left = `${scxA - 20}px`;
-        document.getElementById('tagBadgeA').style.top = `${scyA - 20}px`;
+    document.getElementById('txtTenB').innerHTML = `張力 <span style="font-size:15px">${tText}</span>`;
+    document.getElementById('txtTenB').style.color = color;
+    document.getElementById('txtVertB').innerHTML = `抗重 <span style="font-size:15px">${vertB}</span>`;
+    document.getElementById('hudB').style.borderRightColor = color;
 
-        let mxB = (bx + cx) / 2; let myB = (by + cy) / 2;
-        let scxB = (mxB * ctm.a + ctm.e) - wrapRect.left;
-        let scyB = (myB * ctm.d + ctm.f) - wrapRect.top;
-
-        document.getElementById('tagBadgeB').style.display = 'block';
-        document.getElementById('tagBadgeB').style.left = `${scxB + 20}px`;
-        document.getElementById('tagBadgeB').style.top = `${scyB - 20}px`;
-
-        let sclx = (cx * ctm.a + ctm.e) - wrapRect.left;
-        let scly = ((cy + 48) * ctm.d + ctm.f) - wrapRect.top;
-        document.getElementById('floatLoad').style.left = `${sclx}px`;
-        document.getElementById('floatLoad').style.top = `${scly}px`;
-    }
+    // 💡 執行終極黑科技：全系統無縫旋轉、縮放與平移
+    let rot = document.getElementById('rotSlider').value;
+    let scl = document.getElementById('scaleSlider').value;
+    
+    // 將 SVG 群組與大擔架 HTML 進行完美的同步變形
+    document.getElementById('transformLayer').style.transform = `translate(${panX}px, ${panY}px) rotate(${rot}deg) scale(${scl})`;
+    
+    // HTML 擔架定位 (不受預覽環境 iframe 的 getScreenCTM 崩潰影響)
+    document.getElementById('floatLoad').style.left = `calc(50% + ${panX}px)`;
+    document.getElementById('floatLoad').style.top = `calc(50% + ${panY + 45}px)`; // 相對於中心點下移
+    document.getElementById('floatLoad').style.transform = `translate(-50%, -50%) rotate(${rot}deg) scale(${scl})`;
 
     document.getElementById('mulText').textContent = (tension>9999 ? '∞' : multiplier.toFixed(2)) + ' x';
     document.getElementById('mulText').style.color = color;
@@ -735,6 +717,9 @@ document.getElementById('angleSlider').addEventListener('input', (e) => {
     draw(val);
 });
 
+document.getElementById('rotSlider').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
+document.getElementById('scaleSlider').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
+
 document.querySelectorAll('.ma-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
         let angle = e.target.dataset.angle;
@@ -747,6 +732,41 @@ document.querySelectorAll('.ma-btn').forEach(btn => {
 
 document.getElementById('inLoad').addEventListener('input', () => draw(document.getElementById('angleSlider').value));
 
+// 💡 實境疊圖專屬：單指自由拖曳平移系統
+let isPanning = false, startX, startY;
+const wrap = document.getElementById('svgWrap');
+
+wrap.addEventListener('mousedown', (e) => {
+    if (e.target.closest('#floatLoad') || e.target.closest('input')) return;
+    isPanning = true;
+    startX = e.clientX - panX;
+    startY = e.clientY - panY;
+});
+wrap.addEventListener('touchstart', (e) => {
+    if (e.target.closest('#floatLoad') || e.target.closest('input')) return;
+    isPanning = true;
+    startX = e.touches[0].clientX - panX;
+    startY = e.touches[0].clientY - panY;
+}, {passive: false});
+
+window.addEventListener('mousemove', (e) => {
+    if(!isPanning) return;
+    panX = e.clientX - startX;
+    panY = e.clientY - startY;
+    draw(document.getElementById('angleSlider').value);
+});
+window.addEventListener('touchmove', (e) => {
+    if(!isPanning) return;
+    e.preventDefault();
+    panX = e.touches[0].clientX - startX;
+    panY = e.touches[0].clientY - startY;
+    draw(document.getElementById('angleSlider').value);
+}, {passive: false});
+
+window.addEventListener('mouseup', () => isPanning = false);
+window.addEventListener('touchend', () => isPanning = false);
+
+
 let stream = null, videoTrack = null, torchOn = false; 
 const video = document.getElementById('bg-video'), image = document.getElementById('bg-image'), btnCamera = document.getElementById('btn-camera'), btnFlashlight = document.getElementById('btn-flashlight'), gridOverlay = document.getElementById('grid-overlay'); 
 let gridVisible = true, hudVisible = true;
@@ -758,6 +778,7 @@ async function toggleCamera() {
     torchOn = false; btnFlashlight.classList.remove('active');
     mainCard.classList.remove('camera-mode');
     document.body.classList.remove('camera-mode');
+    document.getElementById('overlayTools').style.display = 'none'; // 關閉相機時隱藏疊圖工具
   } else { 
     try { 
       image.style.opacity = "0"; 
@@ -766,6 +787,8 @@ async function toggleCamera() {
       video.srcObject = stream; video.style.opacity = "1"; btnCamera.classList.add('active'); 
       mainCard.classList.add('camera-mode');
       document.body.classList.add('camera-mode');
+      document.getElementById('overlayTools').style.display = 'flex'; // 開啟相機時顯示疊圖工具
+      try{ alert("📍 實境疊圖已啟動！\n\n您可以直接在畫布上「拖曳平移」，並利用下方出現的「旋轉與縮放」拉桿，將系統完美疊合於現場照片中！"); }catch(e){}
     } catch (err) { 
       try { alert("⚠️ 鏡頭啟動失敗：" + err.message); } catch(e){} 
     } 
@@ -801,6 +824,8 @@ function loadImage(event) {
       image.style.opacity = "1"; 
       mainCard.classList.add('camera-mode');
       document.body.classList.add('camera-mode');
+      document.getElementById('overlayTools').style.display = 'flex';
+      try{ alert("📍 相簿疊圖已載入！\n\n您可以直接在畫布上「拖曳平移」，並利用下方出現的「旋轉與縮放」拉桿，將系統完美疊合於現場照片中！"); }catch(e){}
     }; 
     reader.readAsDataURL(file); 
   } 
@@ -813,7 +838,6 @@ function toggleHUD() {
   const huds = document.querySelectorAll('.hud-panel, .tagline-wrap, .control-deck, .tag-badge, .stretcher-tag');
   huds.forEach(el => el.style.opacity = hudVisible ? "1" : "0");
   
-  // 💡 切換閉眼狀態：顯示或隱藏紅色戰術斜線
   const slash = document.getElementById('hud-slash');
   if (slash) {
       slash.style.display = hudVisible ? 'none' : 'block';
@@ -823,13 +847,14 @@ function toggleHUD() {
 function resetEngine() {
   document.getElementById('inLoad').value = 100;
   document.getElementById('angleSlider').value = 120;
+  document.getElementById('rotSlider').value = 0;
+  document.getElementById('scaleSlider').value = 1;
+  panX = 0; panY = 0;
   document.querySelectorAll('.ma-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.ma-btn[data-angle="120"]').classList.add('active');
-  if(useAR) disableAR();
   draw(120);
 }
 
-// 💡 V11.0 瞬間拓印與無塵截圖引擎
 async function takeScreenshot() {
   const target = document.getElementById('mainCard'); 
   target.classList.add('capture-mode');
@@ -905,7 +930,7 @@ async function takeScreenshot() {
 const shareBtnAction = document.getElementById('shareBtnAction');
 if(shareBtnAction) {
     shareBtnAction.addEventListener('click', async () => {
-      const shareData = { title: '錨點張力儀 (散木團隊)', text: '推薦這套散木團隊專屬的「錨點張力儀」！支援AR實境測角與一鍵戰術截圖，快來試試！', url: window.location.href };
+      const shareData = { title: '錨點張力儀 (散木團隊)', text: '推薦這套散木團隊專屬的「錨點張力儀」！支援實境疊圖與一鍵戰術截圖，快來試試！', url: window.location.href };
       try {
         if (navigator.share) { await navigator.share(shareData); } 
         else {
@@ -928,7 +953,7 @@ if ('serviceWorker' in navigator) {
 function checkForUpdates() {
   let confirmUpdate = true;
   try {
-      confirmUpdate = confirm("系統將連線檢查是否有最新版本的運算參數。\n\n請問是否立即執行更新程序？");
+      confirmUpdate = confirm("當前系統版本：" + APP_VERSION + "\n\n系統將連線檢查是否有最新版本的運算參數。\n\n請問是否立即執行更新程序？");
   } catch(e) {
   }
   
@@ -962,6 +987,8 @@ menuGroups.forEach(group => {
 
 window.addEventListener('resize', () => draw(document.getElementById('angleSlider').value));
 document.addEventListener('DOMContentLoaded', () => {
+    const versionDisplay = document.getElementById('appVersionDisplay');
+    if (versionDisplay) { versionDisplay.textContent = APP_VERSION; }
     setTimeout(resetEngine, 150);
 });
 </script>
