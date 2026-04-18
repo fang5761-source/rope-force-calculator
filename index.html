@@ -1077,7 +1077,7 @@ function draw(beta){
 
   const topY = right.y; 
 
-  // 💡 大樂黑科技：AI 戰術走位 (教官智能閃避系統)
+  // 💡 恢復大樂黑科技：AI 戰術走位 (教官智能閃避系統)
   const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
   const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
   const d = isInstructorRight ? -1 : 1; 
@@ -1113,10 +1113,10 @@ function draw(beta){
     instructorHtml = `
       <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
       <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
-      <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+      <text class="mask-text" x="${instX}" y="${topY-45}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
-    // 🎯 AI 動態索敵導引線
+    // 🎯 恢復 AI 動態索敵導引線 (自動追蹤箭頭)
     const arrowStartX = instX + d * 10;
     const arrowStartY = topY - 15;
     const deltaX = aTextPos.x - arrowStartX;
@@ -1162,6 +1162,11 @@ function draw(beta){
   const betaYOffset = Math.max(0, 90 - beta) * 0.4;
   const betaTextY = cy - 35 - betaYOffset;
 
+  // 💡 仰角 (完美固定在底部)
+  const phiArcStart = isInstructorRight ? 0 : 180 - phi;
+  const phiArcEnd = isInstructorRight ? phi : 180;
+  const phiTextAngle = isInstructorRight ? phi / 2 : 180 - phi / 2;
+
   svgContainer.innerHTML = `
     <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
       <defs>
@@ -1173,6 +1178,7 @@ function draw(beta){
         </style>
       </defs>
       
+      <!-- 水平參考線 -->
       <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
       <line x1="20" y1="${cy}" x2="340" y2="${cy}" stroke="var(--base)" stroke-width="1" opacity=".5" />
       
@@ -1192,16 +1198,19 @@ function draw(beta){
       
       <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎</text>
       
-      <path d="${polyArc(aAnchor.x, topY, 38, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
-      
+      <!-- 💡 仰角 (乖乖待在底部) -->
+      <path d="${polyArc(cx, cy, 38, phiArcStart, phiArcEnd)}" stroke="${st.color}" stroke-width="2" fill="none" />
+      <text class="mask-text" x="${polar(cx, cy, 58, phiTextAngle).x}" y="${polar(cx, cy, 58, phiTextAngle).y}" fill="${st.color}" font-size="13" font-weight="bold" dominant-baseline="central">仰角(φ) ${phiStr}°</text>
+
+      <!-- 💡 教官視角 a角 (保持在頂部) -->
       <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
-      <!-- 直接使用前面算好的 aTextPos，不會再報錯！ -->
       <text class="mask-text" x="${aTextPos.x}" y="${aTextPos.y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
       
       <g opacity="0.9" style="${instructorPose}">
         <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
         <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
         ${instructorHtml}
+        <!-- 💡 標籤乖乖浮在教官頭上，不擋路 -->
         <text class="mask-text" x="${instX}" y="${topY-44}" fill="${st.color}" font-size="12" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
       </g>
 
