@@ -7,26 +7,21 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<!-- 官方全名：展現專業權威 -->
-<title>錨點張力儀 (V型雙點版) | 散木團隊</title>
+<title>錨點張力儀 (雙引擎切換版) | 散木團隊</title>
 
-<!-- 🍎 APP 模式設定與桌面短檔名 (徐老師指定：張力儀) -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="錨點張力儀">
+<meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
-<!-- 🔗 LINE/FB 貼上網址時的預覽卡片設定 (Open Graph) -->
-<meta property="og:title" content="錨點張力儀 (V型雙點版) | 散木團隊">
-<meta property="og:description" content="運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。">
+<meta property="og:title" content="錨點張力儀 (雙引擎切換版) | 散木團隊">
+<meta property="og:description" content="內建錨點與索道雙安全規範，運用 AR 鏡頭與空間幾何透視，揭露高危險極限張力。">
 <meta property="og:image" content="https://fang5761-source.github.io/rope-force-calculator/icon-512.png">
 <meta property="og:url" content="https://fang5761-source.github.io/rope-force-calculator/">
 <meta property="og:type" content="website">
 
-<!-- 真正 APP 安裝設定檔 -->
 <link rel="manifest" href="manifest.json">
 
-<!-- APP 專屬主畫面圖示 -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
 
@@ -44,6 +39,7 @@
     --base: #94a3b8;
     --instructor: #cbd5e1;
     --vip: #c084fc;
+    --mode-track: #38bdf8; 
   }
   
   :root[data-theme="light"] {
@@ -57,25 +53,18 @@
     --bad: #dc2626;
     --base: #94a3b8;
     --instructor: #475569;
+    --mode-track: #0284c7;
   }
 
   *{box-sizing:border-box}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family: "Noto Serif CJK TC", serif;
-    display:flex;
-    justify-content:center;
-    align-items: flex-start;
-    padding: 15px 10px 40px 10px;
-    transition: background 0.3s, color 0.3s;
-    touch-action: manipulation; 
+    margin:0; background:var(--bg); color:var(--text);
+    font-family: "Noto Serif CJK TC", serif; display:flex;
+    justify-content:center; align-items: flex-start;
+    padding: 15px 10px 40px 10px; transition: background 0.3s, color 0.3s; touch-action: manipulation; 
   }
   
-  .app-container {
-    max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px;
-  }
+  .app-container { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px; }
 
   .card{
     width:100%; background:var(--card); border:1px solid var(--line);
@@ -84,12 +73,13 @@
   }
   
   .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
-  .title-row { display: flex; align-items: center; width: 100%; }
+  .title-row { display: flex; align-items: center; width: 100%; justify-content: space-between; }
+  .title-left { display: flex; align-items: center; }
   .title-tag {
     font-size: 15px; color: var(--text); font-weight: bold;
-    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; line-height: 1.4;
-    display: flex; align-items: center;
+    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; display: flex; align-items: center;
   }
+  
   .btn-group {
     display: flex; gap: 6px; flex-wrap: wrap; width: 100%;
     background: rgba(150,150,150,0.05); padding: 6px; border-radius: 10px;
@@ -98,11 +88,15 @@
     appearance:none; border:1px solid var(--line); background:rgba(150,150,150,.1);
     color:var(--text); border-radius:8px; padding: 8px 12px; cursor:pointer;
     font-size: 14px; font-weight: bold; display: flex; align-items: center;
-    justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px;
-    position: relative;
+    justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px; position: relative;
   }
   button:hover{ background:rgba(150,150,150,.2); }
   
+  /* 💡 雙引擎切換按鈕專屬樣式 */
+  #modeToggleBtn { flex: 2; min-width: 120px; transition: all 0.3s ease; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+  #modeToggleBtn.mode-anchor { background: var(--safe); color: #0f1623; }
+  #modeToggleBtn.mode-track { background: var(--mode-track); color: #0f1623; }
+
   .zoneSafe{color:var(--safe)} .zoneWarn{color:var(--warn)} .zoneBad{color:var(--bad)}
   
   .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
@@ -143,7 +137,6 @@
   .modal-btn-group button { flex: 1; }
   #angleCancelBtn { background: var(--muted); color: #ffffff; }
 
-  /* VIP 標籤與鎖頭 CSS */
   .vip-badge {
     display: none; background: var(--vip); color: #fff; font-size: 10px; font-weight: bold;
     padding: 2px 6px; border-radius: 12px; letter-spacing: 0.5px;
@@ -226,9 +219,6 @@
   .mask-text { paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px; stroke-linecap: round; stroke-linejoin: round; }
   .beta-text:hover { filter: brightness(1.3); }
 
-  /* =========================================
-     ▼ 終極區塊排版：APP 原生設定選單風格 ▼
-     ========================================= */
   .menu-list { display: flex; flex-direction: column; width: 100%; margin-top: 5px; }
   
   details.main-accordion { margin-top: 12px; }
@@ -263,13 +253,11 @@
   .menu-content p { margin-top: 0; margin-bottom: 10px; }
 
   .menu-action-btn:active { background: rgba(150,150,150,0.1); }
-
   .menu-group.has-open-item > details.menu-item:not([open]), .menu-group.has-open-item > .menu-action-btn { display: none !important; }
   
   .btn-collapse-inner { background: rgba(150,150,150,0.1); color: var(--text); border: 1px solid var(--line); width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
   .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
   
-  /* 💡 更新免責聲明區塊樣式 */
   .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
 </style>
 </head>
@@ -282,7 +270,6 @@
 (function(){
   const _0xd = atob('ZmFuZzU3NjEtc291cmNlLmdpdGh1Yi5pbw=='); 
   const _0xh = window[atob('bG9jYXRpb24=')][atob('aG9zdG5hbWU=')]; 
-
   window['_unlockApp']   = function(){ _0xKill(); };
   window['_bypassCheck'] = function(){ _0xKill(); };
   window['_disableLock'] = function(){ _0xKill(); };
@@ -313,13 +300,11 @@
   (function _0xVerify(){
     const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
     const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
-
     if (!_isOk) {
       try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
       _0xKill();
     }
   })();
-
 })();
 </script>
 
@@ -328,16 +313,24 @@
   <div id="mainCard" class="card">
     <div class="topbar">
       <div class="title-row">
-        <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
-        <div class="title-tag">錨點張力儀 (V型雙點版) <span class="vip-badge">PRO</span></div>
+        <div class="title-left">
+          <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
+          <div class="title-tag" id="mainTitleText">張力儀 (雙引擎版) <span class="vip-badge">PRO</span></div>
+        </div>
       </div>
-      <div class="btn-group">
+      
+      <!-- 💡 雙引擎戰術切換列 -->
+      <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2);">
+        <button id="modeToggleBtn" class="mode-anchor" type="button" title="點擊切換系統安全模式">⚓ 垂直錨點模式</button>
         <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
+        <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
+      </div>
+
+      <div class="btn-group">
         <button id="cameraToggle" type="button" title="開啟實境相機">📷<span class="lock-icon">🔒</span></button>
         <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
         <button id="photoBtn" type="button" title="上傳照片疊圖">📁<span class="lock-icon">🔒</span></button>
         <button id="screenshotBtn" type="button" title="戰術截圖">📸<span class="lock-icon">🔒</span></button>
-        <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
         <button id="reset" type="button" title="重置畫面">↺</button>
       </div>
     </div>
@@ -408,15 +401,12 @@
 
   <div class="menu-list">
     
-    <details class="main-accordion">
-      <summary>📚 專業名詞與原理解析</summary>
+    <details class="main-accordion" id="theoryAccordion">
+      <!-- 💡 完美修復：用隱形的 span 將標題與括號綁定成同一塊積木，杜絕分散排版！ -->
+      <summary><span>📚 專業名詞與原理解析 (<span id="menuModeText">錨點標準</span>)</span></summary>
       <div class="menu-group">
-        <div class="menu-content">
-          <p><b style="color:var(--safe)">🔗 張力 (Tension)</b><br>系統內部主繩繃緊的程度。當 V 型夾角越大，系統產生的倍數張力就越恐怖，超過 120 度將直接大於原負載！</p>
-          <p><b style="color:var(--warn)">⚓ 錨點 (Anchor)</b><br>確保系統安全的核心基石。本儀器專注於計算兩端錨點（A/B點）在不同夾角下，所承受的極限張力拉扯。</p>
-          <p><b style="color:var(--tagline)">📐 臨界死角 (Critical Angle)</b><br>在雙點確保系統中，強烈建議夾角維持在 90 度以內；一旦超過 120 度，張力曲線將呈現指數型飆升，極易導致系統崩潰。</p>
-          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的 a 角，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，兩者數值完全相同，方便教官在現場判斷系統受力狀態。</p>
-          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+        <div class="menu-content" id="theoryContent">
+          <!-- 內容會由 JS 根據模式動態寫入 -->
         </div>
       </div>
     </details>
@@ -424,7 +414,6 @@
     <details class="main-accordion">
       <summary>⚙️ 系統工具與說明書</summary>
       <div class="menu-group">
-        
         <details class="menu-item">
           <summary>
             <div class="menu-header-left"><span class="menu-icon">📖</span>系統操作說明</div>
@@ -432,13 +421,11 @@
           </summary>
           <div class="menu-content">
             <ul style="margin-top: 0; padding-left: 20px;">
-              <li style="margin-bottom: 6px;">直接滑動下方 <b>夾角拉桿</b>，或點擊快速按鈕，即時預覽不同角度的張力變化。</li>
-              <li style="margin-bottom: 6px;">點擊畫面上角度數字旁的 <b>✎ 圖示</b>，可手動輸入精確角度。</li>
+              <li style="margin-bottom: 6px;">點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。</li>
+              <li style="margin-bottom: 6px;">滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。</li>
               <li style="margin-bottom: 6px;">點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。</li>
-              <li style="margin-bottom: 6px;">點擊上方工具列的 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。</li>
-              <li style="margin-bottom: 6px;">點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片。開啟後，點選畫布下方的 <b>【🛠️展開設定】</b>，即可單指拖曳平移 V角，或用拉桿旋轉、縮放來疊合現場地形。</li>
-              <li style="margin-bottom: 6px;">點擊 <b>☀️ 按鈕</b>：切換日/夜間深淺色模式，適應不同光源環境。</li>
-              <li style="margin-bottom: 6px;">點擊 <b>📸 戰術截圖</b>：一鍵截取乾淨儀表板存入相簿。</li>
+              <li style="margin-bottom: 6px;">點擊上方 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。</li>
+              <li style="margin-bottom: 6px;">點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片進行實地疊圖分析。</li>
             </ul>
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
@@ -451,45 +438,11 @@
           </summary>
           <div class="menu-content">
             <div style="text-align: center; margin-bottom: 15px;">
-              <span style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">錨點張力儀 專業正式版</span>
+              <span style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">雙引擎張力儀 專業正式版</span>
             </div>
             <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
             <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;">教學架構與工程判斷／徐世豐</p>
             <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;">工具設計與互動介面／吳佩芳（朵朵）</p>
-            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
-          </div>
-        </details>
-
-        <details class="menu-item">
-          <summary>
-            <div class="menu-header-left"><span class="menu-icon">📱</span>加入主畫面說明</div>
-            <span class="menu-arrow">❯</span>
-          </summary>
-          <div class="menu-content">
-            <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
-            
-            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🤖 Android (安卓版)</p>
-              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
-                <li style="margin-bottom: 4px;">點選畫面右下角的「⋮」</li>
-                <li style="margin-bottom: 4px;">選擇「使用預設瀏覽器開啟」</li>
-                <li style="margin-bottom: 4px;">在畫面右上角點選「⋮」</li>
-                <li style="margin-bottom: 4px;">往下滑，選擇「加到主畫面」</li>
-                <li style="margin-bottom: 0;">點選「安裝」，即可將捷徑加到主畫面</li>
-              </ol>
-            </div>
-
-            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px;">
-              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🍎 iOS (iPhone)</p>
-              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
-                <li style="margin-bottom: 4px;">點選下方的「分享」圖示，往下滑</li>
-                <li style="margin-bottom: 4px;">選擇「加入主畫面」</li>
-                <li style="margin-bottom: 0;">點選「加入」，即可將捷徑加到主畫面</li>
-              </ol>
-            </div>
-
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
           </div>
         </details>
@@ -501,22 +454,15 @@
         <div class="menu-header-left"><span class="menu-icon">🔗</span>分享系統連結</div>
         <span class="menu-arrow">❯</span>
       </div>
-
       <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
         <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並載入最新版本</div>
         <span class="menu-arrow">❯</span>
       </div>
-
-      <div class="menu-action-btn" onclick="window.open('https://forms.gle/Uykr5jeQP6fgVhxh9', '_blank')">
-        <div class="menu-header-left"><span class="menu-icon">💬</span>技術支援與問題回報</div>
-        <span class="menu-arrow">❯</span>
-      </div>
     </div>
 
-    <!-- 💡 替換為軟體免責聲明 -->
     <div class="footer-disclaimer">
-      <strong style="color: var(--bad); font-size: 14px;">⚖️ 軟體免責聲明：</strong><br>
-      系統運算基於理想物理模型，不含繩索材質疲勞、摩擦力損耗等環境變數。實際救援操作時，請務必遵循專業教官之指導，開發團隊不負任何實地操作之法律與賠償責任。
+      <strong style="color: var(--bad); font-size: 14px;">⚠️ 軟體免責聲明：</strong><br>
+      系統運算基於理想幾何物理模型，不含繩索延展性、材質疲勞、摩擦力損耗等環境變數。實際救援操作之下垂量與系統架設，請務必遵循專業教官之指導與現場判斷，開發團隊不負任何實地操作之法律與賠償責任。
     </div>
 
   </div>
@@ -542,7 +488,7 @@
   </div>
 </div>
 
-<!-- 💡 VIP 升級解鎖視窗 -->
+<!-- VIP 升級解鎖視窗 -->
 <div id="vipModal" class="modal-overlay">
   <div class="modal-box">
     <h3>🔒 專業版功能解鎖 <span class="vip-badge" style="display:inline-block; margin-left:8px;">PRO</span></h3>
@@ -569,8 +515,6 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.log('SW 啟動失敗', err));
   });
 }
-
-console.log("%c🛡️ 本錨點張力儀由散木團隊研發，未經授權禁止盜用！", "color: #ef4444; font-size: 18px; font-weight: bold; text-shadow: 1px 1px 2px #000;");
 
 const svgContainer = document.getElementById('svgContainer');
 const svgWrap = document.querySelector('.svgWrap');
@@ -609,20 +553,17 @@ const angleCancelBtn = document.getElementById('angleCancelBtn');
 
 const shareBtnAction = document.getElementById('shareBtnAction');
 const instructorToggleBtn = document.getElementById('instructorToggleBtn');
+const modeToggleBtn = document.getElementById('modeToggleBtn');
+const mainTitleText = document.getElementById('mainTitleText');
+const theoryContent = document.getElementById('theoryContent');
+const menuModeText = document.getElementById('menuModeText');
 
-// 💡 VIP 系統初始化
+// 💡 VIP 系統
 const VIP_SECRET_KEYS = ["SM-PRO-2024", "SUNMOON-V10", "RESCUE-VIP"];
 let isUserVip = false;
-
-try {
-    isUserVip = localStorage.getItem('sunmoon_vip_status') === 'true';
-} catch (e) {
-    console.warn("預覽環境限制存取");
-}
-
+try { isUserVip = localStorage.getItem('sunmoon_vip_status') === 'true'; } catch (e) {}
 if (isUserVip) { document.body.classList.add('is-vip'); }
 
-// 💡 修正 1：細分相機與相簿的專屬文案
 const featureDescriptions = {
     '📷 實境相機疊圖': '開啟鏡頭將沙盤完美重疊於真實救援現場，實地精準推演！',
     '📁 場勘照片疊圖': '您可以匯入現場環境相片，即使在指揮所，也能將系統完美疊合於相片中，進行最真實的地形沙盤兵推！',
@@ -631,7 +572,6 @@ const featureDescriptions = {
 };
 
 let pendingFeatureCallback = null;
-
 function attemptFeature(featureName, callback) {
     if (isUserVip) { callback(); } 
     else {
@@ -643,34 +583,64 @@ function attemptFeature(featureName, callback) {
         document.getElementById('vipModal').style.display = 'flex';
     }
 }
-
-function closeVipModal() {
-    document.getElementById('vipModal').style.display = 'none';
-    pendingFeatureCallback = null;
-}
-
+function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; pendingFeatureCallback = null; }
 function verifyVip() {
     const inputPwd = document.getElementById('vipPwdInput').value.trim();
-    const errorMsg = document.getElementById('vipErrorMsg');
-    
     if (VIP_SECRET_KEYS.includes(inputPwd)) {
         try { localStorage.setItem('sunmoon_vip_status', 'true'); } catch(e){}
-        isUserVip = true;
-        document.body.classList.add('is-vip'); 
-        closeVipModal();
+        isUserVip = true; document.body.classList.add('is-vip'); closeVipModal();
         try { alert("🎉 授權成功！歡迎使用散木專業版全功能！"); } catch(e) {}
         if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
-    } else {
-        errorMsg.textContent = "❌ 密碼錯誤，請確認輸入是否正確。";
-    }
+    } else { document.getElementById('vipErrorMsg').textContent = "❌ 密碼錯誤，請確認輸入是否正確。"; }
 }
 
 let isInstructorRight = true;
+instructorToggleBtn.addEventListener('click', () => { isInstructorRight = !isInstructorRight; draw(slider.value); });
 
-instructorToggleBtn.addEventListener('click', () => {
-  isInstructorRight = !isInstructorRight;
-  draw(slider.value);
+// 💡 雙引擎切換系統狀態變數
+let currentMode = 'anchor'; // 'anchor' or 'trackline'
+
+modeToggleBtn.addEventListener('click', () => {
+    if(currentMode === 'anchor') {
+        currentMode = 'trackline';
+        modeToggleBtn.className = 'mode-track';
+        modeToggleBtn.innerHTML = '🚠 水平索道模式';
+        mainTitleText.innerHTML = '索道張力儀 (動態版) <span class="vip-badge">PRO</span>';
+        menuModeText.textContent = '索道標準';
+        if(slider.value < 120) slider.value = 150; // 切換時給予一個適合索道的預設角度
+    } else {
+        currentMode = 'anchor';
+        modeToggleBtn.className = 'mode-anchor';
+        modeToggleBtn.innerHTML = '⚓ 垂直錨點模式';
+        mainTitleText.innerHTML = '錨點張力儀 (V型版) <span class="vip-badge">PRO</span>';
+        menuModeText.textContent = '錨點標準';
+        if(slider.value > 120) slider.value = 90; // 切換時給予一個適合錨點的預設角度
+    }
+    updateTheoryText();
+    draw(slider.value);
 });
+
+function updateTheoryText() {
+    if(currentMode === 'anchor') {
+        theoryContent.innerHTML = `
+          <p><b style="color:var(--safe)">🟢 安全區域 (0° ~ 90°)</b><br>兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。</p>
+          <p><b style="color:var(--warn)">🟡 警示注意區 (90° ~ 120°)</b><br>張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。</p>
+          <p><b style="color:var(--bad)">🔴 極度危險區 (> 120°)</b><br>超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！</p>
+          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+        `;
+    } else {
+        theoryContent.innerHTML = `
+          <p><b style="color:var(--safe)">🟢 正常操作區 (120° ~ 150°)</b><br>為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。</p>
+          <p><b style="color:var(--warn)">🟡 警示注意區 (150° ~ 160°)</b><br>逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。</p>
+          <p><b style="color:var(--bad)">🔴 死亡危險區 (> 160°)</b><br>超過 160° 後，極小的衝擊皆會產生恐怖的破壞力。嚴禁為了減少下垂而將索道拉平超過此極限！</p>
+          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+        `;
+    }
+}
+// 初始化說明文字
+updateTheoryText();
 
 function checkForUpdates() {
   if (confirm("系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？")) {
@@ -679,26 +649,14 @@ function checkForUpdates() {
 }
 
 shareBtnAction.addEventListener('click', async () => {
-  const shareData = {
-    title: '錨點張力儀 (V型雙點版)',
-    text: '運用 AR 鏡頭與空間幾何透視，能在無破壞系統的前提下，揭露高危險極限張力，確保前線教官的操作安全。',
-    url: window.location.href
-  };
+  const shareData = { title: '雙引擎張力分析儀', text: '內建錨點與索道雙重國際安全規範，結合 AR 實境精準推演極限張力。', url: window.location.href };
   try {
-    if (navigator.share) {
-      await navigator.share(shareData);
-    } else {
-      const dummy = document.createElement('input');
-      document.body.appendChild(dummy);
-      dummy.value = window.location.href;
-      dummy.select();
-      document.execCommand('copy');
-      document.body.removeChild(dummy);
-      alert('系統回報：網址已複製，您可以貼上分享給朋友囉！');
+    if (navigator.share) { await navigator.share(shareData); } 
+    else {
+      const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href;
+      dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); alert('系統回報：網址已複製，您可以貼上分享給朋友囉！');
     }
-  } catch (err) {
-    console.error('分享失敗', err);
-  }
+  } catch (err) {}
 });
 
 let hasAgreedToPermissions = false;
@@ -706,11 +664,7 @@ function requestUserAgreement() {
   if (hasAgreedToPermissions) return Promise.resolve();
   return new Promise((resolve) => {
     permissionModalOverlay.style.display = 'flex';
-    permissionAgreeBtn.onclick = () => {
-      permissionModalOverlay.style.display = 'none';
-      hasAgreedToPermissions = true;
-      resolve();
-    };
+    permissionAgreeBtn.onclick = () => { permissionModalOverlay.style.display = 'none'; hasAgreedToPermissions = true; resolve(); };
   });
 }
 
@@ -725,28 +679,20 @@ svgContainer.addEventListener('click', (e) => {
 });
 
 angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
-
 angleConfirmBtn.addEventListener('click', () => {
   let val = parseFloat(exactAngleInput.value);
-  if (isNaN(val) || val < 0 || val > 180) {
-    alert('系統回報：請輸入 0 到 180 之間的有效數字！');
-    return;
-  }
-  slider.value = val;
-  draw(val);
-  angleModalOverlay.style.display = 'none';
+  if (isNaN(val) || val < 0 || val > 180) { alert('系統回報：請輸入 0 到 180 之間的有效數字！'); return; }
+  slider.value = val; draw(val); angleModalOverlay.style.display = 'none';
 });
 
 let isLightMode = false;
 themeToggle.addEventListener('click', () => {
   isLightMode = !isLightMode;
   document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
-  themeToggle.textContent = isLightMode ? '🌙' : '☀️';
-  draw(slider.value);
+  themeToggle.textContent = isLightMode ? '🌙' : '☀️'; draw(slider.value);
 });
 
-let isCameraOn = false;
-let currentStream = null;
+let isCameraOn = false; let currentStream = null;
 cameraToggle.addEventListener('click', () => {
   attemptFeature('📷 實境相機疊圖', async () => {
     if (!isCameraOn) {
@@ -756,85 +702,44 @@ cameraToggle.addEventListener('click', () => {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const backCams = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
         const mainCam = backCams.find(d => !d.label.toLowerCase().includes('ultra') && !d.label.toLowerCase().includes('廣角'));
-        
         if (mainCam && stream.getVideoTracks()[0].getSettings().deviceId !== mainCam.deviceId) {
             stream.getTracks().forEach(t => t.stop());
             stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
         }
-        
-        currentStream = stream;
-        bgVideo.srcObject = currentStream;
-        bgVideo.style.display = 'block';
-        bgImage.style.display = 'none';
-        mainCard.classList.add('camera-mode');
-        cameraToggle.textContent = '❌';
-        cameraToggle.style.color = 'var(--warn)';
-        arControls.style.display = 'flex'; 
-        photoBtn.style.color = 'inherit';
-        isCameraOn = true;
-      } catch (err) {
-        cameraToggle.textContent = '⛔';
-        setTimeout(() => cameraToggle.textContent = '📷', 3000);
-      }
-    } else {
-      turnOffCamera();
-    }
+        currentStream = stream; bgVideo.srcObject = currentStream; bgVideo.style.display = 'block'; bgImage.style.display = 'none';
+        mainCard.classList.add('camera-mode'); cameraToggle.textContent = '❌'; cameraToggle.style.color = 'var(--warn)';
+        arControls.style.display = 'flex'; photoBtn.style.color = 'inherit'; isCameraOn = true;
+      } catch (err) { cameraToggle.textContent = '⛔'; setTimeout(() => cameraToggle.textContent = '📷', 3000); }
+    } else { turnOffCamera(); }
   });
 });
 
 let isTorchOn = false;
 torchToggle.addEventListener('click', async () => {
-  if (!isCameraOn || !currentStream) {
-    alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！');
-    return;
-  }
+  if (!isCameraOn || !currentStream) { alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！'); return; }
   const track = currentStream.getVideoTracks()[0];
   try {
     const capabilities = track.getCapabilities();
-    if (!capabilities.torch) {
-      alert('系統回報：您的裝置或瀏覽器不支援手電筒控制。');
-      return;
-    }
-    isTorchOn = !isTorchOn;
-    await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
-    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit';
-    torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
-  } catch (err) {
-    console.error('Torch error:', err);
-    alert('系統回報：手電筒開啟失敗，部分手機瀏覽器可能受限。');
-  }
+    if (!capabilities.torch) { alert('系統回報：您的裝置或瀏覽器不支援手電筒控制。'); return; }
+    isTorchOn = !isTorchOn; await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
+    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit'; torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
+  } catch (err) { alert('系統回報：手電筒開啟失敗，部分手機瀏覽器可能受限。'); }
 });
 
 function turnOffCamera() {
   if (currentStream) currentStream.getTracks().forEach(track => track.stop());
   bgVideo.style.display = 'none';
-  if (bgImage.style.display !== 'block') {
-    mainCard.classList.remove('camera-mode');
-    arControls.style.display = 'none';
-  }
-  cameraToggle.textContent = '📷';
-  cameraToggle.style.color = 'inherit';
-  isCameraOn = false;
-  
-  isTorchOn = false;
-  torchToggle.style.color = 'inherit';
-  torchToggle.textContent = '🔦';
+  if (bgImage.style.display !== 'block') { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
+  cameraToggle.textContent = '📷'; cameraToggle.style.color = 'inherit'; isCameraOn = false;
+  isTorchOn = false; torchToggle.style.color = 'inherit'; torchToggle.textContent = '🔦';
 }
 
 photoBtn.addEventListener('click', () => {
   attemptFeature('📁 場勘照片疊圖', () => {
     if (bgImage.style.display === 'block') {
-      bgImage.style.display = 'none';
-      bgImage.src = '';
-      photoUpload.value = '';
-      photoBtn.style.color = 'inherit';
-      if (!isCameraOn) {
-        mainCard.classList.remove('camera-mode');
-        arControls.style.display = 'none';
-      }
-    } else {
-      photoUpload.click();
-    }
+      bgImage.style.display = 'none'; bgImage.src = ''; photoUpload.value = ''; photoBtn.style.color = 'inherit';
+      if (!isCameraOn) { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
+    } else { photoUpload.click(); }
   });
 });
 
@@ -843,210 +748,115 @@ photoUpload.addEventListener('change', (e) => {
   if(file) {
     const reader = new FileReader();
     reader.onload = (event) => {
-      bgImage.src = event.target.result;
-      bgImage.style.display = 'block';
+      bgImage.src = event.target.result; bgImage.style.display = 'block';
       if(isCameraOn) turnOffCamera(); 
-      bgVideo.style.display = 'none';
-      mainCard.classList.add('camera-mode');
-      arControls.style.display = 'flex'; 
-      photoBtn.style.color = 'var(--safe)'; 
-    };
-    reader.readAsDataURL(file);
+      bgVideo.style.display = 'none'; mainCard.classList.add('camera-mode');
+      arControls.style.display = 'flex'; photoBtn.style.color = 'var(--safe)'; 
+    }; reader.readAsDataURL(file);
   }
 });
 
-let currentZoom = 1;
-let panX = 0;
-let panY = 0;
-let isDragging = false;
-let startX = 0, startY = 0;
-
-function updateTransform() {
-  scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
-}
+let currentZoom = 1; let panX = 0; let panY = 0; let isDragging = false; let startX = 0, startY = 0;
+function updateTransform() { scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`; }
 
 arCollapseBtn.addEventListener('click', () => {
   const isCollapsed = arControls.classList.contains('is-collapsed');
   if(isCollapsed) {
-    arControls.classList.remove('is-collapsed');
-    document.querySelector('.ar-header-text').style.display = 'block';
-    document.getElementById('arSlidersWrap').style.display = 'flex';
-    arCollapseBtn.textContent = '收起面板';
-    arCollapseBtn.style.color = 'var(--muted)';
+    arControls.classList.remove('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'block';
+    document.getElementById('arSlidersWrap').style.display = 'flex'; arCollapseBtn.textContent = '收起面板'; arCollapseBtn.style.color = 'var(--muted)';
   } else {
-    arControls.classList.add('is-collapsed');
-    document.querySelector('.ar-header-text').style.display = 'none';
-    document.getElementById('arSlidersWrap').style.display = 'none';
-    arCollapseBtn.textContent = '展開設定';
-    arCollapseBtn.style.color = 'var(--safe)';
+    arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
+    document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = '展開設定'; arCollapseBtn.style.color = 'var(--safe)';
   }
 });
 
-zoomSlider.addEventListener('input', (e) => {
-  currentZoom = parseFloat(e.target.value);
-  updateTransform();
-});
+zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
 
-let isDraggingPanel = false;
-let pStartX, pStartY, pInitialLeft, pInitialTop;
-
+let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
 function startPanelDrag(e) {
   if (e.target.id === 'arCollapseBtn' || e.target.tagName.toLowerCase() === 'input') return;
-  isDraggingPanel = true;
-  const touch = e.type.includes('mouse') ? e : e.touches[0];
-  pStartX = touch.clientX;
-  pStartY = touch.clientY;
-  
-  const rect = arControls.getBoundingClientRect();
-  const parentRect = mainCard.getBoundingClientRect();
-  
-  pInitialLeft = rect.left - parentRect.left;
-  pInitialTop = rect.top - parentRect.top;
-  
-  arControls.style.left = `${pInitialLeft}px`;
-  arControls.style.top = `${pInitialTop}px`;
-  arControls.style.right = 'auto';
-  arControls.style.bottom = 'auto';
-  arControls.style.transform = 'none';
+  isDraggingPanel = true; const touch = e.type.includes('mouse') ? e : e.touches[0]; pStartX = touch.clientX; pStartY = touch.clientY;
+  const rect = arControls.getBoundingClientRect(); const parentRect = mainCard.getBoundingClientRect();
+  pInitialLeft = rect.left - parentRect.left; pInitialTop = rect.top - parentRect.top;
+  arControls.style.left = `${pInitialLeft}px`; arControls.style.top = `${pInitialTop}px`; arControls.style.right = 'auto'; arControls.style.bottom = 'auto'; arControls.style.transform = 'none';
 }
-
 function movePanel(e) {
-  if (!isDraggingPanel) return;
-  e.preventDefault();
-  const touch = e.type.includes('mouse') ? e : e.touches[0];
-  const dx = touch.clientX - pStartX;
-  const dy = touch.clientY - pStartY;
-  arControls.style.left = `${pInitialLeft + dx}px`;
-  arControls.style.top = `${pInitialTop + dy}px`;
+  if (!isDraggingPanel) return; e.preventDefault(); const touch = e.type.includes('mouse') ? e : e.touches[0];
+  const dx = touch.clientX - pStartX; const dy = touch.clientY - pStartY;
+  arControls.style.left = `${pInitialLeft + dx}px`; arControls.style.top = `${pInitialTop + dy}px`;
 }
-
 function endPanelDrag() { isDraggingPanel = false; }
-
-arDragHandle.addEventListener('mousedown', startPanelDrag);
-window.addEventListener('mousemove', movePanel);
-window.addEventListener('mouseup', endPanelDrag);
-arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false});
-window.addEventListener('touchmove', movePanel, {passive: false});
-window.addEventListener('touchend', endPanelDrag);
+arDragHandle.addEventListener('mousedown', startPanelDrag); window.addEventListener('mousemove', movePanel); window.addEventListener('mouseup', endPanelDrag);
+arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false}); window.addEventListener('touchmove', movePanel, {passive: false}); window.addEventListener('touchend', endPanelDrag);
 
 mainCard.addEventListener('mousedown', (e) => {
-  if (arControls.classList.contains('is-collapsed')) return;
-  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
-  isDragging = true;
-  startX = e.clientX - panX;
-  startY = e.clientY - panY;
+  if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
 });
-
-window.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  panX = e.clientX - startX;
-  panY = e.clientY - startY;
-  updateTransform();
-});
-
-window.addEventListener('mouseup', () => {
-  isDragging = false;
-  arControls.style.opacity = '1';
-});
+window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
+window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
 
 mainCard.addEventListener('touchstart', (e) => {
-  if (arControls.classList.contains('is-collapsed')) return;
-  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
-  isDragging = true;
-  startX = e.touches[0].clientX - panX;
-  startY = e.touches[0].clientY - panY;
+  if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY;
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
 }, {passive: false});
-
 window.addEventListener('touchmove', (e) => {
-  if (!isDragging) return;
-  if (e.cancelable) e.preventDefault(); 
-  panX = e.touches[0].clientX - startX;
-  panY = e.touches[0].clientY - startY;
-  updateTransform();
+  if (!isDragging) return; if (e.cancelable) e.preventDefault(); 
+  panX = e.touches[0].clientX - startX; panY = e.touches[0].clientY - startY; updateTransform();
 }, {passive: false});
+window.addEventListener('touchend', () => { isDragging = false; arControls.style.opacity = '1'; });
 
-window.addEventListener('touchend', () => {
-  isDragging = false;
-  arControls.style.opacity = '1';
-});
-
-rotateSlider.addEventListener('input', (e) => {
-  let currentAngle = parseFloat(e.target.value);
-  gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`;
-});
+rotateSlider.addEventListener('input', (e) => { let currentAngle = parseFloat(e.target.value); gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`; });
 
 screenshotBtn.addEventListener('click', () => {
   attemptFeature('📸 戰術純淨截圖', async () => {
-    mainCard.style.opacity = '0.5';
-    setTimeout(() => mainCard.style.opacity = '1', 150);
-
-    let originalVideoState = bgVideo.style.display;
-    let originalImageSrc = bgImage.src;
-    let originalImageState = bgImage.style.display;
-
+    mainCard.style.opacity = '0.5'; setTimeout(() => mainCard.style.opacity = '1', 150);
+    let originalVideoState = bgVideo.style.display; let originalImageSrc = bgImage.src; let originalImageState = bgImage.style.display;
     if (isCameraOn && bgVideo.videoWidth) {
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = bgVideo.videoWidth;
-      tempCanvas.height = bgVideo.videoHeight;
+      const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
       tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
-      bgImage.src = tempCanvas.toDataURL('image/jpeg');
-      bgImage.style.display = 'block';
-      bgVideo.style.display = 'none';
+      bgImage.src = tempCanvas.toDataURL('image/jpeg'); bgImage.style.display = 'block'; bgVideo.style.display = 'none';
     }
-
-    const now = new Date();
-    const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
+    const now = new Date(); const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
     const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-    
-    watermark.innerHTML = `🛡️ 錨點張力儀 (V型雙點版)<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
+    let titleStr = currentMode === 'anchor' ? '錨點張力儀 (V型雙點)' : '索道張力儀 (動態滑行)';
+    watermark.innerHTML = `🛡️ ${titleStr}<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
     watermark.style.display = 'block';
-
     try {
-      const canvas = await html2canvas(mainCard, { 
-        useCORS: true, 
-        backgroundColor: null,
-        scale: 2
-      });
-      const link = document.createElement('a');
-      link.download = '戰術張力分析截圖.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    } catch(e) {
-      console.error("截圖發生錯誤", e);
-      alert("系統回報：截圖失敗，請稍後再試！");
-    }
-
+      const canvas = await html2canvas(mainCard, { useCORS: true, backgroundColor: null, scale: 2 });
+      const link = document.createElement('a'); link.download = '戰術張力分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
+    } catch(e) { alert("系統回報：截圖失敗，請稍後再試！"); }
     watermark.style.display = 'none';
-    if (isCameraOn) {
-      bgVideo.style.display = originalVideoState;
-      bgImage.src = originalImageSrc;
-      bgImage.style.display = originalImageState;
-    }
+    if (isCameraOn) { bgVideo.style.display = originalVideoState; bgImage.src = originalImageSrc; bgImage.style.display = originalImageState; }
   });
 });
 
-function polar(cx, cy, r, deg){
-  const rad = deg * Math.PI / 180;
-  return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) };
-}
-
+function polar(cx, cy, r, deg){ const rad = deg * Math.PI / 180; return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) }; }
 function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
   let d = '';
   for(let i = 0; i <= steps; i++){
-    const t = i / steps;
-    const deg = startDeg + (endDeg - startDeg) * t;
-    const p = polar(cx, cy, r, deg);
+    const t = i / steps; const deg = startDeg + (endDeg - startDeg) * t; const p = polar(cx, cy, r, deg);
     d += `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)} `;
-  }
-  return d;
+  } return d;
 }
 
-function stateOf(phi){
-  if(phi <= 10) return { color:'var(--bad)', title:'⚠️ 高危區域', tone:'zoneBad', desc:'教官驚訝！張力極大', stateClass:'is-danger' };
-  if(phi < 25) return { color:'var(--warn)', title:'注意區', tone:'zoneWarn', desc:'張力顯著上升', stateClass:'is-warn' };
-  return { color:'var(--safe)', title:'安全區', tone:'zoneSafe', desc:'受力穩定', stateClass:'' };
+// 💡 雙引擎核心判定：根據當前模式給予不同的紅黃綠燈標準
+function stateOf(beta){
+  if (currentMode === 'anchor') {
+    // ⚓ 垂直錨點模式 (嚴格標準)
+    if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
+    if(beta >= 120) return { color:'var(--bad)', title:'🔴 極度危險', tone:'zoneBad', desc:'張力呈指數飆升，嚴禁逾越！', stateClass:'is-danger' };
+    if(beta >= 90)  return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'張力顯著上升，注意錨點強度', stateClass:'is-warn' };
+    return { color:'var(--safe)', title:'🟢 安全區域', tone:'zoneSafe', desc:'受力穩定，理想架設狀態', stateClass:'' };
+  } else {
+    // 🚠 水平索道模式 (寬容標準)
+    if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
+    if(beta >= 160) return { color:'var(--bad)', title:'🔴 危險區域', tone:'zoneBad', desc:'超過極限，嚴禁再將索道收緊！', stateClass:'is-danger' };
+    if(beta >= 150) return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'逼近 10% 下垂量極限', stateClass:'is-warn' };
+    return { color:'var(--safe)', title:'🟢 正常操作', tone:'zoneSafe', desc:'安全跨距，容許的正常下垂量', stateClass:'' };
+  }
 }
 
 function getForceLabel(phi, beta){
@@ -1054,47 +864,37 @@ function getForceLabel(phi, beta){
   const rad = Math.max(phi, 0.05) * Math.PI / 180;
   const T = Number(inputT.value) || 0;
   const val = T / (2 * Math.sin(rad));
-  try {
-    return val.toLocaleString('en-US', {maximumFractionDigits: 1}) + " kg";
-  } catch (e) {
-    return val.toFixed(1) + " kg";
-  }
+  try { return val.toLocaleString('en-US', {maximumFractionDigits: 1}) + " kg"; } catch (e) { return val.toFixed(1) + " kg"; }
 }
 
 function draw(beta){
   beta = Number(beta);
   const phi = (180 - beta) / 2;
-  const safePhi = Math.max(phi, 0.1);
-  const st = stateOf(phi);
+  const st = stateOf(beta); // 💡 使用新的雙引擎判定
   const forceLabel = getForceLabel(phi, beta);
   
   const isBroken = beta >= 179.9;
-  const isSurprised = phi <= 10 && !isBroken;
+  const isSurprised = (currentMode === 'anchor' ? beta >= 120 : beta >= 160) && !isBroken;
   
   mainCard.classList.remove('is-broken', 'is-danger', 'is-warn');
   if (isBroken) mainCard.classList.add('is-broken');
   else if (st.stateClass) mainCard.classList.add(st.stateClass);
 
-  const cx = 180, cy = 180, ropeLen = 125; 
+  const cx = 180, cy = 200, ropeLen = 125; 
   const left = polar(cx, cy, ropeLen, 180 - phi);
   const right = polar(cx, cy, ropeLen, phi);
   const leftExt = polar(cx, cy, ropeLen + 20, 180 - phi);
   const rightExt = polar(cx, cy, ropeLen + 20, phi);
 
   const topY = right.y; 
-
   const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
   const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
   const d = isInstructorRight ? -1 : 1; 
 
   const pullIn = Math.max(0, (beta - 100) / 80); 
   const forcePosRatio = 1 - pullIn * 0.45; 
-  
-  let leftForceX = cx + (left.x - cx) * forcePosRatio;
-  let rightForceX = cx + (right.x - cx) * forcePosRatio;
-  leftForceX = Math.min(leftForceX, cx - 45);
-  rightForceX = Math.max(rightForceX, cx + 45);
-  
+  let leftForceX = cx + (left.x - cx) * forcePosRatio; let rightForceX = cx + (right.x - cx) * forcePosRatio;
+  leftForceX = Math.min(leftForceX, cx - 45); rightForceX = Math.max(rightForceX, cx + 45);
   const forceY = topY - 15;
 
   const aArcStart = isInstructorRight ? 180 : 360 - phi;
@@ -1125,20 +925,13 @@ function draw(beta){
       <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
     `;
   } else {
-    const arrowStartX = instX + d * 10;
-    const arrowStartY = topY - 15;
+    const arrowStartX = instX + d * 10; const arrowStartY = topY - 15;
     const arcTarget = polar(aAnchor.x, topY, 25, aArcMid);
-    const deltaX = arcTarget.x - arrowStartX;
-    const deltaY = arcTarget.y - arrowStartY;
+    const deltaX = arcTarget.x - arrowStartX; const deltaY = arcTarget.y - arrowStartY;
     const dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
-    
     const ratio = dist > 8 ? (dist - 8) / dist : 1;
-    const arrowEndX = arrowStartX + deltaX * ratio;
-    const arrowEndY = arrowStartY + deltaY * ratio;
-    
-    const arrowCpX = arrowStartX + deltaX * 0.5;
-    const arrowCpY = Math.min(arrowStartY, arrowEndY) - 25;
-
+    const arrowEndX = arrowStartX + deltaX * ratio; const arrowEndY = arrowStartY + deltaY * ratio;
+    const arrowCpX = arrowStartX + deltaX * 0.5; const arrowCpY = Math.min(arrowStartY, arrowEndY) - 25;
     instructorHtml = `
       <line x1="${instX}" y1="${topY-25}" x2="${instX + 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
       <line x1="${instX}" y1="${topY-25}" x2="${instX - 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
@@ -1165,7 +958,6 @@ function draw(beta){
 
   const betaStr = (beta % 1 === 0) ? beta : beta.toFixed(1);
   const phiStr = (phi % 1 === 0) ? phi : phi.toFixed(1);
-
   const betaYOffset = Math.max(0, 90 - beta) * 0.4;
   const betaTextY = cy - 35 - betaYOffset;
 
@@ -1174,10 +966,7 @@ function draw(beta){
       <defs>
         <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--instructor)"/></marker>
         <filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="var(--card)" flood-opacity="0.8"/></filter>
-        <style>
-          @keyframes svgSway { 0% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } 100% { transform: rotate(-0.5deg); } }
-          .sway-element { transform-origin: 180px 160px; animation: svgSway 3s infinite ease-in-out; }
-        </style>
+        <style>@keyframes svgSway { 0% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } 100% { transform: rotate(-0.5deg); } } .sway-element { transform-origin: 180px 160px; animation: svgSway 3s infinite ease-in-out; }</style>
       </defs>
       
       <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
@@ -1191,12 +980,9 @@ function draw(beta){
       <line x1="${left.x}" y1="${left.y}" x2="${leftExt.x}" y2="${leftExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
       <line x1="${right.x}" y1="${right.y}" x2="${rightExt.x}" y2="${rightExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
       
-      <g class="sway-element">
-        <line x1="180" y1="180" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" />
-      </g>
+      <g class="sway-element"><line x1="180" y1="180" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" /></g>
 
       <path d="${polyArc(cx, cy, 28, phi, 180 - phi)}" stroke="var(--warn)" stroke-width="2" fill="none" />
-      
       <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎<tspan class="inline-lock">🔒</tspan></text>
       
       <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
@@ -1225,52 +1011,28 @@ function draw(beta){
   caption.innerHTML = `
     <div style="font-size:14px; margin-bottom:6px;">📍 目前張力倍數：<b style="color:var(--safe)">${mulText} x</b> 負載</div>
     <div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? '💀 系統毀損' : st.title}｜${st.desc}</div>
-    <div style="font-size:13px; opacity:0.9; margin-top:2px;">注意：當夾角趨近 180° 時，支點張力會瞬間暴增，極度危險！</div>
+    <div style="font-size:13px; opacity:0.9; margin-top:2px;">${currentMode === 'anchor' ? '注意：垂直錨點系統嚴禁超過 120°，張力將產生破壞性飆升！' : '注意：索道拉平超過 160° 時，極小衝擊將產生恐怖的動態破壞力！'}</div>
   `;
 }
 
-btnMinus.addEventListener('click', () => { 
-  inputT.value = Math.max(0, Number(inputT.value) - 10); 
-  draw(slider.value); 
-});
-btnPlus.addEventListener('click', () => { 
-  inputT.value = Number(inputT.value) + 10; 
-  draw(slider.value); 
-});
+btnMinus.addEventListener('click', () => { inputT.value = Math.max(0, Number(inputT.value) - 10); draw(slider.value); });
+btnPlus.addEventListener('click', () => { inputT.value = Number(inputT.value) + 10; draw(slider.value); });
 
 slider.addEventListener('input', () => draw(slider.value));
 inputT.addEventListener('input', () => draw(slider.value));
 
 resetBtn.addEventListener('click', () => { 
-  slider.value = 120; 
-  inputT.value = 100; 
-  zoomSlider.value = 1;
-  rotateSlider.value = 0;
-  
-  arControls.classList.add('is-collapsed');
-  document.querySelector('.ar-header-text').style.display = 'none';
-  document.getElementById('arSlidersWrap').style.display = 'none';
-  arCollapseBtn.textContent = '展開設定';
-  arCollapseBtn.style.color = 'var(--safe)';
-  arControls.style.opacity = '1';
-  arControls.style.left = 'auto';
-  arControls.style.top = '80px';
-  arControls.style.right = '10px';
-  arControls.style.bottom = 'auto';
-
-  currentZoom = 1;
-  panX = 0;
-  panY = 0;
-  updateTransform();
-  gimbalWrap.style.transform = `rotate(0deg)`;
-  
-  draw(120); 
+  slider.value = currentMode === 'anchor' ? 90 : 150; 
+  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0;
+  arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
+  document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = '展開設定'; arCollapseBtn.style.color = 'var(--safe)';
+  arControls.style.opacity = '1'; arControls.style.left = 'auto'; arControls.style.top = '80px'; arControls.style.right = '10px'; arControls.style.bottom = 'auto';
+  currentZoom = 1; panX = 0; panY = 0; updateTransform(); gimbalWrap.style.transform = `rotate(0deg)`; draw(slider.value); 
 });
 
 jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
 
 draw(120);
-
 const menuGroups = document.querySelectorAll('.menu-group');
 menuGroups.forEach(group => {
   const items = group.querySelectorAll('details.menu-item');
@@ -1278,19 +1040,11 @@ menuGroups.forEach(group => {
     item.addEventListener('toggle', function() {
       if (this.open) {
         group.classList.add('has-open-item');
-        items.forEach(other => {
-          if (other !== this && other.open) {
-            other.removeAttribute('open');
-          }
-        });
-        setTimeout(() => {
-          this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 50);
+        items.forEach(other => { if (other !== this && other.open) { other.removeAttribute('open'); } });
+        setTimeout(() => { this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
       } else {
         const anyOpen = Array.from(items).some(i => i.open);
-        if (!anyOpen) {
-          group.classList.remove('has-open-item');
-        }
+        if (!anyOpen) { group.classList.remove('has-open-item'); }
       }
     });
   });
