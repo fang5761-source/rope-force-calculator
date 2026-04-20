@@ -92,7 +92,6 @@
   }
   button:hover{ background:rgba(150,150,150,.2); }
   
-  /* 💡 雙引擎切換按鈕專屬樣式 */
   #modeToggleBtn { flex: 2; min-width: 120px; transition: all 0.3s ease; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
   #modeToggleBtn.mode-anchor { background: var(--safe); color: #0f1623; }
   #modeToggleBtn.mode-track { background: var(--mode-track); color: #0f1623; }
@@ -402,7 +401,6 @@
   <div class="menu-list">
     
     <details class="main-accordion" id="theoryAccordion">
-      <!-- 💡 完美修復：用隱形的 span 將標題與括號綁定成同一塊積木，杜絕分散排版！ -->
       <summary><span>📚 專業名詞與原理解析 (<span id="menuModeText">錨點標準</span>)</span></summary>
       <div class="menu-group">
         <div class="menu-content" id="theoryContent">
@@ -625,7 +623,7 @@ function updateTheoryText() {
     if(currentMode === 'anchor') {
         theoryContent.innerHTML = `
           <p><b style="color:var(--safe)">🟢 安全區域 (0° ~ 90°)</b><br>兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。</p>
-          <p><b style="color:var(--warn)">🟡 警示注意區 (90° ~ 120°)</b><br>張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。</p>
+          <p><b style="color:var(--warn)">🟡 警示注意區 (> 90° ~ 120°)</b><br>張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。</p>
           <p><b style="color:var(--bad)">🔴 極度危險區 (> 120°)</b><br>超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！</p>
           <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
           <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
@@ -633,7 +631,7 @@ function updateTheoryText() {
     } else {
         theoryContent.innerHTML = `
           <p><b style="color:var(--safe)">🟢 正常操作區 (120° ~ 150°)</b><br>為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。</p>
-          <p><b style="color:var(--warn)">🟡 警示注意區 (150° ~ 160°)</b><br>逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。</p>
+          <p><b style="color:var(--warn)">🟡 警示注意區 (> 150° ~ 160°)</b><br>逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。</p>
           <p><b style="color:var(--bad)">🔴 死亡危險區 (> 160°)</b><br>超過 160° 後，極小的衝擊皆會產生恐怖的破壞力。嚴禁為了減少下垂而將索道拉平超過此極限！</p>
           <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
           <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
@@ -843,19 +841,19 @@ function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
   } return d;
 }
 
-// 💡 雙引擎核心判定：根據當前模式給予不同的紅黃綠燈標準
+// 💡 雙引擎核心判定：根據當前模式給予不同的紅黃綠燈標準 (邊界修正為 ">" 而非 ">=")
 function stateOf(beta){
   if (currentMode === 'anchor') {
     // ⚓ 垂直錨點模式 (嚴格標準)
     if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
-    if(beta >= 120) return { color:'var(--bad)', title:'🔴 極度危險', tone:'zoneBad', desc:'張力呈指數飆升，嚴禁逾越！', stateClass:'is-danger' };
-    if(beta >= 90)  return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'張力顯著上升，注意錨點強度', stateClass:'is-warn' };
+    if(beta > 120) return { color:'var(--bad)', title:'🔴 極度危險', tone:'zoneBad', desc:'張力呈指數飆升，嚴禁逾越！', stateClass:'is-danger' };
+    if(beta > 90)  return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'張力顯著上升，注意錨點強度', stateClass:'is-warn' };
     return { color:'var(--safe)', title:'🟢 安全區域', tone:'zoneSafe', desc:'受力穩定，理想架設狀態', stateClass:'' };
   } else {
     // 🚠 水平索道模式 (寬容標準)
     if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
-    if(beta >= 160) return { color:'var(--bad)', title:'🔴 危險區域', tone:'zoneBad', desc:'超過極限，嚴禁再將索道收緊！', stateClass:'is-danger' };
-    if(beta >= 150) return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'逼近 10% 下垂量極限', stateClass:'is-warn' };
+    if(beta > 160) return { color:'var(--bad)', title:'🔴 危險區域', tone:'zoneBad', desc:'超過極限，嚴禁再將索道收緊！', stateClass:'is-danger' };
+    if(beta > 150) return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'逼近 10% 下垂量極限', stateClass:'is-warn' };
     return { color:'var(--safe)', title:'🟢 正常操作', tone:'zoneSafe', desc:'安全跨距，容許的正常下垂量', stateClass:'' };
   }
 }
@@ -875,7 +873,8 @@ function draw(beta){
   const forceLabel = getForceLabel(phi, beta);
   
   const isBroken = beta >= 179.9;
-  const isSurprised = (currentMode === 'anchor' ? beta >= 120 : beta >= 160) && !isBroken;
+  // 💡 同步修正教官驚嚇動畫的觸發條件為嚴格大於 (>)
+  const isSurprised = (currentMode === 'anchor' ? beta > 120 : beta > 160) && !isBroken;
   
   mainCard.classList.remove('is-broken', 'is-danger', 'is-warn');
   if (isBroken) mainCard.classList.add('is-broken');
