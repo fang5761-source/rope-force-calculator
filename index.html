@@ -74,7 +74,7 @@
   
   .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
   .title-row { display: flex; align-items: center; width: 100%; justify-content: space-between; }
-  .title-left { display: flex; align-items: center; }
+  .title-left { display: flex; align-items: center; cursor: pointer; user-select: none; }
   .title-tag {
     font-size: 15px; color: var(--text); font-weight: bold;
     border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; display: flex; align-items: center;
@@ -258,6 +258,19 @@
   .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
   
   .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
+
+  /* 💡 新增：散木專屬浮動提示框 (Toast) 樣式 */
+  #toastMessage {
+    display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px;
+    border-left: 4px solid var(--safe); box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    z-index: 10000; font-weight: bold; text-align: center; font-size: 14px; width: 85%; max-width: 320px;
+    animation: toast-slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes toast-slide-down {
+    from { top: -50px; opacity: 0; }
+    to { top: 20px; opacity: 1; }
+  }
 </style>
 </head>
 <body>
@@ -300,29 +313,30 @@
     const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
     const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
     if (!_isOk) {
-      try { alert('\u26a0\ufe0f \u7cfb\u7d71\u5b89\u5168\u8b66\u544a\n\n\u5075\u6e2c\u5230\u975e\u5b98\u65b9\u7db2\u57df\uff01\n\u672c\u5de5\u5177\u70ba\u3010\u6563\u6728\u5718\u968a\u3011\u5c08\u5c6c\u7814\u767c\uff0c\u672a\u7d93\u6388\u6b0a\u7981\u6b62\u76dc\u7528\u3002\n\u9632\u8b77\u6a5f\u5236\u555f\u52d5\u4e2d\u2026'); } catch(e){}
       _0xKill();
     }
   })();
 })();
 </script>
 
+<!-- 💡 新增：散木專屬浮動提示框 (取代容易被封鎖的原生 alert) -->
+<div id="toastMessage"></div>
+
 <div class="app-container">
   
   <div id="mainCard" class="card">
     <div class="topbar">
       <div class="title-row">
-        <div class="title-left">
+        <div class="title-left" id="mainTitleText">
           <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
-          <div class="title-tag" id="mainTitleText">張力儀 (雙引擎版) <span class="vip-badge">PRO</span></div>
+          <div class="title-tag"><span id="modeTitleLabel">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
         </div>
       </div>
       
-      <!-- 💡 雙引擎戰術切換列 -->
       <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2);">
         <button id="modeToggleBtn" class="mode-anchor" type="button" title="點擊切換系統安全模式">⚓ 垂直錨點模式</button>
-        <button id="instructorToggleBtn" type="button" title="切換教官位置">🧍‍♂️↔️</button>
-        <button id="themeToggle" type="button" title="日/夜間模式">☀️</button>
+        <button id="instructorToggleBtn" type="button" title="切換教官位置" style="min-width: 40px; flex: none;">🧍‍♂️↔️</button>
+        <button id="themeToggle" type="button" title="日/夜間模式" style="min-width: 40px; flex: none;">☀️</button>
       </div>
 
       <div class="btn-group">
@@ -404,8 +418,7 @@
       <summary><span>📚 專業名詞與原理解析 (<span id="menuModeText">錨點標準</span>)</span></summary>
       <div class="menu-group">
         <div class="menu-content" id="theoryContent">
-          <!-- 內容會由 JS 根據模式動態寫入 -->
-        </div>
+          </div>
       </div>
     </details>
 
@@ -452,6 +465,11 @@
         <div class="menu-header-left"><span class="menu-icon">🔗</span>分享系統連結</div>
         <span class="menu-arrow">❯</span>
       </div>
+      <!-- 💡 修復：將技術支援與問題回報按鈕補回來了！ -->
+      <div class="menu-action-btn" id="supportBtnAction" style="border-bottom: 1px solid var(--line);">
+        <div class="menu-header-left"><span class="menu-icon">💬</span>技術支援與問題回報</div>
+        <span class="menu-arrow">❯</span>
+      </div>
       <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
         <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並載入最新版本</div>
         <span class="menu-arrow">❯</span>
@@ -486,9 +504,26 @@
   </div>
 </div>
 
-<!-- VIP 升級解鎖視窗 -->
-<div id="vipModal" class="modal-overlay">
+<!-- 💡 新增：技術支援引導視窗 -->
+<div id="supportModal" class="modal-overlay">
   <div class="modal-box">
+    <h3 style="color:var(--warn); margin-top:0;">💬 技術支援與問題回報</h3>
+    <p style="text-align:left; font-size:13px; line-height:1.7; margin-bottom:15px; color:var(--text);">
+      如果您遇到系統異常，或是<strong>更換新手機需要重新取得授權碼</strong>，請準備好您的：<br><br>
+      <span style="color:var(--safe);">✔ 購買收據 Email 截圖</span><br>
+      <span style="color:var(--safe);">✔ 遭遇的問題描述</span><br><br>
+      請點擊下方按鈕前往「專屬回報表單」填寫。團隊確認無誤後，會盡速將新密碼發送至您的信箱！<br>
+      <span style="color:var(--muted); font-size:11.5px; display:block; margin-top:8px;">(⚠️ 註：表單包含截圖上傳功能，為配合系統安全，填寫前需登入 Google 帳號)</span>
+    </p>
+    <div class="modal-btn-group">
+      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="document.getElementById('supportModal').style.display='none'">稍後再說</button>
+      <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="window.open('https://forms.gle/fnxHcegcwQSPKmuQ6', '_blank'); document.getElementById('supportModal').style.display='none'">前往填寫表單</button>
+    </div>
+  </div>
+</div>
+
+<div id="vipModal" class="modal-overlay">
+  <div class="modal-box" id="vipModalBox">
     <h3>🔒 專業版功能解鎖 <span class="vip-badge" style="display:inline-block; margin-left:8px;">PRO</span></h3>
     <p>您即將啟用「<span id="vipFeatureName" style="color:var(--vip); font-weight:bold; font-size:16px;"></span>」！</p>
     <p id="vipFeatureDesc" style="font-size:14px; color:var(--safe); font-weight:bold; margin-bottom: 12px;"></p>
@@ -512,6 +547,15 @@ if ('serviceWorker' in navigator) {
       .then(reg => console.log('🛡️ 戰術後勤 SW 已啟動'))
       .catch(err => console.log('SW 啟動失敗', err));
   });
+}
+
+// 💡 散木專屬浮動提示 (Toast) 系統：取代容易被封鎖的原生 alert
+function showToast(msg, type = 'safe') {
+    const toast = document.getElementById('toastMessage');
+    toast.innerHTML = msg;
+    toast.style.borderLeftColor = `var(--${type})`;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 3000);
 }
 
 const svgContainer = document.getElementById('svgContainer');
@@ -550,16 +594,45 @@ const angleConfirmBtn = document.getElementById('angleConfirmBtn');
 const angleCancelBtn = document.getElementById('angleCancelBtn');
 
 const shareBtnAction = document.getElementById('shareBtnAction');
+const supportBtnAction = document.getElementById('supportBtnAction'); // 💡 綁定技術支援按鈕
 const instructorToggleBtn = document.getElementById('instructorToggleBtn');
 const modeToggleBtn = document.getElementById('modeToggleBtn');
 const mainTitleText = document.getElementById('mainTitleText');
+const modeTitleLabel = document.getElementById('modeTitleLabel');
 const theoryContent = document.getElementById('theoryContent');
 const menuModeText = document.getElementById('menuModeText');
 
-// 💡 VIP 系統
-const VIP_SECRET_KEYS = ["SM-PRO-2024", "SUNMOON-V10", "RESCUE-VIP"];
+// 💡 點擊開啟技術支援視窗
+supportBtnAction.addEventListener('click', () => {
+    document.getElementById('supportModal').style.display = 'flex';
+});
+
+// ==========================================
+// 💡 VIP 系統 (三層防護網與隱藏指揮官控制台)
+// ==========================================
+
+const PERMANENT_KEYS = ["SM-A7K9-X2M4", "SM-B3Q8-P9Y1", "SM-C5R2-W6Z7"]; 
+const MASTER_KEY = "SUNMOON-BOSS"; 
+
+function getDailyKey(offsetDays = 0) {
+    const d = new Date();
+    d.setDate(d.getDate() + offsetDays);
+    const dateStr = d.toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '');
+    const hash = (parseInt(dateStr) * 17 % 9000) + 1000;
+    return "SM-" + hash;
+}
+
+const todayStr = new Date().toLocaleDateString('en-CA', {timeZone: 'Asia/Taipei'}); 
 let isUserVip = false;
-try { isUserVip = localStorage.getItem('sunmoon_vip_status') === 'true'; } catch (e) {}
+
+try { 
+    if (localStorage.getItem('sunmoon_vip_status') === 'true') {
+        isUserVip = true; 
+    } else if (localStorage.getItem('sunmoon_vip_expire') === todayStr) {
+        isUserVip = true; 
+    }
+} catch (e) {}
+
 if (isUserVip) { document.body.classList.add('is-vip'); }
 
 const featureDescriptions = {
@@ -569,11 +642,14 @@ const featureDescriptions = {
     '🎯 精確角度輸入': '解鎖小數點級別的精確輸入！解除滑桿限制，精準模擬現場量測的極端張力變化！'
 };
 
+const originalVipModalHtml = document.getElementById('vipModalBox').innerHTML;
 let pendingFeatureCallback = null;
+
 function attemptFeature(featureName, callback) {
     if (isUserVip) { callback(); } 
     else {
         pendingFeatureCallback = callback;
+        document.getElementById('vipModalBox').innerHTML = originalVipModalHtml; 
         document.getElementById('vipFeatureName').textContent = featureName;
         document.getElementById('vipFeatureDesc').textContent = featureDescriptions[featureName];
         document.getElementById('vipErrorMsg').textContent = "";
@@ -581,39 +657,110 @@ function attemptFeature(featureName, callback) {
         document.getElementById('vipModal').style.display = 'flex';
     }
 }
+
 function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; pendingFeatureCallback = null; }
+
+// 💡 隱藏的指揮官暗門通道 (點擊標題召喚)
+mainTitleText.addEventListener('click', () => {
+    if (isUserVip) {
+        pendingFeatureCallback = null;
+        document.getElementById('vipModalBox').innerHTML = originalVipModalHtml; 
+        document.getElementById('vipFeatureName').textContent = "🛡️ 系統狀態：已解鎖";
+        document.getElementById('vipFeatureDesc').textContent = "如需進入指揮官控制台，請輸入最高權限金鑰：";
+        document.getElementById('vipErrorMsg').textContent = "";
+        document.getElementById('vipPwdInput').value = "";
+        document.getElementById('vipModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('vipPwdInput').focus(), 100);
+    }
+});
+
+// 💡 修復：使用免 confirm 且最穩定的直接清除與重載技術
+window.logoutVip = function() {
+    try {
+        localStorage.removeItem('sunmoon_vip_status');
+        localStorage.removeItem('sunmoon_vip_expire');
+    } catch(e) {}
+    showToast("🔄 登出成功，正在重新載入鎖定狀態...", "warn");
+    setTimeout(() => { window.location.reload(); }, 1000); // 延遲一秒讓吐司訊息顯示完畢再重整
+};
+
 function verifyVip() {
-    const inputPwd = document.getElementById('vipPwdInput').value.trim();
-    if (VIP_SECRET_KEYS.includes(inputPwd)) {
-        try { localStorage.setItem('sunmoon_vip_status', 'true'); } catch(e){}
+    const inputPwd = document.getElementById('vipPwdInput').value.trim().toUpperCase(); 
+    const errorMsg = document.getElementById('vipErrorMsg');
+    
+    if (inputPwd === MASTER_KEY) {
+        try { localStorage.setItem('sunmoon_vip_status', 'true'); } catch(e){} 
+        isUserVip = true; document.body.classList.add('is-vip'); 
+
+        const todayKey = getDailyKey(0);
+        const tmrwKey = getDailyKey(1);
+        // 💡 新增：自動抓取第一組終身金鑰
+        const permKey = PERMANENT_KEYS[0];
+
+        document.getElementById('vipModalBox').innerHTML = `
+          <h3 style="color: var(--warn); margin-top:0;">👑 指揮官專屬控制台</h3>
+          <p style="font-size:14px; margin-bottom:15px; color:var(--text);">報告長官！以下是動態教學體驗碼：</p>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--safe);">
+            <span style="color:var(--muted); font-size:12px;">👉 今天的體驗碼 (今晚 23:59 失效)</span><br>
+            <strong style="color:var(--safe); font-size:22px; letter-spacing:1px;">${todayKey}</strong>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--warn);">
+            <span style="color:var(--muted); font-size:12px;">👉 明天的體驗碼</span><br>
+            <strong style="color:var(--warn); font-size:22px; letter-spacing:1px;">${tmrwKey}</strong>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:20px; text-align:left; border-left: 4px solid var(--vip);">
+            <span style="color:var(--muted); font-size:12px;">👉 🌟 總部專屬配發碼</span><br>
+            <strong style="color:var(--vip); font-size:18px; letter-spacing:1px;">${permKey}</strong>
+          </div>
+          <div class="modal-btn-group" style="margin-top: 15px;">
+            <button class="primary-btn" style="background:transparent; border:1px solid var(--bad); color:var(--bad);" onclick="logoutVip()">清除授權(登出)</button>
+            <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="closeVipModal()">關閉控制台</button>
+          </div>
+        `;
+        return; 
+    }
+
+    if (PERMANENT_KEYS.includes(inputPwd)) {
+        try { localStorage.setItem('sunmoon_vip_status', 'true'); } catch(e){} 
         isUserVip = true; document.body.classList.add('is-vip'); closeVipModal();
-        try { alert("🎉 授權成功！歡迎使用散木專業版全功能！"); } catch(e) {}
+        showToast("🎉 授權成功！歡迎使用散木專業版全功能！", "safe");
         if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
-    } else { document.getElementById('vipErrorMsg').textContent = "❌ 密碼錯誤，請確認輸入是否正確。"; }
+        return;
+    }
+
+    if (inputPwd === getDailyKey(0)) {
+        try { localStorage.setItem('sunmoon_vip_expire', todayStr); } catch(e){} 
+        isUserVip = true; document.body.classList.add('is-vip'); closeVipModal();
+        showToast("⏱️ 體驗授權成功！您已解鎖今日的專業版權限 (今晚 23:59 自動失效)。", "safe");
+        if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
+        return;
+    }
+
+    errorMsg.textContent = "❌ 授權碼錯誤或已過期，請確認輸入是否正確。"; 
 }
+
+// ==========================================
 
 let isInstructorRight = true;
 instructorToggleBtn.addEventListener('click', () => { isInstructorRight = !isInstructorRight; draw(slider.value); });
 
-// 💡 雙引擎切換系統狀態變數
-let currentMode = 'anchor'; // 'anchor' or 'trackline'
+let currentMode = 'anchor'; 
 
 modeToggleBtn.addEventListener('click', () => {
     if(currentMode === 'anchor') {
         currentMode = 'trackline';
         modeToggleBtn.className = 'mode-track';
         modeToggleBtn.innerHTML = '🚠 水平索道模式';
-        // 💡 聽從徐老師的戰術指令：正名為「滑行版」以區別另一套「動態滑行版」
-        mainTitleText.innerHTML = '索道張力儀 (滑行版) <span class="vip-badge">PRO</span>';
+        modeTitleLabel.textContent = '索道張力儀 (滑行版)';
         menuModeText.textContent = '索道標準';
-        if(slider.value < 120) slider.value = 150; // 切換時給予一個適合索道的預設角度
+        if(slider.value < 120) slider.value = 150; 
     } else {
         currentMode = 'anchor';
         modeToggleBtn.className = 'mode-anchor';
         modeToggleBtn.innerHTML = '⚓ 垂直錨點模式';
-        mainTitleText.innerHTML = '錨點張力儀 (V型版) <span class="vip-badge">PRO</span>';
+        modeTitleLabel.textContent = '錨點張力儀 (V型版)';
         menuModeText.textContent = '錨點標準';
-        if(slider.value > 120) slider.value = 90; // 切換時給予一個適合錨點的預設角度
+        if(slider.value > 120) slider.value = 90; 
     }
     updateTheoryText();
     draw(slider.value);
@@ -638,13 +785,13 @@ function updateTheoryText() {
         `;
     }
 }
-// 初始化說明文字
 updateTheoryText();
 
 function checkForUpdates() {
-  if (confirm("系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？")) {
-    window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
-  }
+    showToast("🔄 正在清除快取並載入最新版本...", "warn");
+    setTimeout(() => {
+        window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
+    }, 1000);
 }
 
 shareBtnAction.addEventListener('click', async () => {
@@ -653,7 +800,8 @@ shareBtnAction.addEventListener('click', async () => {
     if (navigator.share) { await navigator.share(shareData); } 
     else {
       const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href;
-      dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); alert('系統回報：網址已複製，您可以貼上分享給朋友囉！');
+      dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); 
+      showToast('🔗 系統回報：網址已複製，您可以貼上分享給朋友囉！', 'safe'); 
     }
   } catch (err) {}
 });
@@ -680,7 +828,7 @@ svgContainer.addEventListener('click', (e) => {
 angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
 angleConfirmBtn.addEventListener('click', () => {
   let val = parseFloat(exactAngleInput.value);
-  if (isNaN(val) || val < 0 || val > 180) { alert('系統回報：請輸入 0 到 180 之間的有效數字！'); return; }
+  if (isNaN(val) || val < 0 || val > 180) { showToast('⚠️ 請輸入 0 到 180 之間的有效數字！', 'bad'); return; }
   slider.value = val; draw(val); angleModalOverlay.style.display = 'none';
 });
 
@@ -715,14 +863,14 @@ cameraToggle.addEventListener('click', () => {
 
 let isTorchOn = false;
 torchToggle.addEventListener('click', async () => {
-  if (!isCameraOn || !currentStream) { alert('系統回報：請先開啟「📷 實境相機」才能使用手電筒！'); return; }
+  if (!isCameraOn || !currentStream) { showToast('⚠️ 請先開啟「📷 實境相機」才能使用手電筒！', 'warn'); return; }
   const track = currentStream.getVideoTracks()[0];
   try {
     const capabilities = track.getCapabilities();
-    if (!capabilities.torch) { alert('系統回報：您的裝置或瀏覽器不支援手電筒控制。'); return; }
+    if (!capabilities.torch) { showToast('⚠️ 您的裝置或瀏覽器不支援手電筒控制。', 'bad'); return; }
     isTorchOn = !isTorchOn; await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
     torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit'; torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
-  } catch (err) { alert('系統回報：手電筒開啟失敗，部分手機瀏覽器可能受限。'); }
+  } catch (err) { showToast('⚠️ 手電筒開啟失敗，部分手機瀏覽器可能受限。', 'bad'); }
 });
 
 function turnOffCamera() {
@@ -820,13 +968,13 @@ screenshotBtn.addEventListener('click', () => {
     }
     const now = new Date(); const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
     const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-    let titleStr = currentMode === 'anchor' ? '錨點張力儀 (V型雙點)' : '索道張力儀 (動態滑行)';
+    let titleStr = currentMode === 'anchor' ? '錨點張力儀 (V型雙點版)' : '索道張力儀 (滑行版)';
     watermark.innerHTML = `🛡️ ${titleStr}<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
     watermark.style.display = 'block';
     try {
       const canvas = await html2canvas(mainCard, { useCORS: true, backgroundColor: null, scale: 2 });
       const link = document.createElement('a'); link.download = '戰術張力分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
-    } catch(e) { alert("系統回報：截圖失敗，請稍後再試！"); }
+    } catch(e) { showToast("❌ 截圖失敗，請稍後再試！", "bad"); }
     watermark.style.display = 'none';
     if (isCameraOn) { bgVideo.style.display = originalVideoState; bgImage.src = originalImageSrc; bgImage.style.display = originalImageState; }
   });
@@ -841,16 +989,13 @@ function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
   } return d;
 }
 
-// 💡 雙引擎核心判定：根據當前模式給予不同的紅黃綠燈標準 (邊界修正為 ">" 而非 ">=")
 function stateOf(beta){
   if (currentMode === 'anchor') {
-    // ⚓ 垂直錨點模式 (嚴格標準)
     if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
     if(beta > 120) return { color:'var(--bad)', title:'🔴 極度危險', tone:'zoneBad', desc:'張力呈指數飆升，嚴禁逾越！', stateClass:'is-danger' };
     if(beta > 90)  return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'張力顯著上升，注意錨點強度', stateClass:'is-warn' };
     return { color:'var(--safe)', title:'🟢 安全區域', tone:'zoneSafe', desc:'受力穩定，理想架設狀態', stateClass:'' };
   } else {
-    // 🚠 水平索道模式 (寬容標準)
     if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
     if(beta > 160) return { color:'var(--bad)', title:'🔴 危險區域', tone:'zoneBad', desc:'超過極限，嚴禁再將索道收緊！', stateClass:'is-danger' };
     if(beta > 150) return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'逼近 10% 下垂量極限', stateClass:'is-warn' };
@@ -869,11 +1014,10 @@ function getForceLabel(phi, beta){
 function draw(beta){
   beta = Number(beta);
   const phi = (180 - beta) / 2;
-  const st = stateOf(beta); // 💡 使用新的雙引擎判定
+  const st = stateOf(beta); 
   const forceLabel = getForceLabel(phi, beta);
   
   const isBroken = beta >= 179.9;
-  // 💡 同步修正教官驚嚇動畫的觸發條件為嚴格大於 (>)
   const isSurprised = (currentMode === 'anchor' ? beta > 120 : beta > 160) && !isBroken;
   
   mainCard.classList.remove('is-broken', 'is-danger', 'is-warn');
