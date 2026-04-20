@@ -605,7 +605,8 @@ modeToggleBtn.addEventListener('click', () => {
         currentMode = 'trackline';
         modeToggleBtn.className = 'mode-track';
         modeToggleBtn.innerHTML = '🚠 水平索道模式';
-        mainTitleText.innerHTML = '索道張力儀 (動態版) <span class="vip-badge">PRO</span>';
+        // 💡 聽從徐老師的戰術指令：正名為「滑行版」以區別另一套「動態滑行版」
+        mainTitleText.innerHTML = '索道張力儀 (滑行版) <span class="vip-badge">PRO</span>';
         menuModeText.textContent = '索道標準';
         if(slider.value < 120) slider.value = 150; // 切換時給予一個適合索道的預設角度
     } else {
