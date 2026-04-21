@@ -80,6 +80,15 @@
     border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; display: flex; align-items: center;
   }
   
+  /* 語言切換按鈕 */
+  #langToggleBtn {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--muted);
+    border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-left: auto;
+    flex: none; /* 💡 修正：強制不被全局按鈕屬性拉長，保持靠右 */
+  }
+  #langToggleBtn:active { transform: scale(0.95); background: var(--line); color: var(--text); }
+
   .btn-group {
     display: flex; gap: 6px; flex-wrap: wrap; width: 100%;
     background: rgba(150,150,150,0.05); padding: 6px; border-radius: 10px;
@@ -259,7 +268,7 @@
   
   .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
 
-  /* 💡 新增：散木專屬浮動提示框 (Toast) 樣式 */
+  /* 💡 散木專屬浮動提示框 (Toast) 樣式 */
   #toastMessage {
     display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
     background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px;
@@ -319,6 +328,211 @@
 })();
 </script>
 
+<script>
+// 💡 V5.0 無資料庫多語系字典引擎 (i18n Engine)
+const i18n = {
+  zh: {
+    appTitle: "錨點張力儀 (雙引擎版)",
+    appTitleTrack: "索道張力儀 (滑行版)",
+    modeAnchor: "⚓ 垂直錨點模式",
+    modeTrack: "🚠 水平索道模式",
+    weight: "負重 (kg)",
+    deadLine: "死線破斷",
+    zoom: "🔍 縮放",
+    rotate: "🔄 旋轉",
+    anchorTension: "固定點張力",
+    deadLineShort: "死線!",
+    langBtn: "🌐 繁中",
+    menu1: "專業名詞與原理解析",
+    menu2: "系統工具與說明書",
+    menu3: "分享系統連結",
+    menu4: "檢查並載入最新版本",
+    menu5: "技術支援與問題回報",
+    broken: "💀 系統毀損",
+    danger: "🔴 極度危險",
+    warn: "🟡 警示區域",
+    safe: "🟢 安全區域",
+    trackDanger: "🔴 危險區域",
+    trackSafe: "🟢 正常操作",
+    brokenDesc: "死線破斷！極度危險！",
+    anchorDangerDesc: "張力呈指數飆升，嚴禁逾越！",
+    anchorWarnDesc: "張力顯著上升，注意錨點強度",
+    anchorSafeDesc: "受力穩定，理想架設狀態",
+    trackDangerDesc: "超過極限，嚴禁再將索道收緊！",
+    trackWarnDesc: "逼近 10% 下垂量極限",
+    trackSafeDesc: "安全跨距，容許的正常下垂量",
+    anchorNote: "注意：垂直錨點系統嚴禁超過 120°，張力將產生破壞性飆升！",
+    trackNote: "注意：索道拉平超過 160° 時，極小衝擊將產生恐怖的動態破壞力！",
+    currentMul: "📍 目前張力倍數：",
+    loadWord: "負載",
+    anchorStd: "錨點標準",
+    trackStd: "索道標準",
+    limitWarning: "理論極限(179.95°)：57,296 kg",
+    thAnSafeT: "🟢 安全區域 (0° ~ 90°)",
+    thAnSafeD: "兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。",
+    thAnWarnT: "🟡 警示注意區 (> 90° ~ 120°)",
+    thAnWarnD: "張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。",
+    thAnDanT: "🔴 極度危險區 (> 120°)",
+    thAnDanD: "超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！",
+    thTrSafeT: "🟢 正常操作區 (120° ~ 150°)",
+    thTrSafeD: "為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。",
+    thTrWarnT: "🟡 警示注意區 (> 150° ~ 160°)",
+    thTrWarnD: "逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。",
+    thTrDanT: "🔴 死亡危險區 (> 160°)",
+    thTrDanD: "超過 160° 後，極小的衝擊皆會產生恐怖的破壞力。嚴禁為了減少下垂而將索道拉平超過此極限！",
+    thAngle: "φ 內錯仰角",
+    thAngleD: "教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。",
+    collapse: "🔼 收起說明"
+  },
+  en: {
+    appTitle: "Anchor Force Calc (Dual)",
+    appTitleTrack: "Trackline Force Calc",
+    modeAnchor: "⚓ Anchor Mode",
+    modeTrack: "🚠 Trackline Mode",
+    weight: "Load (kg)",
+    deadLine: "FAILURE",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Rotate",
+    anchorTension: "Tension",
+    deadLineShort: "FAIL!",
+    langBtn: "🌐 EN",
+    menu1: "Theory & Principles",
+    menu2: "Manual & Tools",
+    menu3: "Share Link",
+    menu4: "Check Updates",
+    menu5: "Support",
+    broken: "💀 SYSTEM FAILURE",
+    danger: "🔴 DANGER",
+    warn: "🟡 WARNING",
+    safe: "🟢 SAFE",
+    trackDanger: "🔴 DANGER",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "Critical limit exceeded!",
+    anchorDangerDesc: "Tension exponential. DO NOT EXCEED!",
+    anchorWarnDesc: "Tension high. Verify anchor strength.",
+    anchorSafeDesc: "Ideal rigging condition.",
+    trackDangerDesc: "Limit exceeded. Do not tighten!",
+    trackWarnDesc: "Approaching 10% sag limit.",
+    trackSafeDesc: "Safe span. Normal sag.",
+    anchorNote: "Note: Vertical anchors MUST NOT exceed 120°. Destructive tension!",
+    trackNote: "Note: Trackline > 160° causes massive dynamic destruction!",
+    currentMul: "📍 Tension Multiplier: ",
+    loadWord: "Load",
+    anchorStd: "Anchor Std",
+    trackStd: "Trackline Std",
+    limitWarning: "Theoretical Limit (179.95°): 57,296 kg",
+    thAnSafeT: "🟢 Safe Zone (0° ~ 90°)",
+    thAnSafeD: "Anchors take <71% load. Ideal rigging.",
+    thAnWarnT: "🟡 Warning Zone (> 90° ~ 120°)",
+    thAnWarnD: "Tension rises. Verify anchor strength.",
+    thAnDanT: "🔴 Danger Zone (> 120°)",
+    thAnDanD: "Anchors take >100% load. Exponential spike. NEVER exceed!",
+    thTrSafeT: "🟢 Operating Zone (120° ~ 150°)",
+    thTrSafeD: "Safe span. Ensure anchors hold 2x load.",
+    thTrWarnT: "🟡 Warning Zone (> 150° ~ 160°)",
+    thTrWarnD: "Approaching 10% sag limit! High alert.",
+    thTrDanT: "🔴 Death Zone (> 160°)",
+    thTrDanD: "Beyond 160°, tiny impacts cause massive destruction!",
+    thAngle: "φ Interior Angle",
+    thAngleD: "Matches inner φ angle for easy field estimation.",
+    collapse: "🔼 Collapse"
+  },
+  ja: {
+    appTitle: "張力計 (デュアル版)",
+    appTitleTrack: "トラックライン張力計",
+    modeAnchor: "⚓ アンカーモード",
+    modeTrack: "🚠 トラックライン",
+    weight: "荷重 (kg)",
+    deadLine: "システム崩壊",
+    zoom: "🔍 ズーム",
+    rotate: "🔄 回転",
+    anchorTension: "支点張力",
+    deadLineShort: "破断!",
+    langBtn: "🌐 日本語",
+    menu1: "原理と専門用語",
+    menu2: "ツールと操作",
+    menu3: "リンク共有",
+    menu4: "更新確認",
+    menu5: "サポート",
+    broken: "💀 システム崩壊",
+    danger: "🔴 危険エリア",
+    warn: "🟡 警告エリア",
+    safe: "🟢 安全エリア",
+    trackDanger: "🔴 危険エリア",
+    trackSafe: "🟢 正常操作",
+    brokenDesc: "限界超過！極めて危険！",
+    anchorDangerDesc: "張力急増。厳禁！",
+    anchorWarnDesc: "張力上昇。支点強度に注意。",
+    anchorSafeDesc: "理想的な架設状態。",
+    trackDangerDesc: "限界超過。これ以上張るな！",
+    trackWarnDesc: "サグ10%限界に接近。",
+    trackSafeDesc: "安全スパン。許容サグ。",
+    anchorNote: "注意：アンカー120°超えは厳禁。破壊的張力が発生！",
+    trackNote: "注意：160°超えは微小衝撃で崩壊！",
+    currentMul: "📍 現在の張力倍数: ",
+    loadWord: "荷重",
+    anchorStd: "アンカー基準",
+    trackStd: "トラックライン",
+    limitWarning: "理論的限界(179.95°): 57,296 kg",
+    thAnSafeT: "🟢 安全エリア (0° ~ 90°)",
+    thAnSafeD: "負荷71%未満。理想的な状態。",
+    thAnWarnT: "🟡 警告エリア (> 90° ~ 120°)",
+    thAnWarnD: "張力上昇。支点強度を要確認。",
+    thAnDanT: "🔴 危険エリア (> 120°)",
+    thAnDanD: "負荷100%超過。急増するため厳禁！",
+    thTrSafeT: "🟢 正常操作 (120° ~ 150°)",
+    thTrSafeD: "安全なスパン。支点は2倍の強度が必要。",
+    thTrWarnT: "🟡 警告エリア (> 150° ~ 160°)",
+    thTrWarnD: "サグ10%限界に接近！要警戒。",
+    thTrDanT: "🔴 デス・ゾーン (> 160°)",
+    thTrDanD: "160°超過での衝撃は破壊的。過緊張厳禁！",
+    thAngle: "φ 錯角",
+    thAngleD: "中心のφ角と等しく、現場での判断に役立つ。",
+    collapse: "🔼 閉じる"
+  }
+};
+
+const availableLangs = ['zh', 'en', 'ja'];
+let currentLang = localStorage.getItem('sunmoon_lang') || 'zh';
+if (!availableLangs.includes(currentLang)) currentLang = 'zh';
+
+function t(key) {
+    return i18n[currentLang][key] || i18n['zh'][key] || key;
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[currentLang][key]) {
+            el.innerHTML = i18n[currentLang][key];
+        }
+    });
+    
+    const langBtn = document.getElementById('langToggleBtn');
+    if (langBtn) langBtn.innerHTML = t('langBtn');
+
+    const modeBtn = document.getElementById('modeToggleBtn');
+    const modeTitleLabel = document.getElementById('modeTitleLabel');
+    const menuModeText = document.getElementById('menuModeText');
+    
+    if (modeBtn && typeof currentMode !== 'undefined') {
+        modeBtn.innerHTML = currentMode === 'anchor' ? t('modeAnchor') : t('modeTrack');
+        if (modeTitleLabel) modeTitleLabel.textContent = currentMode === 'anchor' ? t('appTitle') : t('appTitleTrack');
+        if (menuModeText) menuModeText.textContent = currentMode === 'anchor' ? t('anchorStd') : t('trackStd');
+    }
+
+    if (typeof updateTheoryText === 'function') updateTheoryText();
+    if (typeof draw === 'function' && typeof slider !== 'undefined') draw(slider.value);
+}
+
+function toggleLang() {
+    let idx = availableLangs.indexOf(currentLang);
+    currentLang = availableLangs[(idx + 1) % availableLangs.length];
+    localStorage.setItem('sunmoon_lang', currentLang);
+    applyTranslations();
+}
+</script>
+
 <!-- 💡 新增：散木專屬浮動提示框 (取代容易被封鎖的原生 alert) -->
 <div id="toastMessage"></div>
 
@@ -329,8 +543,10 @@
       <div class="title-row">
         <div class="title-left" id="mainTitleText">
           <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
-          <div class="title-tag"><span id="modeTitleLabel">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
+          <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
         </div>
+        <!-- 💡 多語系切換按鈕 -->
+        <button id="langToggleBtn" onclick="toggleLang()">🌐 繁中</button>
       </div>
       
       <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2);">
@@ -364,11 +580,11 @@
                 <input id="inputT" type="number" value="100" min="0">
                 <button id="btnPlus" class="weight-btn" type="button">+</button>
               </div>
-              <span>負重 (kg)</span>
+              <span data-i18n="weight">負重 (kg)</span>
             </div>
             <div class="skull-view">
               <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
-              <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;">死線破斷</span>
+              <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;" data-i18n="deadLine">死線破斷</span>
             </div>
           </div>
         </div>
@@ -385,11 +601,11 @@
       </div>
       <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
         <div class="ar-row">
-          <span class="ar-label" style="color:var(--safe);">🔍 縮放</span>
+          <span class="ar-label" style="color:var(--safe);" data-i18n="zoom">🔍 縮放</span>
           <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
         </div>
         <div class="ar-row">
-          <span class="ar-label" style="color:var(--warn);">🔄 旋轉</span>
+          <span class="ar-label" style="color:var(--warn);" data-i18n="rotate">🔄 旋轉</span>
           <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
         </div>
       </div>
@@ -415,7 +631,7 @@
   <div class="menu-list">
     
     <details class="main-accordion" id="theoryAccordion">
-      <summary><span>📚 專業名詞與原理解析 (<span id="menuModeText">錨點標準</span>)</span></summary>
+      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1">專業名詞與原理解析</span> (<span id="menuModeText" data-i18n="anchorStd">錨點標準</span>)</div></summary>
       <div class="menu-group">
         <div class="menu-content" id="theoryContent">
           </div>
@@ -423,7 +639,7 @@
     </details>
 
     <details class="main-accordion">
-      <summary>⚙️ 系統工具與說明書</summary>
+      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">⚙️</span> <span data-i18n="menu2">系統工具與說明書</span></div></summary>
       <div class="menu-group">
         <details class="menu-item">
           <summary>
@@ -462,16 +678,15 @@
 
     <div class="main-accordion" style="display: flex; flex-direction: column;">
       <div class="menu-action-btn" id="shareBtnAction" style="border-bottom: 1px solid var(--line);">
-        <div class="menu-header-left"><span class="menu-icon">🔗</span>分享系統連結</div>
+        <div class="menu-header-left"><span class="menu-icon">🔗</span><span data-i18n="menu3">分享系統連結</span></div>
         <span class="menu-arrow">❯</span>
       </div>
-      <!-- 💡 修復：將技術支援與問題回報按鈕補回來了！ -->
       <div class="menu-action-btn" id="supportBtnAction" style="border-bottom: 1px solid var(--line);">
-        <div class="menu-header-left"><span class="menu-icon">💬</span>技術支援與問題回報</div>
+        <div class="menu-header-left"><span class="menu-icon">💬</span><span data-i18n="menu5">技術支援與問題回報</span></div>
         <span class="menu-arrow">❯</span>
       </div>
       <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
-        <div class="menu-header-left"><span class="menu-icon">🔄</span>檢查並載入最新版本</div>
+        <div class="menu-header-left"><span class="menu-icon">🔄</span><span data-i18n="menu4">檢查並載入最新版本</span></div>
         <span class="menu-arrow">❯</span>
       </div>
     </div>
@@ -752,16 +967,16 @@ modeToggleBtn.addEventListener('click', () => {
     if(currentMode === 'anchor') {
         currentMode = 'trackline';
         modeToggleBtn.className = 'mode-track';
-        modeToggleBtn.innerHTML = '🚠 水平索道模式';
-        modeTitleLabel.textContent = '索道張力儀 (滑行版)';
-        menuModeText.textContent = '索道標準';
+        modeToggleBtn.innerHTML = t('modeTrack');
+        modeTitleLabel.textContent = t('appTitleTrack');
+        menuModeText.textContent = t('trackStd');
         if(slider.value < 120) slider.value = 150; 
     } else {
         currentMode = 'anchor';
         modeToggleBtn.className = 'mode-anchor';
-        modeToggleBtn.innerHTML = '⚓ 垂直錨點模式';
-        modeTitleLabel.textContent = '錨點張力儀 (V型版)';
-        menuModeText.textContent = '錨點標準';
+        modeToggleBtn.innerHTML = t('modeAnchor');
+        modeTitleLabel.textContent = t('appTitle');
+        menuModeText.textContent = t('anchorStd');
         if(slider.value > 120) slider.value = 90; 
     }
     updateTheoryText();
@@ -771,23 +986,22 @@ modeToggleBtn.addEventListener('click', () => {
 function updateTheoryText() {
     if(currentMode === 'anchor') {
         theoryContent.innerHTML = `
-          <p><b style="color:var(--safe)">🟢 安全區域 (0° ~ 90°)</b><br>兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。</p>
-          <p><b style="color:var(--warn)">🟡 警示注意區 (> 90° ~ 120°)</b><br>張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。</p>
-          <p><b style="color:var(--bad)">🔴 極度危險區 (> 120°)</b><br>超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！</p>
-          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
-          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          <p><b style="color:var(--safe)">${t('thAnSafeT')}</b><br>${t('thAnSafeD')}</p>
+          <p><b style="color:var(--warn)">${t('thAnWarnT')}</b><br>${t('thAnWarnD')}</p>
+          <p><b style="color:var(--bad)">${t('thAnDanT')}</b><br>${t('thAnDanD')}</p>
+          <p><b style="color:var(--instructor)">${t('thAngle')}</b><br>${t('thAngleD')}</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">${t('collapse')}</button>
         `;
     } else {
         theoryContent.innerHTML = `
-          <p><b style="color:var(--safe)">🟢 正常操作區 (120° ~ 150°)</b><br>為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。</p>
-          <p><b style="color:var(--warn)">🟡 警示注意區 (> 150° ~ 160°)</b><br>逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。</p>
-          <p><b style="color:var(--bad)">🔴 死亡危險區 (> 160°)</b><br>超過 160° 後，極小的衝擊皆會產生恐怖的破壞力。嚴禁為了減少下垂而將索道拉平超過此極限！</p>
-          <p><b style="color:var(--instructor)">φ 內錯仰角</b><br>教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。</p>
-          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">🔼 收起說明</button>
+          <p><b style="color:var(--safe)">${t('thTrSafeT')}</b><br>${t('thTrSafeD')}</p>
+          <p><b style="color:var(--warn)">${t('thTrWarnT')}</b><br>${t('thTrWarnD')}</p>
+          <p><b style="color:var(--bad)">${t('thTrDanT')}</b><br>${t('thTrDanD')}</p>
+          <p><b style="color:var(--instructor)">${t('thAngle')}</b><br>${t('thAngleD')}</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">${t('collapse')}</button>
         `;
     }
 }
-updateTheoryText();
 
 function checkForUpdates() {
     showToast("🔄 正在清除快取並載入最新版本...", "warn");
@@ -963,20 +1177,23 @@ screenshotBtn.addEventListener('click', () => {
   attemptFeature('📸 戰術純淨截圖', async () => {
     mainCard.style.opacity = '0.5'; setTimeout(() => mainCard.style.opacity = '1', 150);
     let originalVideoState = bgVideo.style.display; let originalImageSrc = bgImage.src; let originalImageState = bgImage.style.display;
+    
     if (isCameraOn && bgVideo.videoWidth) {
       const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
       tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
       bgImage.src = tempCanvas.toDataURL('image/jpeg'); bgImage.style.display = 'block'; bgVideo.style.display = 'none';
     }
+    
     const now = new Date(); const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
     const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-    let titleStr = currentMode === 'anchor' ? '錨點張力儀 (V型雙點版)' : '索道張力儀 (滑行版)';
-    watermark.innerHTML = `🛡️ ${titleStr}<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
+    watermark.innerHTML = `🛡️ [APP名稱]<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
     watermark.style.display = 'block';
+    
     try {
       const canvas = await html2canvas(mainCard, { useCORS: true, backgroundColor: null, scale: 2 });
-      const link = document.createElement('a'); link.download = '戰術張力分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
+      const link = document.createElement('a'); link.download = '戰術分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
     } catch(e) { showToast("❌ 截圖失敗，請稍後再試！", "bad"); }
+    
     watermark.style.display = 'none';
     if (isCameraOn) { bgVideo.style.display = originalVideoState; bgImage.src = originalImageSrc; bgImage.style.display = originalImageState; }
   });
@@ -993,15 +1210,15 @@ function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
 
 function stateOf(beta){
   if (currentMode === 'anchor') {
-    if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
-    if(beta > 120) return { color:'var(--bad)', title:'🔴 極度危險', tone:'zoneBad', desc:'張力呈指數飆升，嚴禁逾越！', stateClass:'is-danger' };
-    if(beta > 90)  return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'張力顯著上升，注意錨點強度', stateClass:'is-warn' };
-    return { color:'var(--safe)', title:'🟢 安全區域', tone:'zoneSafe', desc:'受力穩定，理想架設狀態', stateClass:'' };
+    if(beta >= 179.9) return { color:'var(--bad)', title: t('broken'), tone:'zoneBad', desc: t('brokenDesc'), stateClass:'is-broken' };
+    if(beta > 120) return { color:'var(--bad)', title: t('danger'), tone:'zoneBad', desc: t('anchorDangerDesc'), stateClass:'is-danger' };
+    if(beta > 90)  return { color:'var(--warn)', title: t('warn'), tone:'zoneWarn', desc: t('anchorWarnDesc'), stateClass:'is-warn' };
+    return { color:'var(--safe)', title: t('safe'), tone:'zoneSafe', desc: t('anchorSafeDesc'), stateClass:'' };
   } else {
-    if(beta >= 179.9) return { color:'var(--bad)', title:'💀 系統毀損', tone:'zoneBad', desc:'死線破斷！極度危險！', stateClass:'is-broken' };
-    if(beta > 160) return { color:'var(--bad)', title:'🔴 危險區域', tone:'zoneBad', desc:'超過極限，嚴禁再將索道收緊！', stateClass:'is-danger' };
-    if(beta > 150) return { color:'var(--warn)', title:'🟡 警示區域', tone:'zoneWarn', desc:'逼近 10% 下垂量極限', stateClass:'is-warn' };
-    return { color:'var(--safe)', title:'🟢 正常操作', tone:'zoneSafe', desc:'安全跨距，容許的正常下垂量', stateClass:'' };
+    if(beta >= 179.9) return { color:'var(--bad)', title: t('broken'), tone:'zoneBad', desc: t('brokenDesc'), stateClass:'is-broken' };
+    if(beta > 160) return { color:'var(--bad)', title: t('trackDanger'), tone:'zoneBad', desc: t('trackDangerDesc'), stateClass:'is-danger' };
+    if(beta > 150) return { color:'var(--warn)', title: t('warn'), tone:'zoneWarn', desc: t('trackWarnDesc'), stateClass:'is-warn' };
+    return { color:'var(--safe)', title: t('trackSafe'), tone:'zoneSafe', desc: t('trackSafeDesc'), stateClass:'' };
   }
 }
 
@@ -1010,7 +1227,7 @@ function getForceLabel(phi, beta){
   const rad = Math.max(phi, 0.05) * Math.PI / 180;
   const T = Number(inputT.value) || 0;
   const val = T / (2 * Math.sin(rad));
-  try { return val.toLocaleString('en-US', {maximumFractionDigits: 1}) + " kg"; } catch (e) { return val.toFixed(1) + " kg"; }
+  try { return val.toLocaleString('en-US', {maximumFractionDigits: 1}); } catch (e) { return val.toFixed(1); }
 }
 
 function draw(beta){
@@ -1085,21 +1302,33 @@ function draw(beta){
     `;
   }
 
+  // 💡 修正：將所有 "死線!" 改用 t('deadLineShort')，達成多國語言無縫切換
+  let tension = (Number(inputT.value) || 0) / (2 * Math.sin(Math.max(phi, 0.05) * Math.PI / 180));
+  let verticalA = tension * Math.sin(Math.max(phi, 0.05) * Math.PI / 180);
+  let verticalB = tension * Math.sin(Math.max(phi, 0.05) * Math.PI / 180);
+
+  let isStraight = (!isBroken) && (beta >= 179.9);
+  
+  let tText = (isStraight || tension > 9999) ? t('deadLineShort') : tension.toFixed(1);
+  let vAText = (isStraight || verticalA > 9999) ? t('deadLineShort') : verticalA.toFixed(1);
+  let vBText = (isStraight || verticalB > 9999) ? t('deadLineShort') : verticalB.toFixed(1);
+  let unitText = isBroken ? '' : 'kg';
+
   let forceTagsHtml = '';
   if (beta <= 15 && !isBroken) {
-    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">固定點張力 ${forceLabel}</text>`;
+    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">${t('anchorTension')} ${forceLabel} ${unitText}</text>`;
   } else {
     forceTagsHtml = `
-      <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
-      <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
-      <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">固定點張力</text>
-      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${forceLabel}</text>
+      <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
+      <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${tText} ${unitText}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${vBText} ${unitText}</text>
     `;
   }
 
   let limitWarningHtml = isBroken ? `
     <rect x="80" y="70" width="200" height="28" rx="6" fill="var(--bad)" opacity="0.85" />
-    <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">理論極限(179.95°)：57,296 kg</text>
+    <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">${t('limitWarning')}</text>
   ` : '';
 
   const betaStr = (beta % 1 === 0) ? beta : beta.toFixed(1);
@@ -1155,9 +1384,9 @@ function draw(beta){
   let mulText = tension > 9999 ? '∞' : multiplier.toFixed(2);
   
   caption.innerHTML = `
-    <div style="font-size:14px; margin-bottom:6px;">📍 目前張力倍數：<b style="color:var(--safe)">${mulText} x</b> 負載</div>
-    <div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? '💀 系統毀損' : st.title}｜${st.desc}</div>
-    <div style="font-size:13px; opacity:0.9; margin-top:2px;">${currentMode === 'anchor' ? '注意：垂直錨點系統嚴禁超過 120°，張力將產生破壞性飆升！' : '注意：索道拉平超過 160° 時，極小衝擊將產生恐怖的動態破壞力！'}</div>
+    <div style="font-size:14px; margin-bottom:6px;">${t('currentMul')}<b style="color:var(--safe)">${mulText} x</b> ${t('loadWord')}</div>
+    <div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? t('broken') : st.title}｜${st.desc}</div>
+    <div style="font-size:13px; opacity:0.9; margin-top:2px;">${currentMode === 'anchor' ? t('anchorNote') : t('trackNote')}</div>
   `;
 }
 
