@@ -3,178 +3,289 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#0a1410" />
+<meta name="theme-color" content="#0f1623" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<title>轉向點受力分析儀 (全地形版) | 散木團隊</title>
+<title>錨點張力儀 (雙引擎切換版) | 散木團隊</title>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="全地形轉向">
+<meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
-<meta property="og:title" content="轉向點受力分析儀 (全地形版) | 散木團隊">
-<meta property="og:description" content="全地形模擬！結合實境 AR 與動態摩擦力引擎，精準推演樹幹、攀岩岩壁、鋼架空橋等轉向點的極限受力變化。">
-<meta property="og:image" content="https://fang5761-source.github.io/redirect-simulator/icon-512.png">
+<meta property="og:title" content="錨點張力儀 (雙引擎切換版) | 散木團隊">
+<meta property="og:description" content="內建錨點與索道雙安全規範，運用 AR 鏡頭與空間幾何透視，揭露高危險極限張力。">
+<meta property="og:image" content="https://fang5761-source.github.io/rope-force-calculator/icon-512.png">
+<meta property="og:url" content="https://fang5761-source.github.io/rope-force-calculator/">
 <meta property="og:type" content="website">
 
 <link rel="manifest" href="manifest.json">
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f1623'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' stroke='%23334155' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23334155' stroke-width='1' stroke-dasharray='2 4' opacity='0.6'/%3E%3Cpath d='M 33 40 A 25 25 0 0 1 67 40' stroke='%23ffd84d' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' fill='none' opacity='0.3'/%3E%3Cpath d='M20 20 L50 65 L80 20' stroke='%2322c55e' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Ccircle cx='50' cy='65' r='6' fill='%230f1623' stroke='%23e8eef7' stroke-width='3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='8' stroke-linecap='round' opacity='0.3'/%3E%3Cpolygon points='41,80 59,80 50,95' fill='%23ef4444' opacity='0.3'/%3E%3Cpath d='M50 71 L50 85' stroke='%23ef4444' stroke-width='4' stroke-linecap='round'/%3E%3Cpolygon points='44,82 56,82 50,92' fill='%23ef4444'/%3E%3C/svg%3E">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap');
-
   :root{
-    --bg: #0a1410;
-    --card: rgba(15, 30, 22, 0.85);
-    --line: #183624;
-    --grid: #132a1b;
-    --text: #e8f5e9;
-    --muted: #81c784;
-    --safe: #4ade80;
-    --warn: #fbbf24;
+    --bg: #0f1623;
+    --card: #121a2a;
+    --line: #1b2940;
+    --text: #e8eef7;
+    --muted: #a8b3c5;
+    --safe: #22c55e;
+    --warn: #ffd84d;
     --bad: #ef4444;
-    --tagline: #fb923c; 
+    --base: #94a3b8;
+    --instructor: #cbd5e1;
     --vip: #c084fc;
-    --tree: #65a30d;
-  }
-
-  html, body { 
-    height: 100%; width: 100%; overflow: hidden; overscroll-behavior: none; 
-    position: fixed; inset: 0; background-color: var(--bg);
+    --mode-track: #38bdf8; 
   }
   
-  body {
-    margin: 0; color: var(--text); font-family: 'Noto Serif TC', serif;
-    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
-    display: flex; flex-direction: column; align-items: center;
-    padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom);
-    transition: background-color 0.3s ease;
+  :root[data-theme="light"] {
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --line: #cbd5e1;
+    --text: #0f1623;
+    --muted: #64748b;
+    --safe: #16a34a;
+    --warn: #d97706;
+    --bad: #dc2626;
+    --base: #94a3b8;
+    --instructor: #475569;
+    --mode-track: #0284c7;
   }
 
-  body.camera-mode { background-color: transparent !important; }
-
-  #status-bar-protector {
-    position: fixed; top: 0; left: 0; width: 100%; height: env(safe-area-inset-top);
-    background-color: var(--bg); z-index: 9998; transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-  }
-  body.camera-mode #status-bar-protector { background-color: rgba(10, 20, 16, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-
-  #scroll-wrapper { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; display: flex; flex-direction: column; align-items: center; }
-  input, textarea { -webkit-user-select: auto; user-select: auto; box-sizing: border-box; }
   *{box-sizing:border-box}
-
-  #bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background-color: var(--bg); overflow: hidden; }
-  #bg-video, #bg-image { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s; }
-  #grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 20px 20px; opacity: 0.5; pointer-events: none; transition: opacity 0.3s; }
-
-  .app-container { max-width: 500px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; padding: 10px 10px 40px 10px; }
-  input[type="file"] { display: none; }
-
-  .card { width:100%; background:var(--card); border:2px solid var(--line); border-radius:16px; padding: 10px; box-shadow:0 10px 30px rgba(0,0,0,.5); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; }
-  .card.camera-mode { background: transparent !important; border-color: rgba(255,255,255,0.2) !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none !important; }
-  .card.capture-mode { background-color: var(--bg) !important; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px) !important; background-size: 20px 20px !important; border-color: var(--line) !important; box-shadow: none !important; border-radius: 0 !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
-  .capture-mode .capture-hide { display: none !important; }
-  
-  .topbar { display: flex; align-items: center; margin-bottom: 8px; width: 100%; justify-content: space-between; }
-  .title-left { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; border-left: 4px solid var(--warn); padding-left: 8px; font-size: 15px; font-weight: bold; white-space: nowrap; }
-  .vip-badge { display: none; background: var(--vip); color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 12px; letter-spacing: 0.5px; box-shadow: 0 0 8px rgba(192, 132, 252, 0.6); margin-left: 4px; }
-  .is-vip .vip-badge { display: inline-block; }
-
-  /* 語言切換按鈕 */
-  #langToggleBtn {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--muted);
-    border-radius: 8px; padding: 4px 10px; font-size: 12px; font-weight: bold; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-left: auto;
-    flex: 0 0 auto !important; 
-    width: fit-content !important;
-    min-width: 0 !important;
-    white-space: nowrap;
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family: "Noto Serif CJK TC", serif; display:flex;
+    justify-content:center; align-items: flex-start;
+    padding: 15px 10px 40px 10px; transition: background 0.3s, color 0.3s; touch-action: manipulation; 
   }
-  #langToggleBtn:active { transform: scale(0.95); background: var(--line); color: var(--text); }
-
-  .icon-bar { display: flex; justify-content: space-between; align-items: center; gap: 6px; background: rgba(0,0,0,0.4); padding: 6px 8px; border-radius: 12px; margin-bottom: 8px; border: 1px solid var(--line); }
-  .icon-btn { flex: 1; aspect-ratio: 1/1; max-height: 36px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid transparent; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: all 0.2s; font-size: 16px; color: var(--text); padding: 0; }
-  .icon-btn:active { background: var(--line); transform: scale(0.95); }
-  .icon-btn.active { background: var(--safe); color: var(--bg); border-color: var(--safe); }
-  .lock-icon { position: absolute; bottom: 2px; right: 2px; font-size: 10px; background: rgba(0,0,0,0.8); border-radius: 50%; padding: 2px; }
-  .is-vip .lock-icon { display: none; }
-
-  .svgWrap { position:relative; width:100%; height: 35vh; min-height: 280px; max-height: 380px; background: transparent; border-radius: 12px; border: 1px dashed var(--line); overflow: hidden; margin-bottom: 8px; }
-  svg { display: block; width: 100%; height: 100%; }
-  .draggable-anchor { cursor: grab; touch-action: none; }
-  .draggable-anchor:active { cursor: grabbing; }
-
-  .dashboard { display: flex; justify-content: space-between; gap: 6px; margin-bottom: 8px; }
-  .dash-box { flex: 1; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 4px; display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .dash-box .lbl { font-size: 11px; color: var(--muted); font-weight: bold; margin-bottom: 4px; }
-  .dash-box .val { font-size: 18px; font-weight: 900; font-family: monospace; }
-  .dash-box .sub { font-size: 10px; opacity: 0.8; margin-top: 2px; }
-
-  .control-deck { background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
-  .control-row { display: flex; flex-direction: column; gap: 6px; }
-  .btn-group-lbl { font-size: 12px; color: var(--safe); font-weight: bold; }
-  .toggle-group { display: flex; gap: 6px; width: 100%; justify-content: center; }
-  .toggle-btn { flex: 1; background: rgba(0,0,0,0.4); border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 8px 2px; font-size: 13px; font-weight: bold; cursor: pointer; transition: all 0.2s; position: relative;}
-  .toggle-btn.active { background: var(--safe); color: var(--bg); border-color: var(--safe); }
-  .toggle-btn[data-type="action"].active { background: var(--tagline); color: var(--bg); border-color: var(--tagline); }
-  .toggle-btn[data-type="scene"].active { background: var(--muted); color: var(--bg); border-color: var(--muted); }
-
-  .edu-wrap { margin-top: 8px; padding: 12px; background: rgba(255, 216, 77, 0.1); border-radius: 8px; border: 1px solid var(--warn); text-align: justify; font-size: 13.5px; font-weight: bold; color: var(--text); line-height: 1.6; transition: background 0.3s, border 0.3s; }
-  .mask-text { paint-order: stroke fill; stroke: var(--bg); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
-
-  .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-  .modal-overlay.show { opacity: 1; pointer-events: auto; }
-  .modal-box { background: var(--bg); border: 2px solid var(--vip); border-radius: 16px; padding: 24px; width: 90%; max-width: 350px; text-align: center; box-shadow: 0 10px 40px rgba(192, 132, 252, 0.3); transform: scale(0.9); transition: transform 0.3s ease; }
-  .modal-overlay.show .modal-box { transform: scale(1); }
-  .modal-box h3 { margin: 0 0 10px 0; color: var(--text); }
-  .modal-actions { display: flex; gap: 10px; margin-top: 15px; }
-  .btn-cancel { flex: 1; background: transparent; border: 1px solid var(--line); color: var(--text); padding: 10px; border-radius: 8px; cursor: pointer; }
-  .btn-unlock { flex: 1; background: var(--warn); border: none; color: #0f1623; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-  .pwd-input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--line); color: #fff; padding: 10px; border-radius: 8px; font-size: 16px; text-align: center; outline: none; margin-bottom: 12px; font-family: monospace; }
   
-  #toastMessage { position: fixed; top: -50px; left: 50%; transform: translateX(-50%); background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px; border-left: 4px solid var(--safe); box-shadow: 0 8px 25px rgba(0,0,0,0.6); z-index: 10000; font-weight: bold; text-align: center; font-size: 14px; width: 85%; max-width: 320px; transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0; pointer-events: none; }
-  #toastMessage.show { top: 20px; opacity: 1; }
+  .app-container { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px; }
 
-  /* 統一：選單樣式全面對齊張力儀 */
-  .menu-list { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; width: 100%; }
-  .main-accordion { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
-  details.main-accordion > summary { padding: 14px 16px; font-weight: bold; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--warn); background: rgba(0,0,0,0.3); font-size: 15px; }
+  .card{
+    width:100%; background:var(--card); border:1px solid var(--line);
+    border-radius:16px; padding: 10px; box-shadow:0 10px 30px rgba(0,0,0,.2);
+    transition: border-color 0.3s, background 0.3s; overflow: hidden; position: relative;
+  }
+  
+  .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
+  .title-row { display: flex; align-items: center; width: 100%; justify-content: space-between; }
+  .title-left { display: flex; align-items: center; cursor: pointer; user-select: none; }
+  .title-tag {
+    font-size: 15px; color: var(--text); font-weight: bold;
+    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; display: flex; align-items: center;
+  }
+  
+  #langSelect {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--muted);
+    border-radius: 8px; padding: 4px 6px; font-size: 13px; font-weight: bold; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-left: auto;
+    flex: 0 0 auto !important; width: fit-content !important; min-width: 0 !important;
+    outline: none; -webkit-appearance: menulist;
+  }
+  #langSelect:focus { border-color: var(--safe); color: var(--text); }
+  #langSelect option { background: var(--bg); color: var(--text); }
+
+  .btn-group {
+    display: flex; gap: 6px; flex-wrap: wrap; width: 100%;
+    background: rgba(150,150,150,0.05); padding: 6px; border-radius: 10px;
+  }
+  button{
+    appearance:none; border:1px solid var(--line); background:rgba(150,150,150,.1);
+    color:var(--text); border-radius:8px; padding: 8px 12px; cursor:pointer;
+    font-size: 14px; font-weight: bold; display: flex; align-items: center;
+    justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px; position: relative;
+  }
+  button:hover{ background:rgba(150,150,150,.2); }
+  
+  #modeToggleBtn { flex: 2; min-width: 120px; transition: all 0.3s ease; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+  #modeToggleBtn.mode-anchor { background: var(--safe); color: #0f1623; }
+  #modeToggleBtn.mode-track { background: var(--mode-track); color: #0f1623; }
+
+  .zoneSafe{color:var(--safe)} .zoneWarn{color:var(--warn)} .zoneBad{color:var(--bad)}
+  
+  .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
+  .svgWrap:active { cursor: grabbing; }
+  
+  #bgVideo, #bgImage {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: top center; z-index: -1; display: none; opacity: 0.85;
+  }
+  .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
+  :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
+  .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
+
+  #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
+  #scaleWrap { transform-origin: top center; will-change: transform; }
+
+  .modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); z-index: 9999; align-items: center; justify-content: center;
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  }
+  .modal-box {
+    background: var(--card); border: 2px solid var(--safe); padding: 24px;
+    border-radius: 16px; width: 85%; max-width: 400px; text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
+  }
+  .modal-box h3 { color: var(--safe); margin-top: 0; margin-bottom: 12px; font-size: 18px; }
+  .modal-box p { color: var(--text); font-size: 14px; line-height: 1.6; }
+  .modal-box button.primary-btn {
+    background: var(--safe); color: #0f1623; font-size: 15px; padding: 10px 24px;
+    border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;
+  }
+  #exactAngleInput {
+    width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px;
+    border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
+  }
+  .modal-btn-group { display: flex; gap: 10px; }
+  .modal-btn-group button { flex: 1; }
+  #angleCancelBtn { background: var(--muted); color: #ffffff; }
+
+  .vip-badge {
+    display: none; background: var(--vip); color: #fff; font-size: 10px; font-weight: bold;
+    padding: 2px 6px; border-radius: 12px; letter-spacing: 0.5px;
+    box-shadow: 0 0 8px rgba(192, 132, 252, 0.6); margin-left: 6px; vertical-align: middle;
+  }
+  body.is-vip .vip-badge { display: inline-block; }
+  
+  .lock-icon { position: absolute; bottom: 2px; right: 4px; font-size: 10px; text-shadow: 0 1px 2px #000; pointer-events: none; }
+  body.is-vip .lock-icon { display: none; }
+  .inline-lock { font-size: 12px; margin-left: 4px; vertical-align: text-top; }
+  body.is-vip .inline-lock { display: none; }
+
+  .watermark {
+    display: none; position: absolute; bottom: 12px; left: 12px; font-size: 11px; font-weight: bold;
+    color: #e8eef7; background: rgba(15, 22, 35, 0.85); border-left: 3px solid var(--safe);
+    padding: 6px 10px; border-radius: 6px; z-index: 100; pointer-events: none;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8); line-height: 1.5;
+  }
+
+  @keyframes sway { 0%, 100% { transform: translateX(-50%) rotate(-0.6deg); } 50% { transform: translateX(-50%) rotate(0.6deg); } }
+  @keyframes shake { 0%, 100% { transform: translateX(-50.5%) translateY(0.5px); } 50% { transform: translateX(-49.5%) translateY(-0.5px); } }
+  @keyframes flash-red { 0%, 100% { border-color: rgba(239, 68, 68, 0.4); background: var(--card); } 50% { border-color: rgba(239, 68, 68, 1); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); } }
+  @keyframes skull-land { 0% { transform: scale(0.5) translateY(-30px); opacity: 0; } 70% { transform: scale(1.1) translateY(0); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+  @keyframes panic-shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-1px, 1px); } 50% { transform: translate(1px, -1px); } 75% { transform: translate(-1px, -1px); } }
+
+  .tOverlay{
+    position:absolute; left:50%; top:230px; transform:translateX(-50%); display:flex; flex-direction: column;
+    align-items:center; color:var(--bad); z-index:5; transform-origin: top center; animation: sway 3s infinite ease-in-out;
+    pointer-events: none; transition: top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+  .tOverlay input, .tOverlay span, .tOverlay button { pointer-events: auto; }
+  .is-warn .tOverlay { animation-duration: 1.2s; }
+  .is-danger .tOverlay { animation: shake 0.1s infinite; }
+  .is-broken { animation: flash-red 0.4s ease-in-out 3; }
+  .is-broken .tOverlay { animation: none; top: 240px; } 
+
+  .skull-view { display: none; }
+  .normal-view { display: flex; flex-direction: column; align-items: center; }
+  .is-broken .normal-view { display: none; }
+  .is-broken .skull-view { display: flex; flex-direction: column; align-items: center; animation: skull-land 0.4s 0.2s forwards; opacity: 0; }
+
+  .weight-controls { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+  .weight-btn {
+    width: 32px; height: 28px; background: rgba(150,150,150,0.2) !important; border: 1px solid var(--line) !important;
+    color: var(--text) !important; font-size: 16px !important; border-radius: 6px !important; pointer-events: auto; flex: none; min-width: auto;
+  }
+  .weight-btn:active { background: rgba(150,150,150,0.4) !important; transform: scale(0.95); }
+
+  .tOverlay input{
+    width:60px; border-radius:6px; border:2px solid var(--bad); background:var(--bg); color:var(--text); padding:2px;
+    text-align:center; font-weight: bold; font-size: 16px; margin-bottom: 0;
+  }
+  .tOverlay span { font-size: 11px; font-weight: bold; background: var(--card); padding: 0 4px; border-radius: 4px; }
+  
+  #arControls {
+    display: none; flex-direction: column; gap: 12px; position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
+    padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    transition: opacity 0.3s ease, padding 0.3s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+  }
+  #arControls.is-collapsed { width: auto; padding: 8px 14px; border-radius: 20px; background: rgba(0,0,0,0.6); border: 1px solid var(--muted); }
+  #arControls.is-collapsed #arSlidersWrap, #arControls.is-collapsed .ar-header-text { display: none !important; }
+  #arDragHandle { cursor: move; touch-action: none; user-select: none; }
+  .ar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+  .ar-label { font-size: 13px; font-weight: bold; white-space: nowrap; width: 65px; }
+  #zoomSlider::-webkit-slider-thumb { background: var(--safe); box-shadow: 0 2px 6px rgba(34, 197, 94, 0.6); }
+  #rotateSlider::-webkit-slider-thumb { background: var(--warn); box-shadow: 0 2px 6px rgba(255, 216, 77, 0.6); }
+
+  .slider-container { padding: 0 10px; margin-top: 5px; position: relative; z-index: 20; }
+  input[type="range"]{ -webkit-appearance:none; width:100%; margin: 8px 0; background:transparent; cursor:pointer; }
+  input[type="range"]::-webkit-slider-runnable-track{ height:8px; border-radius:999px; background:var(--line); }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:#a67c5b;
+    border:2px solid var(--bg); margin-top:-9px; box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  }
+  
+  .jumpbar{ display:flex; gap:4px; flex-wrap:wrap; justify-content:center; margin-top:8px; background:rgba(150,150,150,0.05); padding: 6px; border-radius: 10px; }
+  .jump{ padding:8px 12px; font-size:12px; min-width: 65px; font-weight: bold; flex: 1; border-radius: 8px; }
+  .caption{ text-align:center; margin-top:8px; padding:6px; background: rgba(150,150,150,0.1); border-radius:8px; font-size: 13px; line-height: 1.6; }
+  
+  .mask-text { paint-order: stroke fill; stroke: var(--bg); stroke-width: 5px; stroke-linecap: round; stroke-linejoin: round; }
+  .beta-text:hover { filter: brightness(1.3); }
+
+  .menu-list { display: flex; flex-direction: column; width: 100%; margin-top: 5px; }
+  
+  details.main-accordion { margin-top: 12px; }
+  details.main-accordion > summary {
+    font-size: 14px; font-weight: bold; color: var(--text); padding: 12px 16px; background: rgba(150,150,150,0.1);
+    border-radius: 12px; letter-spacing: 0.5px; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; transition: background 0.2s;
+  }
+  details.main-accordion > summary:active { background: rgba(150,150,150,0.2); }
   details.main-accordion > summary::-webkit-details-marker { display: none; }
   details.main-accordion > summary::after { content: "❯"; font-size: 12px; color: var(--muted); transition: transform 0.3s; display: inline-block; }
   details.main-accordion[open] > summary { margin-bottom: 8px; }
   details.main-accordion[open] > summary::after { transform: rotate(90deg); }
+
+  .menu-group { background: var(--card); border-radius: 14px; border: 1px solid var(--line); box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; }
+
+  details.menu-item, .menu-action-btn { background: transparent; border: none; border-radius: 0; box-shadow: none; border-bottom: 1px solid rgba(150,150,150,0.1); margin: 0; font-size: 15px; font-weight: bold; color: var(--text); cursor: pointer; user-select: none; text-decoration: none; }
+  details.menu-item { display: block; padding: 0; }
+  .menu-action-btn { display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+  details.menu-item:last-child, .menu-action-btn:last-child { border-bottom: none; }
+
+  details.menu-item summary { display: flex; align-items: center; justify-content: space-between; list-style: none; width: 100%; margin: 0; padding: 16px; }
+  details.menu-item summary::-webkit-details-marker { display: none; }
   
-  .menu-group { display: flex; flex-direction: column; }
-  .menu-item { border-top: 1px solid var(--line); }
-  .menu-item summary { padding: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; transition: background 0.2s; color: var(--text); }
-  .menu-item summary::-webkit-details-marker { display: none; }
-  .menu-item summary:active { background: var(--line); }
   .menu-header-left { display: flex; align-items: center; gap: 12px; }
   .menu-icon { font-size: 18px; width: 24px; text-align: center; }
-  .menu-arrow { color: var(--muted); font-size: 12px; transition: transform 0.3s; }
-  .menu-item[open] > summary .menu-arrow { transform: rotate(90deg); }
+  .menu-arrow { color: var(--muted); transition: transform 0.3s; font-size: 12px; font-weight: bold; }
+  details.menu-item[open] summary .menu-arrow { transform: rotate(90deg); }
   
-  .menu-content { padding: 16px; font-size: 13.5px; color: var(--muted); line-height: 1.6; border-top: 1px solid rgba(150,150,150,0.1); margin: 0; text-align: justify; }
+  .menu-content { font-size: 14px; color: var(--muted); line-height: 1.7; border-top: 1px solid rgba(150,150,150,0.1); margin: 0; padding: 16px; font-weight: normal; }
   .menu-content ul { padding-left: 20px; margin: 8px 0; }
   .menu-content li { margin-bottom: 6px; }
-  
-  .btn-collapse-inner { width: 100%; padding: 10px; margin-top: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: 8px; color: var(--text); cursor: pointer; font-family: inherit; font-weight: bold; }
-  
-  .menu-action-btn { padding: 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: bold; transition: background 0.2s; color: var(--text); border-bottom: 1px solid var(--line); }
-  .menu-action-btn:last-child { border-bottom: none; }
-  .menu-action-btn:active { background: var(--line); }
-  
-  .footer-disclaimer { margin-top: 5px; padding: 12px; font-size: 12px; color: var(--muted); line-height: 1.6; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 4px solid var(--bad); text-align: justify; }
+  .menu-content p { margin-top: 0; margin-bottom: 10px; }
 
+  .menu-action-btn:active { background: rgba(150,150,150,0.1); }
+  .menu-group.has-open-item > details.menu-item:not([open]), .menu-group.has-open-item > .menu-action-btn { display: none !important; }
+  
+  .btn-collapse-inner { background: rgba(150,150,150,0.1); color: var(--text); border: 1px solid var(--line); width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 20px; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background 0.2s; }
+  .btn-collapse-inner:active { background: rgba(150,150,150,0.2); }
+  
+  .footer-disclaimer { margin-top: 20px; padding: 15px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: justify; background: rgba(150,150,150,0.05); border-radius: 10px; border-left: 4px solid var(--bad); }
+
+  #toastMessage {
+    display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px;
+    border-left: 4px solid var(--safe); box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    z-index: 10000; font-weight: bold; text-align: center; font-size: 14px; width: 85%; max-width: 320px;
+    animation: toast-slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  @keyframes toast-slide-down {
+    from { top: -50px; opacity: 0; }
+    to { top: 20px; opacity: 1; }
+  }
 </style>
 </head>
 <body>
 
 <script>
-// 散木團隊 · 多層次防盜保護系統 v4.0 (墨綠色特戰版)
 (function(){
   const _0xd = atob('ZmFuZzU3NjEtc291cmNlLmdpdGh1Yi5pbw=='); 
   const _0xh = window[atob('bG9jYXRpb24=')][atob('aG9zdG5hbWU=')]; 
@@ -186,9 +297,20 @@
     const _m = msg || atob('5pyq57aT5o6l5qC85qih6Iiq5ZCn77yc5bey57O757uf5bim5Yqo5aSx5pWX');
     try {
       document.open();
-      document.write('<html><body style="margin:0;height:100vh;display:flex;flex-direction:column;background:#0a1410;color:#ef4444;justify-content:center;align-items:center;text-align:center;font-family:monospace;padding:20px;"><span style="font-size:72px;margin-bottom:16px;">&#x1F480;</span><div style="font-size:22px;font-weight:bold;margin-bottom:8px;">' + _m + '</div><div style="font-size:13px;color:#81c784;margin-top:12px;">' + atob('5pys5bel5YW36aSa5qih6Iiq55qE5q2k5bqT77yM5Lul56aB5q2k5q+P5qih6IiqICsgU2NhdHRlck1hcA==') + '</div></body></html>');
+      document.write(
+        '<html><body style="margin:0;height:100vh;display:flex;flex-direction:column;' +
+        'background:#0f1623;color:#ef4444;justify-content:center;align-items:center;' +
+        'text-align:center;font-family:monospace;padding:20px;">' +
+        '<span style="font-size:72px;margin-bottom:16px;">&#x1F480;</span>' +
+        '<div style="font-size:22px;font-weight:bold;margin-bottom:8px;">' + _m + '</div>' +
+        '<div style="font-size:13px;color:#94a3b8;margin-top:12px;">' +
+        atob('5pys5bel5YW36aSa5qih6Iiq55qE5q2k5bqT77yM5Lul56aB5q2k5q+P5qih6IiqICsgU2NhdHRlck1hcA==') +
+        '</div></body></html>'
+      );
       document.close();
     } catch(e) {
+      document.body.innerHTML = '';
+      document.body.style.cssText = 'background:#0f1623;color:#ef4444;display:flex;flex-direction:column;height:100vh;justify-content:center;align-items:center;text-align:center;';
       document.body.innerHTML = '<span style="font-size:72px">&#x1F480;</span><br>' + _m;
     }
     throw new Error('[SM-SHIELD] Unauthorized access terminated.');
@@ -197,244 +319,1018 @@
   (function _0xVerify(){
     const _whitelist = [_0xd, 'localhost', '127.0.0.1', ''];
     const _isOk = _whitelist.some(function(w){ return _0xh === w || _0xh.endsWith('.' + w); });
-    if (!_isOk) { _0xKill(); }
+    if (!_isOk) {
+      _0xKill();
+    }
   })();
 })();
 </script>
 
 <script>
-// 💡 V5.0 無資料庫多語系字典引擎 (i18n Engine)
 const i18n = {
   zh: {
-    appTitle: "全地形轉向沙盤",
-    ground: "地面 Ground",
-    distExt: "長距離延伸至地面",
-    groundOp: "地面操作",
-    loadW: "負載端 (W)",
-    always1x: "永遠 = 1 倍",
-    anchorTension: "地面操作拉力",
-    codForce: "(COD)受力",
-    terrainLabel: "🏕️ 模擬地形與環境",
-    btnTree: "🌳 攀樹",
-    btnRock: "🪨 攀岩",
-    btnSteel: "🏗️ 鋼架空橋",
-    btnNone: "⬛ 淨空",
-    frictionLabel: "🛡️ 轉向點 (COD) 摩擦力介質",
-    btnCustom: "✏️ 自訂",
-    directPull: "直拉",
-    btnFricCara: "🪝 鉤環",
-    btnFricPull: "⚙️ 滑輪",
-    actionLabel: "🕹️ 系統操作動作",
-    btnStat: "⏸️ 靜止鎖定",
-    btnHaul: "⬆️ 系統上拉",
-    btnLow: "⬇️ 系統下放",
-    eduDefault: "📍 請在上方沙盤中自由拖曳「地面操作」，觀察轉向點承受的力量變化。",
-    sceneTree: "樹幹",
-    sceneRock: "岩壁",
-    sceneSteel: "鋼架",
-    sceneNone: "轉向點",
-    nameUpdated: "介質已更名為：",
-    fricUpdated: "COD 摩擦係數已自訂為：",
-    fricInvalid: "❌ 請輸入 0 到 1 之間的有效數字",
-    edu_static: "⏸️ <b>靜止鎖定時，沒有摩擦阻力產生。</b><br>此時不管你掛在哪裡，系統操作端只要付出相等於負載 ({T}kg) 的力量就能維持平衡。",
-    edu_haul_base: "🥵 <b>{name} (COD) 摩擦力極大！這是最累的拉法。</b><br>為了把負載往上拉，操作端必須多花 <b>{mult} 倍</b> 的力氣 ({T}kg) 才能克服摩擦力！{name}也因此承受恐怖的連帶破壞力。",
-    edu_haul_cara: "🪝🤨 <b>鉤環提供中等摩擦力。</b><br>雖然比{name}滑順，但金屬摩擦力還是讓操作端要出 <b>{mult} 倍</b> 的力氣 ({T}kg) 才能往上拉。",
-    edu_haul_pull: "⚙️😎 <b>高效率轉向！極度省力。</b><br>摩擦力幾乎消失，操作端只需要出 <b>{mult} 倍</b> 左右的力量 ({T}kg) 就能拉動。{name}也比較安全！",
-    edu_low_base: "🛡️ <b>下放時，{name} (COD) 反而變成救星！</b><br>巨大的摩擦力變成「天然煞車」，操作端只要輕輕握住 <b>{T}kg</b> 的力量，就能穩穩控制住系統！",
-    edu_low_cara: "🪝🛡️ <b>鉤環提供適中的煞車力。</b><br>下放時，金屬摩擦力幫忙煞車，操作端需出力 <b>{T}kg</b> 即可穩穩控制。",
-    edu_low_pull: "⚙️⚠️ <b>滑輪太溜了！下放請小心。</b><br>因為沒有摩擦力幫忙煞車，操作端必須死命握住將近負載 ({T}kg) 的力量，很容易失手滑掉！",
-    edu_warning: "<br><br>🚨 <b>滑輪倍增效應：</b> 繩索夾角太小，讓{name}承受了超過 2 倍的合力，極易發生崩塌斷裂意外！",
-    multLabel: "(負載的 {m} 倍)",
+    appTitle: "錨點張力儀 (雙引擎版)",
+    appTitleTrack: "索道張力儀 (滑行版)",
+    modeAnchor: "⚓ 垂直錨點模式",
+    modeTrack: "🚠 水平索道模式",
+    weight: "負重 (kg)",
+    deadLine: "死線破斷",
+    zoom: "🔍 縮放",
+    rotate: "🔄 旋轉",
+    anchorTension: "固定點張力",
+    deadLineShort: "死線!",
     langBtn: "🌐 繁中",
     menu1: "專業名詞與原理解析",
     menu2: "系統工具與說明書",
     menu3: "分享系統連結",
     menu4: "檢查並載入最新版本",
-    menu5: "技術支援與問題回報",
+    menu5: "系統問題回報",
     menuOp: "系統操作說明",
     menuInfo: "版本與開發資訊",
     menuPWA: "加入主畫面說明",
-    op1: "滑動下方沙盤中的 <b>地面操作</b>，即時推演不同角度下的力量變化。",
-    op2: "點擊上方 <b>模擬地形與環境</b>，一鍵切換攀樹、攀岩或鋼架場景。",
-    op3: "切換 <b>轉向點 (COD) 摩擦力介質</b>，觀察直拉、鉤環、滑輪對操作者負擔的影響。",
-    op4: "點擊 <b>✏️自訂</b>，可手動設定轉向介質名稱與摩擦係數。",
-    op5: "切換 <b>🕹️系統操作動作</b>，比對靜止、上拉與下放時，摩擦力帶來的截然不同效應。",
-    devTitle: "全地形轉向沙盤 專業正式版",
+    broken: "💀 系統毀損",
+    danger: "🔴 極度危險",
+    warn: "🟡 警示區域",
+    safe: "🟢 安全區域",
+    trackDanger: "🔴 危險區域",
+    trackSafe: "🟢 正常操作",
+    brokenDesc: "死線破斷！極度危險！",
+    anchorDangerDesc: "張力呈指數飆升，嚴禁逾越！",
+    anchorWarnDesc: "張力顯著上升，注意錨點強度",
+    anchorSafeDesc: "受力穩定，理想架設狀態",
+    trackDangerDesc: "超過極限，嚴禁再將索道收緊！",
+    trackWarnDesc: "逼近 10% 下垂量極限",
+    trackSafeDesc: "安全跨距，容許的正常下垂量",
+    anchorNote: "注意：垂直錨點系統嚴禁超過 120°，張力將產生破壞性飆升！",
+    trackNote: "注意：索道拉平超過 160° 時，極小衝擊將產生恐怖的動態破壞力！",
+    currentMul: "📍 目前張力倍數：",
+    loadWord: "負載",
+    anchorStd: "錨點標準",
+    trackStd: "索道標準",
+    limitWarning: "理論極限(179.95°)：57,296 kg",
+    thAnSafeT: "🟢 安全區域 (0° ~ 90°)",
+    thAnSafeD: "兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。",
+    thAnWarnT: "🟡 警示注意區 (> 90° ~ 120°)",
+    thAnWarnD: "張力顯著上升。實戰中若地形受限可接受，但須極度確認錨點強度。",
+    thAnDanT: "🔴 極度危險區 (> 120°)",
+    thAnDanD: "超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！",
+    thTrSafeT: "🟢 正常操作區 (120° ~ 150°)",
+    thTrSafeD: "為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。",
+    thTrWarnT: "🟡 警示注意區 (> 150° ~ 160°)",
+    thTrWarnD: "逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。",
+    thTrDanT: "🔴 死亡危險區 (> 160°)",
+    thTrDanD: "超過 160° 後，極小的衝擊皆會產生恐怖的破壞力。嚴禁為了減少下垂而將索道拉平超過此極限！",
+    thAngle: "φ 內錯仰角",
+    thAngleD: "教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。",
+    collapse: "🔼 收起說明",
+    // 操作說明與雜項
+    op1: "點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。",
+    op2: "滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。",
+    op3: "點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。",
+    op4: "點擊上方 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。",
+    op5: "點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片進行實地疊圖分析。",
+    devTitle: "雙引擎張力儀 專業正式版",
     devTeam: "本工具由 <span style='color:var(--warn);'>散木團隊</span> 開發製作",
     devT1: "教學架構與工程判斷／徐世豐",
     devT2: "工具設計與互動介面／吳佩芳（朵朵）",
-    customNameTitle: "✏️ 自訂介質名稱",
-    customNameDesc: "請輸入您要模擬的轉向地形或介質：",
-    customNamePlh: "例如：水泥柱、怪手吊臂",
-    customFricTitle: "⚙️ 自訂摩擦係數",
-    fricTip: "💡 <b>戰術提示：</b><br><span style='color:var(--bad)'>0.3</span> = 摩擦力極大 (如: 粗糙岩壁)<br><span style='color:var(--safe)'>0.9</span> = 摩擦力極小 (如: 高效滑輪)",
-    fricPlh: "輸入 0.1 ~ 1.0 之間的數字",
+    pwaDesc: "將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：",
+    pwaAnd: "🤖 Android (安卓版)",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "點開連結（可直接從 LINE 開啟）",
+    pwaStep2: "點選瀏覽器右上角的「⋮」",
+    pwaStep3: "選擇「加到主畫面」或「安裝應用程式」",
+    pwaStep4: "點選「安裝」，即可在桌面找到 APP",
+    pwaStep5: "請務必使用 <b>Safari</b> 瀏覽器開啟",
+    pwaStep6: "點選畫面下方的「分享」圖示",
+    pwaStep7: "往下滑，選擇「加入主畫面」",
+    pwaStep8: "點選「加入」，即可將捷徑加到主畫面",
+    installBtn: "📥 點擊一鍵安裝 APP",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ 軟體免責聲明：</strong><br>系統運算基於理想幾何物理模型，不含繩索延展性、材質疲勞、摩擦力損耗等環境變數。實際救援操作之下垂量與系統架設，請務必遵循專業教官之指導與現場判斷，開發團隊不負任何實地操作之法律與賠償責任。<br><br><span style='color:var(--warn);'>※ 本系統採單機授權，為保障研發團隊權益，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>",
+    // VIP & Modal
+    vipTitle: "🔒 專業版功能解鎖",
+    vipEnable1: "您即將啟用「",
+    vipEnable2: "」！",
+    vipProOnly: "此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！",
+    vipDisclaimer: "⚠️ 注意：本系統採單機授權，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。",
+    vipStoreBtn: "🛒 前往專業版自動販賣機",
+    vipHasPwd: "已取得密碼？請在此輸入：",
+    vipPwdPlh: "輸入 VIP 通關密碼",
+    vipCancel: "稍後再說",
+    vipUnlock: "立即解鎖 🔓",
+    vipErrPwd: "❌ 授權碼錯誤，請確認輸入是否正確。",
+    vipStateUnlocked: "🛡️ 系統狀態：已解鎖",
+    vipStateDesc: "如需進入指揮官控制台，請輸入最高權限金鑰：",
+    cmdTitle: "👑 指揮官專屬控制台",
+    cmdExpToday: "👉 今天的體驗碼 (今晚失效)",
+    cmdExpTmrw: "👉 明天的體驗碼",
+    cmdPerm: "👉 🌟 總部專屬配發碼",
+    cmdLogout: "清除授權(登出)",
+    cmdClose: "關閉控制台",
+    toastAuthSuccess: "🎉 授權成功！歡迎使用！",
+    toastTrialSuccess: "⏱️ 體驗授權成功！(今晚自動失效)",
+    toastLogout: "🔄 登出成功，重新載入鎖定狀態...",
+    supTitle: "💬 系統問題回報",
+    supDesc: "發現小蟲子 (Bug) 或系統異常嗎？<br><br>請點擊下方按鈕，填寫您的問題與建議，研發團隊會盡快進行修復與優化！",
+    supLater: "稍後再說",
+    supGo: "前往填寫表單",
+    featCam: "📷 實境相機疊圖",
+    featCamDesc: "開啟鏡頭將沙盤完美重疊於真實救援現場，實地精準推演轉向角度！",
+    featPhoto: "📁 場勘照片疊圖",
+    featPhotoDesc: "您可以匯入現場環境相片，即使在指揮所，也能將系統完美疊合於相片中，進行最真實的地形沙盤兵推！",
+    featShot: "📸 戰術純淨截圖",
+    featShotDesc: "自動濾除雜訊，一鍵匯出無浮水印、最高解析度的專業戰術報告圖紙！",
+    featAngle: "🎯 精確角度輸入",
+    featAngleDesc: "解鎖小數點級別的精確輸入！解除滑桿限制，精準模擬現場量測的極端張力變化！",
+    angleInputTitle: "🎯 輸入精確角度",
+    angleInputDesc: "請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)",
     cancel: "取消",
-    confirmName: "確認更改",
-    confirmFric: "確認套用",
-    thCodT: "🔄 轉向點 (COD)",
-    thCodD: "Change of Direction。改變繩索行進方向的受力點，其承受的總合力取決於繩索夾角。",
-    thFricT: "🛡️ 摩擦力 (Friction)",
-    thFricD: "繩索與介質接觸產生的阻力。系統上拉時，摩擦力是「敵人」，會大幅增加操作端負擔；系統下放時，摩擦力是「朋友」，能提供額外的煞車力道。",
-    thMultT: "🚨 滑輪倍增效應 (Multiplier Effect)",
-    thMultD: "當使用高效率滑輪且繩索夾角極小時（如 0°），轉向點將承受將近 2 倍 (200%) 的負載總張力，容易造成固定點崩塌！",
-    collapse: "🔼 收起說明"
+    confirm: "確認設定",
+    arPanelTitle: "🛠️ 實境疊圖控制面板",
+    arExpand: "展開設定",
+    arCollapse: "收起面板",
+    permTitle: "🛡️ 系統安全提示",
+    permDesc: "為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭。<br><br>請放心，所有影像疊圖運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！",
+    permBtn: "我瞭解了，開始授權",
+    btnMinus: "-",
+    btnPlus: "+"
   },
   en: {
-    appTitle: "Redirect Sandbox",
-    ground: "Ground",
-    distExt: "Extended to Ground",
-    groundOp: "Ground OP",
-    loadW: "Load (W)",
-    always1x: "Always = 1x",
-    anchorTension: "Anchor Tension",
-    codForce: "COD Force",
-    terrainLabel: "🏕️ Terrain & Environment",
-    btnTree: "🌳 Tree",
-    btnRock: "🪨 Rock",
-    btnSteel: "🏗️ Truss",
-    btnNone: "⬛ Blank",
-    frictionLabel: "🛡️ COD Friction Type",
-    btnCustom: "✏️ Custom",
-    directPull: " Pull",
-    btnFricCara: "🪝 Carabiner",
-    btnFricPull: "⚙️ Pulley",
-    actionLabel: "🕹️ System Action",
-    btnStat: "⏸️ Static",
-    btnHaul: "⬆️ Hauling",
-    btnLow: "⬇️ Lowering",
-    eduDefault: "📍 Drag the 'Ground OP' above to observe COD force changes.",
-    sceneTree: "Tree",
-    sceneRock: "Rock",
-    sceneSteel: "Truss",
-    sceneNone: "Redirect",
-    nameUpdated: "COD named to: ",
-    fricUpdated: "Friction custom set to: ",
-    fricInvalid: "❌ Enter a valid number between 0 and 1",
-    edu_static: "⏸️ <b>Zero friction in static lock.</b><br>Operator holds force equal to load ({T}kg) to maintain balance.",
-    edu_haul_base: "🥵 <b>High friction on {name}! Most exhausting.</b><br>Operator needs <b>{mult}x</b> force ({T}kg) to haul! {name} bears massive destructive force.",
-    edu_haul_cara: "🪝🤨 <b>Medium friction on carabiner.</b><br>Smoother than {name}, but requires <b>{mult}x</b> force ({T}kg) to haul.",
-    edu_haul_pull: "⚙️😎 <b>High efficiency! Effortless.</b><br>Friction nearly gone. Operator only needs <b>{mult}x</b> force ({T}kg). Safer for {name}!",
-    edu_low_base: "🛡️ <b>High friction acts as a natural brake!</b><br>Operator easily controls the load holding just <b>{T}kg</b>.",
-    edu_low_cara: "🪝🛡️ <b>Medium braking force.</b><br>Operator holds <b>{T}kg</b> to lower safely.",
-    edu_low_pull: "⚙️⚠️ <b>Very slippery! Caution when lowering.</b><br>Almost no braking help. Operator must hold <b>{T}kg</b>. Easy to lose grip!",
-    edu_warning: "<br><br>🚨 <b>Pulley Multiplier Effect:</b> Angle is too sharp! {name} bears >2x load. High risk of failure!",
-    multLabel: "({m}x Load)",
-    langBtn: "🌐 EN",
+    appTitle: "Anchor Force Calc",
+    appTitleTrack: "Trackline Calc",
+    modeAnchor: "⚓ Anchor Mode",
+    modeTrack: "🚠 Trackline Mode",
+    weight: "Load (kg)",
+    deadLine: "FAILURE",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Rotate",
+    anchorTension: "Tension",
+    deadLineShort: "FAIL!",
     menu1: "Theory & Principles",
     menu2: "Manual & Tools",
     menu3: "Share Link",
     menu4: "Check Updates",
-    menu5: "Support & Feedback",
+    menu5: "Report an Issue",
     menuOp: "System Manual",
     menuInfo: "Version Info",
     menuPWA: "Add to Home Screen",
-    op1: "Drag the <b>Ground OP</b> in the sandbox to simulate force changes dynamically.",
-    op2: "Click <b>Terrain & Environment</b> to switch between Tree, Rock, or Truss.",
-    op3: "Change <b>COD Friction Type</b> to observe how direct pull, carabiners, or pulleys affect the load.",
-    op4: "Click <b>✏️Custom</b> to manually set the object name and friction coefficient.",
-    op5: "Toggle <b>System Action</b> to compare the effects of friction during Static, Hauling, and Lowering.",
-    devTitle: "Redirect Sandbox PRO",
+    broken: "💀 FAILURE",
+    danger: "🔴 DANGER",
+    warn: "🟡 WARNING",
+    safe: "🟢 SAFE",
+    trackDanger: "🔴 DANGER",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "Critical limit exceeded!",
+    anchorDangerDesc: "Tension exponential. DO NOT EXCEED!",
+    anchorWarnDesc: "Tension high. Verify anchor strength.",
+    anchorSafeDesc: "Ideal rigging condition.",
+    trackDangerDesc: "Limit exceeded. Do not tighten!",
+    trackWarnDesc: "Approaching 10% sag limit.",
+    trackSafeDesc: "Safe span. Normal sag.",
+    anchorNote: "Note: Vertical anchors MUST NOT exceed 120°. Destructive tension!",
+    trackNote: "Note: Trackline > 160° causes massive dynamic destruction!",
+    currentMul: "📍 Tension Multiplier: ",
+    loadWord: "Load",
+    anchorStd: "Anchor Std",
+    trackStd: "Trackline Std",
+    limitWarning: "Theoretical Limit (179.95°): 57,296 kg",
+    thAnSafeT: "🟢 Safe Zone (0° ~ 90°)",
+    thAnSafeD: "Anchors take <71% load. Ideal rigging.",
+    thAnWarnT: "🟡 Warning Zone (> 90° ~ 120°)",
+    thAnWarnD: "Tension rises. Verify anchor strength.",
+    thAnDanT: "🔴 Danger Zone (> 120°)",
+    thAnDanD: "Anchors take >100% load. Exponential spike. NEVER exceed!",
+    thTrSafeT: "🟢 Operating Zone (120° ~ 150°)",
+    thTrSafeD: "Safe span. Ensure anchors hold 2x load.",
+    thTrWarnT: "🟡 Warning Zone (> 150° ~ 160°)",
+    thTrWarnD: "Approaching 10% sag limit! High alert.",
+    thTrDanT: "🔴 Death Zone (> 160°)",
+    thTrDanD: "Beyond 160°, tiny impacts cause massive destruction!",
+    thAngle: "φ Interior Angle",
+    thAngleD: "Matches inner φ angle for easy field estimation.",
+    collapse: "🔼 Collapse",
+    op1: "Click <b>【⚓/🚠 Mode Button】</b> to switch physics standards.",
+    op2: "Slide the <b>Angle Slider</b> below for dynamic tension. Click the <b>✎ Icon</b> to input decimals.",
+    op3: "Click <b>[-] or [+]</b> to quickly adjust load weight.",
+    op4: "Click <b>🧍‍♂️↔️</b> to flip the instructor's position.",
+    op5: "Click <b>📷 AR / 📁 Photo</b> to overlay real scene images.",
+    devTitle: "Dual Engine Simulator PRO",
     devTeam: "Developed by <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Engineering & Architecture / Shih-Feng Hsu",
     devT2: "UI/UX Design / Pei-Fang Wu",
-    customNameTitle: "✏️ Custom COD Name",
-    customNameDesc: "Enter the custom terrain or object name:",
-    customNamePlh: "e.g., Concrete pillar",
-    customFricTitle: "⚙️ Custom Friction",
-    fricTip: "💡 <b>Tip:</b><br><span style='color:var(--bad)'>0.3</span> = High Friction (Rough rock)<br><span style='color:var(--safe)'>0.9</span> = Low Friction (Pulley)",
-    fricPlh: "Enter 0.1 ~ 1.0",
+    pwaDesc: "Add to home screen for an immersive experience:",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "Open the link in your browser",
+    pwaStep2: "Tap '⋮' in the browser menu",
+    pwaStep3: "Select 'Add to Home Screen'",
+    pwaStep4: "Tap 'Install'",
+    pwaStep5: "Must use the <b>Safari</b> browser",
+    pwaStep6: "Tap the 'Share' icon at the bottom",
+    pwaStep7: "Scroll down and select 'Add to Home Screen'",
+    pwaStep8: "Tap 'Add' to create the shortcut",
+    installBtn: "📥 Install APP",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ Disclaimer:</strong><br>This software is a theoretical physics tool. Real-world rigging and safety MUST be determined by professional instructors on-site. <br><br><span style='color:var(--warn);'>* Single-device license. No customer support or code replacement for lost/changed devices. Please repurchase to support our team.</span>",
+    vipTitle: "🔒 PRO Feature",
+    vipEnable1: "Enable '",
+    vipEnable2: "'",
+    vipProOnly: "Support SunMoon Team to unlock all features permanently!",
+    vipDisclaimer: "⚠️ Notice: Single-device license. No customer support or replacements for lost/changed devices. Please repurchase.",
+    vipStoreBtn: "🛒 Go to PRO Store",
+    vipHasPwd: "Have a password?",
+    vipPwdPlh: "Enter VIP Password",
+    vipCancel: "Maybe Later",
+    vipUnlock: "Unlock 🔓",
+    vipErrPwd: "❌ Incorrect password.",
+    vipStateUnlocked: "🛡️ System: Unlocked",
+    vipStateDesc: "Enter MASTER KEY for Console:",
+    cmdTitle: "👑 Commander Console",
+    cmdExpToday: "👉 Today's Trial Code",
+    cmdExpTmrw: "👉 Tomorrow's Trial Code",
+    cmdPerm: "👉 🌟 Permanent Code",
+    cmdLogout: "Logout",
+    cmdClose: "Close",
+    toastAuthSuccess: "🎉 Auth Success!",
+    toastTrialSuccess: "⏱️ Trial Activated!",
+    toastLogout: "🔄 Logged out.",
+    supTitle: "💬 Report an Issue",
+    supDesc: "Found a bug or have a suggestion?<br><br>Click below to fill out the report form and help us improve the system!",
+    supLater: "Maybe Later",
+    supGo: "Go to Support Form",
+    featCam: "📷 AR Camera Overlay",
+    featCamDesc: "Overlay sandbox on real rescue scene for precise angle deduction!",
+    featPhoto: "📁 Photo Overlay",
+    featPhotoDesc: "Import site photos for realistic force simulation!",
+    featShot: "📸 Tactical Screenshot",
+    featShotDesc: "Auto-filter noise, one-click export watermark-free tactical report!",
+    featAngle: "🎯 Exact Angle Input",
+    featAngleDesc: "Unlock decimal precision for exact tension simulation!",
+    angleInputTitle: "🎯 Exact Angle",
+    angleInputDesc: "Enter measured rope angle<br>(0° ~ 180°)",
     cancel: "Cancel",
-    confirmName: "Confirm",
-    confirmFric: "Apply",
-    thCodT: "🔄 COD (Change of Direction)",
-    thCodD: "The point where the rope changes direction. The total force it bears depends on the rope angle.",
-    thFricT: "🛡️ Friction",
-    thFricD: "Resistance when rope contacts an object. It's an 'enemy' when hauling (adds effort), but a 'friend' when lowering (adds braking).",
-    thMultT: "🚨 Pulley Multiplier Effect",
-    thMultD: "When using an efficient pulley and a very sharp angle (e.g., 0°), the COD bears nearly 2x (200%) of the load, risking anchor failure!",
-    collapse: "🔼 Collapse"
+    confirm: "Confirm",
+    arPanelTitle: "🛠️ AR Panel",
+    arExpand: "Expand",
+    arCollapse: "Collapse",
+    permTitle: "🛡️ Camera Access",
+    permDesc: "Camera access is required for AR. Processing is 100% local. No data is recorded or sent.",
+    permBtn: "Allow Access",
+    btnMinus: "-",
+    btnPlus: "+"
   },
   ja: {
-    appTitle: "リダイレクト砂盤",
-    ground: "地面 Ground",
-    distExt: "長距離延長（地面）",
-    groundOp: "操作側",
-    loadW: "負荷 (W)",
-    always1x: "常に = 1倍",
-    anchorTension: "操作側張力",
-    codForce: "(COD) 荷重",
-    terrainLabel: "🏕️ 地形と環境",
-    btnTree: "🌳 ツリー",
-    btnRock: "🪨 ロック",
-    btnSteel: "🏗️ 鉄骨",
-    btnNone: "⬛ 空白",
-    frictionLabel: "🛡️ COD 摩擦タイプ",
-    btnCustom: "✏️ カスタム",
-    directPull: " 直引き",
-    btnFricCara: "🪝 カラビナ",
-    btnFricPull: "⚙️ プーリー",
-    actionLabel: "🕹️ システム動作",
-    btnStat: "⏸️ 静止",
-    btnHaul: "⬆️ 引き上げ",
-    btnLow: "⬇️ ロワリング",
-    eduDefault: "📍 上の「操作側」をドラッグして、COD荷重変化を観察してください。",
-    sceneTree: "樹木",
-    sceneRock: "岩壁",
-    sceneSteel: "鉄骨",
-    sceneNone: "支点",
-    nameUpdated: "COD名を変更しました：",
-    fricUpdated: "摩擦係数を変更しました：",
-    fricInvalid: "❌ 0から1の間の数値を入力してください",
-    edu_static: "⏸️ <b>静止ロック時、摩擦抵抗ゼロ。</b><br>操作側は負荷({T}kg)と同等の力でバランスを維持できます。",
-    edu_haul_base: "🥵 <b>{name}の摩擦大！最もしんどい方法です。</b><br>引き上げには<b>{mult}倍</b>の力({T}kg)が必要！{name}に大きな破壊力がかかります。",
-    edu_haul_cara: "🪝🤨 <b>カラビナの中程度摩擦。</b><br>{name}より滑らかですが、引き上げに<b>{mult}倍</b>の力({T}kg)が必要です。",
-    edu_haul_pull: "⚙️😎 <b>高効率！超省力。</b><br>摩擦がほぼ消滅。操作側は<b>{mult}倍</b>の力({T}kg)で済みます。{name}にも安全！",
-    edu_low_base: "🛡️ <b>ロワリング時、{name}の摩擦がブレーキに！</b><br>操作側はわずか<b>{T}kg</b>の力で安定して下降できます。",
-    edu_low_cara: "🪝🛡️ <b>適度なブレーキ力。</b><br>操作側は<b>{T}kg</b>の力で安全にコントロールできます。",
-    edu_low_pull: "⚙️⚠️ <b>滑りやすい！ロワリング注意。</b><br>摩擦ブレーキがないため、操作側は負荷に近い力({T}kg)を保持する必要があり、手を滑らせる危険大！",
-    edu_warning: "<br><br>🚨 <b>プーリー倍増効果：</b> 角度が鋭すぎます！{name}が2倍以上の合力を受け、崩壊のリスク大！",
-    multLabel: "(負荷の {m} 倍)",
-    langBtn: "🌐 日本語",
+    appTitle: "張力計 (デュアル版)",
+    appTitleTrack: "トラックライン張力計",
+    modeAnchor: "⚓ アンカーモード",
+    modeTrack: "🚠 トラックライン",
+    weight: "荷重 (kg)",
+    deadLine: "システム崩壊",
+    zoom: "🔍 ズーム",
+    rotate: "🔄 回転",
+    anchorTension: "張力",
+    deadLineShort: "破断!",
     menu1: "原理と専門用語",
     menu2: "ツールと操作",
     menu3: "リンク共有",
-    menu4: "更新の確認",
-    menu5: "サポート/フィードバック",
+    menu4: "更新確認",
+    menu5: "バグ報告",
     menuOp: "操作マニュアル",
     menuInfo: "バージョン情報",
     menuPWA: "ホーム画面に追加",
-    op1: "サンドボックス内の <b>操作側</b> をドラッグして、角度ごとの荷重変化をシミュレーションします。",
-    op2: "上部の <b>地形と環境</b> をクリックし、ツリー、ロック、鉄骨を切り替えます。",
-    op3: "<b>COD摩擦タイプ</b> を変更し、直引き、カラビナ、プーリーが負担にどう影響するか観察します。",
-    op4: "<b>✏️カスタム</b> をクリックして、名称と摩擦係数を手動設定できます。",
-    op5: "<b>システム動作</b> を切り替えて、静止、引き上げ、ロワリング時の摩擦の違いを比較します。",
-    devTitle: "リダイレクト砂盤 PRO",
+    broken: "💀 システム崩壊",
+    danger: "🔴 危険エリア",
+    warn: "🟡 警告エリア",
+    safe: "🟢 安全エリア",
+    trackDanger: "🔴 危険エリア",
+    trackSafe: "🟢 正常操作",
+    brokenDesc: "限界超過！極めて危険！",
+    anchorDangerDesc: "張力急増。厳禁！",
+    anchorWarnDesc: "張力上昇。支点強度に注意。",
+    anchorSafeDesc: "理想的な架設状態。",
+    trackDangerDesc: "限界超過。これ以上張るな！",
+    trackWarnDesc: "サグ10%限界に接近。",
+    trackSafeDesc: "安全スパン。許容サグ。",
+    anchorNote: "注意：アンカー120°超えは厳禁。破壊的張力が発生！",
+    trackNote: "注意：160°超えは微小衝撃で崩壊！",
+    currentMul: "📍 現在の張力倍数: ",
+    loadWord: "荷重",
+    anchorStd: "アンカー基準",
+    trackStd: "トラックライン",
+    limitWarning: "理論的限界(179.95°): 57,296 kg",
+    thAnSafeT: "🟢 安全エリア (0° ~ 90°)",
+    thAnSafeD: "負荷71%未満。理想的な状態。",
+    thAnWarnT: "🟡 警告エリア (> 90° ~ 120°)",
+    thAnWarnD: "張力上昇。支点強度を要確認。",
+    thAnDanT: "🔴 危険エリア (> 120°)",
+    thAnDanD: "負荷100%超過。急増するため厳禁！",
+    thTrSafeT: "🟢 正常操作 (120° ~ 150°)",
+    thTrSafeD: "安全なスパン。支点は2倍の強度が必要。",
+    thTrWarnT: "🟡 警告エリア (> 150° ~ 160°)",
+    thTrWarnD: "サグ10%限界に接近！要警戒。",
+    thTrDanT: "🔴 デス・ゾーン (> 160°)",
+    thTrDanD: "160°超過での衝撃は破壊的。過緊張厳禁！",
+    thAngle: "φ 錯角",
+    thAngleD: "中心のφ角と等しく、現場での判断に役立つ。",
+    collapse: "🔼 閉じる",
+    op1: "上の <b>【⚓/🚠 モード切替】</b> をクリックして基準を変更。",
+    op2: "下の <b>角度スライダー</b> を操作してプレビュー。<b>✎ アイコン</b> をクリックで小数点入力。",
+    op3: "負荷の両側にある <b>[-] または [+] ボタン</b> で重量調整。",
+    op4: "<b>🧍‍♂️↔️ ボタン</b> をクリックして教官の立ち位置を反転。",
+    op5: "<b>📷 ARカメラ / 📁 写真</b> で現場画像をオーバーレイ。",
+    devTitle: "デュアルエンジン張力計 PRO",
     devTeam: "開発：<span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "アーキテクチャ・監修 / Shih-Feng Hsu",
     devT2: "UI/UX デザイン / Pei-Fang Wu",
-    customNameTitle: "✏️ COD名カスタム",
-    customNameDesc: "地形やオブジェクト名を入力：",
-    customNamePlh: "例：コンクリート柱",
-    customFricTitle: "⚙️ 摩擦係数カスタム",
-    fricTip: "💡 <b>ヒント：</b><br><span style='color:var(--bad)'>0.3</span> = 摩擦大 (岩など)<br><span style='color:var(--safe)'>0.9</span> = 摩擦小 (プーリー)",
-    fricPlh: "0.1 ~ 1.0",
+    pwaDesc: "ホーム画面に追加して、フルスクリーンの没入型体験を：",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "ブラウザでリンクを開く",
+    pwaStep2: "右上の「⋮」をタップ",
+    pwaStep3: "「ホーム画面に追加」を選択",
+    pwaStep4: "「インストール」をタップ",
+    pwaStep5: "必ず <b>Safari</b> ブラウザを使用してください",
+    pwaStep6: "下部の「共有」アイコンをタップ",
+    pwaStep7: "下にスクロールし、「ホーム画面に追加」を選択",
+    pwaStep8: "「追加」をタップ",
+    installBtn: "📥 アプリをインストール",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚖️ 免責事項：</strong><br>本ソフトウェアは理論上の物理演算ツールであり、ロープの疲労や極端な摩擦などは考慮されていません。実際の救助操作は必ず専門の教官が判断してください。<br><br><span style='color:var(--warn);'>※ 本アプリは単一デバイスライセンスです。機種変更時のコード再発行やカスタマーサポートは提供しておりません。開発支援のため再購入をお願いします。</span>",
+    vipTitle: "🔒 PRO版ロック解除",
+    vipEnable1: "「",
+    vipEnable2: "」を有効にします！",
+    vipProOnly: "これはPRO版限定機能です。<br>SunMoonチームを支援し、全機能を永久解放しましょう！",
+    vipDisclaimer: "⚠️ 注意: 単一デバイスライセンスです。機種変更時のコード再発行やサポートはありません。再購入をお願いします。",
+    vipStoreBtn: "🛒 PRO版ストアへ",
+    vipHasPwd: "パスワードをお持ちですか？ここに入力：",
+    vipPwdPlh: "VIPパスワードを入力",
+    vipCancel: "後で",
+    vipUnlock: "今すぐロック解除 🔓",
+    vipErrPwd: "❌ パスワードが間違っています。もう一度確認してください。",
+    vipStateUnlocked: "🛡️ システム状態: ロック解除済み",
+    vipStateDesc: "指揮官コンソールに入るには、マスターキーを入力してください：",
+    cmdTitle: "👑 指揮官専用コンソール",
+    cmdExpToday: "👉 今日の体験コード (今夜失効)",
+    cmdExpTmrw: "👉 明日の体験コード",
+    cmdPerm: "👉 🌟 本部専用パーマネントコード",
+    cmdLogout: "認証解除 (ログアウト)",
+    cmdClose: "コンソールを閉じる",
+    toastAuthSuccess: "🎉 認証成功！ようこそ！",
+    toastTrialSuccess: "⏱️ 体験版有効化！(今夜自動失効)",
+    toastLogout: "🔄 ログアウトしました。再読み込み中...",
+    supTitle: "💬 システム問題報告",
+    supDesc: "バグや提案がありますか？<br><br>下のボタンからフォームに入力し、システムの改善にご協力ください！",
+    supLater: "後で",
+    supGo: "サポートフォームへ",
+    featCam: "📷 ARカメラオーバーレイ",
+    featCamDesc: "カメラを起動し、実際の救助現場に砂盤を重ねて角度を正確にシミュレーション！",
+    featPhoto: "📁 写真オーバーレイ",
+    featPhotoDesc: "現場の写真をインポートし、最もリアルな荷重シミュレーションを行います！",
+    featShot: "📸 戦術クリーン・スクリーンショット",
+    featShotDesc: "ノイズを除去し、透かしのない高解像度の戦術レポートをワンクリックで出力！",
+    featAngle: "🎯 正確な角度入力",
+    featAngleDesc: "小数点以下の入力をロック解除！スライダーの制限を解除し、正確な張力をシミュレーション！",
+    angleInputTitle: "🎯 正確な角度を入力",
+    angleInputDesc: "測定したロープの角度を入力<br>(小数点対応, 0° ~ 180°)",
     cancel: "キャンセル",
-    confirmName: "確認",
-    confirmFric: "適用",
-    thCodT: "🔄 リダイレクト (COD)",
-    thCodD: "ロープの進行方向を変える支点。受ける合力はロープの角度に依存します。",
-    thFricT: "🛡️ 摩擦 (Friction)",
-    thFricD: "ロープが接触する際に生じる抵抗。引き上げ時は負担を増やす「敵」ですが、ロワリング時はブレーキを助ける「味方」になります。",
-    thMultT: "🚨 プーリー倍増効果 (Multiplier Effect)",
-    thMultD: "高効率プーリーを使用し、角度が非常に狭い(例:0°)場合、CODは負荷の約2倍(200%)の力を受け、崩壊の危険があります！",
-    collapse: "🔼 閉じる"
+    confirm: "設定を適用",
+    arPanelTitle: "🛠️ AR 設定パネル",
+    arExpand: "設定を展開",
+    arCollapse: "パネルを閉じる",
+    permTitle: "🛡️ セキュリティ警告",
+    permDesc: "カメラを起動して現場の角度をシミュレーションします。<br><br>画像処理はすべてスマホの<strong>ローカル</strong>で行われます。録画やデータ送信は一切行いません。<br><br>次のプロンプトで<strong>「許可」</strong>をタップしてARを起動してください！",
+    permBtn: "理解しました、許可する",
+    btnMinus: "-",
+    btnPlus: "+"
+  },
+  ko: {
+    appTitle: "앵커 장력계 (듀얼 엔진)",
+    appTitleTrack: "트랙라인 장력계",
+    modeAnchor: "⚓ 수직 앵커 모드",
+    modeTrack: "🚠 수평 트랙라인",
+    weight: "하중 (kg)",
+    deadLine: "시스템 파괴",
+    zoom: "🔍 확대",
+    rotate: "🔄 회전",
+    anchorTension: "장력",
+    deadLineShort: "파괴!",
+    menu1: "전문 용어 및 원리",
+    menu2: "도구 및 매뉴얼",
+    menu3: "링크 공유",
+    menu4: "업데이트 확인",
+    menu5: "문제 신고",
+    menuOp: "시스템 매뉴얼",
+    menuInfo: "버전 정보",
+    menuPWA: "홈 화면에 추가",
+    broken: "💀 시스템 파괴",
+    danger: "🔴 극도 위험",
+    warn: "🟡 경고 구역",
+    safe: "🟢 안전 구역",
+    trackDanger: "🔴 위험 구역",
+    trackSafe: "🟢 정상 작동",
+    brokenDesc: "한계 초과! 매우 위험합니다!",
+    anchorDangerDesc: "장력이 기하급수적으로 증가합니다. 절대 금지!",
+    anchorWarnDesc: "장력이 증가합니다. 앵커 강도를 확인하세요.",
+    anchorSafeDesc: "이상적인 리깅 상태입니다.",
+    trackDangerDesc: "한계 초과. 더 이상 당기지 마십시오!",
+    trackWarnDesc: "10% 새그 한계에 근접했습니다.",
+    trackSafeDesc: "안전한 스팬 및 새그입니다.",
+    anchorNote: "주의: 수직 앵커 시스템은 120°를 초과해서는 안 됩니다!",
+    trackNote: "주의: 트랙라인이 160°를 초과하면 파괴적인 장력이 발생합니다!",
+    currentMul: "📍 현재 장력 배수: ",
+    loadWord: "하중",
+    anchorStd: "앵커 기준",
+    trackStd: "트랙라인 기준",
+    limitWarning: "이론적 한계(179.95°): 57,296 kg",
+    thAnSafeT: "🟢 안전 구역 (0° ~ 90°)",
+    thAnSafeD: "각 앵커가 하중의 71% 이하를 분담합니다.",
+    thAnWarnT: "🟡 경고 구역 (> 90° ~ 120°)",
+    thAnWarnD: "장력이 증가합니다. 앵커 강도 확인이 필요합니다.",
+    thAnDanT: "🔴 위험 구역 (> 120°)",
+    thAnDanD: "장력이 하중의 100%를 초과합니다. 절대 금지!",
+    thTrSafeT: "🟢 정상 작동 구역 (120° ~ 150°)",
+    thTrSafeD: "안전한 트랙라인. 앵커가 2배 하중을 견딜 수 있는지 확인하세요.",
+    thTrWarnT: "🟡 경고 구역 (> 150° ~ 160°)",
+    thTrWarnD: "새그 10% 한계 근접! 고도의 주의가 필요합니다.",
+    thTrDanT: "🔴 데스 존 (> 160°)",
+    thTrDanD: "160° 초과 시 미세한 충격도 거대한 파괴력을 생성합니다!",
+    thAngle: "φ 교각",
+    thAngleD: "내부 φ 각도와 일치하여 현장 예측을 용이하게 합니다.",
+    collapse: "🔼 닫기",
+    op1: "<b>【⚓/🚠 모드 버튼】</b>을 클릭하여 물리 기준을 전환하세요.",
+    op2: "아래 <b>각도 슬라이더</b>를 밀어 장력을 시뮬레이션하세요. <b>✎ 아이콘</b>으로 소수점 입력이 가능합니다.",
+    op3: "하중 옆의 <b>[-] 또는 [+]</b> 버튼을 클릭하여 무게를 조절하세요.",
+    op4: "<b>🧍‍♂️↔️</b> 버튼으로 교관의 위치를 반전시킵니다.",
+    op5: "<b>📷 AR / 📁 사진</b>을 클릭하여 실제 현장 이미지를 오버레이하세요.",
+    devTitle: "듀얼 엔진 장력계 PRO",
+    devTeam: "개발: <span style='color:var(--warn);'>SunMoon Team</span>",
+    devT1: "아키텍처 및 엔지니어링 / Shih-Feng Hsu",
+    devT2: "UI/UX 디자인 / Pei-Fang Wu",
+    pwaDesc: "홈 화면에 추가하여 전체 화면으로 즐기세요:",
+    pwaAnd: "🤖 안드로이드 (Android)",
+    pwaIOS: "🍎 아이폰 (iOS)",
+    pwaStep1: "브라우저에서 링크를 엽니다.",
+    pwaStep2: "오른쪽 상단의 '⋮' 메뉴를 누릅니다.",
+    pwaStep3: "'홈 화면에 추가'를 선택합니다.",
+    pwaStep4: "'추가'를 눌러 설치합니다.",
+    pwaStep5: "반드시 <b>Safari</b> 브라우저를 사용하세요.",
+    pwaStep6: "하단의 '공유' 아이콘을 누릅니다.",
+    pwaStep7: "아래로 스크롤하여 '홈 화면에 추가'를 선택합니다.",
+    pwaStep8: "'추가'를 누릅니다.",
+    installBtn: "📥 앱 설치하기",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ 면책 조항:</strong><br>본 소프트웨어는 이론적 물리 연산 도구입니다. 실제 구조 작업 및 안전은 반드시 현장의 전문 교관이 판단해야 합니다.<br><br><span style='color:var(--warn);'>※ 본 앱은 1기기 라이선스입니다. 기기 변경 시 비밀번호 재발급 및 고객 지원은 제공되지 않습니다. 개발 지원을 위해 재구매를 부탁드립니다.</span>",
+    vipTitle: "🔒 PRO 기능 잠금 해제",
+    vipEnable1: "다음 기능을 활성화합니다: '",
+    vipEnable2: "'",
+    vipProOnly: "SunMoon 팀을 지원하고 모든 기능을 영구적으로 잠금 해제하세요!",
+    vipDisclaimer: "⚠️ 주의: 본 앱은 1기기 라이선스입니다. 기기 변경 시 고객 지원이 제공되지 않으니 재구매 바랍니다.",
+    vipStoreBtn: "🛒 PRO 스토어로 이동",
+    vipHasPwd: "비밀번호가 있으신가요?",
+    vipPwdPlh: "VIP 비밀번호 입력",
+    vipCancel: "나중에",
+    vipUnlock: "잠금 해제 🔓",
+    vipErrPwd: "❌ 비밀번호가 올바르지 않습니다.",
+    vipStateUnlocked: "🛡️ 시스템: 잠금 해제됨",
+    vipStateDesc: "콘솔 마스터 키 입력:",
+    cmdTitle: "👑 사령관 콘솔",
+    cmdExpToday: "👉 오늘 체험 코드",
+    cmdExpTmrw: "👉 내일 체험 코드",
+    cmdPerm: "👉 🌟 영구 코드",
+    cmdLogout: "로그아웃",
+    cmdClose: "닫기",
+    toastAuthSuccess: "🎉 인증 성공!",
+    toastTrialSuccess: "⏱️ 체험판 활성화!",
+    toastLogout: "🔄 로그아웃 되었습니다.",
+    supTitle: "💬 문제 신고",
+    supDesc: "버그나 제안 사항이 있나요?<br><br>아래 버튼을 눌러 양식을 작성하고 시스템 개선에 참여해 주세요!",
+    supLater: "나중에",
+    supGo: "폼으로 이동",
+    featCam: "📷 AR 카메라 오버레이",
+    featCamDesc: "실제 구조 현장에 샌드박스를 겹쳐 정확한 각도를 시뮬레이션하세요!",
+    featPhoto: "📁 사진 오버레이",
+    featPhotoDesc: "현장 사진을 불러와 가장 현실적인 장력을 예측하세요!",
+    featShot: "📸 전술 스크린샷",
+    featShotDesc: "노이즈를 필터링하고 워터마크 없는 고해상도 리포트를 출력합니다!",
+    featAngle: "🎯 정밀 각도 입력",
+    featAngleDesc: "소수점 입력을 잠금 해제하여 정확한 장력을 시뮬레이션하세요!",
+    angleInputTitle: "🎯 정밀 각도 입력",
+    angleInputDesc: "측정된 로프 각도 입력<br>(0° ~ 180°)",
+    cancel: "취소",
+    confirm: "확인",
+    arPanelTitle: "🛠️ AR 설정 패널",
+    arExpand: "설정 펼치기",
+    arCollapse: "닫기",
+    permTitle: "🛡️ 카메라 접근 권한",
+    permDesc: "AR 시뮬레이션을 위해 카메라 접근이 필요합니다. 모든 처리는 100% 로컬에서 수행되며, 데이터는 녹화되거나 전송되지 않습니다.",
+    permBtn: "접근 허용",
+    btnMinus: "-",
+    btnPlus: "+"
+  },
+  fr: {
+    appTitle: "Force d'Ancrage",
+    appTitleTrack: "Force de Tyrolienne",
+    modeAnchor: "⚓ Mode Ancrage",
+    modeTrack: "🚠 Mode Tyrolienne",
+    weight: "Charge (kg)",
+    deadLine: "RUPTURE",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Rotation",
+    anchorTension: "Tension",
+    deadLineShort: "Rupture!",
+    menu1: "Théorie et Principes",
+    menu2: "Manuel et Outils",
+    menu3: "Partager le lien",
+    menu4: "Vérifier les MAJ",
+    menu5: "Signaler un Problème",
+    menuOp: "Manuel du Système",
+    menuInfo: "Info de Version",
+    menuPWA: "Ajouter à l'écran",
+    broken: "💀 ÉCHEC DU SYSTÈME",
+    danger: "🔴 DANGER",
+    warn: "🟡 AVERTISSEMENT",
+    safe: "🟢 SÛR",
+    trackDanger: "🔴 DANGER",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "Limite critique dépassée !",
+    anchorDangerDesc: "Tension exponentielle. NE PAS DÉPASSER !",
+    anchorWarnDesc: "Tension élevée. Vérifiez l'ancrage.",
+    anchorSafeDesc: "Condition de gréement idéale.",
+    trackDangerDesc: "Limite dépassée. Ne pas tendre plus !",
+    trackWarnDesc: "Approche de la limite de flèche de 10%.",
+    trackSafeDesc: "Portée sûre. Flèche normale.",
+    anchorNote: "Note : Les ancrages verticaux NE DOIVENT PAS dépasser 120° !",
+    trackNote: "Note : Une tyrolienne > 160° provoque une destruction dynamique !",
+    currentMul: "📍 Multiplicateur de tension : ",
+    loadWord: "Charge",
+    anchorStd: "Std. Ancrage",
+    trackStd: "Std. Tyrolienne",
+    limitWarning: "Limite théorique (179.95°) : 57 296 kg",
+    thAnSafeT: "🟢 Zone Sûre (0° ~ 90°)",
+    thAnSafeD: "Les ancrages supportent <71% de la charge. Idéal.",
+    thAnWarnT: "🟡 Zone d'Avertissement (> 90° ~ 120°)",
+    thAnWarnD: "La tension augmente. Vérifiez l'ancrage.",
+    thAnDanT: "🔴 Zone de Danger (> 120°)",
+    thAnDanD: "Les ancrages supportent >100% de la charge. JAMAIS dépasser !",
+    thTrSafeT: "🟢 Zone de Fonctionnement (120° ~ 150°)",
+    thTrSafeD: "Portée sûre. Assurez-vous que l'ancrage supporte 2x la charge.",
+    thTrWarnT: "🟡 Zone d'Avertissement (> 150° ~ 160°)",
+    thTrWarnD: "Approche de la limite de 10% ! Alerte élevée.",
+    thTrDanT: "🔴 Zone de Mort (> 160°)",
+    thTrDanD: "Au-delà de 160°, les petits impacts causent une destruction massive !",
+    thAngle: "φ Angle Intérieur",
+    thAngleD: "Correspond à l'angle intérieur φ pour une estimation facile.",
+    collapse: "🔼 Fermer",
+    op1: "Cliquez sur <b>【Bouton ⚓/🚠】</b> pour changer de standard physique.",
+    op2: "Faites glisser le <b>Curseur d'Angle</b>. Cliquez sur <b>✎</b> pour les décimales.",
+    op3: "Cliquez sur <b>[-] ou [+]</b> pour ajuster le poids.",
+    op4: "Cliquez sur <b>🧍‍♂️↔️</b> pour inverser la position de l'instructeur.",
+    op5: "Cliquez sur <b>📷 AR / 📁 Photo</b> pour superposer des images réelles.",
+    devTitle: "Simulateur Double Moteur PRO",
+    devTeam: "Développé par <span style='color:var(--warn);'>SunMoon Team</span>",
+    devT1: "Ingénierie et Architecture / Shih-Feng Hsu",
+    devT2: "Design UI/UX / Pei-Fang Wu",
+    pwaDesc: "Ajouter à l'écran d'accueil pour une expérience immersive :",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "Ouvrez le lien dans le navigateur",
+    pwaStep2: "Appuyez sur '⋮' dans le menu",
+    pwaStep3: "Sélectionnez 'Ajouter à l'écran d'accueil'",
+    pwaStep4: "Appuyez sur 'Installer'",
+    pwaStep5: "Utilisez obligatoirement <b>Safari</b>",
+    pwaStep6: "Appuyez sur l'icône 'Partager' en bas",
+    pwaStep7: "Sélectionnez 'Sur l'écran d'accueil'",
+    pwaStep8: "Appuyez sur 'Ajouter'",
+    installBtn: "📥 Installer l'APP",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ Avertissement :</strong><br>Outil théorique. Le gréement réel DOIT être déterminé par des professionnels.<br><br><span style='color:var(--warn);'>* Licence pour un seul appareil. Aucun service client pour le remplacement d'appareil. Veuillez racheter pour nous soutenir.</span>",
+    vipTitle: "🔒 Fonction PRO",
+    vipEnable1: "Activer '",
+    vipEnable2: "'",
+    vipProOnly: "Soutenez SunMoon Team pour débloquer toutes les fonctions !",
+    vipDisclaimer: "⚠️ Note : Licence pour un seul appareil. Aucun support pour changement d'appareil. Veuillez racheter.",
+    vipStoreBtn: "🛒 Aller à la boutique PRO",
+    vipHasPwd: "Vous avez un mot de passe ?",
+    vipPwdPlh: "Entrez le mot de passe",
+    vipCancel: "Plus tard",
+    vipUnlock: "Débloquer 🔓",
+    vipErrPwd: "❌ Mot de passe incorrect.",
+    vipStateUnlocked: "🛡️ Système : Débloqué",
+    vipStateDesc: "Entrez le code MASTER pour la Console :",
+    cmdTitle: "👑 Console du Commandant",
+    cmdExpToday: "👉 Code d'essai d'aujourd'hui",
+    cmdExpTmrw: "👉 Code d'essai de demain",
+    cmdPerm: "👉 🌟 Code Permanent",
+    cmdLogout: "Déconnexion",
+    cmdClose: "Fermer",
+    toastAuthSuccess: "🎉 Authentification réussie !",
+    toastTrialSuccess: "⏱️ Essai activé !",
+    toastLogout: "🔄 Déconnecté.",
+    supTitle: "💬 Signaler un Problème",
+    supDesc: "Un bug ou une suggestion ?<br><br>Cliquez ci-dessous pour remplir le formulaire et nous aider à nous améliorer !",
+    supLater: "Plus tard",
+    supGo: "Aller au Formulaire",
+    featCam: "📷 Caméra AR",
+    featCamDesc: "Superposez la simulation sur la scène de sauvetage réelle !",
+    featPhoto: "📁 Superposition Photo",
+    featPhotoDesc: "Importez des photos du site pour une simulation réaliste !",
+    featShot: "📸 Capture Tactique",
+    featShotDesc: "Exportation haute résolution sans filigrane !",
+    featAngle: "🎯 Angle Précis",
+    featAngleDesc: "Débloquez la précision décimale pour une simulation exacte !",
+    angleInputTitle: "🎯 Angle Précis",
+    angleInputDesc: "Entrez l'angle mesuré de la corde<br>(0° ~ 180°)",
+    cancel: "Annuler",
+    confirm: "Confirmer",
+    arPanelTitle: "🛠️ Panneau AR",
+    arExpand: "Développer",
+    arCollapse: "Fermer",
+    permTitle: "🛡️ Accès Caméra",
+    permDesc: "L'accès à la caméra est requis pour l'AR. Le traitement est 100% local. Aucune donnée n'est envoyée.",
+    permBtn: "Autoriser l'accès",
+    btnMinus: "-",
+    btnPlus: "+"
+  },
+  de: {
+    appTitle: "Ankerkraft Rechner",
+    appTitleTrack: "Seilbahnkraft",
+    modeAnchor: "⚓ Ankermodus",
+    modeTrack: "🚠 Seilbahnmodus",
+    weight: "Last (kg)",
+    deadLine: "BRUCH",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Drehen",
+    anchorTension: "Spannung",
+    deadLineShort: "Bruch!",
+    menu1: "Theorie & Prinzipien",
+    menu2: "Handbuch & Werkzeuge",
+    menu3: "Link teilen",
+    menu4: "Updates prüfen",
+    menu5: "Fehler melden",
+    menuOp: "Systemhandbuch",
+    menuInfo: "Versionsinfo",
+    menuPWA: "Zum Startbildschirm",
+    broken: "💀 SYSTEMAUSFALL",
+    danger: "🔴 GEFAHR",
+    warn: "🟡 WARNUNG",
+    safe: "🟢 SICHER",
+    trackDanger: "🔴 GEFAHR",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "Kritische Grenze überschritten!",
+    anchorDangerDesc: "Spannung exponentiell. NICHT ÜBERSCHREITEN!",
+    anchorWarnDesc: "Spannung hoch. Anker prüfen.",
+    anchorSafeDesc: "Idealer Montagezustand.",
+    trackDangerDesc: "Grenze überschritten. Nicht weiter spannen!",
+    trackWarnDesc: "Annäherung an 10% Durchhangsgrenze.",
+    trackSafeDesc: "Sichere Spannweite. Normaler Durchhang.",
+    anchorNote: "Hinweis: Vertikale Anker DÜRFEN 120° NICHT überschreiten!",
+    trackNote: "Hinweis: Seilbahn > 160° verursacht dynamische Zerstörung!",
+    currentMul: "📍 Spannungsfaktor: ",
+    loadWord: "Last",
+    anchorStd: "Anker Std.",
+    trackStd: "Seilbahn Std.",
+    limitWarning: "Theoretisches Limit (179.95°): 57.296 kg",
+    thAnSafeT: "🟢 Sichere Zone (0° ~ 90°)",
+    thAnSafeD: "Anker nehmen <71% der Last auf. Ideal.",
+    thAnWarnT: "🟡 Warnzone (> 90° ~ 120°)",
+    thAnWarnD: "Spannung steigt. Ankerkraft überprüfen.",
+    thAnDanT: "🔴 Gefahrenzone (> 120°)",
+    thAnDanD: "Anker nehmen >100% der Last auf. NIEMALS überschreiten!",
+    thTrSafeT: "🟢 Betriebszone (120° ~ 150°)",
+    thTrSafeD: "Sichere Seilbahn. Anker muss 2x Last halten.",
+    thTrWarnT: "🟡 Warnzone (> 150° ~ 160°)",
+    thTrWarnD: "Annäherung an 10% Limit! Höchste Alarmbereitschaft.",
+    thTrDanT: "🔴 Todeszone (> 160°)",
+    thTrDanD: "Über 160° verursachen kleine Stöße massive Zerstörung!",
+    thAngle: "φ Innenwinkel",
+    thAngleD: "Entspricht dem inneren φ-Winkel zur einfachen Schätzung.",
+    collapse: "🔼 Schließen",
+    op1: "Klicken Sie auf <b>【⚓/🚠 Modus】</b>, um den Standard zu wechseln.",
+    op2: "Schieben Sie den <b>Winkelschieber</b>. Klicken Sie auf <b>✎</b> für Dezimalzahlen.",
+    op3: "Klicken Sie auf <b>[-] oder [+]</b>, um das Gewicht anzupassen.",
+    op4: "Klicken Sie auf <b>🧍‍♂️↔️</b>, um die Position des Ausbilders zu spiegeln.",
+    op5: "Klicken Sie auf <b>📷 AR / 📁 Foto</b> für reale Bildüberlagerungen.",
+    devTitle: "Dual Engine Simulator PRO",
+    devTeam: "Entwickelt von <span style='color:var(--warn);'>SunMoon Team</span>",
+    devT1: "Technik & Architektur / Shih-Feng Hsu",
+    devT2: "UI/UX Design / Pei-Fang Wu",
+    pwaDesc: "Zum Startbildschirm hinzufügen für ein immersives Erlebnis:",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "Link im Browser öffnen",
+    pwaStep2: "Tippen Sie auf '⋮' im Menü",
+    pwaStep3: "Wählen Sie 'Zum Startbildschirm hinzufügen'",
+    pwaStep4: "Tippen Sie auf 'Installieren'",
+    pwaStep5: "Nutzen Sie unbedingt den <b>Safari</b> Browser",
+    pwaStep6: "Tippen Sie unten auf 'Teilen'",
+    pwaStep7: "Wählen Sie 'Zum Home-Bildschirm'",
+    pwaStep8: "Tippen Sie auf 'Hinzufügen'",
+    installBtn: "📥 APP Installieren",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ Haftungsausschluss:</strong><br>Theoretisches Werkzeug. Echte Sicherheit MUSS von professionellen Ausbildern bestimmt werden.<br><br><span style='color:var(--warn);'>* Ein-Gerät-Lizenz. Kein Kundensupport bei Gerätewechsel. Bitte unterstützen Sie uns durch Neukauf.</span>",
+    vipTitle: "🔒 PRO Funktion",
+    vipEnable1: "Aktiviere '",
+    vipEnable2: "'",
+    vipProOnly: "Unterstützen Sie das SunMoon Team, um alle Funktionen freizuschalten!",
+    vipDisclaimer: "⚠️ Hinweis: Ein-Gerät-Lizenz. Kein Support bei Gerätewechsel. Bitte neu kaufen.",
+    vipStoreBtn: "🛒 Zum PRO Store",
+    vipHasPwd: "Haben Sie ein Passwort?",
+    vipPwdPlh: "VIP Passwort eingeben",
+    vipCancel: "Später",
+    vipUnlock: "Entsperren 🔓",
+    vipErrPwd: "❌ Falsches Passwort.",
+    vipStateUnlocked: "🛡️ System: Entsperrt",
+    vipStateDesc: "MASTER KEY für die Konsole eingeben:",
+    cmdTitle: "👑 Commander Konsole",
+    cmdExpToday: "👉 Heutiger Testcode",
+    cmdExpTmrw: "👉 Morgiger Testcode",
+    cmdPerm: "👉 🌟 Permanenter Code",
+    cmdLogout: "Abmelden",
+    cmdClose: "Schließen",
+    toastAuthSuccess: "🎉 Authentifizierung erfolgreich!",
+    toastTrialSuccess: "⏱️ Testversion aktiviert!",
+    toastLogout: "🔄 Abgemeldet.",
+    supTitle: "💬 Fehler melden",
+    supDesc: "Fehler gefunden oder Vorschläge?<br><br>Klicken Sie unten, um das Formular auszufüllen und uns zu helfen!",
+    supLater: "Später",
+    supGo: "Zum Formular",
+    featCam: "📷 AR Kamera",
+    featCamDesc: "Überlagern Sie die Sandbox mit der realen Szene!",
+    featPhoto: "📁 Foto Überlagerung",
+    featPhotoDesc: "Importieren Sie Fotos für realistische Simulationen!",
+    featShot: "📸 Taktischer Screenshot",
+    featShotDesc: "Hochauflösender Export ohne Wasserzeichen!",
+    featAngle: "🎯 Exakter Winkel",
+    featAngleDesc: "Dezimalgenauigkeit für exakte Spannungssimulation freischalten!",
+    angleInputTitle: "🎯 Exakter Winkel",
+    angleInputDesc: "Gemessenen Seilwinkel eingeben<br>(0° ~ 180°)",
+    cancel: "Abbrechen",
+    confirm: "Bestätigen",
+    arPanelTitle: "🛠️ AR Panel",
+    arExpand: "Erweitern",
+    arCollapse: "Schließen",
+    permTitle: "🛡️ Kamerazugriff",
+    permDesc: "Für AR wird Kamerazugriff benötigt. 100% lokale Verarbeitung. Keine Datenaufzeichnung.",
+    permBtn: "Zugriff erlauben",
+    btnMinus: "-",
+    btnPlus: "+"
+  },
+  es: {
+    appTitle: "Calc. Fuerza de Anclaje",
+    appTitleTrack: "Calc. de Tirolesa",
+    modeAnchor: "⚓ Modo Anclaje",
+    modeTrack: "🚠 Modo Tirolesa",
+    weight: "Carga (kg)",
+    deadLine: "FALLA",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Rotar",
+    anchorTension: "Tensión",
+    deadLineShort: "FALLA!",
+    menu1: "Teoría y Principios",
+    menu2: "Manual y Herramientas",
+    menu3: "Compartir Enlace",
+    menu4: "Buscar Actualizaciones",
+    menu5: "Reportar Problema",
+    menuOp: "Manual del Sistema",
+    menuInfo: "Info de Versión",
+    menuPWA: "Añadir a la Pantalla",
+    broken: "💀 FALLA DEL SISTEMA",
+    danger: "🔴 PELIGRO",
+    warn: "🟡 ADVERTENCIA",
+    safe: "🟢 SEGURO",
+    trackDanger: "🔴 PELIGRO",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "¡Límite crítico superado!",
+    anchorDangerDesc: "Tensión exponencial. ¡NO EXCEDER!",
+    anchorWarnDesc: "Tensión alta. Verifique el anclaje.",
+    anchorSafeDesc: "Condición ideal de montaje.",
+    trackDangerDesc: "Límite excedido. ¡No tense más!",
+    trackWarnDesc: "Acercándose al límite de pandeo (10%).",
+    trackSafeDesc: "Tramo seguro. Pandeo normal.",
+    anchorNote: "Nota: ¡Los anclajes verticales NO DEBEN superar los 120°!",
+    trackNote: "Nota: ¡Tirolesa > 160° causa destrucción dinámica masiva!",
+    currentMul: "📍 Multiplicador de Tensión: ",
+    loadWord: "Carga",
+    anchorStd: "Estándar de Anclaje",
+    trackStd: "Estándar de Tirolesa",
+    limitWarning: "Límite Teórico (179.95°): 57,296 kg",
+    thAnSafeT: "🟢 Zona Segura (0° ~ 90°)",
+    thAnSafeD: "Los anclajes soportan <71% de la carga. Ideal.",
+    thAnWarnT: "🟡 Zona de Advertencia (> 90° ~ 120°)",
+    thAnWarnD: "La tensión aumenta. Verifique la fuerza del anclaje.",
+    thAnDanT: "🔴 Zona de Peligro (> 120°)",
+    thAnDanD: "Los anclajes soportan >100% de carga. ¡NUNCA exceder!",
+    thTrSafeT: "🟢 Zona Operativa (120° ~ 150°)",
+    thTrSafeD: "Tramo seguro. Asegure que los anclajes soporten 2x la carga.",
+    thTrWarnT: "🟡 Zona de Advertencia (> 150° ~ 160°)",
+    thTrWarnD: "¡Acercándose al límite del 10%! Alta alerta.",
+    thTrDanT: "🔴 Zona Mortal (> 160°)",
+    thTrDanD: "¡Más allá de los 160°, impactos leves causan gran destrucción!",
+    thAngle: "φ Ángulo Interior",
+    thAngleD: "Coincide con el ángulo interior φ para facilitar la estimación en campo.",
+    collapse: "🔼 Cerrar",
+    op1: "Haga clic en el <b>【Botón ⚓/🚠】</b> para cambiar los estándares.",
+    op2: "Deslice el <b>Control de Ángulo</b> abajo. Haga clic en <b>✎</b> para decimales.",
+    op3: "Haga clic en <b>[-] o [+]</b> junto a la carga para ajustar el peso.",
+    op4: "Haga clic en <b>🧍‍♂️↔️</b> para invertir la posición del instructor.",
+    op5: "Haga clic en <b>📷 AR / 📁 Foto</b> para superponer imágenes reales.",
+    devTitle: "Simulador de Doble Motor PRO",
+    devTeam: "Desarrollado por <span style='color:var(--warn);'>SunMoon Team</span>",
+    devT1: "Ingeniería y Arquitectura / Shih-Feng Hsu",
+    devT2: "Diseño UI/UX / Pei-Fang Wu",
+    pwaDesc: "Añadir a la pantalla de inicio para experiencia completa:",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "Abra el enlace en el navegador",
+    pwaStep2: "Toque '⋮' en el menú",
+    pwaStep3: "Seleccione 'Añadir a la pantalla de inicio'",
+    pwaStep4: "Toque 'Instalar'",
+    pwaStep5: "Debe usar el navegador <b>Safari</b>",
+    pwaStep6: "Toque el icono 'Compartir' en la parte inferior",
+    pwaStep7: "Desplácese y seleccione 'Añadir a la pantalla de inicio'",
+    pwaStep8: "Toque 'Añadir'",
+    installBtn: "📥 Instalar APP",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ Descargo de responsabilidad:</strong><br>Herramienta teórica. El montaje real DEBE ser determinado por profesionales.<br><br><span style='color:var(--warn);'>* Licencia para un solo dispositivo. No hay soporte para reemplazo de dispositivos. Por favor, compre de nuevo para apoyarnos.</span>",
+    vipTitle: "🔒 Función PRO",
+    vipEnable1: "Habilitar '",
+    vipEnable2: "'",
+    vipProOnly: "¡Apoya al equipo SunMoon para desbloquear todas las funciones!",
+    vipDisclaimer: "⚠️ Nota: Licencia para un dispositivo. No hay soporte para cambios de teléfono. Vuelva a comprar.",
+    vipStoreBtn: "🛒 Ir a la Tienda PRO",
+    vipHasPwd: "¿Tienes una contraseña?",
+    vipPwdPlh: "Ingresa la contraseña",
+    vipCancel: "Más Tarde",
+    vipUnlock: "Desbloquear 🔓",
+    vipErrPwd: "❌ Contraseña incorrecta.",
+    vipStateUnlocked: "🛡️ Sistema: Desbloqueado",
+    vipStateDesc: "Introduce la CLAVE MAESTRA para la consola:",
+    cmdTitle: "👑 Consola de Comandante",
+    cmdExpToday: "👉 Código de Prueba de Hoy",
+    cmdExpTmrw: "👉 Código de Prueba de Mañana",
+    cmdPerm: "👉 🌟 Código Permanente",
+    cmdLogout: "Cerrar sesión",
+    cmdClose: "Cerrar",
+    toastAuthSuccess: "🎉 ¡Autenticación exitosa!",
+    toastTrialSuccess: "⏱️ ¡Prueba activada!",
+    toastLogout: "🔄 Sesión cerrada.",
+    supTitle: "💬 Reportar Problema",
+    supDesc: "¿Encontraste un error o tienes sugerencias?<br><br>¡Haz clic abajo para llenar el formulario y ayudarnos a mejorar!",
+    supLater: "Más Tarde",
+    supGo: "Ir al Formulario",
+    featCam: "📷 Cámara AR",
+    featCamDesc: "¡Superponga la simulación en la escena de rescate real!",
+    featPhoto: "📁 Foto Superpuesta",
+    featPhotoDesc: "¡Importe fotos del sitio para simulación realista!",
+    featShot: "📸 Captura Táctica",
+    featShotDesc: "¡Exportación en alta resolución sin marca de agua!",
+    featAngle: "🎯 Ángulo Exacto",
+    featAngleDesc: "¡Desbloquee precisión decimal para una simulación exacta!",
+    angleInputTitle: "🎯 Ángulo Exacto",
+    angleInputDesc: "Ingrese el ángulo de cuerda medido<br>(0° ~ 180°)",
+    cancel: "Cancelar",
+    confirm: "Confirmar",
+    arPanelTitle: "🛠️ Panel AR",
+    arExpand: "Expandir",
+    arCollapse: "Cerrar",
+    permTitle: "🛡️ Acceso a la Cámara",
+    permDesc: "Se requiere acceso para AR. Procesamiento 100% local. No se envían datos.",
+    permBtn: "Permitir Acceso",
+    btnMinus: "-",
+    btnPlus: "+"
+  },
+  pt: {
+    appTitle: "Calc. Força de Ancoragem",
+    appTitleTrack: "Calc. Força Tirolesa",
+    modeAnchor: "⚓ Modo Ancoragem",
+    modeTrack: "🚠 Modo Tirolesa",
+    weight: "Carga (kg)",
+    deadLine: "FALHA",
+    zoom: "🔍 Zoom",
+    rotate: "🔄 Rodar",
+    anchorTension: "Tensão",
+    deadLineShort: "FALHA!",
+    menu1: "Teoria e Princípios",
+    menu2: "Manual e Ferramentas",
+    menu3: "Compartilhar Link",
+    menu4: "Verificar Atualizações",
+    menu5: "Relatar um Problema",
+    menuOp: "Manual do Sistema",
+    menuInfo: "Info da Versão",
+    menuPWA: "Adicionar à Tela Inicial",
+    broken: "💀 FALHA DO SISTEMA",
+    danger: "🔴 PERIGO",
+    warn: "🟡 AVISO",
+    safe: "🟢 SEGURO",
+    trackDanger: "🔴 PERIGO",
+    trackSafe: "🟢 NORMAL",
+    brokenDesc: "Limite crítico excedido!",
+    anchorDangerDesc: "Tensão exponencial. NÃO EXCEDA!",
+    anchorWarnDesc: "Tensão alta. Verifique a ancoragem.",
+    anchorSafeDesc: "Condição ideal de montagem.",
+    trackDangerDesc: "Limite excedido. Não puxe mais!",
+    trackWarnDesc: "Aproximando do limite de flecha (10%).",
+    trackSafeDesc: "Vão seguro. Flecha normal.",
+    anchorNote: "Nota: Ancoragens verticais NÃO DEVEM exceder 120°!",
+    trackNote: "Nota: Tirolesa > 160° causa destruição dinâmica massiva!",
+    currentMul: "📍 Multiplicador de Tensão: ",
+    loadWord: "Carga",
+    anchorStd: "Padrão de Ancoragem",
+    trackStd: "Padrão de Tirolesa",
+    limitWarning: "Limite Teórico (179.95°): 57.296 kg",
+    thAnSafeT: "🟢 Zona Segura (0° ~ 90°)",
+    thAnSafeD: "Ancoragens suportam <71% da carga. Ideal.",
+    thAnWarnT: "🟡 Zona de Aviso (> 90° ~ 120°)",
+    thAnWarnD: "A tensão aumenta. Verifique a ancoragem.",
+    thAnDanT: "🔴 Zona de Perigo (> 120°)",
+    thAnDanD: "Ancoragens suportam >100% da carga. NUNCA exceda!",
+    thTrSafeT: "🟢 Zona Operacional (120° ~ 150°)",
+    thTrSafeD: "Vão seguro. Certifique-se de que a ancoragem suporta 2x a carga.",
+    thTrWarnT: "🟡 Zona de Aviso (> 150° ~ 160°)",
+    thTrWarnD: "Aproximando do limite de 10%! Alerta máximo.",
+    thTrDanT: "🔴 Zona da Morte (> 160°)",
+    thTrDanD: "Além de 160°, pequenos impactos causam grande destruição!",
+    thAngle: "φ Ângulo Interno",
+    thAngleD: "Corresponde ao ângulo interno φ para fácil estimativa.",
+    collapse: "🔼 Fechar",
+    op1: "Clique no <b>【Botão ⚓/🚠】</b> para mudar os padrões.",
+    op2: "Deslize o <b>Controle de Ângulo</b> abaixo. Clique no <b>✎</b> para decimais.",
+    op3: "Clique em <b>[-] ou [+]</b> ao lado da carga para ajustar o peso.",
+    op4: "Clique em <b>🧍‍♂️↔️</b> para inverter a posição do instrutor.",
+    op5: "Clique em <b>📷 AR / 📁 Foto</b> para sobrepor imagens reais.",
+    devTitle: "Simulador Motor Duplo PRO",
+    devTeam: "Desenvolvido por <span style='color:var(--warn);'>SunMoon Team</span>",
+    devT1: "Engenharia e Arquitetura / Shih-Feng Hsu",
+    devT2: "Design UI/UX / Pei-Fang Wu",
+    pwaDesc: "Adicione à tela inicial para uma experiência imersiva:",
+    pwaAnd: "🤖 Android",
+    pwaIOS: "🍎 iOS (iPhone)",
+    pwaStep1: "Abra o link no navegador",
+    pwaStep2: "Toque em '⋮' no menu",
+    pwaStep3: "Selecione 'Adicionar à tela inicial'",
+    pwaStep4: "Toque em 'Instalar'",
+    pwaStep5: "Use o navegador <b>Safari</b>",
+    pwaStep6: "Toque no ícone 'Compartilhar' na parte inferior",
+    pwaStep7: "Selecione 'Adicionar à Tela de Início'",
+    pwaStep8: "Toque em 'Adicionar'",
+    installBtn: "📥 Instalar APP",
+    disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ Aviso Legal:</strong><br>Ferramenta teórica. A montagem real DEVE ser determinada por profissionais.<br><br><span style='color:var(--warn);'>* Licença para dispositivo único. Sem suporte para troca de aparelho. Por favor, compre novamente.</span>",
+    vipTitle: "🔒 Recurso PRO",
+    vipEnable1: "Ativar '",
+    vipEnable2: "'",
+    vipProOnly: "Apoie a Equipe SunMoon para desbloquear todos os recursos!",
+    vipDisclaimer: "⚠️ Atenção: Licença para um dispositivo. Sem suporte para trocas de aparelho. Compre novamente.",
+    vipStoreBtn: "🛒 Ir para a Loja PRO",
+    vipHasPwd: "Tem uma senha?",
+    vipPwdPlh: "Digite a senha VIP",
+    vipCancel: "Mais tarde",
+    vipUnlock: "Desbloquear 🔓",
+    vipErrPwd: "❌ Senha incorreta.",
+    vipStateUnlocked: "🛡️ Sistema: Desbloqueado",
+    vipStateDesc: "Digite a CHAVE MESTRA para o Console:",
+    cmdTitle: "👑 Console do Comandante",
+    cmdExpToday: "👉 Código de Teste de Hoje",
+    cmdExpTmrw: "👉 Código de Teste de Amanhã",
+    cmdPerm: "👉 🌟 Código Permanente",
+    cmdLogout: "Sair",
+    cmdClose: "Fechar",
+    toastAuthSuccess: "🎉 Autenticação bem-sucedida!",
+    toastTrialSuccess: "⏱️ Teste ativado!",
+    toastLogout: "🔄 Desconectado.",
+    supTitle: "💬 Relatar Problema",
+    supDesc: "Encontrou um erro ou tem sugestões?<br><br>Clique abaixo para preencher o formulário e nos ajudar a melhorar!",
+    supLater: "Mais tarde",
+    supGo: "Ir para Formulário",
+    featCam: "📷 Câmera AR",
+    featCamDesc: "Sobreponha a simulação na cena real de resgate!",
+    featPhoto: "📁 Foto Sobreposta",
+    featPhotoDesc: "Importe fotos do local para simulação realista!",
+    featShot: "📸 Captura Tática",
+    featShotDesc: "Exportação em alta resolução sem marca d'água!",
+    featAngle: "🎯 Ângulo Exato",
+    featAngleDesc: "Desbloqueie precisão decimal para simulação exata!",
+    angleInputTitle: "🎯 Ângulo Exato",
+    angleInputDesc: "Digite o ângulo medido da corda<br>(0° ~ 180°)",
+    cancel: "Cancelar",
+    confirm: "Confirmar",
+    arPanelTitle: "🛠️ Painel AR",
+    arExpand: "Expandir",
+    arCollapse: "Fechar",
+    permTitle: "🛡️ Acesso à Câmera",
+    permDesc: "O acesso é necessário para AR. Processamento 100% local. Nenhum dado é enviado.",
+    permBtn: "Permitir Acesso",
+    btnMinus: "-",
+    btnPlus: "+"
   }
 };
 
-const availableLangs = ['zh', 'en', 'ja'];
-let currentLang = localStorage.getItem('sunmoon_lang') || 'zh';
-if (!availableLangs.includes(currentLang)) currentLang = 'zh';
+// 💡 擴增為 8 國語言切換，並加入自動偵測系統語言黑科技
+const availableLangs = ['zh', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'pt'];
+let currentLang = localStorage.getItem('sunmoon_lang');
+
+if (!currentLang) {
+    const browserLang = navigator.language || navigator.userLanguage;
+    const shortLang = browserLang.substring(0, 2).toLowerCase();
+    if (availableLangs.includes(shortLang)) {
+        currentLang = shortLang;
+    } else {
+        currentLang = 'zh';
+    }
+    localStorage.setItem('sunmoon_lang', currentLang);
+}
 
 function t(key) {
     return i18n[currentLang][key] || i18n['zh'][key] || key;
@@ -455,413 +1351,378 @@ function applyTranslations() {
         }
     });
 
-    const langBtn = document.getElementById('langToggleBtn');
-    if (langBtn) langBtn.innerHTML = t('langBtn');
+    const langSelect = document.getElementById('langSelect');
+    if (langSelect) langSelect.value = currentLang;
 
-    if (typeof updateEngine === 'function' && typeof els !== 'undefined' && els.lblBranchName) {
-        els.lblBranchName.textContent = getSceneName();
-        els.btnFrictionBase.innerHTML = `${scenes[currentScene].icon} ${getSceneName()}${t('directPull')}`;
-        updateEngine();
+    const modeBtn = document.getElementById('modeToggleBtn');
+    const modeTitleLabel = document.getElementById('modeTitleLabel');
+    const menuModeText = document.getElementById('menuModeText');
+    
+    if (modeBtn && typeof currentMode !== 'undefined') {
+        modeBtn.innerHTML = currentMode === 'anchor' ? t('modeAnchor') : t('modeTrack');
+        if (modeTitleLabel) modeTitleLabel.textContent = currentMode === 'anchor' ? t('appTitle') : t('appTitleTrack');
+        if (menuModeText) menuModeText.textContent = currentMode === 'anchor' ? t('anchorStd') : t('trackStd');
+    }
+
+    if (typeof updateTheoryText === 'function') updateTheoryText();
+    
+    // 💡 安全呼叫重繪機制，確保不會在變數未準備好時引發 TDZ 錯誤
+    if (typeof draw === 'function' && typeof slider !== 'undefined' && slider) {
+        draw(slider.value);
     }
 }
 
-function toggleLang() {
-    let idx = availableLangs.indexOf(currentLang);
-    currentLang = availableLangs[(idx + 1) % availableLangs.length];
-    localStorage.setItem('sunmoon_lang', currentLang);
-    applyTranslations();
+// 💡 下拉選單切換觸發事件
+function changeLang(selectedLang) {
+    if(availableLangs.includes(selectedLang)) {
+        currentLang = selectedLang;
+        localStorage.setItem('sunmoon_lang', currentLang);
+        applyTranslations();
+    }
 }
 </script>
 
-<div id="status-bar-protector" data-html2canvas-ignore="true"></div>
-<div id="bg-layer"><video id="bg-video" autoplay playsinline muted></video><img id="bg-image" src="" alt="背景圖片"></div>
-<div id="grid-overlay"></div>
 <div id="toastMessage"></div>
 
+<!-- 💡 技術支援視窗套用多語系翻譯與極簡化 (已修正研發團隊描述) -->
 <div id="supportModal" class="modal-overlay">
   <div class="modal-box">
-    <h3 style="color:var(--warn); margin-top:0;">💬 技術支援與問題回報</h3>
-    <p style="text-align:left; font-size:13px; line-height:1.7; margin-bottom:15px; color:var(--text);">
-      如果您遇到系統異常，或是<strong>更換新手機需要重新取得授權碼</strong>，請準備好您的：<br><br>
-      <span style="color:var(--safe);">✔ 購買收據 Email 截圖</span><br>
-      <span style="color:var(--safe);">✔ 遭遇的問題描述</span><br><br>
-      請點擊下方按鈕前往「專屬回報表單」填寫。朵朵老師確認無誤後，會盡速將新密碼發送至您的信箱！<br>
+    <h3 style="color:var(--warn); margin-top:0;" data-i18n="supTitle">💬 系統問題回報</h3>
+    <p style="text-align:left; font-size:13px; line-height:1.7; margin-bottom:15px; color:var(--text);" data-i18n="supDesc">
+      發現小蟲子 (Bug) 或系統異常嗎？<br><br>請點擊下方按鈕，填寫您的問題與建議，研發團隊會盡快進行修復與優化！
     </p>
-    <div class="modal-actions" style="margin-top: 15px;">
-      <button class="btn-cancel" onclick="document.getElementById('supportModal').classList.remove('show')">稍後再說</button>
-      <button class="btn-unlock" style="background:var(--warn); color:#000;" onclick="window.open('https://forms.gle/fnxHcegcwQSPKmuQ6', '_blank'); document.getElementById('supportModal').classList.remove('show')">前往填寫表單</button>
+    <div class="modal-btn-group" style="margin-top: 15px;">
+      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="document.getElementById('supportModal').style.display='none'" data-i18n="supLater">稍後再說</button>
+      <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="window.open('https://forms.gle/fnxHcegcwQSPKmuQ6', '_blank'); document.getElementById('supportModal').style.display='none'" data-i18n="supGo">前往填寫表單</button>
     </div>
   </div>
 </div>
 
+<!-- 💡 付費解鎖視窗套用多語系翻譯 -->
 <div id="vipModal" class="modal-overlay">
   <div class="modal-box" id="vipModalBox">
-    <h3>🔒 專業版功能解鎖 <span class="vip-badge" style="display:inline-block;">PRO</span></h3>
-    <p>您即將啟用「<span id="vipFeatureName" style="color:var(--vip); font-weight:bold; font-size:16px;"></span>」！</p>
+    <h3><span data-i18n="vipTitle">🔒 專業版功能解鎖</span> <span class="vip-badge" style="display:inline-block; margin-left:8px;">PRO</span></h3>
+    <p><span data-i18n="vipEnable1">您即將啟用「</span><span id="vipFeatureName" style="color:var(--vip); font-weight:bold; font-size:16px;"></span><span data-i18n="vipEnable2">」！</span></p>
     <p id="vipFeatureDesc" style="font-size:14px; color:var(--safe); font-weight:bold; margin-bottom: 12px;"></p>
-    <p style="font-size:13px;">此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！</p>
-    <button style="background:var(--vip); color:#fff; border:none; padding:12px 20px; border-radius:8px; font-weight:bold; width:100%; margin-bottom:10px; cursor:pointer;" onclick="window.open('https://gumroad.com', '_blank')">🛒 前往專業版自動販賣機</button>
-    <hr style="border:0; border-top:1px dashed var(--line); margin: 15px 0;">
-    <p style="font-size:12px; color:var(--muted); margin-bottom:8px;">已取得密碼？請在此輸入：</p>
-    <input type="text" id="vipPwdInput" placeholder="輸入 VIP 通關密碼" class="pwd-input" autocomplete="off">
-    <div id="vipErrorMsg" style="color:var(--bad); font-size:12px; height:16px; margin-bottom:8px;"></div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeVipModal()">稍後再說</button>
-      <button class="btn-unlock" onclick="verifyVip()">立即解鎖 🔓</button>
-    </div>
-  </div>
-</div>
-
-<!-- 自訂名稱專屬視窗 -->
-<div id="nameModal" class="modal-overlay">
-  <div class="modal-box">
-    <h3 style="color:var(--safe); margin-top:0;" data-i18n="customNameTitle">✏️ 自訂介質名稱</h3>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:12px;" data-i18n="customNameDesc">請輸入您要模擬的轉向地形或介質：</p>
-    <input type="text" id="nameInput" class="pwd-input" placeholder="例如：水泥柱、怪手吊臂" data-i18n-plh="customNamePlh" style="letter-spacing: normal;">
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="document.getElementById('nameModal').classList.remove('show')" data-i18n="cancel">取消</button>
-      <button class="btn-unlock" style="background:var(--safe); color:#0a1410;" onclick="confirmCustomName()" data-i18n="confirmName">確認更改</button>
-    </div>
-  </div>
-</div>
-
-<!-- 自訂摩擦力專屬視窗 -->
-<div id="frictionModal" class="modal-overlay">
-  <div class="modal-box">
-    <h3 style="color:var(--warn); margin-top:0;" data-i18n="customFricTitle">⚙️ 自訂摩擦係數</h3>
-    <p style="font-size:13px; color:var(--muted); margin-bottom:12px; text-align:left; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;" data-i18n="fricTip">
-      💡 <b>戰術提示：</b><br>
-      <span style="color:var(--bad)">0.3</span> = 摩擦力極大 (如: 粗糙岩壁)<br>
-      <span style="color:var(--safe)">0.9</span> = 摩擦力極小 (如: 高效滑輪)
-    </p>
-    <input type="number" id="frictionInput" class="pwd-input" placeholder="輸入 0.1 ~ 1.0 之間的數字" data-i18n-plh="fricPlh" step="0.1" min="0.1" max="1.0" style="letter-spacing: normal;">
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="document.getElementById('frictionModal').classList.remove('show')" data-i18n="cancel">取消</button>
-      <button class="btn-unlock" onclick="confirmCustomFriction()" data-i18n="confirmFric">確認套用</button>
-    </div>
-  </div>
-</div>
-
-<div id="scroll-wrapper">
-  <div class="app-container">
-
-    <div class="card" id="mainCard">
-      <div class="topbar">
-          <div class="title-left" id="mainTitleText">
-            <span data-i18n="appTitle">全地形轉向沙盤</span> <span class="vip-badge">PRO</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px;">
-            <button id="langToggleBtn" onclick="toggleLang()">🌐 繁中</button>
-            <img src="./sunmoon_logo.png" alt="散木團隊" style="width: 26px; height: 26px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.5);" onerror="this.style.display='none'">
-          </div>
-      </div>
-
-      <div class="icon-bar" data-html2canvas-ignore="true">
-        <button class="icon-btn" id="btn-camera" onclick="attemptFeature('📷 實境相機疊圖', toggleCamera)" title="實境相機">📷<span class="lock-icon">🔒</span></button>
-        <button class="icon-btn" id="btn-flashlight" onclick="toggleFlashlight()" title="手電筒">🔦</button>
-        <label class="icon-btn" onclick="handleImageUploadClick(event)" title="載入照片" style="margin:0;">📁<span class="lock-icon">🔒</span></label>
-        <input type="file" id="upload-image" accept="image/*" onchange="loadImage(event)">
-        <button class="icon-btn" onclick="toggleGrid()" title="工程網格">🌐</button>
-        <button class="icon-btn" onclick="attemptFeature('📸 戰術純淨截圖', takeScreenshot)" title="戰術截圖">📸<span class="lock-icon">🔒</span></button>
-        <button class="icon-btn" onclick="resetEngine()" title="重置沙盤">↺</button>
-      </div>
-
-      <div class="svgWrap" id="svgWrap">
-        <svg id="canvas" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
-          
-          <line x1="0" y1="360" x2="400" y2="360" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-dasharray="10 5" />
-          <text x="390" y="375" fill="rgba(255,255,255,0.2)" font-size="12" font-weight="bold" text-anchor="end" data-i18n="ground">地面 Ground</text>
-
-          <g id="bgTree" stroke="none" fill="rgba(139, 90, 43, 0.25)">
-             <path d="M 10 400 C 10 300 30 200 30 100 C 30 50 10 0 10 0 L 80 0 C 80 50 90 120 80 180 C 70 250 80 400 80 400 Z" />
-             <path d="M 75 100 C 100 90 110 80 140 70 L 180 55 L 180 80 C 140 90 100 110 75 140 Z" />
-          </g>
-
-          <g id="bgRock" stroke="none" fill="rgba(148, 163, 184, 0.2)" style="display:none;">
-             <path d="M 0 0 L 120 0 L 120 360 L 400 360 L 400 400 L 0 400 Z" />
-             <path d="M 0 110 Q 50 130 120 100 M 0 210 Q 60 240 120 180 M 120 360 Q 200 380 250 360 M 280 360 Q 320 380 400 360" stroke="rgba(148, 163, 184, 0.3)" stroke-width="2" fill="none" />
-          </g>
-
-          <g id="bgSteel" stroke="none" fill="rgba(245, 158, 11, 0.15)" style="display:none;">
-             <rect x="0" y="40" width="400" height="40" fill="rgba(245, 158, 11, 0.15)" />
-             <rect x="0" y="40" width="400" height="4" fill="rgba(245, 158, 11, 0.4)" />
-             <rect x="0" y="76" width="400" height="4" fill="rgba(245, 158, 11, 0.4)" />
-             <path d="M 0 40 L 40 80 M 40 40 L 80 80 M 80 40 L 120 80 M 120 40 L 160 80 M 160 40 L 200 80 M 200 40 L 240 80 M 240 40 L 280 80 M 280 40 L 320 80 M 320 40 L 360 80 M 360 40 L 400 80" stroke="rgba(245, 158, 11, 0.3)" stroke-width="3" fill="none"/>
-             <path d="M 0 80 L 40 40 M 40 80 L 80 40 M 80 80 L 120 40 M 120 80 L 160 40 M 160 80 L 200 40 M 200 80 L 240 40 M 240 80 L 280 40 M 280 80 L 320 40 M 320 80 L 360 40 M 360 80 L 400 40" stroke="rgba(245, 158, 11, 0.3)" stroke-width="3" fill="none"/>
-             <rect x="10" y="80" width="20" height="320" fill="rgba(245, 158, 11, 0.1)" />
-             <rect x="370" y="80" width="20" height="320" fill="rgba(245, 158, 11, 0.1)" />
-          </g>
-
-          <line id="ropeLoad" stroke="var(--text)" stroke-width="6" stroke-linecap="round" />
-          <line id="ropeAnchor" stroke="var(--tagline)" stroke-width="6" stroke-linecap="round" />
-          
-          <path id="angleArc" fill="rgba(255, 216, 77, 0.1)" stroke="var(--warn)" stroke-width="2" />
-          <text id="angleText" class="mask-text" fill="var(--warn)" font-size="16" font-weight="bold" text-anchor="middle"></text>
-
-          <g id="redirectNode"></g>
-
-          <g id="forceArrowGroup">
-             <line id="forceArrowLine" x1="0" y1="0" x2="0" y2="0" stroke="var(--bad)" stroke-width="6" stroke-linecap="round" />
-             <polygon id="forceArrowHead" points="0,0 0,0 0,0" fill="var(--bad)" />
-          </g>
-
-          <g id="loadGroup">
-             <circle cx="0" cy="12" r="10" fill="#e8f5e9" />
-             <rect x="-12" y="24" width="24" height="26" rx="5" fill="#e8f5e9" />
-             <text x="0" y="42" fill="#0a1410" font-size="14" font-weight="bold" text-anchor="middle" font-family="monospace">W</text>
-          </g>
-
-          <g id="anchorGroup" class="draggable-anchor">
-             <g id="distanceIndicator" opacity="0" style="transition: opacity 0.3s ease;">
-                <line id="distLine" x1="0" y1="0" x2="0" y2="0" stroke="var(--tagline)" stroke-width="2" stroke-dasharray="4 4" opacity="0.6"/>
-                <text id="distText" x="0" y="0" fill="var(--tagline)" font-size="11" font-weight="bold" text-anchor="middle" class="mask-text" data-i18n="distExt">長距離延伸至地面</text>
-             </g>
-
-             <circle cx="0" cy="0" r="40" fill="transparent" /> 
-             <rect x="-14" y="-20" width="28" height="40" fill="#475569" rx="4" id="anchorBox" />
-             <path d="M -15 -5 L 15 5 M -15 5 L 15 15" stroke="var(--tagline)" stroke-width="4" stroke-linecap="round" />
-             <text y="-25" fill="var(--tagline)" font-size="13" font-weight="bold" text-anchor="middle" pointer-events="none" id="anchorLabel" class="mask-text" data-i18n="groundOp">地面操作</text>
-          </g>
-        </svg>
-      </div>
-
-      <div class="dashboard">
-          <div class="dash-box" style="border-top: 3px solid var(--text);">
-              <span class="lbl" data-i18n="loadW">負載端 (W)</span>
-              <div style="display:flex; align-items:center; gap:2px;">
-                <input type="number" id="inLoad" value="100" step="10" min="10" style="width:45px; background:transparent; border:none; border-bottom:1px solid var(--text); color:var(--text); font-size:18px; font-weight:900; text-align:center; padding:0;">
-                <span style="font-size:12px;">kg</span>
-              </div>
-              <span class="sub" data-i18n="always1x">永遠 = 1 倍</span>
-          </div>
-          <div class="dash-box" id="dashAnchor" style="border-top: 3px solid var(--tagline);">
-              <span class="lbl" data-i18n="anchorTension">地面操作拉力</span>
-              <span class="val" id="txtAnchorTension" style="color:var(--tagline);">-- kg</span>
-              <span class="sub" id="txtAnchorMult">--</span>
-          </div>
-          <div class="dash-box" id="dashBranch" style="border-top: 3px solid var(--bad);">
-              <span class="lbl" style="display:flex; align-items:center; gap:4px;">
-                  <span id="lblBranchName">樹幹</span><span data-i18n="codForce">(COD)受力</span>
-                  <button onclick="customName()" style="background:transparent; border:1px solid var(--muted); color:var(--muted); border-radius:4px; padding:0px 4px; font-size:10px; cursor:pointer;" title="點擊自訂介質名稱" data-i18n="btnCustom">✏️自訂</button>
-              </span>
-              <span class="val" id="txtBranchForce" style="color:var(--bad);">-- kg</span>
-              <span class="sub" id="txtBranchMult">--</span>
-          </div>
-      </div>
-      
-      <div class="control-deck">
-         <div class="control-row">
-            <div class="btn-group-lbl" style="color:var(--muted);" data-i18n="terrainLabel">🏕️ 模擬地形與環境</div>
-            <div class="toggle-group">
-               <button class="toggle-btn active" data-type="scene" data-val="tree" onclick="setScene(this, 'tree')" data-i18n="btnTree">🌳 攀樹</button>
-               <button class="toggle-btn" data-type="scene" data-val="rock" onclick="setScene(this, 'rock')" data-i18n="btnRock">🪨 攀岩</button>
-               <button class="toggle-btn" data-type="scene" data-val="steel" onclick="setScene(this, 'steel')" data-i18n="btnSteel">🏗️ 鋼架空橋</button>
-               <button class="toggle-btn" data-type="scene" data-val="none" onclick="setScene(this, 'none')" data-i18n="btnNone">⬛ 淨空</button>
-            </div>
-         </div>
-
-         <div class="control-row">
-            <div class="btn-group-lbl" style="display:flex; align-items:center; justify-content:center; gap:6px;">
-               <span data-i18n="frictionLabel">🛡️ 轉向點 (COD) 摩擦力介質</span>
-               <button onclick="customFriction()" style="background:var(--card); border:1px solid var(--warn); color:var(--warn); border-radius:4px; padding:2px 6px; font-size:11px; cursor:pointer;" data-i18n="btnCustom">✏️ 自訂</button>
-            </div>
-            <div class="toggle-group">
-               <button class="toggle-btn active" id="btnFrictionBase" data-type="friction" data-val="0.4" onclick="setFriction(this, 'base')">🌳 樹幹直拉</button>
-               <button class="toggle-btn" data-type="friction" data-val="0.6" onclick="setFriction(this, 'carabiner')"><span data-i18n="btnFricCara">🪝 鉤環</span><span class="lock-icon">🔒</span></button>
-               <button class="toggle-btn" data-type="friction" data-val="0.95" onclick="setFriction(this, 'pulley')"><span data-i18n="btnFricPull">⚙️ 滑輪</span><span class="lock-icon">🔒</span></button>
-            </div>
-         </div>
-
-         <div class="control-row">
-            <div class="btn-group-lbl" style="color:var(--tagline);" data-i18n="actionLabel">🕹️ 系統操作動作</div>
-            <div class="toggle-group">
-               <button class="toggle-btn active" data-type="action" data-val="static" onclick="setAction(this)" data-i18n="btnStat">⏸️ 靜止鎖定</button>
-               <button class="toggle-btn" data-type="action" data-val="haul" onclick="setAction(this)"><span data-i18n="btnHaul">⬆️ 系統上拉</span><span class="lock-icon">🔒</span></button>
-               <button class="toggle-btn" data-type="action" data-val="lower" onclick="setAction(this)"><span data-i18n="btnLow">⬇️ 系統下放</span><span class="lock-icon">🔒</span></button>
-            </div>
-         </div>
-      </div>
-      
-      <div class="edu-wrap" id="eduPanel" data-i18n="eduDefault">
-         📍 請在上方沙盤中自由拖曳「地面操作」，觀察轉向點承受的力量變化。
-      </div>
-    </div> 
+    <p style="font-size:13px;" data-i18n="vipProOnly">此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！</p>
     
-    <!-- 💡 統一：選單樣式全面對齊張力儀，並新增操作手冊與多語系動態翻譯 -->
-    <div class="menu-list" data-html2canvas-ignore="true">
-      <details class="main-accordion" id="theoryAccordion">
-        <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1">專業名詞與原理解析</span></div></summary>
-        <div class="menu-group">
-          <div class="menu-content" id="theoryContent">
-            <p><b style="color:var(--safe)" data-i18n="thCodT">🔄 轉向點 (COD)</b><br><span data-i18n="thCodD">Change of Direction。改變繩索行進方向的受力點，其承受的總合力取決於繩索夾角。</span></p>
-            <p><b style="color:var(--warn)" data-i18n="thFricT">🛡️ 摩擦力 (Friction)</b><br><span data-i18n="thFricD">繩索與介質接觸產生的阻力。系統上拉時，摩擦力是「敵人」，會大幅增加操作端負擔；系統下放時，摩擦力是「朋友」，能提供額外的煞車力道。</span></p>
-            <p><b style="color:var(--bad)" data-i18n="thMultT">🚨 滑輪倍增效應 (Multiplier Effect)</b><br><span data-i18n="thMultD">當使用高效率滑輪且繩索夾角極小時（如 0°），轉向點將承受將近 2 倍 (200%) 的負載總張力，容易造成固定點崩塌！</span></p>
+    <!-- 💡 新增：把霸氣免責聲明移到結帳按鈕上方，確保購買前一定會看到 -->
+    <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; border-left:4px solid var(--bad); margin-bottom:12px; text-align:left;">
+      <span style="color:var(--bad); font-size:12px; font-weight:bold; line-height:1.5; display:block;" data-i18n="vipDisclaimer">⚠️ 注意：本系統採單機授權，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>
+    </div>
+
+    <button class="primary-btn" style="background:var(--vip); margin-bottom:10px;" onclick="window.open('https://gumroad.com', '_blank')" data-i18n="vipStoreBtn">🛒 前往專業版自動販賣機</button>
+    <hr style="border:0; border-top:1px dashed var(--line); margin: 15px 0;">
+    <p style="font-size:12px; color:var(--muted); margin-bottom:8px;" data-i18n="vipHasPwd">已取得密碼？請在此輸入：</p>
+    <input type="text" id="vipPwdInput" data-i18n-plh="vipPwdPlh" placeholder="輸入 VIP 通關密碼" style="width: 100%; padding: 10px; font-size: 16px; text-align: center; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 12px; letter-spacing: 2px; font-family: monospace;" autocomplete="off">
+    <div id="vipErrorMsg" style="color:var(--bad); font-size:12px; height:16px; margin-bottom:8px;"></div>
+    <div class="modal-btn-group">
+      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="closeVipModal()" data-i18n="vipCancel">稍後再說</button>
+      <button class="primary-btn" onclick="verifyVip()" data-i18n="vipUnlock">立即解鎖 🔓</button>
+    </div>
+  </div>
+</div>
+
+<div id="permissionModalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <h3 data-i18n="permTitle">🛡️ 系統安全提示</h3>
+    <p data-i18n="permDesc">為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭。<br><br>請放心，所有影像疊圖運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！</p>
+    <button id="permissionAgreeBtn" class="primary-btn" type="button" data-i18n="permBtn">我瞭解了，開始授權</button>
+  </div>
+</div>
+
+<div id="angleModalOverlay" class="modal-overlay">
+  <div class="modal-box">
+    <h3 data-i18n="angleInputTitle">🎯 輸入精確角度</h3>
+    <p style="text-align:center; margin-bottom:12px; font-size:13px;" data-i18n="angleInputDesc">請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)</p>
+    <input type="number" id="exactAngleInput" style="width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px; border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;" min="0" max="180" step="0.1" inputmode="decimal">
+    <div class="modal-btn-group">
+      <button id="angleCancelBtn" class="primary-btn" style="background:var(--muted); color:#fff;" type="button" data-i18n="cancel">取消</button>
+      <button id="angleConfirmBtn" class="primary-btn" type="button" data-i18n="confirm">確認設定</button>
+    </div>
+  </div>
+</div>
+
+<div class="app-container">
+  
+  <div id="mainCard" class="card">
+    <div class="topbar">
+      <div class="title-row">
+        
+        <div class="title-left" id="mainTitleText">
+          <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
+          <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
+        </div>
+        
+        <!-- 💡 智慧下拉式選單與散木 LOGO 並排靠右 -->
+        <div style="display:flex; align-items:center; gap:8px;">
+          <select id="langSelect" onchange="changeLang(this.value)">
+            <option value="zh">🇹🇼 繁中</option>
+            <option value="en">🇺🇸 EN</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="ko">🇰🇷 한국어</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="pt">🇵🇹 Português</option>
+          </select>
+          <img src="./sunmoon_logo.png" alt="散木團隊" style="width: 26px; height: 26px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\' rx=\'6\'/><text x=\'50\' y=\'70\' font-size=\'50\' font-weight=\'bold\' fill=\'%23fff\' text-anchor=\'middle\' font-family=\'sans-serif\'>木</text></svg>'">
+        </div>
+        
+      </div>
+      
+      <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2); margin-top: 8px;">
+        <button id="modeToggleBtn" class="mode-anchor" type="button" title="點擊切換系統安全模式">⚓ 垂直錨點模式</button>
+        <button id="instructorToggleBtn" type="button" title="切換教官位置" style="min-width: 40px; flex: none;">🧍‍♂️↔️</button>
+        <button id="themeToggle" type="button" title="日/夜間模式" style="min-width: 40px; flex: none;">☀️</button>
+      </div>
+
+      <div class="btn-group">
+        <button id="cameraToggle" type="button" title="開啟實境相機">📷<span class="lock-icon">🔒</span></button>
+        <button id="torchToggle" type="button" title="開啟手電筒">🔦</button>
+        <button id="photoBtn" type="button" title="上傳照片疊圖">📁<span class="lock-icon">🔒</span></button>
+        <button id="screenshotBtn" type="button" title="戰術截圖">📸<span class="lock-icon">🔒</span></button>
+        <button id="reset" type="button" title="重置畫面">↺</button>
+      </div>
+    </div>
+
+    <video id="bgVideo" autoplay playsinline muted></video>
+    <img id="bgImage" alt="背景圖片" />
+    <input type="file" id="photoUpload" accept="image/*" style="display:none;">
+
+    <div class="svgWrap">
+      <div id="gimbalWrap">
+        <div id="scaleWrap">
+          <div id="svgContainer" style="width:100%; height: 330px;"></div>
+          
+          <div id="swayGroup" class="tOverlay">
+            <div class="normal-view">
+              <div class="weight-controls">
+                <button id="btnMinus" class="weight-btn" type="button" data-i18n="btnMinus">-</button>
+                <input id="inputT" type="number" value="100" min="0">
+                <button id="btnPlus" class="weight-btn" type="button" data-i18n="btnPlus">+</button>
+              </div>
+              <span data-i18n="weight">負重 (kg)</span>
+            </div>
+            <div class="skull-view">
+              <img src="skull.png" alt="極限骷髏" style="width: 75px; height: 75px; border-radius: 50%; border: 3px solid var(--bad); box-shadow: 0 0 15px rgba(220,38,38,0.5); object-fit: cover; background: var(--bg);" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'70\' viewBox=\'0 0 100 100\'><line x1=\'15\' y1=\'15\' x2=\'85\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><line x1=\'85\' y1=\'15\' x2=\'15\' y2=\'85\' stroke=\'%23dc2626\' stroke-width=\'12\' stroke-linecap=\'round\' /><path d=\'M 30 40 C 30 20 70 20 70 40 C 70 55 65 60 60 65 L 60 80 L 40 80 L 40 65 C 35 60 30 55 30 40 Z\' fill=\'%23f8fafc\' stroke=\'%230f1623\' stroke-width=\'2\' /><path d=\'M 34 48 C 34 40 46 40 46 48 C 46 54 34 54 34 48 Z\' fill=\'%230f1623\' /><path d=\'M 66 48 C 66 40 54 40 54 48 C 54 54 66 54 66 48 Z\' fill=\'%230f1623\' /><path d=\'M 50 56 L 47 64 L 53 64 Z\' fill=\'%230f1623\' /><line x1=\'44\' y1=\'67\' x2=\'44\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'50\' y1=\'67\' x2=\'50\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'56\' y1=\'67\' x2=\'56\' y2=\'80\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /><line x1=\'38\' y1=\'73\' x2=\'62\' y2=\'73\' stroke=\'%230f1623\' stroke-width=\'2.5\' stroke-linecap=\'round\' /></svg>'" />
+              <span style="color:var(--bad); font-size:15px; font-weight:bold; margin-top:4px;" data-i18n="deadLine">死線破斷</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="arControls" class="is-collapsed">
+      <div id="arDragHandle" style="display:flex; justify-content:space-between; align-items:center; width: 100%;">
+        <span class="ar-header-text" style="color:#a8b3c5; font-size:13px; font-weight:bold; display:none; pointer-events:none;" data-i18n="arPanelTitle">🛠️ 實境疊圖控制面板</span>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--muted); font-size:16px; pointer-events:none;">✥</span>
+          <button id="arCollapseBtn" type="button" style="background:transparent; border:none; color:var(--safe); font-size:14px; padding:0; box-shadow:none; font-weight:bold; cursor:pointer;" data-i18n="arExpand">展開設定</button>
+        </div>
+      </div>
+      <div id="arSlidersWrap" style="display: none; flex-direction: column; gap: 12px; width: 100%; margin-top: 10px;">
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--safe);" data-i18n="zoom">🔍 縮放</span>
+          <input type="range" id="zoomSlider" min="0.2" max="5.0" value="1" step="0.05" style="flex:1; margin:0;">
+        </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--warn);" data-i18n="rotate">🔄 旋轉</span>
+          <input type="range" id="rotateSlider" min="-90" max="90" value="0" step="1" style="flex:1; margin:0;">
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-container">
+      <input id="slider" type="range" min="0" max="180" value="120" step="0.1">
+    </div>
+
+    <div class="jumpbar">
+      <button class="jump" data-beta="0" type="button">β 0°</button>
+      <button class="jump" data-beta="60" type="button">β 60°</button>
+      <button class="jump" data-beta="90" type="button">β 90°</button>
+      <button class="jump" data-beta="120" type="button">β 120°</button>
+      <button class="jump" data-beta="150" type="button">β 150°</button>
+      <button class="jump" data-beta="180" type="button">β 180°</button>
+    </div>
+
+    <div id="caption" class="caption"></div>
+    <div id="watermark" class="watermark"></div>
+  </div>
+
+  <div class="menu-list">
+    
+    <details class="main-accordion" id="theoryAccordion">
+      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1">專業名詞與原理解析</span> (<span id="menuModeText" data-i18n="anchorStd">錨點標準</span>)</div></summary>
+      <div class="menu-group">
+        <div class="menu-content" id="theoryContent">
+          </div>
+      </div>
+    </details>
+
+    <details class="main-accordion">
+      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">⚙️</span> <span data-i18n="menu2">系統工具與說明書</span></div></summary>
+      <div class="menu-group">
+        
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📖</span><span data-i18n="menuOp">系統操作說明</span></div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <ul style="margin-top: 0; padding-left: 20px;">
+              <li style="margin-bottom: 6px;" data-i18n="op1">點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。</li>
+              <li style="margin-bottom: 6px;" data-i18n="op2">滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。</li>
+              <li style="margin-bottom: 6px;" data-i18n="op3">點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。</li>
+              <li style="margin-bottom: 6px;" data-i18n="op4">點擊上方 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。</li>
+              <li style="margin-bottom: 6px;" data-i18n="op5">點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片進行實地疊圖分析。</li>
+            </ul>
             <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')" data-i18n="collapse">🔼 收起說明</button>
           </div>
-        </div>
-      </details>
+        </details>
 
-      <details class="main-accordion">
-        <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">⚙️</span> <span data-i18n="menu2">系統工具與說明書</span></div></summary>
-        <div class="menu-group">
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">📖</span><span data-i18n="menuOp">系統操作說明</span></div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <ul style="margin-top: 0; padding-left: 20px;">
-                <li style="margin-bottom: 6px;" data-i18n="op1">滑動下方沙盤中的 <b>地面操作</b>，即時推演不同角度下的力量變化。</li>
-                <li style="margin-bottom: 6px;" data-i18n="op2">點擊上方 <b>模擬地形與環境</b>，一鍵切換攀樹、攀岩或鋼架場景。</li>
-                <li style="margin-bottom: 6px;" data-i18n="op3">切換 <b>轉向點 (COD) 摩擦力介質</b>，觀察直拉、鉤環、滑輪對操作者負擔的影響。</li>
-                <li style="margin-bottom: 6px;" data-i18n="op4">點擊 <b>✏️自訂</b>，可手動設定轉向介質名稱與摩擦係數。</li>
-                <li style="margin-bottom: 6px;" data-i18n="op5">切換 <b>🕹️系統操作動作</b>，比對靜止、上拉與下放時，摩擦力帶來的截然不同效應。</li>
-              </ul>
-              <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')" data-i18n="collapse">🔼 收起說明</button>
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">ℹ️</span><span data-i18n="menuInfo">版本與開發資訊</span></div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <div style="text-align: center; margin-bottom: 15px;">
+              <span data-i18n="devTitle" style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">雙引擎張力儀 專業正式版</span>
             </div>
-          </details>
+            <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;" data-i18n="devTeam">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
+            <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;" data-i18n="devT1">教學架構與工程判斷／徐世豐</p>
+            <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;" data-i18n="devT2">工具設計與互動介面／吳佩芳（朵朵）</p>
+            <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')" data-i18n="collapse">🔼 收起說明</button>
+          </div>
+        </details>
 
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">ℹ️</span><span data-i18n="menuInfo">版本與開發資訊</span></div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <div style="text-align: center; margin-bottom: 15px;">
-                <span data-i18n="devTitle" style="display:inline-block; background:var(--safe); color:#0a1410; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(74,222,128,0.3);">全地形轉向沙盤 專業正式版</span>
-              </div>
-              <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;" data-i18n="devTeam">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
-              <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;" data-i18n="devT1">教學架構與工程判斷／徐世豐</p>
-              <p style="margin-top: 0; margin-bottom: 12px; font-size: 13px; text-align: center;" data-i18n="devT2">工具設計與互動介面／吳佩芳（朵朵）</p>
-              <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')" data-i18n="collapse">🔼 收起說明</button>
+        <details class="menu-item">
+          <summary>
+            <div class="menu-header-left"><span class="menu-icon">📱</span><span data-i18n="menuPWA">加入主畫面說明</span></div>
+            <span class="menu-arrow">❯</span>
+          </summary>
+          <div class="menu-content">
+            <button id="installAppBtn" style="display:none; width:100%; padding:12px; margin-bottom:12px; background:var(--safe); color:#0f1623; border:none; border-radius:8px; font-weight:bold; font-size:15px; cursor:pointer; box-shadow:0 4px 10px rgba(34, 197, 94, 0.3);" data-i18n="installBtn">📥 點擊一鍵安裝 APP</button>
+            <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);" data-i18n="pwaDesc">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);" data-i18n="pwaAnd">🤖 Android (安卓版)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep1">點開連結（可直接從 LINE 開啟）</li>
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep2">點選瀏覽器右上角的「⋮」</li>
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep3">選擇「加到主畫面」或「安裝應用程式」</li>
+                <li style="margin-bottom: 0;" data-i18n="pwaStep4">點選「安裝」，即可在桌面找到 APP</li>
+              </ol>
             </div>
-          </details>
-
-          <details class="menu-item">
-            <summary>
-              <div class="menu-header-left"><span class="menu-icon">📱</span><span data-i18n="menuPWA">加入主畫面說明</span></div>
-              <span class="menu-arrow">❯</span>
-            </summary>
-            <div class="menu-content">
-              <button id="installAppBtn" style="display:none; width:100%; padding:12px; margin-bottom:12px; background:var(--safe); color:#0a1410; border:none; border-radius:8px; font-weight:bold; font-size:15px; cursor:pointer; box-shadow:0 4px 10px rgba(74, 222, 128, 0.3);">📥 點擊一鍵安裝 APP</button>
-              <p style="margin-top: 0; margin-bottom: 8px; color: var(--text);">將捷徑加至主畫面，獲得無網址列的 100% 沉浸式體驗：</p>
-              <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-                <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🤖 Android (安卓版)</p>
-                <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                  <li style="margin-bottom: 4px;">點開連結（可直接從 LINE 開啟）</li>
-                  <li style="margin-bottom: 4px;">點選瀏覽器右上角的「⋮」</li>
-                  <li style="margin-bottom: 4px;">選擇「加到主畫面」或「安裝應用程式」</li>
-                  <li style="margin-bottom: 0;">點選「安裝」，即可在桌面找到 APP</li>
-                </ol>
-              </div>
-              <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px;">
-                <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);">🍎 iOS (iPhone)</p>
-                <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
-                  <li style="margin-bottom: 4px;">請務必使用 <b>Safari</b> 瀏覽器開啟</li>
-                  <li style="margin-bottom: 4px;">點選畫面下方的「分享」圖示</li>
-                  <li style="margin-bottom: 4px;">往下滑，選擇「加入主畫面」</li>
-                  <li style="margin-bottom: 0;">點選「加入」，即可將捷徑加到主畫面</li>
-                </ol>
-              </div>
+            <div style="background: rgba(150,150,150,0.05); padding: 12px; border-radius: 8px;">
+              <p style="margin-top: 0; margin-bottom: 8px; font-weight: bold; color: var(--safe);" data-i18n="pwaIOS">🍎 iOS (iPhone)</p>
+              <ol style="padding-left: 20px; margin: 0; font-size: 13px;">
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep5">請務必使用 <b>Safari</b> 瀏覽器開啟</li>
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep6">點選畫面下方的「分享」圖示</li>
+                <li style="margin-bottom: 4px;" data-i18n="pwaStep7">往下滑，選擇「加入主畫面」</li>
+                <li style="margin-bottom: 0;" data-i18n="pwaStep8">點選「加入」，即可將捷徑加到主畫面</li>
+              </ol>
             </div>
-          </details>
-        </div>
-      </details>
+          </div>
+        </details>
 
-      <div class="main-accordion" style="display: flex; flex-direction: column;">
-        <div class="menu-action-btn" id="shareBtnAction" style="border-bottom: 1px solid var(--line);">
-          <div class="menu-header-left"><span class="menu-icon">🔗</span><span data-i18n="menu3">分享系統連結</span></div>
-          <span class="menu-arrow">❯</span>
-        </div>
-        <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
-          <div class="menu-header-left"><span class="menu-icon">🔄</span><span data-i18n="menu4">檢查並載入最新版本</span></div>
-          <span class="menu-arrow">❯</span>
-        </div>
-        <div class="menu-action-btn" id="supportBtnAction">
-          <div class="menu-header-left"><span class="menu-icon">💬</span><span data-i18n="menu5">技術支援與問題回報</span></div>
-          <span class="menu-arrow">❯</span>
-        </div>
       </div>
+    </details>
 
-      <div class="footer-disclaimer">
-        <strong style="color: var(--bad); font-size: 14px;">⚖️ 軟體免責聲明：</strong><br>
-        本軟體摩擦係數為理論估算均值(樹幹0.4/鉤環0.6/滑輪0.95)。實際救援中，表面粗糙度皆會劇烈改變摩擦力。請務必遵循專業教官之指導實地判定。
+    <div class="main-accordion" style="display: flex; flex-direction: column;">
+      <div class="menu-action-btn" id="shareBtnAction" style="border-bottom: 1px solid var(--line);">
+        <div class="menu-header-left"><span class="menu-icon">🔗</span><span data-i18n="menu3">分享系統連結</span></div>
+        <span class="menu-arrow">❯</span>
+      </div>
+      <div class="menu-action-btn" onclick="checkForUpdates()" style="border-bottom: 1px solid var(--line);">
+        <div class="menu-header-left"><span class="menu-icon">🔄</span><span data-i18n="menu4">檢查並載入最新版本</span></div>
+        <span class="menu-arrow">❯</span>
+      </div>
+      <div class="menu-action-btn" id="supportBtnAction">
+        <div class="menu-header-left"><span class="menu-icon">💬</span><span data-i18n="menu5">系統問題回報</span></div>
+        <span class="menu-arrow">❯</span>
       </div>
     </div>
+
+    <div class="footer-disclaimer" data-i18n="disclaimer">
+      <strong style="color: var(--bad); font-size: 14px;">⚠️ 軟體免責聲明：</strong><br>
+      系統運算基於理想幾何物理模型，不含繩索延展性、材質疲勞、摩擦力損耗等環境變數。實際救援操作之下垂量與系統架設，請務必遵循專業教官之指導與現場判斷，開發團隊不負任何實地操作之法律與賠償責任。<br><br><span style='color:var(--warn);'>※ 本系統採單機授權，為保障研發團隊權益，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>
+    </div>
+
   </div>
 </div>
 
 <script>
-// --- V4.0 核心工具包 ---
-function showToast(msg, type = 'safe') {
-    const toast = document.getElementById('toastMessage');
-    toast.innerHTML = msg;
-    toast.style.borderLeftColor = `var(--${type})`;
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 3000);
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('🛡️ 戰術後勤 SW 已啟動'))
+      .catch(err => console.log('SW 啟動失敗', err));
+  });
 }
 
-// 💡 戰術升級：本裝備專屬的「獨立金鑰」，防堵拿舊密碼來開新鎖！(SMR = SunMoon Redirect)
-const PERMANENT_KEYS = ["SMR-A7K9-X2M4", "SMR-B3Q8-P9Y1", "SMR-C5R2-W6Z7"];
+// 💡 VIP 系統 (三層防護網與隱藏指揮官控制台)
+const PERMANENT_KEYS = ["SMV-A7K9-X2M4", "SMV-B3Q8-P9Y1", "SMV-C5R2-W6Z7"]; 
 const MASTER_KEY = "SUNMOONBOSS"; 
 
 function getDailyKey(offsetDays = 0) {
-    const d = new Date(); d.setDate(d.getDate() + offsetDays);
+    const d = new Date();
+    d.setDate(d.getDate() + offsetDays);
     const dateStr = d.toLocaleDateString('zh-TW', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '');
     const hash = (parseInt(dateStr) * 17 % 9000) + 1000;
-    return "SMR-" + hash; 
+    return "SMV-" + hash; 
 }
 
 const todayStr = new Date().toLocaleDateString('en-CA', {timeZone: 'Asia/Taipei'}); 
 let isUserVip = false;
-try {
-    if (localStorage.getItem('sunmoon_vip_redirect_status') === 'true') { isUserVip = true; }
-    else if (localStorage.getItem('sunmoon_vip_redirect_expire') === todayStr) { isUserVip = true; }
+
+try { 
+    if (localStorage.getItem('sunmoon_vip_anchor_status') === 'true') {
+        isUserVip = true; 
+    } else if (localStorage.getItem('sunmoon_vip_anchor_expire') === todayStr) {
+        isUserVip = true; 
+    }
 } catch (e) {}
+
 if (isUserVip) { document.body.classList.add('is-vip'); }
 
-const featureDescriptions = {
-    '📷 實境相機疊圖': '開啟鏡頭將沙盤重疊於真實救援現場，實地精準推演轉向角度！',
-    '📁 場勘照片疊圖': '匯入現場環境照片，進行最真實的受力兵推！',
-    '📸 戰術純淨截圖': '自動濾除雜訊，一鍵匯出無浮水印、最高解析度的專業戰術報告圖紙！',
-    '⚙️ 動態摩擦力運算': '解鎖鉤環與滑輪摩擦係數！精準推演不同轉向介質對系統的受力影響。',
-    '🕹️ 上拉下放引擎': '解鎖動態操作！真實模擬上拉 (Hauling) 與下放 (Lowering) 時，摩擦力造成的恐怖張力翻倍效應！'
-};
-
-const originalVipModalHtml = document.getElementById('vipModalBox').innerHTML;
 let pendingFeatureCallback = null;
 
-function attemptFeature(featureName, callback) {
+function attemptFeature(featureKey, callback) {
     if (isUserVip) { callback(); } 
     else {
         pendingFeatureCallback = callback;
-        document.getElementById('vipModalBox').innerHTML = originalVipModalHtml; 
-        document.getElementById('vipFeatureName').textContent = featureName;
-        document.getElementById('vipFeatureDesc').textContent = featureDescriptions[featureName] || "";
+        document.getElementById('vipFeatureName').textContent = t(featureKey);
+        document.getElementById('vipFeatureDesc').textContent = t(featureKey + 'Desc');
         document.getElementById('vipErrorMsg').textContent = "";
         document.getElementById('vipPwdInput').value = "";
-        document.getElementById('vipModal').classList.add('show');
+        document.getElementById('vipModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('vipPwdInput').focus(), 100);
     }
 }
 
-const mainTitleEl = document.getElementById('mainTitleText');
-if (mainTitleEl) {
-    mainTitleEl.addEventListener('click', () => {
-        if (isUserVip) {
-            pendingFeatureCallback = null;
-            document.getElementById('vipModalBox').innerHTML = originalVipModalHtml; 
-            document.querySelector('#vipModalBox h3').innerHTML = "🛡️ 系統狀態：已解鎖";
-            document.querySelector('#vipModalBox p').innerHTML = "如需進入指揮官控制台，請輸入最高權限金鑰：";
-            document.getElementById('vipErrorMsg').textContent = "";
-            document.getElementById('vipPwdInput').value = "";
-            document.getElementById('vipModal').classList.add('show');
-        }
-    });
-}
+function closeVipModal() { document.getElementById('vipModal').style.display = 'none'; pendingFeatureCallback = null; }
+
+const mainTitleText = document.getElementById('mainTitleText');
+mainTitleText.addEventListener('click', () => {
+    if (isUserVip) {
+        pendingFeatureCallback = null;
+        document.getElementById('vipFeatureName').parentElement.innerHTML = t('vipStateDesc');
+        document.getElementById('vipFeatureDesc').textContent = "";
+        document.querySelector('[data-i18n="vipTitle"]').textContent = t('vipStateUnlocked');
+        document.getElementById('vipErrorMsg').textContent = "";
+        document.getElementById('vipPwdInput').value = "";
+        document.getElementById('vipModal').style.display = 'flex';
+        setTimeout(() => document.getElementById('vipPwdInput').focus(), 100);
+    }
+});
 
 window.logoutVip = function() {
-    try { localStorage.removeItem('sunmoon_vip_redirect_status'); localStorage.removeItem('sunmoon_vip_redirect_expire'); } catch(e) {}
-    showToast("🔄 登出成功，重新載入鎖定狀態...", "warn");
+    try {
+        localStorage.removeItem('sunmoon_vip_anchor_status');
+        localStorage.removeItem('sunmoon_vip_anchor_expire');
+    } catch(e) {}
+    showToast(t('toastLogout'), "warn");
     setTimeout(() => { window.location.reload(); }, 1000); 
 };
 
@@ -870,466 +1731,551 @@ function verifyVip() {
     const errorMsg = document.getElementById('vipErrorMsg');
     
     if (inputPwd === MASTER_KEY) {
-        try { localStorage.setItem('sunmoon_vip_redirect_status', 'true'); } catch(e){} 
+        try { localStorage.setItem('sunmoon_vip_anchor_status', 'true'); } catch(e){} 
         isUserVip = true; document.body.classList.add('is-vip'); 
-        const todayKey = getDailyKey(0); const tmrwKey = getDailyKey(1); const permKey = PERMANENT_KEYS[0];
+
+        const todayKey = getDailyKey(0);
+        const tmrwKey = getDailyKey(1);
+        const permKey = PERMANENT_KEYS[0];
+
+        // 💡 指揮官控制台
         document.getElementById('vipModalBox').innerHTML = `
-          <h3 style="color: var(--warn); margin-top:0;">👑 指揮官專屬控制台</h3>
+          <h3 style="color: var(--warn); margin-top:0;">${t('cmdTitle')}</h3>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--safe);">
-            <span style="color:var(--muted); font-size:12px;">👉 今天的體驗碼 (今晚失效)</span><br><strong style="color:var(--safe); font-size:22px; letter-spacing:1px;">${todayKey}</strong>
+            <span style="color:var(--muted); font-size:12px;">${t('cmdExpToday')}</span><br>
+            <strong style="color:var(--safe); font-size:22px; letter-spacing:1px;">${todayKey}</strong>
           </div>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--warn);">
-            <span style="color:var(--muted); font-size:12px;">👉 明天的體驗碼</span><br><strong style="color:var(--warn); font-size:22px; letter-spacing:1px;">${tmrwKey}</strong>
+            <span style="color:var(--muted); font-size:12px;">${t('cmdExpTmrw')}</span><br>
+            <strong style="color:var(--warn); font-size:22px; letter-spacing:1px;">${tmrwKey}</strong>
           </div>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:20px; text-align:left; border-left: 4px solid var(--vip);">
-            <span style="color:var(--muted); font-size:12px;">👉 🌟 總部專屬配發碼</span><br><strong style="color:var(--vip); font-size:18px; letter-spacing:1px;">${permKey}</strong>
+            <span style="color:var(--muted); font-size:12px;">${t('cmdPerm')}</span><br>
+            <strong style="color:var(--vip); font-size:18px; letter-spacing:1px;">${permKey}</strong>
           </div>
-          <div class="modal-actions" style="margin-top: 15px;">
-            <button class="btn-cancel" style="border:1px solid var(--bad); color:var(--bad);" onclick="logoutVip()">清除授權(登出)</button>
-            <button class="btn-unlock" style="background:var(--warn); color:#000;" onclick="closeVipModal()">關閉控制台</button>
+          <div class="modal-btn-group" style="margin-top: 15px;">
+            <button class="primary-btn" style="background:transparent; border:1px solid var(--bad); color:var(--bad);" onclick="logoutVip()">${t('cmdLogout')}</button>
+            <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="closeVipModal()">${t('cmdClose')}</button>
           </div>
         `;
         return; 
     }
 
-    if (PERMANENT_KEYS.includes(inputPwd) || inputPwd === getDailyKey(0)) {
-        try { localStorage.setItem('sunmoon_vip_redirect_status', 'true'); } catch(e){} 
+    if (PERMANENT_KEYS.includes(inputPwd)) {
+        try { localStorage.setItem('sunmoon_vip_anchor_status', 'true'); } catch(e){} 
         isUserVip = true; document.body.classList.add('is-vip'); closeVipModal();
-        showToast("🎉 授權成功！歡迎使用！", "safe");
+        showToast(t('toastAuthSuccess'), "safe");
         if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
         return;
     }
-    
+
     if (inputPwd === getDailyKey(0)) {
-        try { localStorage.setItem('sunmoon_vip_redirect_expire', todayStr); } catch(e){} 
+        try { localStorage.setItem('sunmoon_vip_anchor_expire', todayStr); } catch(e){} 
         isUserVip = true; document.body.classList.add('is-vip'); closeVipModal();
-        showToast("⏱️ 體驗授權成功！(今晚自動失效)", "safe");
+        showToast(t('toastTrialSuccess'), "safe");
         if (pendingFeatureCallback) { pendingFeatureCallback(); pendingFeatureCallback = null; }
         return;
     }
-    
-    errorMsg.textContent = "❌ 授權碼錯誤，請確認輸入是否正確。"; 
-}
-function closeVipModal() { document.getElementById('vipModal').classList.remove('show'); pendingFeatureCallback = null;}
 
-const supportBtnAction = document.getElementById('supportBtnAction');
-if(supportBtnAction) { supportBtnAction.addEventListener('click', () => document.getElementById('supportModal').classList.add('show')); }
-
-// AR 系統
-let stream = null, videoTrack = null, torchOn = false; 
-const video = document.getElementById('bg-video'), image = document.getElementById('bg-image'), btnCamera = document.getElementById('btn-camera'), btnFlashlight = document.getElementById('btn-flashlight'), gridOverlay = document.getElementById('grid-overlay'); 
-let gridVisible = true;
-
-async function toggleCamera() { 
-  if (stream) { 
-    stream.getTracks().forEach(track => track.stop()); stream = null; videoTrack = null; 
-    video.style.opacity = "0"; btnCamera.classList.remove('active'); 
-    torchOn = false; btnFlashlight.classList.remove('active');
-    mainCard.classList.remove('camera-mode'); document.body.classList.remove('camera-mode');
-  } else { 
-    try { 
-      image.style.opacity = "0"; 
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }); 
-      videoTrack = stream.getVideoTracks()[0];
-      video.srcObject = stream; video.style.opacity = "1"; btnCamera.classList.add('active'); 
-      mainCard.classList.add('camera-mode'); document.body.classList.add('camera-mode');
-    } catch (err) { showToast("⚠️ 鏡頭啟動失敗：" + err.message, "bad"); } 
-  } 
+    errorMsg.textContent = t('vipErrPwd'); 
 }
 
-async function toggleFlashlight() {
-  if (!videoTrack) { showToast("⚠️ 請先開啟 📷 實境鏡頭！", "warn"); return; }
-  try {
-    const capabilities = videoTrack.getCapabilities();
-    if (!capabilities.torch) { showToast("⚠️ 裝置不支援手電筒功能！", "bad"); return; }
-    torchOn = !torchOn; await videoTrack.applyConstraints({ advanced: [{ torch: torchOn }] });
-    if(torchOn) btnFlashlight.classList.add('active'); else btnFlashlight.classList.remove('active');
-  } catch(e) { showToast("⚠️ 手電筒切換失敗：" + e.message, "bad"); }
-}
+let isInstructorRight = true;
+const instructorToggleBtn = document.getElementById('instructorToggleBtn');
+instructorToggleBtn.addEventListener('click', () => { isInstructorRight = !isInstructorRight; draw(slider.value); });
 
-function handleImageUploadClick(e) { if (!isUserVip) { e.preventDefault(); attemptFeature('📁 場勘照片疊圖', () => document.getElementById('upload-image').click()); } }
-function loadImage(event) { 
-  const file = event.target.files[0]; 
-  if (file) { 
-    if(stream) toggleCamera(); 
-    const reader = new FileReader(); 
-    reader.onload = function(e) { 
-      image.src = e.target.result; image.style.opacity = "1"; 
-      mainCard.classList.add('camera-mode'); document.body.classList.add('camera-mode');
-    }; reader.readAsDataURL(file); 
-  } 
-}
-function toggleGrid() { gridVisible = !gridVisible; gridOverlay.style.opacity = gridVisible ? "0.5" : "0"; }
+let currentMode = 'anchor'; 
+const modeToggleBtn = document.getElementById('modeToggleBtn');
+const modeTitleLabel = document.getElementById('modeTitleLabel');
+const menuModeText = document.getElementById('menuModeText');
+const theoryContent = document.getElementById('theoryContent');
 
-async function takeScreenshot() {
-  const target = document.getElementById('mainCard'); target.classList.add('capture-mode');
-  const inputs = target.querySelectorAll('input[type="number"]'); const placeholders = [];
-  inputs.forEach(inp => {
-      if(inp.closest('.capture-hide')) return;
-      const span = document.createElement('span');
-      span.textContent = inp.value;
-      span.style.color = 'var(--text)'; span.style.fontSize = '18px'; span.style.fontWeight = 'bold'; span.style.fontFamily = 'monospace'; span.style.margin = '0 2px';
-      inp.style.display = 'none'; inp.parentNode.insertBefore(span, inp); placeholders.push({ span, inp });
-  });
-  window.scrollTo(0, 0); await new Promise(r => setTimeout(r, 100));
-  try {
-    const canvas = await html2canvas(target, { backgroundColor: '#0a1410', scale: 2, useCORS: true, ignoreElements: (el) => el.hasAttribute('data-html2canvas-ignore') || el.classList.contains('capture-hide') });
-    const link = document.createElement('a'); link.download = `轉向點戰術報告_${new Date().getTime()}.png`; link.href = canvas.toDataURL('image/png'); link.click();
-  } catch(e) { showToast("❌ 截圖失敗，請稍後再試！", "bad"); }
-  placeholders.forEach(p => { p.inp.style.display = ''; p.span.remove(); }); target.classList.remove('capture-mode');
-}
-
-// 💡 核心變更：全地形場景與自訂介質引擎
-const svgEl = document.getElementById('canvas');
-const inLoad = document.getElementById('inLoad');
-const els = {
-  ropeLoad: document.getElementById('ropeLoad'), ropeAnchor: document.getElementById('ropeAnchor'),
-  redirectNode: document.getElementById('redirectNode'), loadGroup: document.getElementById('loadGroup'),
-  anchorGroup: document.getElementById('anchorGroup'), anchorBox: document.getElementById('anchorBox'), anchorLabel: document.getElementById('anchorLabel'),
-  angleArc: document.getElementById('angleArc'), angleText: document.getElementById('angleText'),
-  forceArrowLine: document.getElementById('forceArrowLine'), forceArrowHead: document.getElementById('forceArrowHead'),
-  txtBranchForce: document.getElementById('txtBranchForce'), txtBranchMult: document.getElementById('txtBranchMult'),
-  dashBranch: document.getElementById('dashBranch'), dashAnchor: document.getElementById('dashAnchor'),
-  txtAnchorTension: document.getElementById('txtAnchorTension'), txtAnchorMult: document.getElementById('txtAnchorMult'),
-  eduPanel: document.getElementById('eduPanel'), lblBranchName: document.getElementById('lblBranchName'),
-  btnFrictionBase: document.getElementById('btnFrictionBase'),
-  distanceIndicator: document.getElementById('distanceIndicator'), distLine: document.getElementById('distLine'), distText: document.getElementById('distText')
-};
-
-const P = { x: 120, y: 80 }; 
-const L_dist = 200;           
-let A = { x: 340, y: 360 };   
-
-// 場景資料庫
-const scenes = {
-    'tree': { i18nKey: 'sceneTree', icon: '🌳', color: 'var(--tree)', friction: 0.4, bg: 'bgTree', customName: null },
-    'rock': { i18nKey: 'sceneRock', icon: '🪨', color: '#94a3b8', friction: 0.5, bg: 'bgRock', customName: null },
-    'steel': { i18nKey: 'sceneSteel', icon: '🏗️', color: '#f59e0b', friction: 0.3, bg: 'bgSteel', customName: null },
-    'none': { i18nKey: 'sceneNone', icon: '📍', color: '#cbd5e1', friction: 0.4, bg: 'none', customName: null }
-};
-
-let currentScene = 'tree';
-let currentE = 0.4; 
-let currentMode = 'base'; // base = 使用場景預設介質, carabiner, pulley
-let currentAction = 'static';
-
-function getSceneName() {
-    if (scenes[currentScene].customName) return scenes[currentScene].customName;
-    return t(scenes[currentScene].i18nKey);
-}
-
-function setScene(btn, sceneKey) {
-    document.querySelectorAll('.toggle-btn[data-type="scene"]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentScene = sceneKey;
-    
-    ['bgTree', 'bgRock', 'bgSteel'].forEach(id => {
-        if(document.getElementById(id)) document.getElementById(id).style.display = 'none';
-    });
-    if(scenes[sceneKey].bg !== 'none') {
-        document.getElementById(scenes[sceneKey].bg).style.display = 'block';
-    }
-
-    els.lblBranchName.textContent = getSceneName();
-    els.btnFrictionBase.innerHTML = `${scenes[sceneKey].icon} ${getSceneName()}${t('directPull')}`;
-    els.btnFrictionBase.dataset.val = scenes[sceneKey].friction;
-
-    if (currentMode === 'base') {
-        currentE = scenes[sceneKey].friction;
-    }
-    
-    updateEngine();
-}
-
-function customName() {
-    document.getElementById('nameInput').value = getSceneName();
-    document.getElementById('nameModal').classList.add('show');
-    setTimeout(() => document.getElementById('nameInput').focus(), 100);
-}
-
-function confirmCustomName() {
-    let newName = document.getElementById('nameInput').value.trim();
-    if (newName !== "") {
-        scenes[currentScene].customName = newName;
-        els.lblBranchName.textContent = newName;
-        els.btnFrictionBase.innerHTML = `${scenes[currentScene].icon} ${newName}${t('directPull')}`;
-        updateEngine();
-        showToast(`✏️ ${t('nameUpdated')} ${newName}`, "safe");
-    }
-    document.getElementById('nameModal').classList.remove('show');
-}
-
-function customFriction() {
-    document.getElementById('frictionInput').value = currentE;
-    document.getElementById('frictionModal').classList.add('show');
-    setTimeout(() => document.getElementById('frictionInput').focus(), 100);
-}
-
-function confirmCustomFriction() {
-    let newE = parseFloat(document.getElementById('frictionInput').value);
-    if (!isNaN(newE) && newE > 0 && newE <= 1) {
-        currentE = newE;
-        document.querySelectorAll('.toggle-btn[data-type="friction"]').forEach(b => b.classList.remove('active'));
-        showToast(`✏️ ${t('fricUpdated')} ${currentE}`, "safe");
-        
-        if (currentAction === 'static') {
-            const haulBtn = document.querySelector('.toggle-btn[data-type="action"][data-val="haul"]');
-            document.querySelectorAll('.toggle-btn[data-type="action"]').forEach(b => b.classList.remove('active'));
-            haulBtn.classList.add('active');
-            currentAction = 'haul';
-        }
-        updateEngine();
-        document.getElementById('frictionModal').classList.remove('show');
+modeToggleBtn.addEventListener('click', () => {
+    if(currentMode === 'anchor') {
+        currentMode = 'trackline';
+        modeToggleBtn.className = 'mode-track';
+        modeToggleBtn.innerHTML = t('modeTrack');
+        modeTitleLabel.textContent = t('appTitleTrack');
+        menuModeText.textContent = t('trackStd');
+        if(slider.value < 120) slider.value = 150; 
     } else {
-        showToast(t('fricInvalid'), "bad");
+        currentMode = 'anchor';
+        modeToggleBtn.className = 'mode-anchor';
+        modeToggleBtn.innerHTML = t('modeAnchor');
+        modeTitleLabel.textContent = t('appTitle');
+        menuModeText.textContent = t('anchorStd');
+        if(slider.value > 120) slider.value = 90; 
     }
-}
-
-function setFriction(btn, mode) {
-    const doSet = () => {
-        document.querySelectorAll('.toggle-btn[data-type="friction"]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentE = parseFloat(btn.dataset.val);
-        currentMode = mode;
-        
-        if (currentAction === 'static') {
-            const haulBtn = document.querySelector('.toggle-btn[data-type="action"][data-val="haul"]');
-            document.querySelectorAll('.toggle-btn[data-type="action"]').forEach(b => b.classList.remove('active'));
-            haulBtn.classList.add('active');
-            currentAction = 'haul';
-        }
-        updateEngine();
-    };
-    if (mode !== 'base') attemptFeature('⚙️ 動態摩擦力運算', doSet); else doSet();
-}
-
-function setAction(btn) {
-    const doSet = () => {
-        document.querySelectorAll('.toggle-btn[data-type="action"]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentAction = btn.dataset.val;
-        updateEngine();
-    };
-    if (btn.dataset.val !== 'static') attemptFeature('🕹️ 上拉下放引擎', doSet); else doSet();
-}
-
-function renderRedirectNode() {
-    let html = '';
-    let c = scenes[currentScene].color;
-    if (currentMode === 'base') {
-        if(currentScene === 'tree') html = `<path d="M-25,-5 Q0,-20 25,-5 Q0,-15 -25,-5" fill="none" stroke="${c}" stroke-width="8" stroke-linecap="round"/><circle cx="0" cy="0" r="6" fill="#0a1410" />`;
-        else if(currentScene === 'rock') html = `<path d="M-15,-10 L0,-15 L10,-5 L15,10 L-15,5 Z" fill="${c}"/><circle cx="0" cy="0" r="4" fill="#0a1410" />`;
-        else if(currentScene === 'steel') html = `<rect x="-20" y="-10" width="40" height="15" fill="${c}" rx="4"/><circle cx="0" cy="0" r="6" fill="#0a1410" />`;
-        else html = `<circle cx="0" cy="0" r="10" fill="${c}"/><circle cx="0" cy="0" r="4" fill="#0a1410" />`;
-    } else if (currentMode === 'carabiner') {
-        html = `<path d="M-15,0 A15,15 0 1,1 15,0 A15,15 0 0,1 -15,0" fill="none" stroke="#cbd5e1" stroke-width="6"/><line x1="12" y1="-10" x2="12" y2="10" stroke="#f1f5f9" stroke-width="4" stroke-linecap="round"/>`;
-    } else {
-        html = `<circle cx="0" cy="0" r="18" fill="var(--warn)" stroke="#0a1410" stroke-width="3" /><circle cx="0" cy="0" r="6" fill="#0a1410" /><line x1="0" y1="0" x2="10" y2="10" stroke="#000" stroke-width="2"/>`;
-    }
-    els.redirectNode.innerHTML = html;
-}
-
-function describeArc(x, y, r, startAngle, endAngle) {
-    let start = { x: x + r * Math.cos(endAngle), y: y + r * Math.sin(endAngle) };
-    let end = { x: x + r * Math.cos(startAngle), y: y + r * Math.sin(startAngle) };
-    let largeArcFlag = endAngle - startAngle <= Math.PI ? "0" : "1";
-    return ["M", x, y, "L", start.x, start.y, "A", r, r, 0, largeArcFlag, 0, end.x, end.y, "Z"].join(" ");
-}
-
-function updateEngine() {
-    let W = parseFloat(inLoad.value) || 100;
-    
-    let T_L = W; 
-    let T_A = W; 
-
-    if (currentAction === 'haul') {
-        T_A = W / currentE; 
-    } else if (currentAction === 'lower') {
-        T_A = W * currentE; 
-    }
-    
-    let vecL = { x: 0, y: 1 }; 
-    let lenA = Math.hypot(A.x - P.x, A.y - P.y);
-    let vecA = { x: (A.x - P.x) / lenA, y: (A.y - P.y) / lenA }; 
-    
-    let dot = vecL.x * vecA.x + vecL.y * vecA.y;
-    let thetaRad = Math.acos(Math.max(-1, Math.min(1, dot)));
-    let thetaDeg = thetaRad * 180 / Math.PI;
-    
-    let vForceL = { x: vecL.x * T_L, y: vecL.y * T_L };
-    let vForceA = { x: vecA.x * T_A, y: vecA.y * T_A };
-    
-    let vecForce = { x: vForceL.x + vForceA.x, y: vForceL.y + vForceA.y };
-    let Force = Math.hypot(vecForce.x, vecForce.y);
-    let multiplier = Force / W;
-    
-    let dirForce = { x: 0, y: 0 };
-    if(Force > 0) { dirForce.x = vecForce.x / Force; dirForce.y = vecForce.y / Force; }
-    
-    renderRedirectNode();
-    els.redirectNode.setAttribute('transform', `translate(${P.x}, ${P.y})`);
-    
-    let loadPt = { x: P.x, y: P.y + L_dist };
-    els.ropeLoad.setAttribute('x1', P.x); els.ropeLoad.setAttribute('y1', P.y);
-    els.ropeLoad.setAttribute('x2', loadPt.x); els.ropeLoad.setAttribute('y2', loadPt.y);
-    els.loadGroup.setAttribute('transform', `translate(${loadPt.x}, ${loadPt.y})`);
-    
-    els.ropeAnchor.setAttribute('x1', P.x); els.ropeAnchor.setAttribute('y1', P.y);
-    els.ropeAnchor.setAttribute('x2', A.x); els.ropeAnchor.setAttribute('y2', A.y);
-    els.anchorGroup.setAttribute('transform', `translate(${A.x}, ${A.y})`);
-    
-    let angleL = Math.PI / 2; 
-    let angleA = Math.atan2(vecA.y, vecA.x);
-    if(angleA < 0) angleA += 2 * Math.PI;
-    
-    let startAng = Math.min(angleL, angleA); let endAng = Math.max(angleL, angleA);
-    if (endAng - startAng > Math.PI) { startAng = Math.max(angleL, angleA); endAng = Math.min(angleL, angleA) + 2*Math.PI; }
-    els.angleArc.setAttribute("d", describeArc(P.x, P.y, 40, startAng, endAng));
-    
-    let midAng = (startAng + endAng) / 2;
-    els.angleText.textContent = `θ ${thetaDeg.toFixed(0)}°`;
-    els.angleText.setAttribute('x', P.x + 70 * Math.cos(midAng)); 
-    els.angleText.setAttribute('y', P.y + 70 * Math.sin(midAng) + 6);
-    
-    let arrowLen = 30 + multiplier * 15; 
-    let arrowEnd = { x: P.x + dirForce.x * arrowLen, y: P.y + dirForce.y * arrowLen };
-    els.forceArrowLine.setAttribute('x1', P.x); els.forceArrowLine.setAttribute('y1', P.y);
-    els.forceArrowLine.setAttribute('x2', arrowEnd.x); els.forceArrowLine.setAttribute('y2', arrowEnd.y);
-    
-    let headAng = Math.atan2(dirForce.y, dirForce.x);
-    let h1 = { x: arrowEnd.x - 12 * Math.cos(headAng - 0.5), y: arrowEnd.y - 12 * Math.sin(headAng - 0.5) };
-    let h2 = { x: arrowEnd.x - 12 * Math.cos(headAng + 0.5), y: arrowEnd.y - 12 * Math.sin(headAng + 0.5) };
-    els.forceArrowHead.setAttribute('points', `${arrowEnd.x},${arrowEnd.y} ${h1.x},${h1.y} ${h2.x},${h2.y}`);
-    
-    if (A.y < P.y + 150 && currentAction !== 'static') {
-        els.distanceIndicator.style.opacity = '1';
-        els.distLine.setAttribute('x1', 0); els.distLine.setAttribute('y1', 25);
-        els.distLine.setAttribute('x2', 0); els.distLine.setAttribute('y2', 400 - A.y + 50);
-        els.distText.setAttribute('x', 0); els.distText.setAttribute('y', 40);
-    } else {
-        els.distanceIndicator.style.opacity = '0';
-    }
-
-    // 💡 動態白話文教學邏輯 (使用 i18n)
-    let eduText = "";
-    let eduColor = "var(--safe)";
-    let eduBg = "rgba(74, 222, 128, 0.1)";
-    let aMult = T_A / W;
-    let mName = getSceneName();
-    let mIcon = scenes[currentScene].icon;
-    
-    if (currentAction === 'static') {
-        eduText = t('edu_static').replace('{T}', T_A.toFixed(0));
-        eduColor = "var(--text)"; eduBg = "rgba(255,255,255,0.05)";
-    } else if (currentAction === 'haul') {
-        if (currentMode === 'base' || (currentE < 0.6)) {
-            eduText = `${mIcon}` + t('edu_haul_base').replace(/{name}/g, mName).replace('{mult}', aMult.toFixed(1)).replace('{T}', T_A.toFixed(0));
-            eduColor = "var(--bad)"; eduBg = "rgba(239, 68, 68, 0.15)";
-        } else if (currentMode === 'carabiner' || (currentE >= 0.6 && currentE < 0.9)) {
-            eduText = t('edu_haul_cara').replace(/{name}/g, mName).replace('{mult}', aMult.toFixed(1)).replace('{T}', T_A.toFixed(0));
-            eduColor = "var(--warn)"; eduBg = "rgba(251, 191, 36, 0.15)";
-        } else {
-            eduText = t('edu_haul_pull').replace(/{name}/g, mName).replace('{mult}', aMult.toFixed(1)).replace('{T}', T_A.toFixed(0));
-            eduColor = "var(--safe)"; eduBg = "rgba(74, 222, 128, 0.15)";
-        }
-    } else if (currentAction === 'lower') {
-        if (currentMode === 'base' || (currentE < 0.6)) {
-            eduText = `${mIcon}` + t('edu_low_base').replace(/{name}/g, mName).replace('{T}', T_A.toFixed(0));
-        } else if (currentMode === 'carabiner' || (currentE >= 0.6 && currentE < 0.9)) {
-            eduText = t('edu_low_cara').replace(/{name}/g, mName).replace('{T}', T_A.toFixed(0));
-        } else {
-            eduText = t('edu_low_pull').replace(/{name}/g, mName).replace('{T}', T_A.toFixed(0));
-            eduColor = "var(--bad)"; eduBg = "rgba(239, 68, 68, 0.15)";
-        }
-    }
-
-    if (thetaDeg < 60 && multiplier >= 2) {
-        eduText += t('edu_warning').replace(/{name}/g, mName);
-        eduColor = "var(--bad)"; eduBg = "rgba(239, 68, 68, 0.15)";
-    }
-
-    els.eduPanel.innerHTML = eduText;
-    els.eduPanel.style.borderColor = eduColor;
-    els.eduPanel.style.background = eduBg;
-
-    let forceColor = "var(--safe)";
-    if (multiplier >= 2.5) forceColor = "var(--bad)";
-    else if (multiplier >= 1.8) forceColor = "var(--warn)";
-    
-    els.forceArrowLine.setAttribute('stroke', forceColor);
-    els.forceArrowHead.setAttribute('fill', forceColor);
-    
-    els.txtAnchorTension.textContent = `${T_A.toFixed(0)} kg`;
-    els.txtAnchorMult.textContent = t('multLabel').replace('{m}', aMult.toFixed(1));
-    
-    els.txtBranchForce.textContent = `${Force.toFixed(0)} kg`;
-    els.txtBranchForce.style.color = forceColor;
-    els.txtBranchMult.textContent = t('multLabel').replace('{m}', multiplier.toFixed(1));
-    els.dashBranch.style.borderTopColor = forceColor;
-}
-
-inLoad.addEventListener('input', updateEngine);
-
-let pt = svgEl.createSVGPoint();
-function getSVGPos(e) { pt.x = e.touches ? e.touches[0].clientX : e.clientX; pt.y = e.touches ? e.touches[0].clientY : e.clientY; return pt.matrixTransform(svgEl.getScreenCTM().inverse()); }
-
-let isDragging = false;
-function startDrag(e) { isDragging = true; if(e.type === 'touchstart' && e.cancelable) { e.preventDefault(); } }
-els.anchorGroup.addEventListener('mousedown', startDrag);
-els.anchorGroup.addEventListener('touchstart', startDrag, {passive: false});
-
-function processDrag(e) {
-  if(!isDragging) return;
-  if(e.cancelable) e.preventDefault(); 
-  let pos = getSVGPos(e);
-  A.x = Math.max(20, Math.min(380, pos.x));
-  A.y = Math.max(20, Math.min(380, pos.y));
-  updateEngine();
-}
-
-window.addEventListener('touchmove', processDrag, {passive: false});
-window.addEventListener('mousemove', processDrag);
-window.addEventListener('touchend', () => isDragging = false);
-window.addEventListener('mouseup', () => isDragging = false);
-
-function resetEngine() {
-  A = { x: 340, y: 360 }; inLoad.value = 100;
-  setScene(document.querySelector('.toggle-btn[data-type="scene"][data-val="tree"]'), 'tree');
-  document.querySelector('.toggle-btn[data-type="action"][data-val="static"]').click();
-}
-
-setTimeout(() => { applyTranslations(); resetEngine(); }, 100);
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault(); deferredPrompt = e;
-    const installBtn = document.getElementById('installAppBtn');
-    if (installBtn) {
-        installBtn.style.display = 'block';
-        installBtn.addEventListener('click', async () => {
-            if (deferredPrompt) { deferredPrompt.prompt(); const { outcome } = await deferredPrompt.userChoice; if (outcome === 'accepted') installBtn.style.display = 'none'; deferredPrompt = null; }
-        });
-    }
+    updateTheoryText();
+    draw(slider.value);
 });
 
-if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').then(reg => { reg.update(); }).catch(err => console.error(err)); }); }
+function updateTheoryText() {
+    if(currentMode === 'anchor') {
+        theoryContent.innerHTML = `
+          <p><b style="color:var(--safe)">${t('thAnSafeT')}</b><br>${t('thAnSafeD')}</p>
+          <p><b style="color:var(--warn)">${t('thAnWarnT')}</b><br>${t('thAnWarnD')}</p>
+          <p><b style="color:var(--bad)">${t('thAnDanT')}</b><br>${t('thAnDanD')}</p>
+          <p><b style="color:var(--instructor)">${t('thAngle')}</b><br>${t('thAngleD')}</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">${t('collapse')}</button>
+        `;
+    } else {
+        theoryContent.innerHTML = `
+          <p><b style="color:var(--safe)">${t('thTrSafeT')}</b><br>${t('thTrSafeD')}</p>
+          <p><b style="color:var(--warn)">${t('thTrWarnT')}</b><br>${t('thTrWarnD')}</p>
+          <p><b style="color:var(--bad)">${t('thTrDanT')}</b><br>${t('thTrDanD')}</p>
+          <p><b style="color:var(--instructor)">${t('thAngle')}</b><br>${t('thAngleD')}</p>
+          <button type="button" class="btn-collapse-inner" onclick="this.closest('details').removeAttribute('open')">${t('collapse')}</button>
+        `;
+    }
+}
 
 function checkForUpdates() {
-  showToast("🔄 正在清除快取並載入最新版本...", "warn");
-  if ('caches' in window) { caches.keys().then((names) => { names.forEach(name => caches.delete(name)); }); }
-  setTimeout(() => { window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime(); }, 1500);
+    showToast(t('menu4'), "warn");
+    setTimeout(() => {
+        window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
+    }, 1000);
 }
 
 const shareBtnAction = document.getElementById('shareBtnAction');
-if(shareBtnAction) {
-    shareBtnAction.addEventListener('click', async () => {
-      const shareData = { title: '轉向點受力分析儀', text: '推薦這套散木團隊專屬的黑科技！結合實境相機與動態摩擦力引擎，快來試試！', url: window.location.href };
-      try {
-        if (navigator.share) { await navigator.share(shareData); } 
-        else { const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href; dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); showToast('🔗 網址已複製，您可以貼上分享給其他人囉！', 'safe'); }
-      } catch (err) { }
-    });
+shareBtnAction.addEventListener('click', async () => {
+  const shareData = { title: '雙引擎張力分析儀', text: '內建錨點與索道雙重國際安全規範，結合 AR 實境精準推演極限張力。', url: window.location.href };
+  try {
+    if (navigator.share) { await navigator.share(shareData); } 
+    else {
+      const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href;
+      dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); 
+      showToast('🔗 系統回報：網址已複製，您可以貼上分享給朋友囉！', 'safe'); 
+    }
+  } catch (err) {}
+});
+
+const supportBtnAction = document.getElementById('supportBtnAction'); 
+supportBtnAction.addEventListener('click', () => {
+    document.getElementById('supportModal').style.display = 'flex';
+});
+
+let hasAgreedToPermissions = false;
+const permissionModalOverlay = document.getElementById('permissionModalOverlay');
+const permissionAgreeBtn = document.getElementById('permissionAgreeBtn');
+
+function requestUserAgreement() {
+  if (hasAgreedToPermissions) return Promise.resolve();
+  return new Promise((resolve) => {
+    permissionModalOverlay.style.display = 'flex';
+    permissionAgreeBtn.onclick = () => { permissionModalOverlay.style.display = 'none'; hasAgreedToPermissions = true; resolve(); };
+  });
 }
+
+const angleModalOverlay = document.getElementById('angleModalOverlay');
+const exactAngleInput = document.getElementById('exactAngleInput');
+const angleConfirmBtn = document.getElementById('angleConfirmBtn');
+const angleCancelBtn = document.getElementById('angleCancelBtn');
+
+const svgContainer = document.getElementById('svgContainer');
+const slider = document.getElementById('slider');
+
+svgContainer.addEventListener('click', (e) => {
+  if (e.target.classList.contains('beta-text') || e.target.closest('.beta-text')) {
+    attemptFeature('featAngle', () => {
+      exactAngleInput.value = slider.value;
+      angleModalOverlay.style.display = 'flex';
+      setTimeout(() => exactAngleInput.focus(), 100);
+    });
+  }
+});
+
+angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
+angleConfirmBtn.addEventListener('click', () => {
+  let val = parseFloat(exactAngleInput.value);
+  if (isNaN(val) || val < 0 || val > 180) { showToast('⚠️ 請輸入 0 到 180 之間的有效數字！', 'bad'); return; }
+  slider.value = val; draw(val); angleModalOverlay.style.display = 'none';
+});
+
+let isLightMode = false;
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', () => {
+  isLightMode = !isLightMode;
+  document.documentElement.setAttribute('data-theme', isLightMode ? 'light' : 'dark');
+  themeToggle.textContent = isLightMode ? '🌙' : '☀️'; draw(slider.value);
+});
+
+let isCameraOn = false; let currentStream = null;
+const cameraToggle = document.getElementById('cameraToggle');
+const bgVideo = document.getElementById('bgVideo');
+const bgImage = document.getElementById('bgImage');
+const mainCard = document.getElementById('mainCard');
+const arControls = document.getElementById('arControls');
+
+cameraToggle.addEventListener('click', () => {
+  attemptFeature('featCam', async () => {
+    if (!isCameraOn) {
+      await requestUserAgreement(); 
+      try {
+        let stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const backCams = devices.filter(d => d.kind === 'videoinput' && d.label.toLowerCase().includes('back'));
+        const mainCam = backCams.find(d => !d.label.toLowerCase().includes('ultra') && !d.label.toLowerCase().includes('廣角'));
+        if (mainCam && stream.getVideoTracks()[0].getSettings().deviceId !== mainCam.deviceId) {
+            stream.getTracks().forEach(t => t.stop());
+            stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
+        }
+        currentStream = stream; bgVideo.srcObject = currentStream; bgVideo.style.display = 'block'; bgImage.style.display = 'none';
+        mainCard.classList.add('camera-mode'); cameraToggle.textContent = '❌'; cameraToggle.style.color = 'var(--warn)';
+        arControls.style.display = 'flex'; photoBtn.style.color = 'inherit'; isCameraOn = true;
+      } catch (err) { cameraToggle.textContent = '⛔'; setTimeout(() => cameraToggle.textContent = '📷', 3000); }
+    } else { turnOffCamera(); }
+  });
+});
+
+let isTorchOn = false;
+const torchToggle = document.getElementById('torchToggle');
+torchToggle.addEventListener('click', async () => {
+  if (!isCameraOn || !currentStream) { showToast('⚠️ 請先開啟「📷 實境相機」才能使用手電筒！', 'warn'); return; }
+  const track = currentStream.getVideoTracks()[0];
+  try {
+    const capabilities = track.getCapabilities();
+    if (!capabilities.torch) { showToast('⚠️ 您的裝置或瀏覽器不支援手電筒控制。', 'bad'); return; }
+    isTorchOn = !isTorchOn; await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
+    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit'; torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
+  } catch (err) { showToast('⚠️ 手電筒開啟失敗，部分手機瀏覽器可能受限。', 'bad'); }
+});
+
+function turnOffCamera() {
+  if (currentStream) currentStream.getTracks().forEach(track => track.stop());
+  bgVideo.style.display = 'none';
+  if (bgImage.style.display !== 'block') { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
+  cameraToggle.textContent = '📷'; cameraToggle.style.color = 'inherit'; isCameraOn = false;
+  isTorchOn = false; torchToggle.style.color = 'inherit'; torchToggle.textContent = '🔦';
+}
+
+const photoBtn = document.getElementById('photoBtn');
+const photoUpload = document.getElementById('photoUpload');
+photoBtn.addEventListener('click', () => {
+  attemptFeature('featPhoto', () => {
+    if (bgImage.style.display === 'block') {
+      bgImage.style.display = 'none'; bgImage.src = ''; photoUpload.value = ''; photoBtn.style.color = 'inherit';
+      if (!isCameraOn) { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
+    } else { photoUpload.click(); }
+  });
+});
+
+photoUpload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(file) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      bgImage.src = event.target.result; bgImage.style.display = 'block';
+      if(isCameraOn) turnOffCamera(); 
+      bgVideo.style.display = 'none'; mainCard.classList.add('camera-mode');
+      arControls.style.display = 'flex'; photoBtn.style.color = 'var(--safe)'; 
+    }; reader.readAsDataURL(file);
+  }
+});
+
+const arCollapseBtn = document.getElementById('arCollapseBtn');
+arCollapseBtn.addEventListener('click', () => {
+  const isCollapsed = arControls.classList.contains('is-collapsed');
+  if(isCollapsed) {
+    arControls.classList.remove('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'block';
+    document.getElementById('arSlidersWrap').style.display = 'flex'; arCollapseBtn.textContent = t('arCollapse'); arCollapseBtn.style.color = 'var(--muted)';
+  } else {
+    arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
+    document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = t('arExpand'); arCollapseBtn.style.color = 'var(--safe)';
+  }
+});
+
+let currentZoom = 1; let panX = 0; let panY = 0; let isDragging = false; let startX = 0, startY = 0;
+const scaleWrap = document.getElementById('scaleWrap');
+function updateTransform() { scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`; }
+
+const zoomSlider = document.getElementById('zoomSlider');
+zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
+
+let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
+const arDragHandle = document.getElementById('arDragHandle');
+function startPanelDrag(e) {
+  if (e.target.id === 'arCollapseBtn' || e.target.tagName.toLowerCase() === 'input') return;
+  isDraggingPanel = true; const touch = e.type.includes('mouse') ? e : e.touches[0]; pStartX = touch.clientX; pStartY = touch.clientY;
+  const rect = arControls.getBoundingClientRect(); const parentRect = mainCard.getBoundingClientRect();
+  pInitialLeft = rect.left - parentRect.left; pInitialTop = rect.top - parentRect.top;
+  arControls.style.left = `${pInitialLeft}px`; arControls.style.top = `${pInitialTop}px`; arControls.style.right = 'auto'; arControls.style.bottom = 'auto'; arControls.style.transform = 'none';
+}
+function movePanel(e) {
+  if (!isDraggingPanel) return; e.preventDefault(); const touch = e.type.includes('mouse') ? e : e.touches[0];
+  const dx = touch.clientX - pStartX; const dy = touch.clientY - pStartY;
+  arControls.style.left = `${pInitialLeft + dx}px`; arControls.style.top = `${pInitialTop + dy}px`;
+}
+function endPanelDrag() { isDraggingPanel = false; }
+arDragHandle.addEventListener('mousedown', startPanelDrag); window.addEventListener('mousemove', movePanel); window.addEventListener('mouseup', endPanelDrag);
+arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false}); window.addEventListener('touchmove', movePanel, {passive: false}); window.addEventListener('touchend', endPanelDrag);
+
+mainCard.addEventListener('mousedown', (e) => {
+  if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
+});
+window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
+window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
+
+mainCard.addEventListener('touchstart', (e) => {
+  if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY;
+  if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
+}, {passive: false});
+window.addEventListener('touchmove', (e) => {
+  if (!isDragging) return; if (e.cancelable) e.preventDefault(); 
+  panX = e.touches[0].clientX - startX; panY = e.touches[0].clientY - startY; updateTransform();
+}, {passive: false});
+window.addEventListener('touchend', () => { isDragging = false; arControls.style.opacity = '1'; });
+
+const rotateSlider = document.getElementById('rotateSlider');
+const gimbalWrap = document.getElementById('gimbalWrap');
+rotateSlider.addEventListener('input', (e) => { let currentAngle = parseFloat(e.target.value); gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`; });
+
+const screenshotBtn = document.getElementById('screenshotBtn');
+const watermark = document.getElementById('watermark');
+screenshotBtn.addEventListener('click', () => {
+  attemptFeature('featShot', async () => {
+    mainCard.style.opacity = '0.5'; setTimeout(() => mainCard.style.opacity = '1', 150);
+    let originalVideoState = bgVideo.style.display; let originalImageSrc = bgImage.src; let originalImageState = bgImage.style.display;
+    
+    if (isCameraOn && bgVideo.videoWidth) {
+      const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
+      tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+      bgImage.src = tempCanvas.toDataURL('image/jpeg'); bgImage.style.display = 'block'; bgVideo.style.display = 'none';
+    }
+    
+    const now = new Date(); const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
+    const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    let titleStr = currentMode === 'anchor' ? t('appTitle') : t('appTitleTrack');
+    watermark.innerHTML = `🛡️ ${titleStr}<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
+    watermark.style.display = 'block';
+    
+    try {
+      const canvas = await html2canvas(mainCard, { useCORS: true, backgroundColor: null, scale: 2 });
+      const link = document.createElement('a'); link.download = '戰術張力分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
+    } catch(e) { showToast("❌ 截圖失敗，請稍後再試！", "bad"); }
+    
+    watermark.style.display = 'none';
+    if (isCameraOn) { bgVideo.style.display = originalVideoState; bgImage.src = originalImageSrc; bgImage.style.display = originalImageState; }
+  });
+});
+
+function polar(cx, cy, r, deg){ const rad = deg * Math.PI / 180; return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) }; }
+function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
+  let d = '';
+  for(let i = 0; i <= steps; i++){
+    const t = i / steps; const deg = startDeg + (endDeg - startDeg) * t; const p = polar(cx, cy, r, deg);
+    d += `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(2)} ${p.y.toFixed(2)} `;
+  } return d;
+}
+
+function stateOf(beta){
+  if (currentMode === 'anchor') {
+    if(beta >= 179.9) return { color:'var(--bad)', title: t('broken'), tone:'zoneBad', desc: t('brokenDesc'), stateClass:'is-broken' };
+    if(beta > 120) return { color:'var(--bad)', title: t('danger'), tone:'zoneBad', desc: t('anchorDangerDesc'), stateClass:'is-danger' };
+    if(beta > 90)  return { color:'var(--warn)', title: t('warn'), tone:'zoneWarn', desc: t('anchorWarnDesc'), stateClass:'is-warn' };
+    return { color:'var(--safe)', title: t('safe'), tone:'zoneSafe', desc: t('anchorSafeDesc'), stateClass:'' };
+  } else {
+    if(beta >= 179.9) return { color:'var(--bad)', title: t('broken'), tone:'zoneBad', desc: t('brokenDesc'), stateClass:'is-broken' };
+    if(beta > 160) return { color:'var(--bad)', title: t('trackDanger'), tone:'zoneBad', desc: t('trackDangerDesc'), stateClass:'is-danger' };
+    if(beta > 150) return { color:'var(--warn)', title: t('warn'), tone:'zoneWarn', desc: t('trackWarnDesc'), stateClass:'is-warn' };
+    return { color:'var(--safe)', title: t('trackSafe'), tone:'zoneSafe', desc: t('trackSafeDesc'), stateClass:'' };
+  }
+}
+
+const inputT = document.getElementById('inputT');
+
+function getForceLabel(phi, beta){
+  if(beta >= 179.9) return "∞"; 
+  const rad = Math.max(phi, 0.05) * Math.PI / 180;
+  const T = Number(inputT.value) || 0;
+  const val = T / (2 * Math.sin(rad));
+  try { return val.toLocaleString('en-US', {maximumFractionDigits: 1}); } catch (e) { return val.toFixed(1); }
+}
+
+const caption = document.getElementById('caption');
+
+function draw(beta){
+  beta = Number(beta);
+  const phi = (180 - beta) / 2;
+  const st = stateOf(beta); 
+  const forceLabel = getForceLabel(phi, beta);
+  
+  const isBroken = beta >= 179.9;
+  const isSurprised = (currentMode === 'anchor' ? beta > 120 : beta > 160) && !isBroken;
+  
+  mainCard.classList.remove('is-broken', 'is-danger', 'is-warn');
+  if (isBroken) mainCard.classList.add('is-broken');
+  else if (st.stateClass) mainCard.classList.add(st.stateClass);
+
+  const cx = 180, cy = 200, ropeLen = 125; 
+  const left = polar(cx, cy, ropeLen, 180 - phi);
+  const right = polar(cx, cy, ropeLen, phi);
+  const leftExt = polar(cx, cy, ropeLen + 20, 180 - phi);
+  const rightExt = polar(cx, cy, ropeLen + 20, phi);
+
+  const topY = right.y; 
+  const instOffset = Math.max(45, 60 + (120 - beta) * 0.5); 
+  const instX = isInstructorRight ? Math.min(right.x + instOffset, 330) : Math.max(left.x - instOffset, 30);
+  const d = isInstructorRight ? -1 : 1; 
+
+  const pullIn = Math.max(0, (beta - 100) / 80); 
+  const forcePosRatio = 1 - pullIn * 0.45; 
+  let leftForceX = cx + (left.x - cx) * forcePosRatio; let rightForceX = cx + (right.x - cx) * forcePosRatio;
+  leftForceX = Math.min(leftForceX, cx - 45); rightForceX = Math.max(rightForceX, cx + 45);
+  const forceY = topY - 15;
+
+  const aArcStart = isInstructorRight ? 180 : 360 - phi;
+  const aArcEnd = isInstructorRight ? 180 + phi : 360;
+  const aArcMid = isInstructorRight ? 180 + phi/2 : 360 - phi/2;
+  const aAnchor = isInstructorRight ? right : left;
+  const aTextPos = polar(aAnchor.x, topY, 38, aArcMid);
+
+  const altArcStart = isInstructorRight ? 0 : 180 - phi;
+  const altArcEnd = isInstructorRight ? phi : 180;
+  const altArcMid = isInstructorRight ? phi/2 : 180 - phi/2;
+  const altTextPos = polar(cx, cy, 45, altArcMid);
+
+  let instructorPose = '';
+  if (isSurprised || isBroken) instructorPose = 'animation: panic-shake 0.15s infinite;';
+  
+  let ropesHtml = isBroken ? 
+    `<line x1="${cx-25}" y1="${cy+5}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />
+     <line x1="${cx+25}" y1="${cy+5}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" opacity="0.5" />` :
+    `<line x1="${cx}" y1="${cy}" x2="${left.x}" y2="${left.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />
+     <line x1="${cx}" y1="${cy}" x2="${right.x}" y2="${right.y}" stroke="${st.color}" stroke-width="8" stroke-linecap="round" />`;
+
+  let instructorHtml = '';
+  if (isSurprised || isBroken) {
+    instructorHtml = `
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - d*10}" y2="${topY-35}" stroke="var(--instructor)" stroke-width="1.5" />
+      <text class="mask-text" x="${instX}" y="${topY-58}" fill="var(--bad)" font-size="18" font-weight="bold" text-anchor="middle">!</text>
+    `;
+  } else {
+    const arrowStartX = instX + d * 10; const arrowStartY = topY - 15;
+    const arcTarget = polar(aAnchor.x, topY, 25, aArcMid);
+    const deltaX = arcTarget.x - arrowStartX; const deltaY = arcTarget.y - arrowStartY;
+    const dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    const ratio = dist > 8 ? (dist - 8) / dist : 1;
+    const arrowEndX = arrowStartX + deltaX * ratio; const arrowEndY = arrowStartY + deltaY * ratio;
+    const arrowCpX = arrowStartX + deltaX * 0.5; const arrowCpY = Math.min(arrowStartY, arrowEndY) - 25;
+    instructorHtml = `
+      <line x1="${instX}" y1="${topY-25}" x2="${instX + 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <line x1="${instX}" y1="${topY-25}" x2="${instX - 7}" y2="${topY-18}" stroke="var(--instructor)" stroke-width="1.5" />
+      <path d="M ${arrowStartX} ${arrowStartY} Q ${arrowCpX} ${arrowCpY} ${arrowEndX} ${arrowEndY}" stroke="var(--instructor)" stroke-width="1.2" fill="none" marker-end="url(#arrow)" />
+    `;
+  }
+
+  let tension = (Number(inputT.value) || 0) / (2 * Math.sin(Math.max(phi, 0.05) * Math.PI / 180));
+  let verticalA = tension * Math.sin(Math.max(phi, 0.05) * Math.PI / 180);
+  let verticalB = tension * Math.sin(Math.max(phi, 0.05) * Math.PI / 180);
+
+  let isStraight = (!isBroken) && (beta >= 179.9);
+  
+  let tText = (isStraight || tension > 9999) ? t('deadLineShort') : tension.toFixed(1);
+  let vAText = (isStraight || verticalA > 9999) ? t('deadLineShort') : verticalA.toFixed(1);
+  let vBText = (isStraight || verticalB > 9999) ? t('deadLineShort') : verticalB.toFixed(1);
+  let unitText = isBroken ? '' : 'kg';
+
+  let forceTagsHtml = '';
+  if (beta <= 15 && !isBroken) {
+    forceTagsHtml = `<text class="mask-text" x="${cx}" y="${forceY}" fill="${st.color}" font-size="18" text-anchor="middle">${t('anchorTension')} ${forceLabel} ${unitText}</text>`;
+  } else {
+    forceTagsHtml = `
+      <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
+      <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${tText} ${unitText}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${vBText} ${unitText}</text>
+    `;
+  }
+
+  let limitWarningHtml = isBroken ? `
+    <rect x="80" y="70" width="200" height="28" rx="6" fill="var(--bad)" opacity="0.85" />
+    <text x="180" y="89" fill="var(--card)" font-size="13" font-weight="bold" text-anchor="middle">${t('limitWarning')}</text>
+  ` : '';
+
+  const betaStr = (beta % 1 === 0) ? beta : beta.toFixed(1);
+  const phiStr = (phi % 1 === 0) ? phi : phi.toFixed(1);
+  const betaYOffset = Math.max(0, 90 - beta) * 0.4;
+  const betaTextY = cy - 35 - betaYOffset;
+
+  svgContainer.innerHTML = `
+    <svg viewBox="0 0 360 330" style="width:100%; height:100%;">
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="var(--instructor)"/></marker>
+        <filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="var(--card)" flood-opacity="0.8"/></filter>
+        <style>@keyframes svgSway { 0% { transform: rotate(-0.5deg); } 50% { transform: rotate(0.5deg); } 100% { transform: rotate(-0.5deg); } } .sway-element { transform-origin: 180px 160px; animation: svgSway 3s infinite ease-in-out; }</style>
+      </defs>
+      
+      <line x1="20" y1="${topY}" x2="340" y2="${topY}" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="1" opacity=".4" />
+      <line x1="20" y1="${cy}" x2="340" y2="${cy}" stroke="var(--base)" stroke-width="1" opacity=".5" />
+      
+      <path d="${polyArc(cx, cy, 32, 30, 150)}" stroke="var(--warn)" stroke-width="6" opacity="${beta>=120 ? 0.2 : (beta>90 ? 0.05 : 0)}" fill="none" />
+      <path d="${polyArc(cx, cy, 40, 20, 160)}" stroke="var(--bad)" stroke-width="8" opacity="${beta>=140 ? 0.3 : (beta>90 ? 0.05 : 0)}" fill="none" />
+
+      ${ropesHtml}
+      
+      <line x1="${left.x}" y1="${left.y}" x2="${leftExt.x}" y2="${leftExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      <line x1="${right.x}" y1="${right.y}" x2="${rightExt.x}" y2="${rightExt.y}" stroke="${st.color}" stroke-width="2" stroke-dasharray="4 4" opacity=".5" />
+      
+      <g class="sway-element"><line x1="180" y1="180" x2="180" y2="230" stroke="var(--bad)" stroke-width="3" marker-end="url(#arrow)" opacity="${isBroken ? 0 : 1}" /></g>
+
+      <path d="${polyArc(cx, cy, 28, phi, 180 - phi)}" stroke="var(--warn)" stroke-width="2" fill="none" />
+      <text class="beta-text mask-text" x="${cx}" y="${betaTextY}" fill="var(--warn)" font-size="13" text-anchor="middle" font-weight="bold" style="cursor:pointer; pointer-events:auto; text-decoration:underline; text-underline-offset:2px;">β ${betaStr}° ✎<tspan class="inline-lock">🔒</tspan></text>
+      
+      <path d="${polyArc(aAnchor.x, topY, 25, aArcStart, aArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" />
+      <text class="mask-text" x="${aTextPos.x}" y="${aTextPos.y}" fill="${st.color}" font-size="16" font-weight="bold" text-anchor="middle" dominant-baseline="central">a</text>
+      
+      <path d="${polyArc(cx, cy, 25, altArcStart, altArcEnd)}" stroke="${st.color}" stroke-width="2.5" fill="none" stroke-dasharray="3 3" />
+      <text class="mask-text" x="${altTextPos.x}" y="${altTextPos.y}" fill="${st.color}" font-size="14" font-weight="bold" text-anchor="middle" dominant-baseline="central">φ ${phiStr}°</text>
+
+      <g opacity="0.9" style="${instructorPose}">
+        <circle cx="${instX}" cy="${topY-34}" r="5" fill="var(--instructor)" />
+        <line x1="${instX}" y1="${topY-29}" x2="${instX}" y2="${topY-15}" stroke="var(--instructor)" stroke-width="1.5" />
+        ${instructorHtml}
+        <text class="mask-text" x="${instX}" y="${topY-44}" fill="${st.color}" font-size="12" font-weight="bold" text-anchor="middle">a(=φ) ${phiStr}°</text>
+      </g>
+
+      <g font-weight="bold" filter="url(#shadow)">
+        ${forceTagsHtml}
+        ${limitWarningHtml}
+      </g>
+    </svg>
+  `;
+
+  let multiplier = tension / Number(inputT.value);
+  let mulText = tension > 9999 ? '∞' : multiplier.toFixed(2);
+  
+  caption.innerHTML = `
+    <div style="font-size:14px; margin-bottom:6px;">${t('currentMul')}<b style="color:var(--safe)">${mulText} x</b> ${t('loadWord')}</div>
+    <div class="${st.tone}" style="font-weight:bold; font-size: 15px;">${isBroken ? t('broken') : st.title}｜${st.desc}</div>
+    <div style="font-size:13px; opacity:0.9; margin-top:2px;">${currentMode === 'anchor' ? t('anchorNote') : t('trackNote')}</div>
+  `;
+}
+
+const btnMinus = document.getElementById('btnMinus');
+const btnPlus = document.getElementById('btnPlus');
+btnMinus.addEventListener('click', () => { inputT.value = Math.max(0, Number(inputT.value) - 10); draw(slider.value); });
+btnPlus.addEventListener('click', () => { inputT.value = Number(inputT.value) + 10; draw(slider.value); });
+
+slider.addEventListener('input', () => draw(slider.value));
+inputT.addEventListener('input', () => draw(slider.value));
+
+const resetBtn = document.getElementById('reset');
+resetBtn.addEventListener('click', () => { 
+  slider.value = currentMode === 'anchor' ? 90 : 150; 
+  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0;
+  arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
+  document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = t('arExpand'); arCollapseBtn.style.color = 'var(--safe)';
+  arControls.style.opacity = '1'; arControls.style.left = 'auto'; arControls.style.top = '80px'; arControls.style.right = '10px'; arControls.style.bottom = 'auto';
+  currentZoom = 1; panX = 0; panY = 0; updateTransform(); gimbalWrap.style.transform = `rotate(0deg)`; draw(slider.value); 
+});
+
+const jumpBtns = document.querySelectorAll('.jump');
+jumpBtns.forEach(btn => btn.addEventListener('click', () => { slider.value = btn.dataset.beta; draw(slider.value); }));
 
 const menuGroups = document.querySelectorAll('.menu-group');
 menuGroups.forEach(group => {
@@ -1338,12 +2284,20 @@ menuGroups.forEach(group => {
     item.addEventListener('toggle', function() {
       if (this.open) {
         group.classList.add('has-open-item');
-        items.forEach(other => { if (other !== this && other.open) other.removeAttribute('open'); });
+        items.forEach(other => { if (other !== this && other.open) { other.removeAttribute('open'); } });
         setTimeout(() => { this.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
-      } else { const anyOpen = Array.from(items).some(i => i.open); if (!anyOpen) group.classList.remove('has-open-item'); }
+      } else {
+        const anyOpen = Array.from(items).some(i => i.open);
+        if (!anyOpen) { group.classList.remove('has-open-item'); }
+      }
     });
   });
 });
+
+// 💡 引擎順序修復：等待 DOM 與變數皆載入完畢後，再執行翻譯與繪圖，完美避開死區當機！
+applyTranslations();
+draw(120);
+
 </script>
 </body>
 </html>
