@@ -62,7 +62,7 @@
     margin:0; background:var(--bg); color:var(--text);
     font-family: "Noto Serif CJK TC", serif; display:flex;
     justify-content:center; align-items: flex-start;
-    padding: 15px 10px 40px 10px; transition: background 0.3s, color 0.3s; touch-action: manipulation; 
+    padding: calc(12px + env(safe-area-inset-top)) 10px calc(40px + env(safe-area-inset-bottom)) 10px; transition: background 0.3s, color 0.3s; touch-action: manipulation; 
   }
   
   .app-container { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px; }
