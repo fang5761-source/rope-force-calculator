@@ -73,22 +73,19 @@
     transition: border-color 0.3s, background 0.3s; overflow: hidden; position: relative;
   }
   
+  /* 頂部導覽列調整 (V6.2 規範) */
   .topbar { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; padding: 0 4px; }
   .title-row { display: flex; align-items: center; width: 100%; justify-content: space-between; }
-  .title-left { display: flex; align-items: center; cursor: pointer; user-select: none; }
-  .title-tag {
-    font-size: 15px; color: var(--text); font-weight: bold;
-    border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; display: flex; align-items: center;
-  }
+  .title-left { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; font-size: 15px; font-weight: bold; white-space: nowrap; }
+  .title-tag { display: flex; align-items: center; border-left: 4px solid var(--warn); padding-left: 8px; letter-spacing: 0.5px; }
   
+  /* 下拉語言選單 (下放至工具選單) */
   #langSelect {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--muted);
-    border-radius: 8px; padding: 4px 6px; font-size: 13px; font-weight: bold; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-left: auto;
-    flex: 0 0 auto !important; width: fit-content !important; min-width: 0 !important;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--line); color: var(--text);
+    border-radius: 6px; padding: 4px 8px; font-size: 13px; font-weight: bold; cursor: pointer;
     outline: none; -webkit-appearance: menulist;
   }
-  #langSelect:focus { border-color: var(--safe); color: var(--text); }
+  #langSelect:focus { border-color: var(--safe); }
   #langSelect option { background: var(--bg); color: var(--text); }
 
   .btn-group {
@@ -126,26 +123,28 @@
   .modal-overlay {
     display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.85); z-index: 9999; align-items: center; justify-content: center;
-    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
   .modal-box {
-    background: var(--card); border: 2px solid var(--safe); padding: 24px;
+    background: var(--card); border: 2px solid var(--vip); padding: 24px;
     border-radius: 16px; width: 85%; max-width: 400px; text-align: center;
     box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative;
   }
-  .modal-box h3 { color: var(--safe); margin-top: 0; margin-bottom: 12px; font-size: 18px; }
-  .modal-box p { color: var(--text); font-size: 14px; line-height: 1.6; }
+  .modal-box h3 { margin-top: 0; margin-bottom: 12px; font-size: 18px; color: var(--warn); }
+  .modal-box p { color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
   .modal-box button.primary-btn {
-    background: var(--safe); color: #0f1623; font-size: 15px; padding: 10px 24px;
-    border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;
+    background: var(--vip); color: #fff; font-size: 15px; padding: 12px 20px; box-shadow: 0 4px 12px rgba(192, 132, 252, 0.4);
+    border: none; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px; transition: transform 0.2s;
   }
+  .modal-box button.primary-btn:active { transform: scale(0.95); }
+  
   #exactAngleInput {
     width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px;
     border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;
   }
   .modal-btn-group { display: flex; gap: 10px; }
-  .modal-btn-group button { flex: 1; }
-  #angleCancelBtn { background: var(--muted); color: #ffffff; }
+  .modal-btn-group .btn-cancel { flex: 1; background: var(--muted) !important; color: #fff !important; box-shadow: none !important; }
+  .modal-btn-group .btn-unlock { flex: 1; background: var(--safe) !important; color: #0f1623 !important; box-shadow: none !important; }
 
   .vip-badge {
     display: none; background: var(--vip); color: #fff; font-size: 10px; font-weight: bold;
@@ -275,12 +274,10 @@
     background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px;
     border-left: 4px solid var(--safe); box-shadow: 0 8px 25px rgba(0,0,0,0.6);
     z-index: 10000; font-weight: bold; text-align: center; font-size: 14px; width: 85%; max-width: 320px;
-    animation: toast-slide-down 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    opacity: 0; pointer-events: none;
   }
-  @keyframes toast-slide-down {
-    from { top: -50px; opacity: 0; }
-    to { top: 20px; opacity: 1; }
-  }
+  #toastMessage.show { top: 20px; opacity: 1; pointer-events: auto; display: block; }
 </style>
 </head>
 <body>
@@ -339,7 +336,7 @@ const i18n = {
     rotate: "🔄 旋轉",
     anchorTension: "固定點張力",
     deadLineShort: "死線!",
-    langBtn: "🌐 繁中",
+    menuLang: "語言設定 / Language",
     menu1: "專業名詞與原理解析",
     menu2: "系統工具與說明書",
     menu3: "分享系統連結",
@@ -383,7 +380,6 @@ const i18n = {
     thAngle: "φ 內錯仰角",
     thAngleD: "教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。",
     collapse: "🔼 收起說明",
-    // 操作說明與雜項
     op1: "點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。",
     op2: "滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。",
     op3: "點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。",
@@ -406,12 +402,11 @@ const i18n = {
     pwaStep8: "點選「加入」，即可將捷徑加到主畫面",
     installBtn: "📥 點擊一鍵安裝 APP",
     disclaimer: "<strong style='color: var(--bad); font-size: 14px;'>⚠️ 軟體免責聲明：</strong><br>系統運算基於理想幾何物理模型，不含繩索延展性、材質疲勞、摩擦力損耗等環境變數。實際救援操作之下垂量與系統架設，請務必遵循專業教官之指導與現場判斷，開發團隊不負任何實地操作之法律與賠償責任。<br><br><span style='color:var(--warn);'>※ 本系統採單機授權，為保障研發團隊權益，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>",
-    // VIP & Modal
     vipTitle: "🔒 專業版功能解鎖",
     vipEnable1: "您即將啟用「",
     vipEnable2: "」！",
     vipProOnly: "此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！",
-    vipDisclaimer: "⚠️ 注意：本系統採單機授權，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。",
+    vipDisclaimer: "※ 本系統採單機授權，為保障研發團隊權益，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。",
     vipStoreBtn: "🛒 前往專業版自動販賣機",
     vipHasPwd: "已取得密碼？請在此輸入：",
     vipPwdPlh: "輸入 VIP 通關密碼",
@@ -420,15 +415,11 @@ const i18n = {
     vipErrPwd: "❌ 授權碼錯誤，請確認輸入是否正確。",
     vipStateUnlocked: "🛡️ 系統狀態：已解鎖",
     vipStateDesc: "如需進入指揮官控制台，請輸入最高權限金鑰：",
-    cmdTitle: "👑 指揮官專屬控制台",
-    cmdExpToday: "👉 今天的體驗碼 (今晚失效)",
-    cmdExpTmrw: "👉 明天的體驗碼",
-    cmdPerm: "👉 🌟 總部專屬配發碼",
-    cmdLogout: "清除授權(登出)",
-    cmdClose: "關閉控制台",
     toastAuthSuccess: "🎉 授權成功！歡迎使用！",
     toastTrialSuccess: "⏱️ 體驗授權成功！(今晚自動失效)",
     toastLogout: "🔄 登出成功，重新載入鎖定狀態...",
+    toastCopy: "🔗 系統回報：網址已複製，您可以貼上分享給朋友囉！",
+    updateMsg: "系統回報：即將為您清除快取，並重新載入最新版本！\n\n請問是否繼續執行？",
     supTitle: "💬 系統問題回報",
     supDesc: "發現小蟲子 (Bug) 或系統異常嗎？<br><br>請點擊下方按鈕，填寫您的問題與建議，研發團隊會盡快進行修復與優化！",
     supLater: "稍後再說",
@@ -465,6 +456,7 @@ const i18n = {
     rotate: "🔄 Rotate",
     anchorTension: "Tension",
     deadLineShort: "FAIL!",
+    menuLang: "Language",
     menu1: "Theory & Principles",
     menu2: "Manual & Tools",
     menu3: "Share Link",
@@ -534,7 +526,7 @@ const i18n = {
     vipEnable1: "Enable '",
     vipEnable2: "'",
     vipProOnly: "Support SunMoon Team to unlock all features permanently!",
-    vipDisclaimer: "⚠️ Notice: Single-device license. No customer support or replacements for lost/changed devices. Please repurchase.",
+    vipDisclaimer: "※ Single-device license. To protect the development team's rights, please repurchase if you change devices or lose your password. No customer service or replacements provided.",
     vipStoreBtn: "🛒 Go to PRO Store",
     vipHasPwd: "Have a password?",
     vipPwdPlh: "Enter VIP Password",
@@ -543,17 +535,13 @@ const i18n = {
     vipErrPwd: "❌ Incorrect password.",
     vipStateUnlocked: "🛡️ System: Unlocked",
     vipStateDesc: "Enter MASTER KEY for Console:",
-    cmdTitle: "👑 Commander Console",
-    cmdExpToday: "👉 Today's Trial Code",
-    cmdExpTmrw: "👉 Tomorrow's Trial Code",
-    cmdPerm: "👉 🌟 Permanent Code",
-    cmdLogout: "Logout",
-    cmdClose: "Close",
     toastAuthSuccess: "🎉 Auth Success!",
     toastTrialSuccess: "⏱️ Trial Activated!",
     toastLogout: "🔄 Logged out.",
+    toastCopy: "🔗 Link copied to clipboard!",
+    updateMsg: "System Report: Clearing cache and reloading the latest version!\n\nContinue?",
     supTitle: "💬 Report an Issue",
-    supDesc: "Found a bug or have a suggestion?<br><br>Click below to fill out the report form and help us improve the system!",
+    supDesc: "Found a bug or system error?<br><br>Click the button below to submit your issue. Our R&D team will fix and optimize it ASAP!",
     supLater: "Maybe Later",
     supGo: "Go to Support Form",
     featCam: "📷 AR Camera Overlay",
@@ -588,6 +576,7 @@ const i18n = {
     rotate: "🔄 回転",
     anchorTension: "張力",
     deadLineShort: "破断!",
+    menuLang: "言語設定 / Language",
     menu1: "原理と専門用語",
     menu2: "ツールと操作",
     menu3: "リンク共有",
@@ -657,7 +646,7 @@ const i18n = {
     vipEnable1: "「",
     vipEnable2: "」を有効にします！",
     vipProOnly: "これはPRO版限定機能です。<br>SunMoonチームを支援し、全機能を永久解放しましょう！",
-    vipDisclaimer: "⚠️ 注意: 単一デバイスライセンスです。機種変更時のコード再発行やサポートはありません。再購入をお願いします。",
+    vipDisclaimer: "※ 本システムは単一デバイスライセンスです。開発チームの権利を保護するため、機種変更やパスワード紛失時は再購入をお願いします。再発行やサポートは提供しておりません。",
     vipStoreBtn: "🛒 PRO版ストアへ",
     vipHasPwd: "パスワードをお持ちですか？ここに入力：",
     vipPwdPlh: "VIPパスワードを入力",
@@ -666,17 +655,13 @@ const i18n = {
     vipErrPwd: "❌ パスワードが間違っています。もう一度確認してください。",
     vipStateUnlocked: "🛡️ システム状態: ロック解除済み",
     vipStateDesc: "指揮官コンソールに入るには、マスターキーを入力してください：",
-    cmdTitle: "👑 指揮官専用コンソール",
-    cmdExpToday: "👉 今日の体験コード (今夜失効)",
-    cmdExpTmrw: "👉 明日の体験コード",
-    cmdPerm: "👉 🌟 本部専用パーマネントコード",
-    cmdLogout: "認証解除 (ログアウト)",
-    cmdClose: "コンソールを閉じる",
     toastAuthSuccess: "🎉 認証成功！ようこそ！",
     toastTrialSuccess: "⏱️ 体験版有効化！(今夜自動失効)",
     toastLogout: "🔄 ログアウトしました。再読み込み中...",
+    toastCopy: "🔗 リンクをクリップボードにコピーしました！",
+    updateMsg: "システム報告：キャッシュをクリアし、最新バージョンを再読み込みします！\n\n続行しますか？",
     supTitle: "💬 システム問題報告",
-    supDesc: "バグや提案がありますか？<br><br>下のボタンからフォームに入力し、システムの改善にご協力ください！",
+    supDesc: "バグやシステム異常を見つけましたか？<br><br>下のボタンをクリックして報告してください。開発チームが早急に修正および最適化を行います！",
     supLater: "後で",
     supGo: "サポートフォームへ",
     featCam: "📷 ARカメラオーバーレイ",
@@ -711,6 +696,7 @@ const i18n = {
     rotate: "🔄 회전",
     anchorTension: "장력",
     deadLineShort: "파괴!",
+    menuLang: "언어 설정 / Language",
     menu1: "전문 용어 및 원리",
     menu2: "도구 및 매뉴얼",
     menu3: "링크 공유",
@@ -780,7 +766,7 @@ const i18n = {
     vipEnable1: "다음 기능을 활성화합니다: '",
     vipEnable2: "'",
     vipProOnly: "SunMoon 팀을 지원하고 모든 기능을 영구적으로 잠금 해제하세요!",
-    vipDisclaimer: "⚠️ 주의: 본 앱은 1기기 라이선스입니다. 기기 변경 시 고객 지원이 제공되지 않으니 재구매 바랍니다.",
+    vipDisclaimer: "※ 단일 기기 라이선스입니다. 개발팀의 권익을 보호하기 위해 기기 변경이나 비밀번호 분실 시 재구매해주시기 바랍니다. 고객 지원은 제공되지 않습니다.",
     vipStoreBtn: "🛒 PRO 스토어로 이동",
     vipHasPwd: "비밀번호가 있으신가요?",
     vipPwdPlh: "VIP 비밀번호 입력",
@@ -789,17 +775,13 @@ const i18n = {
     vipErrPwd: "❌ 비밀번호가 올바르지 않습니다.",
     vipStateUnlocked: "🛡️ 시스템: 잠금 해제됨",
     vipStateDesc: "콘솔 마스터 키 입력:",
-    cmdTitle: "👑 사령관 콘솔",
-    cmdExpToday: "👉 오늘 체험 코드",
-    cmdExpTmrw: "👉 내일 체험 코드",
-    cmdPerm: "👉 🌟 영구 코드",
-    cmdLogout: "로그아웃",
-    cmdClose: "닫기",
     toastAuthSuccess: "🎉 인증 성공!",
     toastTrialSuccess: "⏱️ 체험판 활성화!",
     toastLogout: "🔄 로그아웃 되었습니다.",
+    toastCopy: "🔗 링크가 클립보드에 복사되었습니다!",
+    updateMsg: "시스템 보고: 캐시를 지우고 최신 버전을 다시 로드합니다!\n\n계속하시겠습니까?",
     supTitle: "💬 문제 신고",
-    supDesc: "버그나 제안 사항이 있나요?<br><br>아래 버튼을 눌러 양식을 작성하고 시스템 개선에 참여해 주세요!",
+    supDesc: "버그나 시스템 이상을 발견하셨나요?<br><br>아래 버튼을 눌러 양식을 작성해 주세요. 개발팀이 신속히 수정하고 최적화하겠습니다!",
     supLater: "나중에",
     supGo: "폼으로 이동",
     featCam: "📷 AR 카메라 오버레이",
@@ -834,6 +816,7 @@ const i18n = {
     rotate: "🔄 Rotation",
     anchorTension: "Tension",
     deadLineShort: "Rupture!",
+    menuLang: "Langue / Language",
     menu1: "Théorie et Principes",
     menu2: "Manuel et Outils",
     menu3: "Partager le lien",
@@ -903,7 +886,7 @@ const i18n = {
     vipEnable1: "Activer '",
     vipEnable2: "'",
     vipProOnly: "Soutenez SunMoon Team pour débloquer toutes les fonctions !",
-    vipDisclaimer: "⚠️ Note : Licence pour un seul appareil. Aucun support pour changement d'appareil. Veuillez racheter.",
+    vipDisclaimer: "※ Licence pour appareil unique. Afin de protéger les droits de l'équipe de développement, veuillez racheter en cas de changement d'appareil ou de perte de mot de passe. Aucun service client n'est fourni.",
     vipStoreBtn: "🛒 Aller à la boutique PRO",
     vipHasPwd: "Vous avez un mot de passe ?",
     vipPwdPlh: "Entrez le mot de passe",
@@ -912,17 +895,13 @@ const i18n = {
     vipErrPwd: "❌ Mot de passe incorrect.",
     vipStateUnlocked: "🛡️ Système : Débloqué",
     vipStateDesc: "Entrez le code MASTER pour la Console :",
-    cmdTitle: "👑 Console du Commandant",
-    cmdExpToday: "👉 Code d'essai d'aujourd'hui",
-    cmdExpTmrw: "👉 Code d'essai de demain",
-    cmdPerm: "👉 🌟 Code Permanent",
-    cmdLogout: "Déconnexion",
-    cmdClose: "Fermer",
     toastAuthSuccess: "🎉 Authentification réussie !",
     toastTrialSuccess: "⏱️ Essai activé !",
     toastLogout: "🔄 Déconnecté.",
+    toastCopy: "🔗 Lien copié dans le presse-papiers !",
+    updateMsg: "Rapport système : Effacement du cache et rechargement de la dernière version !\n\nContinuer ?",
     supTitle: "💬 Signaler un Problème",
-    supDesc: "Un bug ou une suggestion ?<br><br>Cliquez ci-dessous pour remplir le formulaire et nous aider à nous améliorer !",
+    supDesc: "Vous avez trouvé un bug ou une erreur système ?<br><br>Cliquez ci-dessous pour nous envoyer votre signalement. Notre équipe R&D corrigera cela au plus vite !",
     supLater: "Plus tard",
     supGo: "Aller au Formulaire",
     featCam: "📷 Caméra AR",
@@ -957,6 +936,7 @@ const i18n = {
     rotate: "🔄 Drehen",
     anchorTension: "Spannung",
     deadLineShort: "Bruch!",
+    menuLang: "Sprache / Language",
     menu1: "Theorie & Prinzipien",
     menu2: "Handbuch & Werkzeuge",
     menu3: "Link teilen",
@@ -1026,7 +1006,7 @@ const i18n = {
     vipEnable1: "Aktiviere '",
     vipEnable2: "'",
     vipProOnly: "Unterstützen Sie das SunMoon Team, um alle Funktionen freizuschalten!",
-    vipDisclaimer: "⚠️ Hinweis: Ein-Gerät-Lizenz. Kein Support bei Gerätewechsel. Bitte neu kaufen.",
+    vipDisclaimer: "※ Einzelgerät-Lizenz. Um die Rechte des Entwicklungsteams zu schützen, kaufen Sie bitte neu, wenn Sie das Gerät wechseln oder Ihr Passwort verlieren. Es wird kein Kundenservice angeboten.",
     vipStoreBtn: "🛒 Zum PRO Store",
     vipHasPwd: "Haben Sie ein Passwort?",
     vipPwdPlh: "VIP Passwort eingeben",
@@ -1035,17 +1015,13 @@ const i18n = {
     vipErrPwd: "❌ Falsches Passwort.",
     vipStateUnlocked: "🛡️ System: Entsperrt",
     vipStateDesc: "MASTER KEY für die Konsole eingeben:",
-    cmdTitle: "👑 Commander Konsole",
-    cmdExpToday: "👉 Heutiger Testcode",
-    cmdExpTmrw: "👉 Morgiger Testcode",
-    cmdPerm: "👉 🌟 Permanenter Code",
-    cmdLogout: "Abmelden",
-    cmdClose: "Schließen",
     toastAuthSuccess: "🎉 Authentifizierung erfolgreich!",
     toastTrialSuccess: "⏱️ Testversion aktiviert!",
     toastLogout: "🔄 Abgemeldet.",
+    toastCopy: "🔗 Link in die Zwischenablage kopiert!",
+    updateMsg: "Systembericht: Cache wird geleert und die neueste Version neu geladen!\n\nFortfahren?",
     supTitle: "💬 Fehler melden",
-    supDesc: "Fehler gefunden oder Vorschläge?<br><br>Klicken Sie unten, um das Formular auszufüllen und uns zu helfen!",
+    supDesc: "Fehler oder Systemanomalie gefunden?<br><br>Klicken Sie unten, um uns das Problem zu melden. Unser R&D-Team wird es schnellstmöglich beheben!",
     supLater: "Später",
     supGo: "Zum Formular",
     featCam: "📷 AR Kamera",
@@ -1080,6 +1056,7 @@ const i18n = {
     rotate: "🔄 Rotar",
     anchorTension: "Tensión",
     deadLineShort: "FALLA!",
+    menuLang: "Idioma / Language",
     menu1: "Teoría y Principios",
     menu2: "Manual y Herramientas",
     menu3: "Compartir Enlace",
@@ -1149,7 +1126,7 @@ const i18n = {
     vipEnable1: "Habilitar '",
     vipEnable2: "'",
     vipProOnly: "¡Apoya al equipo SunMoon para desbloquear todas las funciones!",
-    vipDisclaimer: "⚠️ Nota: Licencia para un dispositivo. No hay soporte para cambios de teléfono. Vuelva a comprar.",
+    vipDisclaimer: "※ Licencia de dispositivo único. Para proteger los derechos del equipo de desarrollo, vuelva a comprar si cambia de dispositivo. No se proporciona servicio al cliente.",
     vipStoreBtn: "🛒 Ir a la Tienda PRO",
     vipHasPwd: "¿Tienes una contraseña?",
     vipPwdPlh: "Ingresa la contraseña",
@@ -1158,17 +1135,13 @@ const i18n = {
     vipErrPwd: "❌ Contraseña incorrecta.",
     vipStateUnlocked: "🛡️ Sistema: Desbloqueado",
     vipStateDesc: "Introduce la CLAVE MAESTRA para la consola:",
-    cmdTitle: "👑 Consola de Comandante",
-    cmdExpToday: "👉 Código de Prueba de Hoy",
-    cmdExpTmrw: "👉 Código de Prueba de Mañana",
-    cmdPerm: "👉 🌟 Código Permanente",
-    cmdLogout: "Cerrar sesión",
-    cmdClose: "Cerrar",
     toastAuthSuccess: "🎉 ¡Autenticación exitosa!",
     toastTrialSuccess: "⏱️ ¡Prueba activada!",
     toastLogout: "🔄 Sesión cerrada.",
+    toastCopy: "🔗 ¡Enlace copiado al portapapeles!",
+    updateMsg: "Reporte del Sistema: ¡Borrando caché y recargando la última versión!\n\n¿Continuar?",
     supTitle: "💬 Reportar Problema",
-    supDesc: "¿Encontraste un error o tienes sugerencias?<br><br>¡Haz clic abajo para llenar el formulario y ayudarnos a mejorar!",
+    supDesc: "¿Encontraste un error o un fallo en el sistema?<br><br>Haz clic abajo para enviar tu reporte. ¡Nuestro equipo de I+D lo solucionará lo antes posible!",
     supLater: "Más Tarde",
     supGo: "Ir al Formulario",
     featCam: "📷 Cámara AR",
@@ -1203,6 +1176,7 @@ const i18n = {
     rotate: "🔄 Rodar",
     anchorTension: "Tensão",
     deadLineShort: "FALHA!",
+    menuLang: "Idioma / Language",
     menu1: "Teoria e Princípios",
     menu2: "Manual e Ferramentas",
     menu3: "Compartilhar Link",
@@ -1272,7 +1246,7 @@ const i18n = {
     vipEnable1: "Ativar '",
     vipEnable2: "'",
     vipProOnly: "Apoie a Equipe SunMoon para desbloquear todos os recursos!",
-    vipDisclaimer: "⚠️ Atenção: Licença para um dispositivo. Sem suporte para trocas de aparelho. Compre novamente.",
+    vipDisclaimer: "※ Licença para um dispositivo. Para proteger os direitos da equipe de desenvolvimento, compre novamente caso mude de aparelho. Não há serviço de atendimento ao cliente.",
     vipStoreBtn: "🛒 Ir para a Loja PRO",
     vipHasPwd: "Tem uma senha?",
     vipPwdPlh: "Digite a senha VIP",
@@ -1281,17 +1255,13 @@ const i18n = {
     vipErrPwd: "❌ Senha incorreta.",
     vipStateUnlocked: "🛡️ Sistema: Desbloqueado",
     vipStateDesc: "Digite a CHAVE MESTRA para o Console:",
-    cmdTitle: "👑 Console do Comandante",
-    cmdExpToday: "👉 Código de Teste de Hoje",
-    cmdExpTmrw: "👉 Código de Teste de Amanhã",
-    cmdPerm: "👉 🌟 Código Permanente",
-    cmdLogout: "Sair",
-    cmdClose: "Fechar",
     toastAuthSuccess: "🎉 Autenticação bem-sucedida!",
     toastTrialSuccess: "⏱️ Teste ativado!",
     toastLogout: "🔄 Desconectado.",
+    toastCopy: "🔗 Link copiado para a área de transferência!",
+    updateMsg: "Relatório do Sistema: Limpando o cache e recarregando a última versão!\n\nContinuar?",
     supTitle: "💬 Relatar Problema",
-    supDesc: "Encontrou um erro ou tem sugestões?<br><br>Clique abaixo para preencher o formulário e nos ajudar a melhorar!",
+    supDesc: "Encontrou um erro ou falha no sistema?<br><br>Clique abaixo para enviar seu relatório. Nossa equipe de P&D resolverá o problema o mais rápido possível!",
     supLater: "Mais tarde",
     supGo: "Ir para Formulário",
     featCam: "📷 Câmera AR",
@@ -1317,7 +1287,6 @@ const i18n = {
   }
 };
 
-// 💡 擴增為 8 國語言切換，並加入自動偵測系統語言黑科技
 const availableLangs = ['zh', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'pt'];
 let currentLang = localStorage.getItem('sunmoon_lang');
 
@@ -1366,13 +1335,11 @@ function applyTranslations() {
 
     if (typeof updateTheoryText === 'function') updateTheoryText();
     
-    // 💡 安全呼叫重繪機制，確保不會在變數未準備好時引發 TDZ 錯誤
     if (typeof draw === 'function' && typeof slider !== 'undefined' && slider) {
         draw(slider.value);
     }
 }
 
-// 💡 下拉選單切換觸發事件
 function changeLang(selectedLang) {
     if(availableLangs.includes(selectedLang)) {
         currentLang = selectedLang;
@@ -1384,7 +1351,7 @@ function changeLang(selectedLang) {
 
 <div id="toastMessage"></div>
 
-<!-- 💡 技術支援視窗套用多語系翻譯與極簡化 (已修正研發團隊描述) -->
+<!-- 問題回報視窗 (V6.2 零客服微調版) -->
 <div id="supportModal" class="modal-overlay">
   <div class="modal-box">
     <h3 style="color:var(--warn); margin-top:0;" data-i18n="supTitle">💬 系統問題回報</h3>
@@ -1392,13 +1359,13 @@ function changeLang(selectedLang) {
       發現小蟲子 (Bug) 或系統異常嗎？<br><br>請點擊下方按鈕，填寫您的問題與建議，研發團隊會盡快進行修復與優化！
     </p>
     <div class="modal-btn-group" style="margin-top: 15px;">
-      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="document.getElementById('supportModal').style.display='none'" data-i18n="supLater">稍後再說</button>
-      <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="window.open('https://forms.gle/fnxHcegcwQSPKmuQ6', '_blank'); document.getElementById('supportModal').style.display='none'" data-i18n="supGo">前往填寫表單</button>
+      <button class="primary-btn btn-cancel" type="button" onclick="document.getElementById('supportModal').style.display='none'" data-i18n="supLater">稍後再說</button>
+      <button class="primary-btn btn-unlock" type="button" onclick="window.open('https://forms.gle/fnxHcegcwQSPKmuQ6', '_blank'); document.getElementById('supportModal').style.display='none'" data-i18n="supGo">前往填寫表單</button>
     </div>
   </div>
 </div>
 
-<!-- 💡 付費解鎖視窗套用多語系翻譯 -->
+<!-- 付費解鎖視窗 -->
 <div id="vipModal" class="modal-overlay">
   <div class="modal-box" id="vipModalBox">
     <h3><span data-i18n="vipTitle">🔒 專業版功能解鎖</span> <span class="vip-badge" style="display:inline-block; margin-left:8px;">PRO</span></h3>
@@ -1406,9 +1373,9 @@ function changeLang(selectedLang) {
     <p id="vipFeatureDesc" style="font-size:14px; color:var(--safe); font-weight:bold; margin-bottom: 12px;"></p>
     <p style="font-size:13px;" data-i18n="vipProOnly">此功能為進階專業版限定。<br>支持散木團隊研發，永久解鎖全功能！</p>
     
-    <!-- 💡 新增：把霸氣免責聲明移到結帳按鈕上方，確保購買前一定會看到 -->
+    <!-- 溫和版霸氣免責聲明 -->
     <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; border-left:4px solid var(--bad); margin-bottom:12px; text-align:left;">
-      <span style="color:var(--bad); font-size:12px; font-weight:bold; line-height:1.5; display:block;" data-i18n="vipDisclaimer">⚠️ 注意：本系統採單機授權，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>
+      <span style="color:var(--bad); font-size:12px; font-weight:bold; line-height:1.5; display:block;" data-i18n="vipDisclaimer">※ 本系統採單機授權，為保障研發團隊權益，遺失密碼或更換設備請重新購買，恕無提供補發與人工客服。</span>
     </div>
 
     <button class="primary-btn" style="background:var(--vip); margin-bottom:10px;" onclick="window.open('https://gumroad.com', '_blank')" data-i18n="vipStoreBtn">🛒 前往專業版自動販賣機</button>
@@ -1417,8 +1384,8 @@ function changeLang(selectedLang) {
     <input type="text" id="vipPwdInput" data-i18n-plh="vipPwdPlh" placeholder="輸入 VIP 通關密碼" style="width: 100%; padding: 10px; font-size: 16px; text-align: center; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,0.3); color: #fff; margin-bottom: 12px; letter-spacing: 2px; font-family: monospace;" autocomplete="off">
     <div id="vipErrorMsg" style="color:var(--bad); font-size:12px; height:16px; margin-bottom:8px;"></div>
     <div class="modal-btn-group">
-      <button class="primary-btn" style="background:transparent; border:1px solid var(--line); color:var(--text);" onclick="closeVipModal()" data-i18n="vipCancel">稍後再說</button>
-      <button class="primary-btn" onclick="verifyVip()" data-i18n="vipUnlock">立即解鎖 🔓</button>
+      <button class="primary-btn btn-cancel" onclick="closeVipModal()" data-i18n="vipCancel">稍後再說</button>
+      <button class="primary-btn btn-unlock" onclick="verifyVip()" data-i18n="vipUnlock">立即解鎖 🔓</button>
     </div>
   </div>
 </div>
@@ -1427,7 +1394,7 @@ function changeLang(selectedLang) {
   <div class="modal-box">
     <h3 data-i18n="permTitle">🛡️ 系統安全提示</h3>
     <p data-i18n="permDesc">為了精準比對現場繩索角度，本功能將開啟您的相機鏡頭。<br><br>請放心，所有影像疊圖運算皆僅於手機<strong>「本地端」</strong>處理，絕不錄影或外洩您的隱私。<br><br>請在接下來的系統提示中點選<strong>「允許」</strong>即可啟動 AR 實境！</p>
-    <button id="permissionAgreeBtn" class="primary-btn" type="button" data-i18n="permBtn">我瞭解了，開始授權</button>
+    <button id="permissionAgreeBtn" class="primary-btn btn-unlock" type="button" data-i18n="permBtn">我瞭解了，開始授權</button>
   </div>
 </div>
 
@@ -1437,8 +1404,8 @@ function changeLang(selectedLang) {
     <p style="text-align:center; margin-bottom:12px; font-size:13px;" data-i18n="angleInputDesc">請輸入現場測量的繩索夾角<br>(支援小數點，範圍 0° ~ 180°)</p>
     <input type="number" id="exactAngleInput" style="width: 100%; padding: 12px; font-size: 20px; text-align: center; border-radius: 8px; border: 2px solid var(--safe); background: var(--bg); color: var(--text); margin-bottom: 20px; font-weight: bold;" min="0" max="180" step="0.1" inputmode="decimal">
     <div class="modal-btn-group">
-      <button id="angleCancelBtn" class="primary-btn" style="background:var(--muted); color:#fff;" type="button" data-i18n="cancel">取消</button>
-      <button id="angleConfirmBtn" class="primary-btn" type="button" data-i18n="confirm">確認設定</button>
+      <button id="angleCancelBtn" class="primary-btn btn-cancel" type="button" data-i18n="cancel">取消</button>
+      <button id="angleConfirmBtn" class="primary-btn btn-unlock" type="button" data-i18n="confirm">確認設定</button>
     </div>
   </div>
 </div>
@@ -1448,27 +1415,15 @@ function changeLang(selectedLang) {
   <div id="mainCard" class="card">
     <div class="topbar">
       <div class="title-row">
-        
+        <!-- 💡 淨空頂部：只留 LOGO 絕對防跑版 -->
         <div class="title-left" id="mainTitleText">
-          <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; margin-right: 8px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
+          <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
           <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
         </div>
         
-        <!-- 💡 智慧下拉式選單與散木 LOGO 並排靠右 -->
         <div style="display:flex; align-items:center; gap:8px;">
-          <select id="langSelect" onchange="changeLang(this.value)">
-            <option value="zh">🇹🇼 繁中</option>
-            <option value="en">🇺🇸 EN</option>
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="pt">🇵🇹 Português</option>
-          </select>
           <img src="./sunmoon_logo.png" alt="散木團隊" style="width: 26px; height: 26px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.5);" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\' rx=\'6\'/><text x=\'50\' y=\'70\' font-size=\'50\' font-weight=\'bold\' fill=\'%23fff\' text-anchor=\'middle\' font-family=\'sans-serif\'>木</text></svg>'">
         </div>
-        
       </div>
       
       <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2); margin-top: 8px;">
@@ -1550,7 +1505,7 @@ function changeLang(selectedLang) {
     <div id="watermark" class="watermark"></div>
   </div>
 
-  <div class="menu-list">
+  <div class="menu-list" data-html2canvas-ignore="true">
     
     <details class="main-accordion" id="theoryAccordion">
       <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1">專業名詞與原理解析</span> (<span id="menuModeText" data-i18n="anchorStd">錨點標準</span>)</div></summary>
@@ -1563,6 +1518,21 @@ function changeLang(selectedLang) {
     <details class="main-accordion">
       <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">⚙️</span> <span data-i18n="menu2">系統工具與說明書</span></div></summary>
       <div class="menu-group">
+        
+        <!-- 💡 語言選單下放至系統工具第一排 -->
+        <div class="menu-action-btn" style="border-bottom: 1px solid var(--line); justify-content: space-between; cursor: default;">
+          <div class="menu-header-left"><span class="menu-icon">🌍</span><span data-i18n="menuLang">語言設定 / Language</span></div>
+          <select id="langSelect" onchange="changeLang(this.value)">
+            <option value="zh">🇹🇼 繁中</option>
+            <option value="en">🇺🇸 EN</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="ko">🇰🇷 한국어</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="pt">🇵🇹 Português</option>
+          </select>
+        </div>
         
         <details class="menu-item">
           <summary>
@@ -1638,7 +1608,7 @@ function changeLang(selectedLang) {
         <div class="menu-header-left"><span class="menu-icon">🔄</span><span data-i18n="menu4">檢查並載入最新版本</span></div>
         <span class="menu-arrow">❯</span>
       </div>
-      <div class="menu-action-btn" id="supportBtnAction">
+      <div class="menu-action-btn" id="supportBtnAction" style="border-bottom: 1px solid var(--line);">
         <div class="menu-header-left"><span class="menu-icon">💬</span><span data-i18n="menu5">系統問題回報</span></div>
         <span class="menu-arrow">❯</span>
       </div>
@@ -1661,7 +1631,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// 💡 VIP 系統 (三層防護網與隱藏指揮官控制台)
+// 💡 VIP 系統
 const PERMANENT_KEYS = ["SMV-A7K9-X2M4", "SMV-B3Q8-P9Y1", "SMV-C5R2-W6Z7"]; 
 const MASTER_KEY = "SUNMOONBOSS"; 
 
@@ -1717,6 +1687,22 @@ mainTitleText.addEventListener('click', () => {
     }
 });
 
+function showToast(msg, type = 'safe') {
+    const toast = document.getElementById('toastMessage');
+    toast.innerHTML = msg;
+    toast.style.borderLeftColor = `var(--${type})`;
+    toast.style.display = 'block';
+    
+    // 強制重繪以啟動動畫
+    void toast.offsetWidth; 
+    
+    toast.classList.add('show');
+    setTimeout(() => { 
+        toast.classList.remove('show'); 
+        setTimeout(() => toast.style.display = 'none', 300);
+    }, 3000);
+}
+
 window.logoutVip = function() {
     try {
         localStorage.removeItem('sunmoon_vip_anchor_status');
@@ -1738,24 +1724,24 @@ function verifyVip() {
         const tmrwKey = getDailyKey(1);
         const permKey = PERMANENT_KEYS[0];
 
-        // 💡 指揮官控制台
+        // 💡 指揮官控制台 (維持純繁體中文)
         document.getElementById('vipModalBox').innerHTML = `
-          <h3 style="color: var(--warn); margin-top:0;">${t('cmdTitle')}</h3>
+          <h3 style="color: var(--warn); margin-top:0;">👑 指揮官專屬控制台</h3>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--safe);">
-            <span style="color:var(--muted); font-size:12px;">${t('cmdExpToday')}</span><br>
+            <span style="color:var(--muted); font-size:12px;">👉 今天的體驗碼 (今晚失效)</span><br>
             <strong style="color:var(--safe); font-size:22px; letter-spacing:1px;">${todayKey}</strong>
           </div>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:10px; text-align:left; border-left: 4px solid var(--warn);">
-            <span style="color:var(--muted); font-size:12px;">${t('cmdExpTmrw')}</span><br>
+            <span style="color:var(--muted); font-size:12px;">👉 明天的體驗碼</span><br>
             <strong style="color:var(--warn); font-size:22px; letter-spacing:1px;">${tmrwKey}</strong>
           </div>
           <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; margin-bottom:20px; text-align:left; border-left: 4px solid var(--vip);">
-            <span style="color:var(--muted); font-size:12px;">${t('cmdPerm')}</span><br>
+            <span style="color:var(--muted); font-size:12px;">👉 🌟 總部專屬配發碼</span><br>
             <strong style="color:var(--vip); font-size:18px; letter-spacing:1px;">${permKey}</strong>
           </div>
           <div class="modal-btn-group" style="margin-top: 15px;">
-            <button class="primary-btn" style="background:transparent; border:1px solid var(--bad); color:var(--bad);" onclick="logoutVip()">${t('cmdLogout')}</button>
-            <button class="primary-btn" style="background:var(--warn); color:#000;" onclick="closeVipModal()">${t('cmdClose')}</button>
+            <button class="primary-btn btn-cancel" onclick="logoutVip()">清除授權(登出)</button>
+            <button class="primary-btn btn-unlock" onclick="closeVipModal()">關閉控制台</button>
           </div>
         `;
         return; 
@@ -1830,11 +1816,19 @@ function updateTheoryText() {
     }
 }
 
+// 💡 包含防呆確認與快取清除的更新邏輯
 function checkForUpdates() {
-    showToast(t('menu4'), "warn");
-    setTimeout(() => {
-        window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime();
-    }, 1000);
+    if (confirm(t('updateMsg'))) {
+        showToast("🔄 ...", "warn");
+        if ('caches' in window) {
+          caches.keys().then((names) => {
+            names.forEach(name => caches.delete(name));
+          });
+        }
+        setTimeout(() => {
+            window.location.href = window.location.href.split('?')[0] + '?v=' + new Date().getTime(); 
+        }, 1000);
+    }
 }
 
 const shareBtnAction = document.getElementById('shareBtnAction');
@@ -1845,7 +1839,7 @@ shareBtnAction.addEventListener('click', async () => {
     else {
       const dummy = document.createElement('input'); document.body.appendChild(dummy); dummy.value = window.location.href;
       dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); 
-      showToast('🔗 系統回報：網址已複製，您可以貼上分享給朋友囉！', 'safe'); 
+      showToast(t('toastCopy'), 'safe'); 
     }
   } catch (err) {}
 });
@@ -2294,7 +2288,6 @@ menuGroups.forEach(group => {
   });
 });
 
-// 💡 引擎順序修復：等待 DOM 與變數皆載入完畢後，再執行翻譯與繪圖，完美避開死區當機！
 applyTranslations();
 draw(120);
 
