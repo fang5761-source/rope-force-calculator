@@ -65,6 +65,18 @@
     padding: calc(12px + env(safe-area-inset-top)) 10px calc(40px + env(safe-area-inset-bottom)) 10px; transition: background 0.3s, color 0.3s; touch-action: manipulation; 
   }
   
+  /* 💡 頂部防護罩：阻擋滑動時畫面穿越動態島與狀態列 */
+  .safe-area-blocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top);
+    background: var(--bg);
+    z-index: 10000;
+    transition: background 0.3s;
+  }
+  
   .app-container { max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 15px; }
 
   .card{
@@ -281,6 +293,8 @@
 </style>
 </head>
 <body>
+
+<div class="safe-area-blocker"></div>
 
 <script>
 (function(){
@@ -1179,7 +1193,7 @@ const i18n = {
     menuLang: "Idioma / Language",
     menu1: "Teoria e Princípios",
     menu2: "Manual e Ferramentas",
-    menu3: "Compartilhar Link",
+    menu3: "Compartir Link",
     menu4: "Verificar Atualizações",
     menu5: "Relatar um Problema",
     menuOp: "Manual do Sistema",
