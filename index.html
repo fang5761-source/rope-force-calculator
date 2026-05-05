@@ -1102,7 +1102,7 @@ const i18n = {
     anchorDangerDesc: "Tensión exponencial. ¡NO EXCEDER!",
     anchorWarnDesc: "Tensión alta. Verifique el anclaje.",
     anchorSafeDesc: "Condición ideal de montaje.",
-    trackDangerDesc: "Límite excedido. ¡No tense más!",
+    trackDangerDesc: "Limite excedido. ¡No tense más!",
     trackWarnDesc: "Acercándose al límite de pandeo (10%).",
     trackSafeDesc: "Tramo seguro. Pandeo normal.",
     anchorNote: "Nota: ¡Los anclajes verticales NO DEBEN superar los 120°!",
@@ -1131,7 +1131,7 @@ const i18n = {
     op2: "Deslice el <b>Control de Ángulo</b> abajo. Haga clic en <b>✎</b> para decimales.",
     op3: "Haga clic en <b>[-] o [+]</b> junto a la carga para ajustar el peso.",
     op4: "Haga clic en <b>🧍‍♂️↔️</b> para invertir la posición del instructor.",
-    op5: "Haga clic en <b>📷 AR / 📁 Foto</b> para superponer imágenes reales.",
+    op5: "Haga clic en <b>📷 AR / 📁 Foto</b> para superposer imágenes reales.",
     devTitle: "Simulador de Doble Motor PRO",
     devTeam: "Desarrollado por <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Ingeniería y Arquitectura / Shih-Feng Hsu",
@@ -1444,6 +1444,7 @@ function changeLang(selectedLang) {
   <div id="mainCard" class="card">
     <div class="topbar">
       <div class="title-row">
+        <!-- 💡 淨空頂部：只留 LOGO 絕對防跑版 -->
         <div class="title-left" id="mainTitleText">
           <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
           <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
@@ -1658,7 +1659,7 @@ function changeLang(selectedLang) {
         <!-- 方案 A：銀行轉帳 -->
         <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--safe); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
           <div style="color: var(--safe); font-weight: bold; font-size: 13px; margin-bottom: 8px;">🏦 台灣銀行轉帳 (直接支持團隊)</div>
-          <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">永豐銀行 (代碼 807)</div>
+          <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">永豐銀行 (代碼 807) • 戶名：吳佩芳</div>
           <div style="font-size: 18px; color: var(--text); font-family: monospace; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;" id="bankAccount">20401800252531</div>
           <button type="button" onclick="window.copyBankAccount()" style="width: 100%; background: var(--safe); color: #0f1623; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);">📋 一鍵複製帳號</button>
         </div>
