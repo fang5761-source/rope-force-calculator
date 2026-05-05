@@ -1656,20 +1656,20 @@ function changeLang(selectedLang) {
         <p style="font-size: 13.5px; color: var(--text); margin-top: 0; margin-bottom: 15px; line-height: 1.6; text-align: justify;">本工具為散木團隊義務開發。若這套沙盤對您的實務與教學有幫助，歡迎自由給予我們一點實質鼓勵，這將化為我們開發下一套救援系統的核心動力！</p>
         
         <!-- 方案 A：銀行轉帳 -->
-        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--safe); border-radius: 8px; padding: 12px; margin-bottom: 12px; position: relative;">
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--safe); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
           <div style="color: var(--safe); font-weight: bold; font-size: 13px; margin-bottom: 8px;">🏦 台灣銀行轉帳 (直接支持團隊)</div>
           <div style="font-size: 13px; color: var(--muted); margin-bottom: 4px;">永豐銀行 (代碼 807)</div>
-          <div style="font-size: 18px; color: var(--text); font-family: monospace; letter-spacing: 1px; font-weight: bold;" id="bankAccount">20401800252531</div>
-          <button type="button" onclick="window.copyBankAccount()" style="position: absolute; right: 12px; bottom: 12px; background: var(--safe); color: #0f1623; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);">📋 一鍵複製</button>
+          <div style="font-size: 18px; color: var(--text); font-family: monospace; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;" id="bankAccount">20401800252531</div>
+          <button type="button" onclick="window.copyBankAccount()" style="width: 100%; background: var(--safe); color: #0f1623; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 6px rgba(34, 197, 94, 0.4);">📋 一鍵複製帳號</button>
         </div>
 
         <!-- 方案 B：自動販賣機 -->
-        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center;">
-          <div style="text-align: left;">
+        <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); border-radius: 8px; padding: 12px;">
+          <div style="text-align: left; margin-bottom: 12px;">
             <div style="color: var(--text); font-weight: bold; font-size: 13px; margin-bottom: 4px;">🛒 專業版自動販賣機 (支援刷卡)</div>
-            <div style="font-size: 11px; color: var(--muted);">熟悉的販賣機！支援 Apple Pay 與信用卡</div>
+            <div style="font-size: 12px; color: var(--muted);">熟悉的販賣機！支援 Apple Pay 與信用卡</div>
           </div>
-          <button type="button" onclick="window.open('https://fang5761.gumroad.com/l/jeuyu', '_blank')" style="background: var(--line); color: var(--text); border: none; padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">前往 🛒</button>
+          <button type="button" onclick="window.open('https://fang5761.gumroad.com/l/jeuyu', '_blank')" style="width: 100%; background: var(--line); color: var(--text); border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">前往自動販賣機 🛒</button>
         </div>
         
         <button type="button" class="btn-collapse-inner" onclick="const p = this.closest('details'); if(p) p.removeAttribute('open');" data-i18n="collapse">🔼 收起說明</button>
