@@ -102,6 +102,12 @@
     justify-content: center; touch-action: manipulation; flex: 1; min-width: 40px; position: relative;
   }
   button:hover{ background:rgba(150,150,150,.2); }
+  button.tool-active{
+    background: var(--safe) !important;
+    color: #0f1623 !important;
+    border-color: var(--safe) !important;
+    box-shadow: 0 0 0 2px rgba(34,197,94,.32) inset, 0 0 14px rgba(34,197,94,.32);
+  }
   
   #modeToggleBtn { flex: 2; min-width: 120px; transition: all 0.3s ease; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
   #modeToggleBtn.mode-anchor { background: var(--safe); color: #0f1623; }
@@ -129,7 +135,7 @@
   .topbar, .svgWrap, #arControls, .slider-container, .jumpbar, .caption {
     position: relative; z-index: 1;
   }
-  body:not(.camera-mode) #whitePaperOverlay { display: none !important; }
+  .card:not(.camera-mode) #whitePaperOverlay { display: none !important; }
   .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
   :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
   .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
@@ -156,13 +162,6 @@
     visibility: hidden !important;
   }
   .capture-mode #gestureHitArea { display: none !important; }
-  .capture-mode .caption {
-    margin-top: 10px;
-    background: rgba(15, 22, 35, 0.92);
-    border: 1px solid rgba(232, 238, 247, 0.16);
-    color: #e8eef7;
-    font-size: 14px;
-  }
 
   #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
   #scaleWrap { transform-origin: top center; will-change: transform; }
@@ -2127,9 +2126,9 @@ cameraToggle.addEventListener('click', () => {
             stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: mainCam.deviceId } } });
         }
         currentStream = stream; bgVideo.srcObject = currentStream; bgVideo.style.display = 'block'; bgImage.style.display = 'none';
-        mainCard.classList.add('camera-mode'); cameraToggle.textContent = '❌'; cameraToggle.style.color = 'var(--warn)';
-        arControls.style.display = 'flex'; photoBtn.style.color = 'inherit'; isCameraOn = true;
-      } catch (err) { cameraToggle.textContent = '⛔'; setTimeout(() => cameraToggle.textContent = '📷', 3000); }
+        mainCard.classList.add('camera-mode'); cameraToggle.classList.add('tool-active');
+        arControls.style.display = 'flex'; photoBtn.classList.remove('tool-active'); isCameraOn = true;
+      } catch (err) { cameraToggle.classList.remove('tool-active'); }
     } else { turnOffCamera(); }
   });
 });
@@ -2143,7 +2142,7 @@ torchToggle.addEventListener('click', async () => {
     const capabilities = track.getCapabilities();
     if (!capabilities.torch) { showToast('Torch is not supported on this device.', 'bad'); return; }
     isTorchOn = !isTorchOn; await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
-    torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit'; torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
+    torchToggle.classList.toggle('tool-active', isTorchOn);
   } catch (err) { showToast('Torch failed. Please try again.', 'bad'); }
 });
 
@@ -2151,8 +2150,8 @@ function turnOffCamera() {
   if (currentStream) currentStream.getTracks().forEach(track => track.stop());
   bgVideo.style.display = 'none';
   if (bgImage.style.display !== 'block') { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
-  cameraToggle.textContent = '📷'; cameraToggle.style.color = 'inherit'; isCameraOn = false;
-  isTorchOn = false; torchToggle.style.color = 'inherit'; torchToggle.textContent = '🔦';
+  cameraToggle.classList.remove('tool-active'); isCameraOn = false;
+  isTorchOn = false; torchToggle.classList.remove('tool-active');
 }
 
 const photoBtn = document.getElementById('photoBtn');
@@ -2160,7 +2159,7 @@ const photoUpload = document.getElementById('photoUpload');
 photoBtn.addEventListener('click', () => {
   attemptFeature('featPhoto', () => {
     if (bgImage.style.display === 'block') {
-      bgImage.style.display = 'none'; bgImage.src = ''; photoUpload.value = ''; photoBtn.style.color = 'inherit';
+      bgImage.style.display = 'none'; bgImage.src = ''; photoUpload.value = ''; photoBtn.classList.remove('tool-active');
       if (!isCameraOn) { mainCard.classList.remove('camera-mode'); arControls.style.display = 'none'; }
     } else { photoUpload.click(); }
   });
@@ -2174,7 +2173,7 @@ photoUpload.addEventListener('change', (e) => {
       bgImage.src = event.target.result; bgImage.style.display = 'block';
       if(isCameraOn) turnOffCamera(); 
       bgVideo.style.display = 'none'; mainCard.classList.add('camera-mode');
-      arControls.style.display = 'flex'; photoBtn.style.color = 'var(--safe)'; 
+      arControls.style.display = 'flex'; photoBtn.classList.add('tool-active');
     }; reader.readAsDataURL(file);
   }
 });
@@ -2335,6 +2334,7 @@ screenshotBtn.addEventListener('click', () => {
     if (isTakingScreenshot) return;
     isTakingScreenshot = true;
     screenshotBtn.disabled = true;
+    screenshotBtn.classList.add('tool-active');
     mainCard.style.opacity = '0.72'; setTimeout(() => mainCard.style.opacity = '1', 150);
     const originalVideoState = bgVideo.style.display;
     const originalImageSrc = bgImage.src;
@@ -2355,12 +2355,12 @@ screenshotBtn.addEventListener('click', () => {
       }
 
       const captureMedia = bgImage.style.display === 'block' && bgImage.src ? bgImage : null;
-      const captureRect = mainCard.getBoundingClientRect();
       const whiteOpacity = parseFloat(whiteSlider.value) || 0;
 
       watermark.style.display = 'none';
       mainCard.classList.add('capture-mode');
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const captureRect = mainCard.getBoundingClientRect();
 
       const uiCanvas = await html2canvas(mainCard, {
         useCORS: true,
@@ -2378,7 +2378,9 @@ screenshotBtn.addEventListener('click', () => {
 
       ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f1623';
       ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+      ctx.globalAlpha = 0.85;
       drawCoverMedia(ctx, captureMedia, captureRect.width, captureRect.height, canvasScale);
+      ctx.globalAlpha = 1;
       if (whiteOpacity > 0) {
         ctx.fillStyle = `rgba(255, 255, 255, ${whiteOpacity})`;
         ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
@@ -2403,6 +2405,7 @@ screenshotBtn.addEventListener('click', () => {
         bgImage.style.display = originalImageState;
       }
       screenshotBtn.disabled = false;
+      screenshotBtn.classList.remove('tool-active');
       isTakingScreenshot = false;
     }
   });
