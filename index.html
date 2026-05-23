@@ -111,6 +111,12 @@
   
   .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
   .svgWrap:active { cursor: grabbing; }
+  #gestureHitArea {
+    position: absolute; left: 50%; top: 38px; width: 78%; height: 245px;
+    transform: translateX(-50%); z-index: 4; touch-action: none;
+    background: transparent; cursor: grab;
+  }
+  #gestureHitArea:active { cursor: grabbing; }
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -127,12 +133,11 @@
     display: none !important;
   }
   .capture-mode .svgWrap {
-    margin-top: 0;
+    margin-top: -10px;
     background: rgba(15, 22, 35, 0.72);
-    border: 1px solid rgba(232, 238, 247, 0.18);
-    border-radius: 12px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.25), inset 0 0 28px rgba(0,0,0,0.28);
+    box-shadow: inset 0 0 28px rgba(0,0,0,0.28);
   }
+  .capture-mode #gestureHitArea { display: none !important; }
   .capture-mode #bgVideo,
   .capture-mode #bgImage {
     opacity: 0.42;
@@ -1513,6 +1518,7 @@ function changeLang(selectedLang) {
       <div id="gimbalWrap">
         <div id="scaleWrap">
           <div id="svgContainer" style="width:100%; height: 330px;"></div>
+          <div id="gestureHitArea" aria-hidden="true"></div>
           
           <div id="swayGroup" class="tOverlay">
             <div class="normal-view">
@@ -2187,6 +2193,7 @@ function getTouchAngle(touches) {
 const zoomSlider = document.getElementById('zoomSlider');
 zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
 const svgWrap = document.querySelector('.svgWrap');
+const gestureHitArea = document.getElementById('gestureHitArea');
 
 let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
 const arDragHandle = document.getElementById('arDragHandle');
@@ -2206,7 +2213,7 @@ function endPanelDrag() { isDraggingPanel = false; }
 arDragHandle.addEventListener('mousedown', startPanelDrag); window.addEventListener('mousemove', movePanel); window.addEventListener('mouseup', endPanelDrag);
 arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false}); window.addEventListener('touchmove', movePanel, {passive: false}); window.addEventListener('touchend', endPanelDrag);
 
-svgWrap.addEventListener('mousedown', (e) => {
+gestureHitArea.addEventListener('mousedown', (e) => {
   if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
@@ -2214,7 +2221,7 @@ svgWrap.addEventListener('mousedown', (e) => {
 window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
 window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
 
-svgWrap.addEventListener('touchstart', (e) => {
+gestureHitArea.addEventListener('touchstart', (e) => {
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   if (e.touches.length >= 2) {
     isDragging = false; isGesture = true;
@@ -2291,6 +2298,7 @@ screenshotBtn.addEventListener('click', () => {
     const originalImageSrc = bgImage.src;
     const originalImageState = bgImage.style.display;
     const originalCardClasses = mainCard.className;
+    const shouldCloseCameraAfterCapture = isCameraOn;
 
     try {
       if (isCameraOn && bgVideo.videoWidth) {
@@ -2321,9 +2329,17 @@ screenshotBtn.addEventListener('click', () => {
     } finally {
       mainCard.className = originalCardClasses;
       watermark.style.display = 'none';
-      bgVideo.style.display = originalVideoState;
-      bgImage.src = originalImageSrc;
-      bgImage.style.display = originalImageState;
+      if (shouldCloseCameraAfterCapture) {
+        turnOffCamera();
+        bgImage.src = '';
+        bgImage.style.display = 'none';
+        mainCard.classList.remove('camera-mode');
+        arControls.style.display = 'none';
+      } else {
+        bgVideo.style.display = originalVideoState;
+        bgImage.src = originalImageSrc;
+        bgImage.style.display = originalImageState;
+      }
       screenshotBtn.disabled = false;
       isTakingScreenshot = false;
     }
