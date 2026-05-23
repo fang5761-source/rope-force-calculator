@@ -2145,7 +2145,7 @@ let currentZoom = 1; let currentRotation = 0; let panX = 0; let panY = 0; let is
 let isGesture = false; let gestureStartDistance = 0; let gestureStartAngle = 0; let gestureStartZoom = 1; let gestureStartRotation = 0;
 const scaleWrap = document.getElementById('scaleWrap');
 function updateTransform() { scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`; }
-function updateRotation() { gimbalWrap.style.transform = `rotate(${-currentRotation}deg)`; }
+function updateRotation() { gimbalWrap.style.transform = `rotate(${currentRotation}deg)`; }
 function clampNumber(value, min, max) { return Math.min(max, Math.max(min, value)); }
 function getTouchDistance(touches) {
   const dx = touches[1].clientX - touches[0].clientX;
@@ -2188,7 +2188,7 @@ window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.
 window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
 
 mainCard.addEventListener('touchstart', (e) => {
-  if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
+  if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   if (e.touches.length >= 2) {
     isDragging = false; isGesture = true;
     gestureStartDistance = getTouchDistance(e.touches);
