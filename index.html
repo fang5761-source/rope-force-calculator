@@ -119,6 +119,32 @@
   .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
   :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
   .camera-mode .jumpbar { visibility: hidden !important; pointer-events: none; }
+  .capture-mode .topbar,
+  .capture-mode #arControls,
+  .capture-mode .slider-container,
+  .capture-mode .jumpbar,
+  .capture-mode .watermark {
+    display: none !important;
+  }
+  .capture-mode .svgWrap {
+    margin-top: 0;
+    background: rgba(15, 22, 35, 0.72);
+    border: 1px solid rgba(232, 238, 247, 0.18);
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.25), inset 0 0 28px rgba(0,0,0,0.28);
+  }
+  .capture-mode #bgVideo,
+  .capture-mode #bgImage {
+    opacity: 0.42;
+    filter: brightness(0.72) blur(1px);
+  }
+  .capture-mode .caption {
+    margin-top: 10px;
+    background: rgba(15, 22, 35, 0.92);
+    border: 1px solid rgba(232, 238, 247, 0.16);
+    color: #e8eef7;
+    font-size: 14px;
+  }
 
   #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
   #scaleWrap { transform-origin: top center; will-change: transform; }
@@ -2044,7 +2070,7 @@ svgContainer.addEventListener('click', (e) => {
 angleCancelBtn.addEventListener('click', () => angleModalOverlay.style.display = 'none');
 angleConfirmBtn.addEventListener('click', () => {
   let val = parseFloat(exactAngleInput.value);
-  if (isNaN(val) || val < 0 || val > 180) { showToast('⚠️ 請輸入 0 到 180 之間的有效數字！', 'bad'); return; }
+  if (isNaN(val) || val < 0 || val > 180) { showToast('Angle must be between 0 and 180.', 'bad'); return; }
   slider.value = val; draw(val); angleModalOverlay.style.display = 'none';
 });
 
@@ -2091,10 +2117,10 @@ torchToggle.addEventListener('click', async () => {
   const track = currentStream.getVideoTracks()[0];
   try {
     const capabilities = track.getCapabilities();
-    if (!capabilities.torch) { showToast('⚠️ 您的裝置或瀏覽器不支援手電筒控制。', 'bad'); return; }
+    if (!capabilities.torch) { showToast('Torch is not supported on this device.', 'bad'); return; }
     isTorchOn = !isTorchOn; await track.applyConstraints({ advanced: [{ torch: isTorchOn }] });
     torchToggle.style.color = isTorchOn ? 'var(--warn)' : 'inherit'; torchToggle.textContent = isTorchOn ? '🔦(ON)' : '🔦';
-  } catch (err) { showToast('⚠️ 手電筒開啟失敗，部分手機瀏覽器可能受限。', 'bad'); }
+  } catch (err) { showToast('Torch failed. Please try again.', 'bad'); }
 });
 
 function turnOffCamera() {
@@ -2160,6 +2186,7 @@ function getTouchAngle(touches) {
 
 const zoomSlider = document.getElementById('zoomSlider');
 zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
+const svgWrap = document.querySelector('.svgWrap');
 
 let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
 const arDragHandle = document.getElementById('arDragHandle');
@@ -2179,7 +2206,7 @@ function endPanelDrag() { isDraggingPanel = false; }
 arDragHandle.addEventListener('mousedown', startPanelDrag); window.addEventListener('mousemove', movePanel); window.addEventListener('mouseup', endPanelDrag);
 arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false}); window.addEventListener('touchmove', movePanel, {passive: false}); window.addEventListener('touchend', endPanelDrag);
 
-mainCard.addEventListener('mousedown', (e) => {
+svgWrap.addEventListener('mousedown', (e) => {
   if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
@@ -2187,7 +2214,7 @@ mainCard.addEventListener('mousedown', (e) => {
 window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
 window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
 
-mainCard.addEventListener('touchstart', (e) => {
+svgWrap.addEventListener('touchstart', (e) => {
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   if (e.touches.length >= 2) {
     isDragging = false; isGesture = true;
@@ -2235,33 +2262,73 @@ rotateSlider.addEventListener('input', (e) => { currentRotation = parseFloat(e.t
 
 const screenshotBtn = document.getElementById('screenshotBtn');
 const watermark = document.getElementById('watermark');
+let isTakingScreenshot = false;
+
+function waitForImageReady(img) {
+  return new Promise((resolve, reject) => {
+    if (!img || img.style.display !== 'block' || !img.src || img.complete) {
+      resolve();
+      return;
+    }
+    const cleanup = () => {
+      img.removeEventListener('load', onLoad);
+      img.removeEventListener('error', onError);
+    };
+    const onLoad = () => { cleanup(); resolve(); };
+    const onError = () => { cleanup(); reject(new Error('capture image load failed')); };
+    img.addEventListener('load', onLoad, { once: true });
+    img.addEventListener('error', onError, { once: true });
+  });
+}
+
 screenshotBtn.addEventListener('click', () => {
   attemptFeature('featShot', async () => {
-    mainCard.style.opacity = '0.5'; setTimeout(() => mainCard.style.opacity = '1', 150);
-    let originalVideoState = bgVideo.style.display; let originalImageSrc = bgImage.src; let originalImageState = bgImage.style.display;
-    
-    if (isCameraOn && bgVideo.videoWidth) {
-      const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
-      tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
-      bgImage.src = tempCanvas.toDataURL('image/jpeg'); bgImage.style.display = 'block'; bgVideo.style.display = 'none';
-    }
-    
-    const now = new Date(); const dateStr = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2, '0') + '/' + String(now.getDate()).padStart(2, '0');
-    const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-    let titleStr = currentMode === 'anchor' ? t('appTitle') : t('appTitleTrack');
-    watermark.innerHTML = `🛡️ ${titleStr}<br><span style="font-size:10px; color:#a8b3c5; font-weight:normal;">${dateStr} ${timeStr} ｜ © 散木團隊</span>`;
-    watermark.style.display = 'block';
-    
+    if (isTakingScreenshot) return;
+    isTakingScreenshot = true;
+    screenshotBtn.disabled = true;
+    mainCard.style.opacity = '0.72'; setTimeout(() => mainCard.style.opacity = '1', 150);
+    const originalVideoState = bgVideo.style.display;
+    const originalImageSrc = bgImage.src;
+    const originalImageState = bgImage.style.display;
+    const originalCardClasses = mainCard.className;
+
     try {
-      const canvas = await html2canvas(mainCard, { useCORS: true, backgroundColor: null, scale: 2 });
-      const link = document.createElement('a'); link.download = '戰術張力分析截圖.png'; link.href = canvas.toDataURL('image/png'); link.click();
-    } catch(e) { showToast("❌ 截圖失敗，請稍後再試！", "bad"); }
-    
-    watermark.style.display = 'none';
-    if (isCameraOn) { bgVideo.style.display = originalVideoState; bgImage.src = originalImageSrc; bgImage.style.display = originalImageState; }
+      if (isCameraOn && bgVideo.videoWidth) {
+        const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
+        tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+        bgImage.src = tempCanvas.toDataURL('image/jpeg', 0.92);
+        bgImage.style.display = 'block';
+        bgVideo.style.display = 'none';
+        await waitForImageReady(bgImage);
+      } else {
+        await waitForImageReady(bgImage);
+      }
+
+      watermark.style.display = 'none';
+      mainCard.classList.add('capture-mode');
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+      const canvas = await html2canvas(mainCard, {
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f1623',
+        scale: Math.min(2, window.devicePixelRatio || 1.5),
+        logging: false
+      });
+      const link = document.createElement('a'); link.download = 'tension-capture.png'; link.href = canvas.toDataURL('image/png'); link.click();
+    } catch(e) {
+      showToast('Screenshot failed. Please try again.', 'bad');
+    } finally {
+      mainCard.className = originalCardClasses;
+      watermark.style.display = 'none';
+      bgVideo.style.display = originalVideoState;
+      bgImage.src = originalImageSrc;
+      bgImage.style.display = originalImageState;
+      screenshotBtn.disabled = false;
+      isTakingScreenshot = false;
+    }
   });
 });
-
 function polar(cx, cy, r, deg){ const rad = deg * Math.PI / 180; return { x: cx + r * Math.cos(rad), y: cy - r * Math.sin(rad) }; }
 function polyArc(cx, cy, r, startDeg, endDeg, steps = 20){
   let d = '';
