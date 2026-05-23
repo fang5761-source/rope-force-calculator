@@ -1553,14 +1553,14 @@ function changeLang(selectedLang) {
         <div class="menu-action-btn" style="border-bottom: 1px solid var(--line); justify-content: space-between; cursor: default;">
           <div class="menu-header-left"><span class="menu-icon">🌍</span><span data-i18n="menuLang">語言設定 / Language</span></div>
           <select id="langSelect" onchange="changeLang(this.value)">
-            <option value="zh">🇹🇼 繁中</option>
-            <option value="en">🇺🇸 EN</option>
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="pt">🇵🇹 Português</option>
+            <option value="zh">繁體中文</option>
+            <option value="en">EN</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="fr">Francais</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Espanol</option>
+            <option value="pt">Portugues</option>
           </select>
         </div>
         
@@ -2141,9 +2141,22 @@ arCollapseBtn.addEventListener('click', () => {
   }
 });
 
-let currentZoom = 1; let panX = 0; let panY = 0; let isDragging = false; let startX = 0, startY = 0;
+let currentZoom = 1; let currentRotation = 0; let panX = 0; let panY = 0; let isDragging = false; let startX = 0, startY = 0;
+let isGesture = false; let gestureStartDistance = 0; let gestureStartAngle = 0; let gestureStartZoom = 1; let gestureStartRotation = 0;
 const scaleWrap = document.getElementById('scaleWrap');
 function updateTransform() { scaleWrap.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`; }
+function updateRotation() { gimbalWrap.style.transform = `rotate(${-currentRotation}deg)`; }
+function clampNumber(value, min, max) { return Math.min(max, Math.max(min, value)); }
+function getTouchDistance(touches) {
+  const dx = touches[1].clientX - touches[0].clientX;
+  const dy = touches[1].clientY - touches[0].clientY;
+  return Math.hypot(dx, dy);
+}
+function getTouchAngle(touches) {
+  const dx = touches[1].clientX - touches[0].clientX;
+  const dy = touches[1].clientY - touches[0].clientY;
+  return Math.atan2(dy, dx) * 180 / Math.PI;
+}
 
 const zoomSlider = document.getElementById('zoomSlider');
 zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
@@ -2176,18 +2189,49 @@ window.addEventListener('mouseup', () => { isDragging = false; arControls.style.
 
 mainCard.addEventListener('touchstart', (e) => {
   if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
-  isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY;
+  if (e.touches.length >= 2) {
+    isDragging = false; isGesture = true;
+    gestureStartDistance = getTouchDistance(e.touches);
+    gestureStartAngle = getTouchAngle(e.touches);
+    gestureStartZoom = currentZoom;
+    gestureStartRotation = currentRotation;
+  } else {
+    isGesture = false; isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY;
+  }
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
 }, {passive: false});
 window.addEventListener('touchmove', (e) => {
-  if (!isDragging) return; if (e.cancelable) e.preventDefault(); 
-  panX = e.touches[0].clientX - startX; panY = e.touches[0].clientY - startY; updateTransform();
+  if (!isDragging && !isGesture) return; if (e.cancelable) e.preventDefault();
+  if (isGesture && e.touches.length >= 2) {
+    const zoomMin = parseFloat(zoomSlider.min);
+    const zoomMax = parseFloat(zoomSlider.max);
+    const rotateMin = parseFloat(rotateSlider.min);
+    const rotateMax = parseFloat(rotateSlider.max);
+    const distance = Math.max(getTouchDistance(e.touches), 1);
+    const angleDelta = getTouchAngle(e.touches) - gestureStartAngle;
+    currentZoom = clampNumber(gestureStartZoom * (distance / Math.max(gestureStartDistance, 1)), zoomMin, zoomMax);
+    currentRotation = clampNumber(gestureStartRotation + angleDelta, rotateMin, rotateMax);
+    zoomSlider.value = currentZoom.toFixed(2);
+    rotateSlider.value = Math.round(currentRotation);
+    updateTransform();
+    updateRotation();
+    return;
+  }
+  if (isDragging && e.touches.length === 1) {
+    panX = e.touches[0].clientX - startX; panY = e.touches[0].clientY - startY; updateTransform();
+  }
 }, {passive: false});
-window.addEventListener('touchend', () => { isDragging = false; arControls.style.opacity = '1'; });
+window.addEventListener('touchend', (e) => {
+  if (e.touches.length === 1 && isGesture) {
+    isGesture = false; isDragging = true; startX = e.touches[0].clientX - panX; startY = e.touches[0].clientY - panY;
+    return;
+  }
+  if (e.touches.length === 0) { isDragging = false; isGesture = false; arControls.style.opacity = '1'; }
+});
 
 const rotateSlider = document.getElementById('rotateSlider');
 const gimbalWrap = document.getElementById('gimbalWrap');
-rotateSlider.addEventListener('input', (e) => { let currentAngle = parseFloat(e.target.value); gimbalWrap.style.transform = `rotate(${-currentAngle}deg)`; });
+rotateSlider.addEventListener('input', (e) => { currentRotation = parseFloat(e.target.value); updateRotation(); });
 
 const screenshotBtn = document.getElementById('screenshotBtn');
 const watermark = document.getElementById('watermark');
@@ -2344,7 +2388,7 @@ function draw(beta){
       <text class="mask-text" x="${leftForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
       <text class="mask-text" x="${leftForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${tText} ${unitText}</text>
       <text class="mask-text" x="${rightForceX}" y="${forceY-15}" fill="${st.color}" font-size="11" text-anchor="middle">${t('anchorTension')}</text>
-      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${vBText} ${unitText}</text>
+      <text class="mask-text" x="${rightForceX}" y="${forceY}" fill="${st.color}" font-size="${beta>170?24:15}" text-anchor="middle">${tText} ${unitText}</text>
     `;
   }
 
@@ -2427,7 +2471,7 @@ resetBtn.addEventListener('click', () => {
   arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
   document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = t('arExpand'); arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1'; arControls.style.left = 'auto'; arControls.style.top = '80px'; arControls.style.right = '10px'; arControls.style.bottom = 'auto';
-  currentZoom = 1; panX = 0; panY = 0; updateTransform(); gimbalWrap.style.transform = `rotate(0deg)`; draw(slider.value); 
+  currentZoom = 1; currentRotation = 0; panX = 0; panY = 0; updateTransform(); updateRotation(); draw(slider.value); 
 });
 
 const jumpBtns = document.querySelectorAll('.jump');
