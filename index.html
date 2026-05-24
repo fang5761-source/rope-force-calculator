@@ -117,12 +117,7 @@
   
   .svgWrap{ position:relative; margin-top: -10px; margin-bottom: 0; cursor: grab; touch-action: none; }
   .svgWrap:active { cursor: grabbing; }
-  #gestureHitArea {
-    position: absolute; left: 50%; top: 38px; width: 78%; height: 245px;
-    transform: translateX(-50%); z-index: 4; touch-action: none;
-    background: transparent; cursor: grab;
-  }
-  #gestureHitArea:active { cursor: grabbing; }
+  #svgContainer { touch-action: none; }
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -132,9 +127,10 @@
     position: absolute; inset: 0; background: #ffffff; opacity: 0;
     pointer-events: none; z-index: 0; transition: opacity 0.2s;
   }
-  .topbar, .svgWrap, #arControls, .slider-container, .jumpbar, .caption {
-    position: relative; z-index: 1;
-  }
+  .svgWrap { position: relative; z-index: 1; }
+  .topbar { position: relative; z-index: 100; }
+  #arControls { z-index: 90; }
+  .slider-container, .jumpbar, .caption { position: relative; z-index: 30; }
   .card:not(.camera-mode) #whitePaperOverlay { display: none !important; }
   .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
   :root[data-theme="light"] .card.camera-mode { background: rgba(255, 255, 255, 0.45) !important; }
@@ -153,15 +149,17 @@
     background: transparent;
     box-shadow: none;
   }
+  .card.capture-mode,
   .capture-mode.camera-mode {
     background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
   }
   .capture-mode #bgVideo,
   .capture-mode #bgImage,
   .capture-mode #whitePaperOverlay {
     visibility: hidden !important;
   }
-  .capture-mode #gestureHitArea { display: none !important; }
 
   #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
   #scaleWrap { transform-origin: top center; will-change: transform; }
@@ -1531,7 +1529,6 @@ function changeLang(selectedLang) {
       <div id="gimbalWrap">
         <div id="scaleWrap">
           <div id="svgContainer" style="width:100%; height: 330px;"></div>
-          <div id="gestureHitArea" aria-hidden="true"></div>
           
           <div id="swayGroup" class="tOverlay">
             <div class="normal-view">
@@ -2210,7 +2207,6 @@ function getTouchAngle(touches) {
 const zoomSlider = document.getElementById('zoomSlider');
 zoomSlider.addEventListener('input', (e) => { currentZoom = parseFloat(e.target.value); updateTransform(); });
 const svgWrap = document.querySelector('.svgWrap');
-const gestureHitArea = document.getElementById('gestureHitArea');
 const whitePaperOverlay = document.getElementById('whitePaperOverlay');
 const whiteSlider = document.getElementById('whiteSlider');
 whiteSlider.addEventListener('input', (e) => { whitePaperOverlay.style.opacity = e.target.value; });
@@ -2233,7 +2229,7 @@ function endPanelDrag() { isDraggingPanel = false; }
 arDragHandle.addEventListener('mousedown', startPanelDrag); window.addEventListener('mousemove', movePanel); window.addEventListener('mouseup', endPanelDrag);
 arDragHandle.addEventListener('touchstart', startPanelDrag, {passive: false}); window.addEventListener('touchmove', movePanel, {passive: false}); window.addEventListener('touchend', endPanelDrag);
 
-gestureHitArea.addEventListener('mousedown', (e) => {
+svgContainer.addEventListener('mousedown', (e) => {
   if (arControls.classList.contains('is-collapsed') || e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   isDragging = true; startX = e.clientX - panX; startY = e.clientY - panY;
   if (arControls.style.display === 'flex' || arControls.style.display === 'block') arControls.style.opacity = '0.2';
@@ -2241,7 +2237,7 @@ gestureHitArea.addEventListener('mousedown', (e) => {
 window.addEventListener('mousemove', (e) => { if (!isDragging) return; panX = e.clientX - startX; panY = e.clientY - startY; updateTransform(); });
 window.addEventListener('mouseup', () => { isDragging = false; arControls.style.opacity = '1'; });
 
-gestureHitArea.addEventListener('touchstart', (e) => {
+svgContainer.addEventListener('touchstart', (e) => {
   if (e.target.closest('input') || e.target.closest('button') || e.target.closest('#arControls') || e.target.closest('.beta-text') || e.target.closest('.topbar') || e.target.closest('.jumpbar')) return;
   if (e.touches.length >= 2) {
     isDragging = false; isGesture = true;
@@ -2314,13 +2310,13 @@ function drawCoverMedia(ctx, el, mediaRect, targetRect, canvasScale) {
   const rawH = el.videoHeight || el.naturalHeight;
   if (!rawW || !rawH) return;
 
-  const cssWidth = mediaRect.width;
-  const cssHeight = mediaRect.height;
+  const cssWidth = targetRect.width;
+  const cssHeight = targetRect.height;
   const coverScale = Math.max(cssWidth / rawW, cssHeight / rawH);
   const drawW = rawW * coverScale;
   const drawH = rawH * coverScale;
-  const drawX = mediaRect.left - targetRect.left + (cssWidth - drawW) / 2;
-  const drawY = mediaRect.top - targetRect.top;
+  const drawX = (cssWidth - drawW) / 2;
+  const drawY = 0;
 
   ctx.drawImage(
     el,
