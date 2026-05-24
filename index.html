@@ -126,14 +126,14 @@
   }
   #bgVideo { object-fit: cover; }
   #bgImage { object-fit: contain; }
-  #bgImage.camera-frame { object-fit: cover; object-position: center center; }
+  #bgImage.camera-frame { object-fit: fill; object-position: center center; }
   #whitePaperOverlay {
     position: absolute; inset: 0; background: #ffffff; opacity: 0;
     pointer-events: none; z-index: 0; transition: opacity 0.2s;
   }
   .svgWrap { position: relative; z-index: 1; }
   .topbar { position: relative; z-index: 100; }
-  #arControls { z-index: 90; }
+  #arControls { z-index: 1000; pointer-events: auto; }
   .slider-container, .jumpbar, .caption { position: relative; z-index: 30; }
   .card:not(.camera-mode) #whitePaperOverlay { display: none !important; }
   .card.camera-mode { background: rgba(18, 26, 42, 0.45) !important; }
@@ -251,7 +251,7 @@
   .tOverlay span { font-size: 11px; font-weight: bold; background: var(--card); padding: 0 4px; border-radius: 4px; }
   
   #arControls {
-    display: none; flex-direction: column; gap: 12px; position: absolute; top: 80px; right: 10px; width: 250px; z-index: 50;
+    display: none; flex-direction: column; gap: 12px; position: absolute; top: 80px; right: 10px; width: 250px; z-index: 1000;
     padding: 12px 15px; background: rgba(0,0,0,0.75); border-radius: 12px; border: 1px solid var(--safe); box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     transition: opacity 0.3s ease, padding 0.3s ease; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
   }
@@ -1572,6 +1572,14 @@ function changeLang(selectedLang) {
           <span class="ar-label" style="color:var(--mode-track);">BG</span>
           <input type="range" id="bgZoomSlider" min="0.5" max="3" value="1" step="0.05" style="flex:1; margin:0;">
         </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--mode-track);">BG X</span>
+          <input type="range" id="bgXSlider" min="-180" max="180" value="0" step="1" style="flex:1; margin:0;">
+        </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--mode-track);">BG Y</span>
+          <input type="range" id="bgYSlider" min="-240" max="240" value="0" step="1" style="flex:1; margin:0;">
+        </div>
       </div>
     </div>
 
@@ -2171,7 +2179,7 @@ photoUpload.addEventListener('change', (e) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       bgImage.classList.remove('camera-frame'); bgImage.src = event.target.result; bgImage.style.display = 'block';
-      bgZoomSlider.value = 1; updateBackgroundTransform();
+      bgZoomSlider.value = 1; bgXSlider.value = 0; bgYSlider.value = 0; updateBackgroundTransform();
       if(isCameraOn) turnOffCamera(); 
       bgVideo.style.display = 'none'; mainCard.classList.add('camera-mode');
       arControls.style.display = 'flex'; photoBtn.classList.add('tool-active');
@@ -2215,12 +2223,19 @@ const whitePaperOverlay = document.getElementById('whitePaperOverlay');
 const whiteSlider = document.getElementById('whiteSlider');
 whiteSlider.addEventListener('input', (e) => { whitePaperOverlay.style.opacity = e.target.value; });
 const bgZoomSlider = document.getElementById('bgZoomSlider');
+const bgXSlider = document.getElementById('bgXSlider');
+const bgYSlider = document.getElementById('bgYSlider');
 function updateBackgroundTransform() {
   const scale = parseFloat(bgZoomSlider.value) || 1;
-  bgVideo.style.transform = `scale(${scale})`;
-  bgImage.style.transform = `scale(${scale})`;
+  const x = parseFloat(bgXSlider.value) || 0;
+  const y = parseFloat(bgYSlider.value) || 0;
+  const transform = `translate(${x}px, ${y}px) scale(${scale})`;
+  bgVideo.style.transform = transform;
+  bgImage.style.transform = transform;
 }
 bgZoomSlider.addEventListener('input', updateBackgroundTransform);
+bgXSlider.addEventListener('input', updateBackgroundTransform);
+bgYSlider.addEventListener('input', updateBackgroundTransform);
 
 let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
 const arDragHandle = document.getElementById('arDragHandle');
@@ -2315,6 +2330,30 @@ function waitForImageReady(img) {
   });
 }
 
+function makeVideoSnapshot(videoEl) {
+  const rect = videoEl.getBoundingClientRect();
+  const outW = Math.max(1, Math.round(rect.width * (window.devicePixelRatio || 1)));
+  const outH = Math.max(1, Math.round(rect.height * (window.devicePixelRatio || 1)));
+  const rawW = videoEl.videoWidth;
+  const rawH = videoEl.videoHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+  const targetRatio = outW / outH;
+  const sourceRatio = rawW / rawH;
+  let sx = 0, sy = 0, sw = rawW, sh = rawH;
+  if (sourceRatio > targetRatio) {
+    sw = rawH * targetRatio;
+    sx = (rawW - sw) / 2;
+  } else {
+    sh = rawW / targetRatio;
+    sy = (rawH - sh) / 2;
+  }
+  ctx.drawImage(videoEl, sx, sy, sw, sh, 0, 0, outW, outH);
+  return canvas.toDataURL('image/jpeg', 0.92);
+}
+
 function drawCoverMedia(ctx, el, mediaRect, targetRect, canvasScale) {
   if (!el) return;
   const rawW = el.videoWidth || el.naturalWidth;
@@ -2354,12 +2393,8 @@ screenshotBtn.addEventListener('click', () => {
 
     try {
       if (isCameraOn && bgVideo.videoWidth) {
-        const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = bgVideo.videoWidth;
-        tempCanvas.height = bgVideo.videoHeight;
-        tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
         bgImage.classList.add('camera-frame');
-        bgImage.src = tempCanvas.toDataURL('image/jpeg', 0.92);
+        bgImage.src = makeVideoSnapshot(bgVideo);
         bgImage.style.display = 'block';
         bgVideo.style.display = 'none';
         await waitForImageReady(bgImage);
@@ -2607,7 +2642,7 @@ inputT.addEventListener('input', () => draw(slider.value));
 const resetBtn = document.getElementById('reset');
 resetBtn.addEventListener('click', () => { 
   slider.value = currentMode === 'anchor' ? 90 : 150; 
-  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0; whiteSlider.value = 0; bgZoomSlider.value = 1; whitePaperOverlay.style.opacity = 0; updateBackgroundTransform();
+  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0; whiteSlider.value = 0; bgZoomSlider.value = 1; bgXSlider.value = 0; bgYSlider.value = 0; whitePaperOverlay.style.opacity = 0; updateBackgroundTransform();
   arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
   document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = t('arExpand'); arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1'; arControls.style.left = 'auto'; arControls.style.top = '80px'; arControls.style.right = '10px'; arControls.style.bottom = 'auto';
