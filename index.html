@@ -121,8 +121,12 @@
   
   #bgVideo, #bgImage {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: top center; z-index: -1; display: none; opacity: 0.85;
+    object-position: center center; z-index: -1; display: none; opacity: 0.85;
+    transform-origin: center center;
   }
+  #bgVideo { object-fit: cover; }
+  #bgImage { object-fit: contain; }
+  #bgImage.camera-frame { object-fit: cover; object-position: center center; }
   #whitePaperOverlay {
     position: absolute; inset: 0; background: #ffffff; opacity: 0;
     pointer-events: none; z-index: 0; transition: opacity 0.2s;
@@ -154,11 +158,6 @@
     background: transparent !important;
     border-color: transparent !important;
     box-shadow: none !important;
-  }
-  .capture-mode #bgVideo,
-  .capture-mode #bgImage,
-  .capture-mode #whitePaperOverlay {
-    visibility: hidden !important;
   }
 
   #gimbalWrap { transform-origin: 50% 160px; will-change: transform; }
@@ -1569,6 +1568,10 @@ function changeLang(selectedLang) {
           <span class="ar-label" style="color:#e8eef7;">白紙</span>
           <input type="range" id="whiteSlider" min="0" max="0.85" value="0" step="0.05" style="flex:1; margin:0;">
         </div>
+        <div class="ar-row">
+          <span class="ar-label" style="color:var(--mode-track);">BG</span>
+          <input type="range" id="bgZoomSlider" min="0.5" max="3" value="1" step="0.05" style="flex:1; margin:0;">
+        </div>
       </div>
     </div>
 
@@ -2167,7 +2170,8 @@ photoUpload.addEventListener('change', (e) => {
   if(file) {
     const reader = new FileReader();
     reader.onload = (event) => {
-      bgImage.src = event.target.result; bgImage.style.display = 'block';
+      bgImage.classList.remove('camera-frame'); bgImage.src = event.target.result; bgImage.style.display = 'block';
+      bgZoomSlider.value = 1; updateBackgroundTransform();
       if(isCameraOn) turnOffCamera(); 
       bgVideo.style.display = 'none'; mainCard.classList.add('camera-mode');
       arControls.style.display = 'flex'; photoBtn.classList.add('tool-active');
@@ -2210,6 +2214,13 @@ const svgWrap = document.querySelector('.svgWrap');
 const whitePaperOverlay = document.getElementById('whitePaperOverlay');
 const whiteSlider = document.getElementById('whiteSlider');
 whiteSlider.addEventListener('input', (e) => { whitePaperOverlay.style.opacity = e.target.value; });
+const bgZoomSlider = document.getElementById('bgZoomSlider');
+function updateBackgroundTransform() {
+  const scale = parseFloat(bgZoomSlider.value) || 1;
+  bgVideo.style.transform = `scale(${scale})`;
+  bgImage.style.transform = `scale(${scale})`;
+}
+bgZoomSlider.addEventListener('input', updateBackgroundTransform);
 
 let isDraggingPanel = false; let pStartX, pStartY, pInitialLeft, pInitialTop;
 const arDragHandle = document.getElementById('arDragHandle');
@@ -2337,49 +2348,37 @@ screenshotBtn.addEventListener('click', () => {
     const originalVideoState = bgVideo.style.display;
     const originalImageSrc = bgImage.src;
     const originalImageState = bgImage.style.display;
+    const originalImageClass = bgImage.className;
     const originalCardClasses = mainCard.className;
     const shouldCloseCameraAfterCapture = isCameraOn;
 
     try {
-      if (!isCameraOn) {
+      if (isCameraOn && bgVideo.videoWidth) {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = bgVideo.videoWidth;
+        tempCanvas.height = bgVideo.videoHeight;
+        tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
+        bgImage.classList.add('camera-frame');
+        bgImage.src = tempCanvas.toDataURL('image/jpeg', 0.92);
+        bgImage.style.display = 'block';
+        bgVideo.style.display = 'none';
+        await waitForImageReady(bgImage);
+      } else {
         await waitForImageReady(bgImage);
       }
-
-      const captureMedia = isCameraOn && bgVideo.videoWidth ? bgVideo : (bgImage.style.display === 'block' && bgImage.src ? bgImage : null);
-      const mediaRect = captureMedia ? captureMedia.getBoundingClientRect() : null;
-      const whiteOpacity = parseFloat(whiteSlider.value) || 0;
 
       watermark.style.display = 'none';
       mainCard.classList.add('capture-mode');
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-      const captureRect = mainCard.getBoundingClientRect();
 
-      const uiCanvas = await html2canvas(mainCard, {
+      const canvas = await html2canvas(mainCard, {
         useCORS: true,
         allowTaint: false,
         backgroundColor: null,
         scale: Math.min(2, window.devicePixelRatio || 1.5),
         logging: false
       });
-
-      const finalCanvas = document.createElement('canvas');
-      finalCanvas.width = uiCanvas.width;
-      finalCanvas.height = uiCanvas.height;
-      const ctx = finalCanvas.getContext('2d');
-      const canvasScale = finalCanvas.width / captureRect.width;
-
-      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f1623';
-      ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
-      ctx.globalAlpha = 0.85;
-      drawCoverMedia(ctx, captureMedia, mediaRect, captureRect, canvasScale);
-      ctx.globalAlpha = 1;
-      if (whiteOpacity > 0) {
-        ctx.fillStyle = `rgba(255, 255, 255, ${whiteOpacity})`;
-        ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
-      }
-      ctx.drawImage(uiCanvas, 0, 0);
-
-      const link = document.createElement('a'); link.download = 'tension-capture.png'; link.href = finalCanvas.toDataURL('image/png'); link.click();
+      const link = document.createElement('a'); link.download = 'tension-capture.png'; link.href = canvas.toDataURL('image/png'); link.click();
     } catch(e) {
       showToast('Screenshot failed. Please try again.', 'bad');
     } finally {
@@ -2393,6 +2392,7 @@ screenshotBtn.addEventListener('click', () => {
         arControls.style.display = 'none';
       } else {
         bgVideo.style.display = originalVideoState;
+        bgImage.className = originalImageClass;
         bgImage.src = originalImageSrc;
         bgImage.style.display = originalImageState;
       }
@@ -2607,7 +2607,7 @@ inputT.addEventListener('input', () => draw(slider.value));
 const resetBtn = document.getElementById('reset');
 resetBtn.addEventListener('click', () => { 
   slider.value = currentMode === 'anchor' ? 90 : 150; 
-  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0; whiteSlider.value = 0; whitePaperOverlay.style.opacity = 0;
+  inputT.value = 100; zoomSlider.value = 1; rotateSlider.value = 0; whiteSlider.value = 0; bgZoomSlider.value = 1; whitePaperOverlay.style.opacity = 0; updateBackgroundTransform();
   arControls.classList.add('is-collapsed'); document.querySelector('.ar-header-text').style.display = 'none';
   document.getElementById('arSlidersWrap').style.display = 'none'; arCollapseBtn.textContent = t('arExpand'); arCollapseBtn.style.color = 'var(--safe)';
   arControls.style.opacity = '1'; arControls.style.left = 'auto'; arControls.style.top = '80px'; arControls.style.right = '10px'; arControls.style.bottom = 'auto';
