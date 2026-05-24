@@ -2354,27 +2354,31 @@ function makeVideoSnapshot(videoEl) {
   return canvas.toDataURL('image/jpeg', 0.92);
 }
 
-function drawCoverMedia(ctx, el, mediaRect, targetRect, canvasScale) {
-  if (!el) return;
-  const rawW = el.videoWidth || el.naturalWidth;
-  const rawH = el.videoHeight || el.naturalHeight;
-  if (!rawW || !rawH) return;
-
-  const cssWidth = targetRect.width;
-  const cssHeight = targetRect.height;
-  const coverScale = Math.max(cssWidth / rawW, cssHeight / rawH);
-  const drawW = rawW * coverScale;
-  const drawH = rawH * coverScale;
-  const drawX = (cssWidth - drawW) / 2;
-  const drawY = 0;
-
-  ctx.drawImage(
-    el,
-    drawX * canvasScale,
-    drawY * canvasScale,
-    drawW * canvasScale,
-    drawH * canvasScale
-  );
+function makeImageSnapshot(imgEl, targetEl) {
+  const rect = targetEl.getBoundingClientRect();
+  const ratio = window.devicePixelRatio || 1;
+  const outW = Math.max(1, Math.round(rect.width * ratio));
+  const outH = Math.max(1, Math.round(rect.height * ratio));
+  const rawW = imgEl.naturalWidth;
+  const rawH = imgEl.naturalHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext('2d');
+  const fitScale = Math.min(rect.width / rawW, rect.height / rawH);
+  const bgScale = parseFloat(bgZoomSlider.value) || 1;
+  const x = parseFloat(bgXSlider.value) || 0;
+  const y = parseFloat(bgYSlider.value) || 0;
+  const drawW = rawW * fitScale * bgScale;
+  const drawH = rawH * fitScale * bgScale;
+  const drawX = (rect.width - drawW) / 2 + x;
+  const drawY = (rect.height - drawH) / 2 + y;
+  ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f1623';
+  ctx.fillRect(0, 0, outW, outH);
+  ctx.globalAlpha = 0.85;
+  ctx.drawImage(imgEl, drawX * ratio, drawY * ratio, drawW * ratio, drawH * ratio);
+  ctx.globalAlpha = 1;
+  return canvas.toDataURL('image/jpeg', 0.92);
 }
 
 screenshotBtn.addEventListener('click', () => {
@@ -2400,6 +2404,12 @@ screenshotBtn.addEventListener('click', () => {
         await waitForImageReady(bgImage);
       } else {
         await waitForImageReady(bgImage);
+        if (bgImage.style.display === 'block' && bgImage.src) {
+          bgImage.classList.add('camera-frame');
+          bgImage.src = makeImageSnapshot(bgImage, mainCard);
+          bgImage.style.transform = 'none';
+          await waitForImageReady(bgImage);
+        }
       }
 
       watermark.style.display = 'none';
