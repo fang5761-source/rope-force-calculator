@@ -2308,17 +2308,19 @@ function waitForImageReady(img) {
   });
 }
 
-function drawCoverMedia(ctx, el, cssWidth, cssHeight, canvasScale) {
+function drawCoverMedia(ctx, el, mediaRect, targetRect, canvasScale) {
   if (!el) return;
   const rawW = el.videoWidth || el.naturalWidth;
   const rawH = el.videoHeight || el.naturalHeight;
   if (!rawW || !rawH) return;
 
+  const cssWidth = mediaRect.width;
+  const cssHeight = mediaRect.height;
   const coverScale = Math.max(cssWidth / rawW, cssHeight / rawH);
   const drawW = rawW * coverScale;
   const drawH = rawH * coverScale;
-  const drawX = (cssWidth - drawW) / 2;
-  const drawY = 0;
+  const drawX = mediaRect.left - targetRect.left + (cssWidth - drawW) / 2;
+  const drawY = mediaRect.top - targetRect.top;
 
   ctx.drawImage(
     el,
@@ -2343,18 +2345,12 @@ screenshotBtn.addEventListener('click', () => {
     const shouldCloseCameraAfterCapture = isCameraOn;
 
     try {
-      if (isCameraOn && bgVideo.videoWidth) {
-        const tempCanvas = document.createElement('canvas'); tempCanvas.width = bgVideo.videoWidth; tempCanvas.height = bgVideo.videoHeight;
-        tempCanvas.getContext('2d').drawImage(bgVideo, 0, 0, tempCanvas.width, tempCanvas.height);
-        bgImage.src = tempCanvas.toDataURL('image/jpeg', 0.92);
-        bgImage.style.display = 'block';
-        bgVideo.style.display = 'none';
-        await waitForImageReady(bgImage);
-      } else {
+      if (!isCameraOn) {
         await waitForImageReady(bgImage);
       }
 
-      const captureMedia = bgImage.style.display === 'block' && bgImage.src ? bgImage : null;
+      const captureMedia = isCameraOn && bgVideo.videoWidth ? bgVideo : (bgImage.style.display === 'block' && bgImage.src ? bgImage : null);
+      const mediaRect = captureMedia ? captureMedia.getBoundingClientRect() : null;
       const whiteOpacity = parseFloat(whiteSlider.value) || 0;
 
       watermark.style.display = 'none';
@@ -2379,7 +2375,7 @@ screenshotBtn.addEventListener('click', () => {
       ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#0f1623';
       ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
       ctx.globalAlpha = 0.85;
-      drawCoverMedia(ctx, captureMedia, captureRect.width, captureRect.height, canvasScale);
+      drawCoverMedia(ctx, captureMedia, mediaRect, captureRect, canvasScale);
       ctx.globalAlpha = 1;
       if (whiteOpacity > 0) {
         ctx.fillStyle = `rgba(255, 255, 255, ${whiteOpacity})`;
