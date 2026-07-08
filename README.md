@@ -1,2 +1,2 @@
 # rope-force-calculator
-繩索受力計算(動畫版)
+錨點張力儀(V角雙模式版)
