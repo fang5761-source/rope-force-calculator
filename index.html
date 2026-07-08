@@ -8,15 +8,15 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<title>錨點張力儀 (雙引擎切換版) | 散木團隊</title>
+<title>錨點張力儀（V角雙模式版） | 散木團隊</title>
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="張力儀">
 <meta name="mobile-web-app-capable" content="yes">
 
-<meta property="og:title" content="錨點張力儀 (雙引擎切換版) | 散木團隊">
-<meta property="og:description" content="內建錨點與索道雙安全規範，運用 AR 鏡頭與空間幾何透視，揭露高危險極限張力。">
+<meta property="og:title" content="錨點張力儀（V角雙模式版） | 散木團隊">
+<meta property="og:description" content="內建錨點分力與索道高張力兩種判讀模式，運用 AR 鏡頭與空間幾何透視，觀察角度變化下的張力風險。">
 <meta property="og:image" content="https://fang5761-source.github.io/rope-force-calculator/icon-512.png">
 <meta property="og:url" content="https://fang5761-source.github.io/rope-force-calculator/">
 <meta property="og:type" content="website">
@@ -112,6 +112,19 @@
   #modeToggleBtn { flex: 2; min-width: 120px; transition: all 0.3s ease; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.3); }
   #modeToggleBtn.mode-anchor { background: var(--safe); color: #0f1623; }
   #modeToggleBtn.mode-track { background: var(--mode-track); color: #0f1623; }
+
+  .mode-subtitle {
+    margin: -2px 6px 4px 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(150,150,150,0.08);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 0.2px;
+  }
 
   .zoneSafe{color:var(--safe)} .zoneWarn{color:var(--warn)} .zoneBad{color:var(--bad)}
   
@@ -322,14 +335,15 @@
 
   /* 💡 散木專屬浮動提示框 (Toast) 樣式 - 修復顯示機制 */
   #toastMessage {
-    display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-    background: var(--card); color: var(--text); padding: 14px 24px; border-radius: 10px;
-    border-left: 4px solid var(--safe); box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-    z-index: 10000; font-weight: bold; text-align: center; font-size: 14px; width: 85%; max-width: 320px;
-    transition: top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+    display: none; position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    background: var(--card); color: var(--text); padding: 8px 14px; border-radius: 999px;
+    border-left: 3px solid var(--safe); box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    z-index: 10000; font-weight: bold; text-align: center; font-size: 13px; width: auto; max-width: calc(100% - 32px);
+    transition: top 0.22s ease, opacity 0.22s ease;
     opacity: 0; pointer-events: none;
+    white-space: normal;
   }
-  #toastMessage.show { top: 20px; opacity: 1; pointer-events: auto; display: block; }
+  #toastMessage.show { top: 16px; opacity: 1; pointer-events: auto; display: block; }
 </style>
 </head>
 <body>
@@ -380,10 +394,12 @@
 <script>
 const i18n = {
   zh: {
-    appTitle: "錨點張力儀 (雙引擎版)",
-    appTitleTrack: "索道張力儀 (滑行版)",
-    modeAnchor: "⚓ 垂直錨點模式",
-    modeTrack: "🚠 水平索道模式",
+    appTitle: "錨點張力儀（V角雙模式版）",
+    appTitleTrack: "錨點張力儀（V角雙模式版）",
+    modeAnchor: "⚓ 錨點分力模式",
+    modeTrack: "🚠 索道高張力模式",
+    modeSubtitleAnchor: "一般 V 型錨點與分力角度判讀。",
+    modeSubtitleTrack: "索道、拖拉系統的高張力情境觀察。",
     weight: "負重 (kg)",
     deadLine: "死線破斷",
     zoom: "🔍 縮放",
@@ -412,13 +428,13 @@ const i18n = {
     anchorSafeDesc: "受力穩定，理想架設狀態",
     trackDangerDesc: "超過極限，嚴禁再將索道收緊！",
     trackWarnDesc: "逼近 10% 下垂量極限",
-    trackSafeDesc: "安全跨距，容許的正常下垂量",
-    anchorNote: "注意：垂直錨點系統嚴禁超過 120°，張力將產生破壞性飆升！",
+    trackSafeDesc: "常見操作區，仍須確認系統承載",
+    anchorNote: "注意：錨點分力模式中，系統嚴禁超過 120°，張力將產生破壞性飆升！",
     trackNote: "注意：索道拉平超過 160° 時，極小衝擊將產生恐怖的動態破壞力！",
     currentMul: "📍 目前張力倍數：",
     loadWord: "負載",
-    anchorStd: "錨點標準",
-    trackStd: "索道標準",
+    anchorStd: "錨點分力模式",
+    trackStd: "索道高張力模式",
     limitWarning: "理論極限(179.95°): 57,296 kg",
     thAnSafeT: "🟢 安全區域 (0° ~ 90°)",
     thAnSafeD: "兩側錨點各承受小於 71% 的總負載，為系統架設的最理想狀態。",
@@ -427,7 +443,7 @@ const i18n = {
     thAnDanT: "🔴 極度危險區 (> 120°)",
     thAnDanD: "超過 120° 時，單一錨點承受張力將大於原負載 (100%)，呈現指數型飆升，嚴禁逾越！",
     thTrSafeT: "🟢 正常操作區 (120° ~ 150°)",
-    thTrSafeD: "為不讓擔架觸地，索道通常需拉緊至此區間。只要確保錨點能承受約 2 倍負載，此區間屬安全跨距。",
+    thTrSafeD: "為避免擔架觸地，索道常會拉緊至此區間。此時張力已明顯提高，必須確認錨點、系統與備援條件足以承受高張力。",
     thTrWarnT: "🟡 警示注意區 (> 150° ~ 160°)",
     thTrWarnD: "逼近 10% 下垂量極限！張力飆升至 2~3 倍負載，指揮官必須高度警覺。",
     thTrDanT: "🔴 死亡危險區 (> 160°)",
@@ -435,12 +451,12 @@ const i18n = {
     thAngle: "φ 內錯仰角",
     thAngleD: "教官所指的角度，為繩索與水平面之間的夾角。在幾何學上，它與中心滑輪處的 φ 角互為「內錯角」，方便教官在現場判斷系統受力狀態。",
     collapse: "🔼 收起說明",
-    op1: "點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。",
+    op1: "點擊上方 <b>【⚓/🚠 模式按鈕】</b>：切換「錨點分力模式」與「索道高張力模式」。模式改變的是判讀情境，不是物理張力本身。",
     op2: "滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。",
     op3: "點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。",
     op4: "點擊上方 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。",
     op5: "點擊 <b>📷實境相機 / 📁照片疊圖</b>：開啟鏡頭或匯入現場照片進行實地疊圖分析。",
-    devTitle: "雙引擎張力儀 專業正式版",
+    devTitle: "雙模式張力儀 專業正式版",
     devTeam: "本工具由 <span style='color:var(--warn);'>散木團隊</span> 開發製作",
     devT1: "教學架構與工程判斷／徐世豐",
     devT2: "工具設計與互動介面／吳佩芳（朵朵）",
@@ -510,10 +526,12 @@ const i18n = {
     sponsorCafeBtn: "前往無人咖啡廳（0元取得 / 隨喜支持） ❤️"
   },
   en: {
-    appTitle: "Anchor Force Calc",
-    appTitleTrack: "Trackline Calc",
-    modeAnchor: "⚓ Anchor Mode",
-    modeTrack: "🚠 Trackline Mode",
+    appTitle: "Anchor Tension Meter (V-Angle Dual Mode)",
+    appTitleTrack: "Anchor Tension Meter (V-Angle Dual Mode)",
+    modeAnchor: "⚓ Anchor Load-Sharing Mode",
+    modeTrack: "🚠 High-Tension Trackline Mode",
+    modeSubtitleAnchor: "For general V-anchor load sharing and angle-risk reading.",
+    modeSubtitleTrack: "For high-tension trackline and hauling-system observation.",
     weight: "Load (kg)",
     deadLine: "FAILURE",
     zoom: "🔍 Zoom",
@@ -542,13 +560,13 @@ const i18n = {
     anchorSafeDesc: "Ideal rigging condition.",
     trackDangerDesc: "Limit exceeded. Do not tighten!",
     trackWarnDesc: "Approaching 10% sag limit.",
-    trackSafeDesc: "Safe span. Normal sag.",
-    anchorNote: "Note: Vertical anchors MUST NOT exceed 120°. Destructive tension!",
+    trackSafeDesc: "Operating zone; verify full system capacity",
+    anchorNote: "Note: In anchor load-sharing mode, the system MUST NOT exceed 120°. Destructive tension may occur!",
     trackNote: "Note: Trackline > 160° causes massive dynamic destruction!",
     currentMul: "📍 Tension Multiplier: ",
     loadWord: "Load",
-    anchorStd: "Anchor Std",
-    trackStd: "Trackline Std",
+    anchorStd: "Anchor Load-Sharing Mode",
+    trackStd: "High-Tension Trackline Mode",
     limitWarning: "Theoretical Limit (179.95°): 57,296 kg",
     thAnSafeT: "🟢 Safe Zone (0° ~ 90°)",
     thAnSafeD: "Anchors take <71% load. Ideal rigging.",
@@ -557,7 +575,7 @@ const i18n = {
     thAnDanT: "🔴 Danger Zone (> 120°)",
     thAnDanD: "Anchors take >100% load. Exponential spike. NEVER exceed!",
     thTrSafeT: "🟢 Operating Zone (120° ~ 150°)",
-    thTrSafeD: "Safe span. Ensure anchors hold 2x load.",
+    thTrSafeD: "To prevent the stretcher from touching the ground, a trackline is often tensioned into this range. Tension is already significantly increased; verify that anchors, the system, and backups can withstand high tension.",
     thTrWarnT: "🟡 Warning Zone (> 150° ~ 160°)",
     thTrWarnD: "Approaching 10% sag limit! High alert.",
     thTrDanT: "🔴 Death Zone (> 160°)",
@@ -565,12 +583,12 @@ const i18n = {
     thAngle: "φ Interior Angle",
     thAngleD: "Matches inner φ angle for easy field estimation.",
     collapse: "🔼 Collapse",
-    op1: "Click <b>【⚓/🚠 Mode Button】</b> to switch physics standards.",
+    op1: "Click the <b>【⚓/🚠 Mode Button】</b> to switch between Anchor Load-Sharing Mode and High-Tension Trackline Mode. The mode changes the risk-reading context, not the physical tension itself.",
     op2: "Slide the <b>Angle Slider</b> below for dynamic tension. Click the <b>✎ Icon</b> to input decimals.",
     op3: "Click <b>[-] or [+]</b> to quickly adjust load weight.",
     op4: "Click <b>🧍‍♂️↔️</b> to flip the instructor's position.",
     op5: "Click <b>📷 AR / 📁 Photo</b> to overlay real scene images.",
-    devTitle: "Dual Engine Simulator PRO",
+    devTitle: "Dual-Mode Tension Simulator PRO",
     devTeam: "Developed by <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Engineering & Architecture / Shih-Feng Hsu",
     devT2: "UI/UX Design / Pei-Fang Wu",
@@ -640,10 +658,12 @@ const i18n = {
     sponsorCafeBtn: "Go to the coffee shop ($0 key / optional support) ❤️"
   },
   ja: {
-    appTitle: "張力計 (デュアル版)",
-    appTitleTrack: "トラックライン張力計",
-    modeAnchor: "⚓ アンカーモード",
-    modeTrack: "🚠 トラックライン",
+    appTitle: "アンカー張力計（V角デュアルモード版）",
+    appTitleTrack: "アンカー張力計（V角デュアルモード版）",
+    modeAnchor: "⚓ アンカー分力モード",
+    modeTrack: "🚠 高張力トラックラインモード",
+    modeSubtitleAnchor: "一般的なV字アンカーと分力角度の判定。",
+    modeSubtitleTrack: "トラックライン／牽引システムの高張力場面の観察。",
     weight: "荷重 (kg)",
     deadLine: "システム崩壊",
     zoom: "🔍 ズーム",
@@ -672,13 +692,13 @@ const i18n = {
     anchorSafeDesc: "理想的な架設状態。",
     trackDangerDesc: "限界超過。これ以上張るな！",
     trackWarnDesc: "サグ10%限界に接近。",
-    trackSafeDesc: "安全スパン。許容サグ。",
-    anchorNote: "注意：アンカー120°超えは厳禁。破壊的張力が発生！",
+    trackSafeDesc: "通常操作域。システム耐力の確認が必要。",
+    anchorNote: "注意：アンカー分力モードでは120°超えは厳禁。破壊的な張力が発生します！",
     trackNote: "注意：160°超えは微小衝撃で崩壊！",
     currentMul: "📍 現在の張力倍数: ",
     loadWord: "荷重",
-    anchorStd: "アンカー基準",
-    trackStd: "トラックライン",
+    anchorStd: "アンカー分力モード",
+    trackStd: "高張力トラックラインモード",
     limitWarning: "理論的限界(179.95°): 57,296 kg",
     thAnSafeT: "🟢 安全エリア (0° ~ 90°)",
     thAnSafeD: "負荷71%未満。理想的な状態。",
@@ -687,7 +707,7 @@ const i18n = {
     thAnDanT: "🔴 危険エリア (> 120°)",
     thAnDanD: "負荷100%超過。急増するため厳禁！",
     thTrSafeT: "🟢 正常操作 (120° ~ 150°)",
-    thTrSafeD: "安全なスパン。支点は2倍の強度が必要。",
+    thTrSafeD: "担架の接地を避けるため、トラックラインはこの範囲まで張られることがあります。この時点で張力はすでに大きく上昇しているため、アンカー・システム・バックアップが高張力に耐えられることを必ず確認してください。",
     thTrWarnT: "🟡 警告エリア (> 150° ~ 160°)",
     thTrWarnD: "サグ10%限界に接近！要警戒。",
     thTrDanT: "🔴 デス・ゾーン (> 160°)",
@@ -695,12 +715,12 @@ const i18n = {
     thAngle: "φ 錯角",
     thAngleD: "中心のφ角と等しく、現場での判断に役立つ。",
     collapse: "🔼 閉じる",
-    op1: "上の <b>【⚓/🚠 モード切替】</b> をクリックして基準を変更。",
+    op1: "上の <b>【⚓/🚠 モード切替】</b> を押して、「アンカー分力モード」と「高張力トラックラインモード」を切り替えます。モードが変わるのは判定場面であり、物理的な張力そのものではありません。",
     op2: "下の <b>角度スライダー</b> を操作してプレビュー。<b>✎ アイコン</b> をクリックで小数点入力。",
     op3: "負荷の両側にある <b>[-] または [+] ボタン</b> で重量調整。",
     op4: "<b>🧍‍♂️↔️ ボタン</b> をクリックして教官の立ち位置を反転。",
     op5: "<b>📷 ARカメラ / 📁 写真</b> で現場画像をオーバーレイ。",
-    devTitle: "デュアルエンジン張力計 PRO",
+    devTitle: "デュアルモード張力計 PRO",
     devTeam: "開発：<span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "アーキテクチャ・監修 / Shih-Feng Hsu",
     devT2: "UI/UX デザイン / Pei-Fang Wu",
@@ -770,10 +790,12 @@ const i18n = {
     sponsorCafeBtn: "無人カフェへ（0円キー / 任意サポート）❤️"
   },
   ko: {
-    appTitle: "앵커 장력계 (듀얼 엔진)",
-    appTitleTrack: "트랙라인 장력계",
-    modeAnchor: "⚓ 수직 앵커 모드",
-    modeTrack: "🚠 수평 트랙라인",
+    appTitle: "앵커 장력계 (V각 듀얼 모드판)",
+    appTitleTrack: "앵커 장력계 (V각 듀얼 모드판)",
+    modeAnchor: "⚓ 앵커 분력 모드",
+    modeTrack: "🚠 고장력 트랙라인 모드",
+    modeSubtitleAnchor: "일반 V형 앵커와 분력 각도 판독.",
+    modeSubtitleTrack: "트랙라인·견인 시스템의 고장력 상황 관찰.",
     weight: "하중 (kg)",
     deadLine: "시스템 파괴",
     zoom: "🔍 확대",
@@ -802,13 +824,13 @@ const i18n = {
     anchorSafeDesc: "이상적인 리깅 상태입니다.",
     trackDangerDesc: "한계 초과. 더 이상 당기지 마십시오!",
     trackWarnDesc: "10% 새그 한계에 근접했습니다.",
-    trackSafeDesc: "안전한 스팬 및 새그입니다.",
-    anchorNote: "주의: 수직 앵커 시스템은 120°를 초과해서는 안 됩니다!",
+    trackSafeDesc: "정상 운용 구간이며, 시스템 지지력을 확인해야 합니다",
+    anchorNote: "주의: 앵커 분력 모드에서는 120°를 초과해서는 안 됩니다. 파괴적인 장력이 발생할 수 있습니다!",
     trackNote: "주의: 트랙라인이 160°를 초과하면 파괴적인 장력이 발생합니다!",
     currentMul: "📍 현재 장력 배수: ",
     loadWord: "하중",
-    anchorStd: "앵커 기준",
-    trackStd: "트랙라인 기준",
+    anchorStd: "앵커 분력 모드",
+    trackStd: "고장력 트랙라인 모드",
     limitWarning: "이론적 한계(179.95°): 57,296 kg",
     thAnSafeT: "🟢 안전 구역 (0° ~ 90°)",
     thAnSafeD: "각 앵커가 하중의 71% 이하를 분담합니다.",
@@ -817,7 +839,7 @@ const i18n = {
     thAnDanT: "🔴 위험 구역 (> 120°)",
     thAnDanD: "장력이 하중의 100%를 초과합니다. 절대 금지!",
     thTrSafeT: "🟢 정상 작동 구역 (120° ~ 150°)",
-    thTrSafeD: "안전한 트랙라인. 앵커가 2배 하중을 견딜 수 있는지 확인하세요.",
+    thTrSafeD: "들것이 지면에 닿지 않도록 트랙라인은 이 구간까지 팽팽하게 당겨질 수 있습니다. 이때 장력은 이미 크게 증가한 상태이므로 앵커, 시스템 및 백업 조건이 고장력을 견딜 수 있는지 반드시 확인해야 합니다.",
     thTrWarnT: "🟡 경고 구역 (> 150° ~ 160°)",
     thTrWarnD: "새그 10% 한계 근접! 고도의 주의가 필요합니다.",
     thTrDanT: "🔴 데스 존 (> 160°)",
@@ -825,12 +847,12 @@ const i18n = {
     thAngle: "φ 교각",
     thAngleD: "내부 φ 각도와 일치하여 현장 예측을 용이하게 합니다.",
     collapse: "🔼 닫기",
-    op1: "<b>【⚓/🚠 모드 버튼】</b>을 클릭하여 물리 기준을 전환하세요.",
+    op1: "<b>【⚓/🚠 모드 버튼】</b>을 눌러 “앵커 분력 모드”와 “고장력 트랙라인 모드”를 전환합니다. 모드가 바뀌는 것은 위험 판독 맥락이며, 물리적 장력 자체가 아닙니다.",
     op2: "아래 <b>각도 슬라이더</b>를 밀어 장력을 시뮬레이션하세요. <b>✎ 아이콘</b>으로 소수점 입력이 가능합니다.",
     op3: "하중 옆의 <b>[-] 또는 [+]</b> 버튼을 클릭하여 무게를 조절하세요.",
     op4: "<b>🧍‍♂️↔️</b> 버튼으로 교관의 위치를 반전시킵니다.",
     op5: "<b>📷 AR / 📁 사진</b>을 클릭하여 실제 현장 이미지를 오버레이하세요.",
-    devTitle: "듀얼 엔진 장력계 PRO",
+    devTitle: "듀얼 모드 장력계 PRO",
     devTeam: "개발: <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "아키텍처 및 엔지니어링 / Shih-Feng Hsu",
     devT2: "도구 설계 및 UI / Pei-Fang Wu",
@@ -900,10 +922,12 @@ const i18n = {
     sponsorCafeBtn: "무인 카페로 이동 (0원 키 / 선택 후원) ❤️"
   },
   fr: {
-    appTitle: "Force d'Ancrage",
-    appTitleTrack: "Force de Tyrolienne",
-    modeAnchor: "⚓ Mode Ancrage",
-    modeTrack: "🚠 Mode Tyrolienne",
+    appTitle: "Tensiomètre d'ancrage (mode double angle en V)",
+    appTitleTrack: "Tensiomètre d'ancrage (mode double angle en V)",
+    modeAnchor: "⚓ Mode répartition d’ancrage",
+    modeTrack: "🚠 Mode ligne haute tension",
+    modeSubtitleAnchor: "Pour lire un ancrage en V et la répartition de charge par l’angle.",
+    modeSubtitleTrack: "Pour observer les lignes tendues et systèmes de traction en haute tension.",
     weight: "Charge (kg)",
     deadLine: "RUPTURE",
     zoom: "🔍 Zoom",
@@ -932,13 +956,13 @@ const i18n = {
     anchorSafeDesc: "Condition de gréement idéale.",
     trackDangerDesc: "Limite dépassée. Ne pas tendre plus !",
     trackWarnDesc: "Approche de la limite de flèche de 10%.",
-    trackSafeDesc: "Portée sûre. Flèche normale.",
-    anchorNote: "Note : Les ancrages verticaux NE DOIVENT PAS dépasser 120° !",
-    trackNote: "Note : Une tyrolienne > 160° provoque une destruction dynamique !",
+    trackSafeDesc: "Zone d’utilisation; vérifier la capacité du système",
+    anchorNote: "Note : en mode répartition d’ancrage, le système NE DOIT PAS dépasser 120°. Une tension destructive peut apparaître !",
+    trackNote: "Note : au-delà de 160°, une ligne haute tension peut produire une destruction dynamique massive.",
     currentMul: "📍 Multiplicateur de tension : ",
     loadWord: "Charge",
-    anchorStd: "Std. Ancrage",
-    trackStd: "Std. Tyrolienne",
+    anchorStd: "Mode répartition d’ancrage",
+    trackStd: "Mode ligne haute tension",
     limitWarning: "Limite théorique (179.95°) : 57 296 kg",
     thAnSafeT: "🟢 Zone Sûre (0° ~ 90°)",
     thAnSafeD: "Les ancrages supportent <71% de la charge. Idéal.",
@@ -947,7 +971,7 @@ const i18n = {
     thAnDanT: "🔴 Zone de Danger (> 120°)",
     thAnDanD: "Les ancrages supportent >100% de la charge. JAMAIS dépasser !",
     thTrSafeT: "🟢 Zone de Fonctionnement (120° ~ 150°)",
-    thTrSafeD: "Portée sûre. Assurez-vous que l'ancrage supporte 2x la charge.",
+    thTrSafeD: "Pour éviter que le brancard touche le sol, la ligne est souvent tendue dans cette plage. La tension est déjà nettement plus élevée; vérifiez que les ancrages, le système et les sauvegardes peuvent supporter cette haute tension.",
     thTrWarnT: "🟡 Zone d'Avertissement (> 150° ~ 160°)",
     thTrWarnD: "Approche de la limite de 10% ! Alerte élevée.",
     thTrDanT: "🔴 Zone de Mort (> 160°)",
@@ -955,12 +979,12 @@ const i18n = {
     thAngle: "φ Angle Intérieur",
     thAngleD: "Correspond à l'angle intérieur φ pour une estimation facile.",
     collapse: "🔼 Fermer",
-    op1: "Cliquez sur <b>【Bouton ⚓/🚠】</b> pour changer de standard physique.",
+    op1: "Cliquez sur le <b>【bouton ⚓/🚠】</b> pour passer du mode répartition d’ancrage au mode ligne haute tension. Le mode change le contexte de lecture du risque, pas la tension physique elle-même.",
     op2: "Faites glisser le <b>Curseur d'Angle</b>. Cliquez sur <b>✎</b> pour les décimales.",
     op3: "Cliquez sur <b>[-] ou [+]</b> pour ajuster le poids.",
     op4: "Cliquez sur <b>🧍‍♂️↔️</b> pour inverser la position de l'instructeur.",
     op5: "Cliquez sur <b>📷 AR / 📁 Photo</b> pour superposer des images réelles.",
-    devTitle: "Simulateur Double Moteur PRO",
+    devTitle: "Simulateur de tension double mode PRO",
     devTeam: "Développé par <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Ingénierie et Architecture / Shih-Feng Hsu",
     devT2: "Design UI/UX / Pei-Fang Wu",
@@ -1030,10 +1054,12 @@ const i18n = {
     sponsorCafeBtn: "Aller au café (clé à 0 € / soutien libre) ❤️"
   },
   de: {
-    appTitle: "Ankerkraft Rechner",
-    appTitleTrack: "Seilbahnkraft",
-    modeAnchor: "⚓ Ankermodus",
-    modeTrack: "🚠 Seilbahnmodus",
+    appTitle: "Anker-Spannungsmesser (V-Winkel-Dualmodus)",
+    appTitleTrack: "Anker-Spannungsmesser (V-Winkel-Dualmodus)",
+    modeAnchor: "⚓ Anker-Lastverteilungsmodus",
+    modeTrack: "🚠 Hochspannungs-Trackline-Modus",
+    modeSubtitleAnchor: "Für V-Anker, Lastverteilung und Winkel-Risikobewertung.",
+    modeSubtitleTrack: "Für Trackline- und Zugsysteme in Hochspannungs-Situationen.",
     weight: "Last (kg)",
     deadLine: "BRUCH",
     zoom: "🔍 Zoom",
@@ -1062,13 +1088,13 @@ const i18n = {
     anchorSafeDesc: "Idealer Montagezustand.",
     trackDangerDesc: "Grenze überschritten. Nicht weiter spannen!",
     trackWarnDesc: "Annäherung an 10% Durchhangsgrenze.",
-    trackSafeDesc: "Sichere Spannweite. Normaler Durchhang.",
-    anchorNote: "Hinweis: Vertikale Anker DÜRFEN 120° NICHT überschreiten!",
-    trackNote: "Hinweis: Seilbahn > 160° verursacht dynamische Zerstörung!",
+    trackSafeDesc: "Betriebsbereich; Systemtragfähigkeit prüfen",
+    anchorNote: "Hinweis: Im Anker-Lastverteilungsmodus darf das System 120° NICHT überschreiten. Zerstörerische Spannung kann entstehen!",
+    trackNote: "Hinweis: Bei einer Hochspannungs-Trackline über 160° können kleine Impulse massive dynamische Schäden auslösen.",
     currentMul: "📍 Spannungsfaktor: ",
     loadWord: "Last",
-    anchorStd: "Anker Std.",
-    trackStd: "Seilbahn Std.",
+    anchorStd: "Anker-Lastverteilungsmodus",
+    trackStd: "Hochspannungs-Trackline-Modus",
     limitWarning: "Theoretisches Limit (179.95°): 57.296 kg",
     thAnSafeT: "🟢 Sichere Zone (0° ~ 90°)",
     thAnSafeD: "Anker nehmen <71% der Last auf. Ideal.",
@@ -1077,7 +1103,7 @@ const i18n = {
     thAnDanT: "🔴 Gefahrenzone (> 120°)",
     thAnDanD: "Anker nehmen >100% der Last auf. NIEMALS überschreiten!",
     thTrSafeT: "🟢 Betriebszone (120° ~ 150°)",
-    thTrSafeD: "Sichere Seilbahn. Anker muss 2x Last halten.",
+    thTrSafeD: "Damit die Trage nicht den Boden berührt, wird eine Trackline häufig bis in diesen Bereich gespannt. Die Spannung ist bereits deutlich erhöht; prüfen Sie, ob Anker, System und Backups diese Hochspannung tragen können.",
     thTrWarnT: "🟡 Warnzone (> 150° ~ 160°)",
     thTrWarnD: "Annäherung an 10% Limit! Höchste Alarmbereitschaft.",
     thTrDanT: "🔴 Todeszone (> 160°)",
@@ -1085,12 +1111,12 @@ const i18n = {
     thAngle: "φ Innenwinkel",
     thAngleD: "Entspricht dem inneren φ-Winkel zur einfachen Schätzung.",
     collapse: "🔼 Schließen",
-    op1: "Klicken Sie auf <b>【⚓/🚠 Modus】</b>, um den Standard zu wechseln.",
+    op1: "Klicken Sie auf den <b>【⚓/🚠 Modus】</b>, um zwischen Anker-Lastverteilungsmodus und Hochspannungs-Trackline-Modus zu wechseln. Der Modus ändert den Bewertungskontext, nicht die physikalische Spannung selbst.",
     op2: "Schieben Sie den <b>Winkelschieber</b>. Klicken Sie auf <b>✎</b> für Dezimalzahlen.",
     op3: "Klicken Sie auf <b>[-] oder [+]</b>, um das Gewicht anzupassen.",
     op4: "Klicken Sie auf <b>🧍‍♂️↔️</b>, um die Position des Ausbilders zu spiegeln.",
     op5: "Klicken Sie auf <b>📷 AR / 📁 Foto</b> für reale Bildüberlagerungen.",
-    devTitle: "Dual Engine Simulator PRO",
+    devTitle: "Dual-Mode Spannungssimulator PRO",
     devTeam: "Entwickelt von <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Technik & Architektur / Shih-Feng Hsu",
     devT2: "UI/UX Design / Pei-Fang Wu",
@@ -1160,10 +1186,12 @@ const i18n = {
     sponsorCafeBtn: "Zum Café (0-€-Schlüssel / freiwillig unterstützen) ❤️"
   },
   es: {
-    appTitle: "Calc. Fuerza de Anclaje",
-    appTitleTrack: "Calc. de Tirolesa",
-    modeAnchor: "⚓ Modo Anclaje",
-    modeTrack: "🚠 Modo Tirolesa",
+    appTitle: "Medidor de tensión de anclaje (modo dual de ángulo V)",
+    appTitleTrack: "Medidor de tensión de anclaje (modo dual de ángulo V)",
+    modeAnchor: "⚓ Modo reparto de anclaje",
+    modeTrack: "🚠 Modo línea de alta tensión",
+    modeSubtitleAnchor: "Para leer anclajes en V y reparto de carga por ángulo.",
+    modeSubtitleTrack: "Para observar líneas guía y sistemas de arrastre en alta tensión.",
     weight: "Carga (kg)",
     deadLine: "FALLA",
     zoom: "🔍 Zoom",
@@ -1192,13 +1220,13 @@ const i18n = {
     anchorSafeDesc: "Condición ideal de montaje.",
     trackDangerDesc: "Limite excedido. ¡No tense más!",
     trackWarnDesc: "Acercándose al límite de pandeo (10%).",
-    trackSafeDesc: "Tramo seguro. Pandeo normal.",
-    anchorNote: "Nota: ¡Los anclajes verticales NO DEBEN superar los 120°!",
-    trackNote: "Nota: ¡Tirolesa > 160° causa destrucción dinámica masiva!",
+    trackSafeDesc: "Zona operativa; verificar la capacidad del sistema",
+    anchorNote: "Nota: En el modo reparto de anclaje, el sistema NO debe superar los 120°. ¡Puede producir tensión destructiva!",
+    trackNote: "Nota: por encima de 160°, una línea de alta tensión puede producir destrucción dinámica masiva.",
     currentMul: "📍 Multiplicador de Tensión: ",
     loadWord: "Carga",
-    anchorStd: "Estándar de Anclaje",
-    trackStd: "Estándar de Tirolesa",
+    anchorStd: "Modo reparto de anclaje",
+    trackStd: "Modo línea de alta tensión",
     limitWarning: "Límite Teórico (179.95°): 57,296 kg",
     thAnSafeT: "🟢 Zona Segura (0° ~ 90°)",
     thAnSafeD: "Los anclajes soportan <71% de la carga. Ideal.",
@@ -1207,7 +1235,7 @@ const i18n = {
     thAnDanT: "🔴 Zona de Peligro (> 120°)",
     thAnDanD: "Los anclajes soportan >100% de carga. ¡NUNCA exceder!",
     thTrSafeT: "🟢 Zona Operativa (120° ~ 150°)",
-    thTrSafeD: "Tramo seguro. Asegure que los anclajes soporten 2x la carga.",
+    thTrSafeD: "Para evitar que la camilla toque el suelo, la línea suele tensarse hasta este rango. La tensión ya ha aumentado claramente; verifique que los anclajes, el sistema y los respaldos puedan soportar alta tensión.",
     thTrWarnT: "🟡 Zona de Advertencia (> 150° ~ 160°)",
     thTrWarnD: "¡Acercándose al límite del 10%! Alta alerta.",
     thTrDanT: "🔴 Zona Mortal (> 160°)",
@@ -1215,12 +1243,12 @@ const i18n = {
     thAngle: "φ Ángulo Interior",
     thAngleD: "Coincide con el ángulo interior φ para facilitar la estimación en campo.",
     collapse: "🔼 Cerrar",
-    op1: "Haga clic en el <b>【Botón ⚓/🚠】</b> para cambiar los estándares.",
+    op1: "Haga clic en el <b>【botón ⚓/🚠】</b> para alternar entre modo reparto de anclaje y modo línea de alta tensión. El modo cambia el contexto de lectura del riesgo, no la tensión física en sí.",
     op2: "Deslice el <b>Control de Ángulo</b> abajo. Haga clic en <b>✎</b> para decimales.",
     op3: "Haga clic en <b>[-] o [+]</b> junto a la carga para ajustar el peso.",
     op4: "Haga clic en <b>🧍‍♂️↔️</b> para invertir la posición del instructor.",
     op5: "Haga clic en <b>📷 AR / 📁 Foto</b> para superponer imágenes reales.",
-    devTitle: "Simulador de Doble Motor PRO",
+    devTitle: "Simulador de tensión de doble modo PRO",
     devTeam: "Desarrollado por <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Ingeniería y Arquitectura / Shih-Feng Hsu",
     devT2: "Diseño UI/UX / Pei-Fang Wu",
@@ -1290,10 +1318,12 @@ const i18n = {
     sponsorCafeBtn: "Ir a la cafetería (clave por 0 € / apoyo opcional) ❤️"
   },
   pt: {
-    appTitle: "Calc. Força de Ancoragem",
-    appTitleTrack: "Calc. Força Tirolesa",
-    modeAnchor: "⚓ Modo Ancoragem",
-    modeTrack: "🚠 Modo Tirolesa",
+    appTitle: "Medidor de tensão de ancoragem (modo duplo de ângulo V)",
+    appTitleTrack: "Medidor de tensão de ancoragem (modo duplo de ângulo V)",
+    modeAnchor: "⚓ Modo divisão de ancoragem",
+    modeTrack: "🚠 Modo linha de alta tensão",
+    modeSubtitleAnchor: "Para leitura de ancoragem em V e divisão de carga pelo ângulo.",
+    modeSubtitleTrack: "Para observar linhas-guia e sistemas de tração em alta tensão.",
     weight: "Carga (kg)",
     deadLine: "FALHA",
     zoom: "🔍 Zoom",
@@ -1322,13 +1352,13 @@ const i18n = {
     anchorSafeDesc: "Condição ideal de montagem.",
     trackDangerDesc: "Limite excedido. Não puxe mais!",
     trackWarnDesc: "Aproximando do limite de flecha (10%).",
-    trackSafeDesc: "Vão seguro. Flecha normal.",
-    anchorNote: "Nota: Ancoragens verticais NÃO DEVEM exceder 120°!",
-    trackNote: "Nota: Tirolesa > 160° causa destruição dinâmica massiva!",
+    trackSafeDesc: "Zona operacional; verificar a capacidade do sistema",
+    anchorNote: "Nota: No modo divisão de ancoragem, o sistema NÃO deve exceder 120°. Pode ocorrer tensão destrutiva!",
+    trackNote: "Nota: acima de 160°, uma linha de alta tensão pode produzir destruição dinâmica massiva.",
     currentMul: "📍 Multiplicador de Tensão: ",
     loadWord: "Carga",
-    anchorStd: "Padrão de Ancoragem",
-    trackStd: "Padrão de Tirolesa",
+    anchorStd: "Modo divisão de ancoragem",
+    trackStd: "Modo linha de alta tensão",
     limitWarning: "Limite Teórico (179.95°): 57.296 kg",
     thAnSafeT: "🟢 Zona Segura (0° ~ 90°)",
     thAnSafeD: "Ancoragens suportam <71% da carga. Ideal.",
@@ -1337,7 +1367,7 @@ const i18n = {
     thAnDanT: "🔴 Zona de Perigo (> 120°)",
     thAnDanD: "Ancoragens suportam >100% da carga. NUNCA exceda!",
     thTrSafeT: "🟢 Zona Operacional (120° ~ 150°)",
-    thTrSafeD: "Vão seguro. Certifique-se de que a ancoragem suporta 2x a carga.",
+    thTrSafeD: "Para evitar que a maca toque o solo, a linha costuma ser tensionada até esta faixa. A tensão já aumentou significativamente; verifique se as ancoragens, o sistema e os backups suportam alta tensão.",
     thTrWarnT: "🟡 Zona de Aviso (> 150° ~ 160°)",
     thTrWarnD: "Aproximando do limite de 10%! Alerta máximo.",
     thTrDanT: "🔴 Zona da Morte (> 160°)",
@@ -1345,12 +1375,12 @@ const i18n = {
     thAngle: "φ Ângulo Interno",
     thAngleD: "Corresponde ao ângulo interno φ para fácil estimativa.",
     collapse: "🔼 Fechar",
-    op1: "Clique no <b>【Botão ⚓/🚠】</b> para mudar os padrões.",
+    op1: "Clique no <b>【botão ⚓/🚠】</b> para alternar entre o modo divisão de ancoragem e o modo linha de alta tensão. O modo muda o contexto de leitura de risco, não a tensão física em si.",
     op2: "Deslize o <b>Controle de Ângulo</b> abaixo. Clique no <b>✎</b> para decimais.",
     op3: "Clique em <b>[-] ou [+]</b> ao lado da carga para ajustar o peso.",
     op4: "Clique em <b>🧍‍♂️↔️</b> para inverter a posição do instrutor.",
     op5: "Clique em <b>📷 AR / 📁 Foto</b> para sobrepor imagens reais.",
-    devTitle: "Simulador Motor Duplo PRO",
+    devTitle: "Simulador de tensão de modo duplo PRO",
     devTeam: "Desenvolvido por <span style='color:var(--warn);'>SunMoon Team</span>",
     devT1: "Engenharia e Arquitetura / Shih-Feng Hsu",
     devT2: "Design UI/UX / Pei-Fang Wu",
@@ -1458,11 +1488,13 @@ function applyTranslations() {
     const modeBtn = document.getElementById('modeToggleBtn');
     const modeTitleLabel = document.getElementById('modeTitleLabel');
     const menuModeText = document.getElementById('menuModeText');
-    
+    const modeSubtitle = document.getElementById('modeSubtitle');
+
     if (modeBtn && typeof currentMode !== 'undefined') {
         modeBtn.innerHTML = currentMode === 'anchor' ? t('modeAnchor') : t('modeTrack');
         if (modeTitleLabel) modeTitleLabel.textContent = currentMode === 'anchor' ? t('appTitle') : t('appTitleTrack');
         if (menuModeText) menuModeText.textContent = currentMode === 'anchor' ? t('anchorStd') : t('trackStd');
+        if (modeSubtitle) modeSubtitle.textContent = currentMode === 'anchor' ? t('modeSubtitleAnchor') : t('modeSubtitleTrack');
     }
 
     if (typeof updateTheoryText === 'function') updateTheoryText();
@@ -1483,7 +1515,7 @@ function changeLang(selectedLang) {
 
 <div id="toastMessage"></div>
 
-<!-- 問題回報視窗 (V6.2 零客服微調版) -->
+<!-- 問題回報視窗 (V6.2.7 模式短提示版) -->
 <div id="supportModal" class="modal-overlay">
   <div class="modal-box">
     <h3 style="color:var(--warn); margin-top:0;" data-i18n="supTitle">💬 系統問題回報</h3>
@@ -1552,7 +1584,7 @@ function changeLang(selectedLang) {
         <!-- 💡 淨空頂部：只留 LOGO 絕對防跑版 -->
         <div class="title-left" id="mainTitleText">
           <img src="icon-192.png" alt="[ICON]" style="width: 28px; height: 28px; border-radius: 6px; object-fit: cover; border: 1px solid var(--line); display: inline-block;" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%23334155\'/><text x=\'50\' y=\'65\' font-size=\'40\' fill=\'%23fff\' text-anchor=\'middle\'>?</text></svg>'">
-          <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">張力儀 (雙引擎版)</span> <span class="vip-badge">PRO</span></div>
+          <div class="title-tag"><span id="modeTitleLabel" data-i18n="appTitle">錨點張力儀（V角雙模式版）</span> <span class="vip-badge">PRO</span></div>
         </div>
         
         <div style="display:flex; align-items:center; gap:8px;">
@@ -1561,7 +1593,7 @@ function changeLang(selectedLang) {
       </div>
       
       <div class="btn-group" style="padding: 4px; background: rgba(0,0,0,0.2); margin-top: 8px;">
-        <button id="modeToggleBtn" class="mode-anchor" type="button" title="點擊切換系統安全模式">⚓ 垂直錨點模式</button>
+        <button id="modeToggleBtn" class="mode-anchor" type="button" title="點擊切換判讀模式">⚓ 錨點分力模式</button>
         <button id="instructorToggleBtn" type="button" title="切換教官位置" style="min-width: 40px; flex: none;">🧍‍♂️↔️</button>
         <button id="themeToggle" type="button" title="日/夜間模式" style="min-width: 40px; flex: none;">☀️</button>
       </div>
@@ -1684,7 +1716,7 @@ function changeLang(selectedLang) {
           </summary>
           <div class="menu-content">
             <ul style="margin-top: 0; padding-left: 20px;">
-              <li style="margin-bottom: 6px;" data-i18n="op1">點擊上方 <b>【⚓/🚠 模式按鈕】</b>：一鍵切換國際錨點(嚴格)與水平索道(寬容)物理警戒標準。</li>
+              <li style="margin-bottom: 6px;" data-i18n="op1">點擊上方 <b>【⚓/🚠 模式按鈕】</b>：切換「錨點分力模式」與「索道高張力模式」。模式改變的是判讀情境，不是物理張力本身。</li>
               <li style="margin-bottom: 6px;" data-i18n="op2">滑動下方 <b>夾角拉桿</b>，即時預覽不同角度的張力變化。點擊 <b>✎ 圖示</b> 可手動輸入小數點。</li>
               <li style="margin-bottom: 6px;" data-i18n="op3">點擊下方負載兩側的 <b>[-] 或 [+] 按鈕</b>，快速加減重量。</li>
               <li style="margin-bottom: 6px;" data-i18n="op4">點擊上方 <b>🧍‍♂️↔️ 按鈕</b>，可一鍵切換小人教官的站立位置。</li>
@@ -1727,7 +1759,7 @@ function changeLang(selectedLang) {
 
     <!-- 💡 第二區：專業名詞與原理解析 -->
     <details class="main-accordion" id="theoryAccordion" style="margin-top: 10px;">
-      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1" style="color: var(--warn);">專業名詞與原理解析</span> (<span id="menuModeText" data-i18n="anchorStd">錨點標準</span>)</div></summary>
+      <summary><div style="display:flex; align-items:center; gap:8px;"><span class="menu-icon">📚</span> <span data-i18n="menu1" style="color: var(--warn);">專業名詞與原理解析</span> (<span id="menuModeText" data-i18n="anchorStd">錨點分力模式</span>)</div></summary>
       <div class="menu-group">
         <div class="menu-content" id="theoryContent">
         </div>
@@ -1746,8 +1778,8 @@ function changeLang(selectedLang) {
           </summary>
           <div class="menu-content">
             <div style="text-align: center; margin-bottom: 15px;">
-              <span data-i18n="devTitle" style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">雙引擎張力儀 專業正式版</span>
-              <div style="font-size: 11px; color: var(--muted); margin-top: 8px; font-family: monospace;">Version 6.2.3</div>
+              <span data-i18n="devTitle" style="display:inline-block; background:var(--safe); color:#0f1623; font-weight:bold; padding:4px 14px; border-radius:20px; font-size:13px; letter-spacing:0.5px; box-shadow: 0 2px 6px rgba(34,197,94,0.3);">雙模式張力儀 專業正式版</span>
+              <div style="font-size: 11px; color: var(--muted); margin-top: 8px; font-family: monospace;">Version 6.2.8</div>
             </div>
             <p style="margin-top: 0; margin-bottom: 6px; font-weight: bold; color: var(--text); text-align: center;" data-i18n="devTeam">本工具由 <span style="color:var(--warn);">散木團隊</span> 開發製作</p>
             <p style="margin-top: 0; margin-bottom: 4px; font-size: 13px; text-align: center;" data-i18n="devT1">教學架構與工程判斷／徐世豐</p>
@@ -1929,10 +1961,24 @@ mainTitleText.addEventListener('click', () => {
     setTimeout(() => document.getElementById('vipPwdInput').focus(), 100);
 });
 
-function showToast(msg, type = 'safe') {
+function showToast(msg, type = 'safe', duration = 3000, anchorEl = null) {
     const toast = document.getElementById('toastMessage');
     toast.innerHTML = msg;
     toast.style.borderLeftColor = `var(--${type})`;
+
+    if (anchorEl) {
+        const rect = anchorEl.getBoundingClientRect();
+        toast.style.left = `${rect.left + rect.width / 2}px`;
+        toast.style.top = `${rect.bottom + 6}px`;
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.maxWidth = `${Math.min(320, window.innerWidth - 32)}px`;
+    } else {
+        toast.style.left = '50%';
+        toast.style.top = '16px';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.maxWidth = 'calc(100% - 32px)';
+    }
+
     toast.style.display = 'block';
     
     // 強制重繪以啟動動畫
@@ -1941,8 +1987,8 @@ function showToast(msg, type = 'safe') {
     toast.classList.add('show');
     setTimeout(() => { 
         toast.classList.remove('show'); 
-        setTimeout(() => toast.style.display = 'none', 300);
-    }, 3000);
+        setTimeout(() => toast.style.display = 'none', 220);
+    }, duration);
 }
 
 function logoutVip() {
@@ -2050,6 +2096,7 @@ let currentMode = 'anchor';
 const modeToggleBtn = document.getElementById('modeToggleBtn');
 const modeTitleLabel = document.getElementById('modeTitleLabel');
 const menuModeText = document.getElementById('menuModeText');
+const modeSubtitle = document.getElementById('modeSubtitle');
 const theoryContent = document.getElementById('theoryContent');
 
 modeToggleBtn.addEventListener('click', () => {
@@ -2059,6 +2106,8 @@ modeToggleBtn.addEventListener('click', () => {
         modeToggleBtn.innerHTML = t('modeTrack');
         modeTitleLabel.textContent = t('appTitleTrack');
         menuModeText.textContent = t('trackStd');
+        if (modeSubtitle) modeSubtitle.textContent = t('modeSubtitleTrack');
+        showToast(t('modeSubtitleTrack'), 'safe', 1200, modeToggleBtn);
         if(slider.value < 120) slider.value = 150; 
     } else {
         currentMode = 'anchor';
@@ -2066,6 +2115,8 @@ modeToggleBtn.addEventListener('click', () => {
         modeToggleBtn.innerHTML = t('modeAnchor');
         modeTitleLabel.textContent = t('appTitle');
         menuModeText.textContent = t('anchorStd');
+        if (modeSubtitle) modeSubtitle.textContent = t('modeSubtitleAnchor');
+        showToast(t('modeSubtitleAnchor'), 'safe', 1200, modeToggleBtn);
         if(slider.value > 120) slider.value = 90; 
     }
     updateTheoryText();
@@ -2108,7 +2159,7 @@ function checkForUpdates() {
 
 const shareBtnAction = document.getElementById('shareBtnAction');
 shareBtnAction.addEventListener('click', async () => {
-  const shareData = { title: '雙引擎張力分析儀', text: '內建錨點與索道雙重國際安全規範，結合 AR 實境精準推演極限張力。', url: window.location.href };
+  const shareData = { title: '雙模式張力分析儀', text: '內建錨點分力與索道高張力兩種判讀模式，結合 AR 實境觀察角度與張力風險。', url: window.location.href };
   try {
     if (navigator.share) { await navigator.share(shareData); } 
     else {
